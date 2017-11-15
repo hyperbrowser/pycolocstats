@@ -25,8 +25,8 @@ class TestMethods(object):
         method = Adder()
         track1 = NamedTemporaryFile()
         track2 = NamedTemporaryFile()
-        job = method.createJob(TRACK_1={'class': 'File', 'location': 'file://' + track1.name},
-                               TRACK_2={'class': 'File', 'location': 'file://' + track2.name},
+        job = method.createJob(TRACK_1={'class': 'File', 'location': 'README.md'},
+                               TRACK_2={'class': 'File', 'location': 'README.md'},
                                LOGICAL_ARG_1=4.0,
                                LOGICAL_ARG_2=2.0,
                                LOGICAL_ARG_3="add")
