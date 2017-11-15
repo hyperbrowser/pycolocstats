@@ -21,6 +21,14 @@ inputs:
     type: int?
     inputBinding:
       position: 3
+  - id: t1
+    type: File
+    inputBinding:
+      position: 4
+  - id: t2
+    type: File
+    inputBinding:
+      position: 5
 outputs:
   output:
     type: stdout
@@ -38,6 +46,10 @@ requirements:
           a <- as.double(args[2])
           b <- as.double(args[3])
           c <- as.double(args[4])
+          t1 <- args[5]
+          t2 <- args[6]
+          print(t1)
+          print(t2)
           switch(operation, 
           add={
             a+b

@@ -23,7 +23,8 @@ class Tool(object):
         return {
             'int': int,
             'float': float,
-            'string': str
+            'string': str,
+            'File': dict
         }[typeStr]
 
 
