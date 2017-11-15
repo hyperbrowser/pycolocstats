@@ -10,7 +10,7 @@ from tools.jobrunner import Job
 class Method(object):
     __metaclass__ = ABCMeta
 
-    PROPERTIES = ["LOGICAL_ARG_1", "LOGICAL_ARG_2", "LOGICAL_ARG_3"]
+    PROPERTIES = ['LOGICAL_ARG_1', 'LOGICAL_ARG_2', 'LOGICAL_ARG_3']
 
     def createJob(self, **properties):
         mappedParams = self._mapParams(**properties)

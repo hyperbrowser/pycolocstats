@@ -37,7 +37,7 @@ class Job(object):
 
     def run(self):
         tool = self._cwlToolFactory.make(self._tool.getCwlFilePath())
-        tool.factory.execkwargs["use_container"] = True
+        tool.factory.execkwargs['use_container'] = True
         return tool(**self._params)
 
 
@@ -46,13 +46,11 @@ class Tool(object):
         self._toolName = toolName
 
     def getCwlFilePath(self):
-        # return pkg_resources.resource_filename('tools' + self._toolName, 'tool.cwl')
-        return os.path.join(os.path.dirname(__file__),
-                            "../../tools/%s/tool.cwl" % self._toolName)
+        return pkg_resources.resource_filename('cwl', '%s/tool.cwl' % self._toolName)
 
     def createJobParamsDict(self):
         with open(self.getCwlFilePath(), 'r') as stream:
-            inputs = yaml.load(stream)["inputs"]
+            inputs = yaml.load(stream)['inputs']
             paramDefDict = dict([(inp['id'], self.getPythonType(inp['type'])) for inp in inputs])
         return JobParamsDict(paramDefDict)
 
