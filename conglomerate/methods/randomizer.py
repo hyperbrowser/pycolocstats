@@ -1,5 +1,5 @@
 from conglomerate.methods.method import Method
-from tools.jobrunner import RANDOMIZER_TOOL
+from conglomerate.tools.tool import RANDOMIZER_TOOL
 
 
 class Randomizer(Method):

@@ -1,5 +1,5 @@
 from conglomerate.methods.method import Method
-from tools.jobrunner import CALCULATOR_TOOL
+from conglomerate.tools.tool import CALCULATOR_TOOL
 
 
 class Adder(Method):

@@ -1,7 +1,7 @@
 from conglomerate.methods.randomizer import Randomizer
 from conglomerate.methods.adder import Adder
 from conglomerate.methods.subtractor import Subtractor
-from tools.jobrunner import JobRunner
+from conglomerate.tools.job import JobRunner
 
 
 class TestMethods(object):

@@ -1,10 +1,5 @@
 from abc import ABCMeta, abstractmethod
-
-import os
-import yaml
-import cwltool.factory
-
-from tools.jobrunner import Job
+from conglomerate.tools.job import Job
 
 
 class Method(object):
