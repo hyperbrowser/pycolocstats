@@ -1,4 +1,5 @@
 import cwltool.factory
+import docker
 
 
 class JobParamsDict(dict):
@@ -35,7 +36,9 @@ class Job(object):
         self._params = params
 
     def run(self):
-        tool = self._cwlToolFactory.make(self._tool.getCwlFilePath())
+        path = self._tool.getToolPath()
+        docker.from_env().images.build(path=path, tag=self._tool.getDockerImage())
+        tool = self._cwlToolFactory.make(self._tool.getCWLFilePath())
         tool.factory.execkwargs['use_container'] = True
         return tool(**self._params)
 
