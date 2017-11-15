@@ -1,4 +1,6 @@
 from abc import ABCMeta, abstractmethod
+
+import os
 import yaml
 import cwltool.factory
 
@@ -17,7 +19,7 @@ class Method:
         return tool(**mappedParams)
 
     def _getToolPath(self):
-        return "../../tools/%s/tool.cwl" % self._getToolName()
+        return os.path.join(os.path.dirname(__file__), "../../tools/%s/tool.cwl" % self._getToolName())
 
     def _readInputs(self):
         with open(self._getToolPath(), 'r') as stream:
