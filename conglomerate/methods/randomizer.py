@@ -2,8 +2,8 @@ from conglomerate.methods.method import Method
 
 
 class Randomizer(Method):
-    def __get_mappings__(self):
+    def _getMappings(self):
         return {"LOGICAL_ARG_1": "n", "LOGICAL_ARG_2": "max"}
 
-    def __get_tool_name__(self):
+    def _getToolName(self):
         return "randomizer"

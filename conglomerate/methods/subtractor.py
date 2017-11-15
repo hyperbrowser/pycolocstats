@@ -2,8 +2,8 @@ from conglomerate.methods.method import Method
 
 
 class Subtractor(Method):
-    def __get_mappings__(self):
+    def _getMappings(self):
         return {"LOGICAL_ARG_1": "a", "LOGICAL_ARG_2": "b", "LOGICAL_ARG_3": "operation"}
 
-    def __get_tool_name__(self):
+    def _getToolName(self):
         return "calculator"
