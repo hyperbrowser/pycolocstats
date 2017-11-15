@@ -1,7 +1,7 @@
 import unittest
-from src.methods import Randomizer
-from src.methods import Adder
-from src.methods import Subtractor
+from conglomerate.methods.randomizer import Randomizer
+from conglomerate.methods.adder import Adder
+from conglomerate.methods.subtractor import Subtractor
 
 
 class MethodTests(unittest.TestCase):

@@ -1,4 +1,4 @@
-from src.methods import Method
+from conglomerate.methods.method import Method
 
 
 class Randomizer(Method):
