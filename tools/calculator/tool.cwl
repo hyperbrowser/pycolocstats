@@ -6,13 +6,7 @@ baseCommand:
   - calculator.r
 inputs:
   - id: operation
-    type:
-      type: enum
-      symbols:
-        - add
-        - subtract
-        - factorial
-      name: operation
+    type: string
     inputBinding:
       position: 0
   - id: a

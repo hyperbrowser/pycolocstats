@@ -4,43 +4,30 @@ import os
 import yaml
 import cwltool.factory
 
+from tools.jobrunner import Job
 
-class Method:
+
+class Method(object):
     __metaclass__ = ABCMeta
 
     PROPERTIES = ["LOGICAL_ARG_1", "LOGICAL_ARG_2", "LOGICAL_ARG_3"]
 
-    cwlToolFactory = cwltool.factory.Factory()
-
-    def run(self, **properties):
-        tool = Method.cwlToolFactory.make(self._getToolPath())
-        tool.factory.execkwargs["use_container"] = True
+    def createJob(self, **properties):
         mappedParams = self._mapParams(**properties)
-        return tool(**mappedParams)
-
-    def _getToolPath(self):
-        return os.path.join(os.path.dirname(__file__), "../../tools/%s/tool.cwl" % self._getToolName())
-
-    def _readInputs(self):
-        with open(self._getToolPath(), 'r') as stream:
-            try:
-                return yaml.load(stream)["inputs"]
-            except yaml.YAMLError as exc:
-                print(exc)
+        return Job(self._getTool(), mappedParams)
 
     def _mapParams(self, **properties):
-        inputs = [i["id"] for i in self._readInputs()]
-        mappedProperties = {}
-        for key, value in self._getMappings().items():
-            assert key in Method.PROPERTIES
-            assert value in inputs
-            mappedProperties[self._getMappings()[key]] = properties[key]
-        return mappedProperties
+        params = self._getTool().createJobParamsDict()
+
+        for prop, param in self._getMappings().items():
+            params[param] = properties[prop]
+
+        return params
 
     @abstractmethod
     def _getMappings(self):
         pass
 
     @abstractmethod
-    def _getToolName(self):
+    def _getTool(self):
         pass
