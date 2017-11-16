@@ -39,4 +39,4 @@ class Tool(object):
 
 CALCULATOR_TOOL = Tool('calculator')
 RANDOMIZER_TOOL = Tool('randomizer')
-GEOMETRICORR_TOOL = Tool('geometricorr')
+GENOMETRICORR_TOOL = Tool('genometricorr')

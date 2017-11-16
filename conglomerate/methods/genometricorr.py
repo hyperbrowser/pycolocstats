@@ -1,8 +1,8 @@
 from conglomerate.methods.method import Method
-from conglomerate.tools.tool import GEOMETRICORR_TOOL
+from conglomerate.tools.tool import GENOMETRICORR_TOOL
 
 
-class GeometriCorr(Method):
+class GenometriCorr(Method):
     def _getMappings(self):
         return {'TRACK_1': 't1',
                 'TRACK_2': 't2',
@@ -11,4 +11,4 @@ class GeometriCorr(Method):
                 'LOGICAL_ARG_3': 'operation'}
 
     def _getTool(self):
-        return GEOMETRICORR_TOOL
+        return GENOMETRICORR_TOOL

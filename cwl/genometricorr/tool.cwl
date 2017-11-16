@@ -1,9 +1,9 @@
 class: CommandLineTool
 cwlVersion: v1.0
-id: geometricorr
+id: genometricorr
 baseCommand:
   - Rscript
-  - geometricorr.r
+  - genometricorr.r
 inputs:
   - id: operation
     type: string
@@ -34,13 +34,13 @@ outputs:
     type: stdout
   stderr:
     type: stderr
-label: geometricorr
+label: genometricorr
 requirements:
   - class: DockerRequirement
-    dockerPull: 'conglomerate/geometricorr:latest'
+    dockerPull: 'conglomerate/genometricorr:latest'
   - class: InitialWorkDirRequirement
     listing:
-      - entryname: geometricorr.r
+      - entryname: genometricorr.r
         entry: |-
           library("GenometriCorr")
           library("rtracklayer")
