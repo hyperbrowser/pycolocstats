@@ -1,7 +1,7 @@
 import pkg_resources
 import yaml
 
-from conglomerate.tools.job import JobParamsDict
+from conglomerate.tools.job import JobParamsDict, PathStr
 
 
 class Tool(object):
@@ -33,7 +33,7 @@ class Tool(object):
             'int': int,
             'float': float,
             'string': str,
-            'File': dict
+            'File': PathStr
         }[typeStr]
 
 

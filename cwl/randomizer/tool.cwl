@@ -12,7 +12,15 @@ inputs:
   - id: 'n'
     type: int
     inputBinding:
-      position: 0
+      position: 1
+  - id: t1
+    type: File
+    inputBinding:
+      position: 4
+  - id: t2
+    type: File
+    inputBinding:
+      position: 5
 outputs:
   output:
     type: stdout
@@ -28,4 +36,8 @@ requirements:
           args <- commandArgs(TRUE)
           max <- as.integer(args[1])
           n <- as.integer(args[2])
+          t1 <- args[3]
+          t2 <- args[4]
+          print(t1)
+          print(t2)
           sample(1:max,n,replace=T)
