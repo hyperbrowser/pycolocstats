@@ -17,18 +17,22 @@ inputs:
     type: File
     inputBinding:
       position: 2
+  - id: chrlen
+    type: File
+    inputBinding:
+      position: 3
   - id: a
     type: float?
     inputBinding:
-      position: 3
+      position: 4
   - id: b
     type: float?
     inputBinding:
-      position: 4
+      position: 5
   - id: c
     type: int?
     inputBinding:
-      position: 5
+      position: 6
 outputs:
   stdout:
     type: stdout
@@ -46,11 +50,13 @@ requirements:
           operation <- args[1]
           t1 <- args[2]
           t2 <- args[3]
-          a <- as.double(args[4])
-          b <- as.double(args[5])
-          c <- as.double(args[6])
+          chrlen <- args[4]
+          a <- as.double(args[5])
+          b <- as.double(args[6])
+          c <- as.double(args[7])
           print(paste(readLines(t1), collapse="\n"))
           print(paste(readLines(t2), collapse="\n"))
+          print(paste(readLines(chrlen), collapse="\n"))
           switch(operation,
           add={
             print(a+b)

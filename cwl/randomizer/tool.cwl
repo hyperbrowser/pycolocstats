@@ -21,6 +21,10 @@ inputs:
     type: File
     inputBinding:
       position: 3
+  - id: chrlen
+    type: File
+    inputBinding:
+      position: 4
 outputs:
   stdout:
     type: stdout
@@ -39,6 +43,8 @@ requirements:
           n <- as.integer(args[2])
           t1 <- args[3]
           t2 <- args[4]
+          chrlen <- args[5]
           print(paste(readLines(t1), collapse="\n"))
           print(paste(readLines(t2), collapse="\n"))
+          print(paste(readLines(chrlen), collapse="\n"))
           print(sample(1:max,n,replace=T))

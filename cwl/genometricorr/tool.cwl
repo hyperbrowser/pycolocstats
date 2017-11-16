@@ -17,18 +17,22 @@ inputs:
     type: File
     inputBinding:
       position: 2
+  - id: chrlen
+    type: File
+    inputBinding:
+      position: 3
   - id: a
     type: float?
     inputBinding:
-      position: 3
+      position: 4
   - id: b
     type: float?
     inputBinding:
-      position: 4
+      position: 5
   - id: c
     type: int?
     inputBinding:
-      position: 5
+      position: 6
 outputs:
   stdout:
     type: stdout

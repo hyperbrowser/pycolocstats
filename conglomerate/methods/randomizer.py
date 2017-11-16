@@ -6,6 +6,7 @@ class Randomizer(Method):
     def _getMappings(self):
         return {'TRACK_1': 't1',
                 'TRACK_2': 't2',
+                'CHROM_LENGTHS': 'chrlen',
                 'LOGICAL_ARG_1': 'n',
                 'LOGICAL_ARG_2': 'max'}
 
