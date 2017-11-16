@@ -59,8 +59,11 @@ class Job(object):
         docker.from_env().images.build(path=path, tag=self._tool.getDockerImage())
         tool = self._cwlToolFactory.make(self._tool.getCWLFilePath())
         tool.factory.execkwargs['use_container'] = True
-        toolResults = tool(**self._params)
-        return self._createResultFilesDict(toolResults)
+        try:
+            toolResults = tool(**self._params)
+            return self._createResultFilesDict(toolResults)
+        except cwltool.factory.WorkflowStatus as ws:
+            return self._createResultFilesDict(ws.out)
 
     def _createResultFilesDict(self, toolResults):
         resultFilesDict = {}
