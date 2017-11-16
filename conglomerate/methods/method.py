@@ -7,17 +7,20 @@ class Method(object):
 
     PROPERTIES = ['TRACK_1', 'TRACK_2', 'LOGICAL_ARG_1', 'LOGICAL_ARG_2', 'LOGICAL_ARG_3']
 
-    def createJob(self, **properties):
-        mappedParams = self._mapParams(**properties)
-        return Job(self._getTool(), mappedParams)
-
-    def _mapParams(self, **properties):
-        params = self._getTool().createJobParamsDict()
+    def __init__(self, **properties):
+        self._params = self._getTool().createJobParamsDict()
 
         for prop, param in self._getMappings().items():
-            params[param] = properties[prop]
+            self._params[param] = properties[prop]
 
-        return params
+    def createJob(self):
+        return Job(self._getTool(), self._params)
+
+    def setResultFilesDict(self, resultFilesDict):
+        self._resultFilesDict = resultFilesDict
+
+    def getResultFilesDict(self):
+        return self._resultFilesDict
 
     @abstractmethod
     def _getMappings(self):

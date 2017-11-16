@@ -9,30 +9,31 @@ inputs:
     type: string
     inputBinding:
       position: 0
-  - id: a
-    type: float?
-    inputBinding:
-      position: 1
-  - id: b
-    type: float?
-    inputBinding:
-      position: 2
-  - id: c
-    type: int?
-    inputBinding:
-      position: 3
   - id: t1
     type: File
     inputBinding:
-      position: 4
+      position: 1
   - id: t2
     type: File
     inputBinding:
+      position: 2
+  - id: a
+    type: float?
+    inputBinding:
+      position: 3
+  - id: b
+    type: float?
+    inputBinding:
+      position: 4
+  - id: c
+    type: int?
+    inputBinding:
       position: 5
 outputs:
-  output:
+  stdout:
     type: stdout
-stderr: error.txt
+  stderr:
+    type: stderr
 label: calculator
 requirements:
   - class: DockerRequirement
@@ -43,22 +44,22 @@ requirements:
         entry: |-
           args <- commandArgs(TRUE)
           operation <- args[1]
-          a <- as.double(args[2])
-          b <- as.double(args[3])
-          c <- as.double(args[4])
-          t1 <- args[5]
-          t2 <- args[6]
+          t1 <- args[2]
+          t2 <- args[3]
+          a <- as.double(args[4])
+          b <- as.double(args[5])
+          c <- as.double(args[6])
           print(t1)
           print(t2)
-          switch(operation, 
+          switch(operation,
           add={
-            a+b
+            print(a+b)
           },
           subtract={
-            a-b 
+            print(a-b)
           },
           factorial={
-            factorial(c)
+            print(factorial(c))
           },
           {
              print("function not found")

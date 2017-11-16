@@ -1,4 +1,5 @@
 import os
+import urllib
 
 import cwltool.factory
 import docker
@@ -58,13 +59,18 @@ class Job(object):
         docker.from_env().images.build(path=path, tag=self._tool.getDockerImage())
         tool = self._cwlToolFactory.make(self._tool.getCWLFilePath())
         tool.factory.execkwargs['use_container'] = True
-        return tool(**self._params)
+        toolResults = tool(**self._params)
+        return self._createResultFilesDict(toolResults)
 
-
-class JobRunner(object):
-    @classmethod
-    def runJobs(cls, jobs):
-        return [job.run() for job in jobs]
+    def _createResultFilesDict(self, toolResults):
+        resultFilesDict = {}
+        assert isinstance(toolResults, dict)
+        for key, fileinfo in toolResults.items():
+            assert isinstance(fileinfo, dict)
+            parsedLocation = urllib.parse.urlparse(fileinfo['location'])
+            assert parsedLocation.scheme == 'file'
+            resultFilesDict[key] = parsedLocation.path
+        return resultFilesDict
 
 
 class PathStr(str):

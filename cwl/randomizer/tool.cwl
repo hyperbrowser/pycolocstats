@@ -16,15 +16,16 @@ inputs:
   - id: t1
     type: File
     inputBinding:
-      position: 4
+      position: 2
   - id: t2
     type: File
     inputBinding:
-      position: 5
+      position: 3
 outputs:
-  output:
+  stdout:
     type: stdout
-stderr: error.txt
+  stderr:
+    type: stderr
 label: calculator
 requirements:
   - class: DockerRequirement
@@ -40,4 +41,4 @@ requirements:
           t2 <- args[4]
           print(t1)
           print(t2)
-          sample(1:max,n,replace=T)
+          print(sample(1:max,n,replace=T))
