@@ -1,8 +1,7 @@
 import os
 import urllib
 
-import cwltool.factory
-import docker
+import cwltool
 
 
 class JobParamsDict(dict):
@@ -48,24 +47,20 @@ class JobParamsDict(dict):
 
 
 class Job(object):
-    _cwlToolFactory = cwltool.factory.Factory()
-
     def __init__(self, tool, params):
         self._tool = tool
         self._params = params
 
     def run(self):
-        path = self._tool.getToolPath()
-        docker.from_env().images.build(path=path, tag=self._tool.getDockerImage())
-        tool = self._cwlToolFactory.make(self._tool.getCWLFilePath())
-        tool.factory.execkwargs['use_container'] = True
         try:
-            toolResults = tool(**self._params)
+            cwlTool = self._tool.getCwlTool()
+            toolResults = cwlTool(**self._params)
             return self._createResultFilesDict(toolResults)
         except cwltool.factory.WorkflowStatus as ws:
             return self._createResultFilesDict(ws.out)
 
-    def _createResultFilesDict(self, toolResults):
+    @staticmethod
+    def _createResultFilesDict(toolResults):
         resultFilesDict = {}
         assert isinstance(toolResults, dict)
         for key, fileinfo in toolResults.items():
