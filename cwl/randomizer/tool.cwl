@@ -39,6 +39,6 @@ requirements:
           n <- as.integer(args[2])
           t1 <- args[3]
           t2 <- args[4]
-          print(t1)
-          print(t2)
+          print(paste(readLines(t1), collapse="\n"))
+          print(paste(readLines(t2), collapse="\n"))
           print(sample(1:max,n,replace=T))

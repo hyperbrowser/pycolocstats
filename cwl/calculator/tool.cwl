@@ -49,8 +49,8 @@ requirements:
           a <- as.double(args[4])
           b <- as.double(args[5])
           c <- as.double(args[6])
-          print(t1)
-          print(t2)
+          print(paste(readLines(t1), collapse="\n"))
+          print(paste(readLines(t2), collapse="\n"))
           switch(operation,
           add={
             print(a+b)
