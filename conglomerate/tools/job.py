@@ -5,6 +5,7 @@ import cwltool
 
 
 class JobParamsDict(dict):
+    # TODO: Add explicit support for mandatory/optional params?
     def __init__(self, paramDefDict):
         super(JobParamsDict, self).__init__(self)
         self._paramDefDict = paramDefDict
