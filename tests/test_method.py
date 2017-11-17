@@ -1,5 +1,5 @@
 import os
-from tempfile import NamedTemporaryFile
+from tempfile import NamedTemporaryFile, mkstemp
 
 from conglomerate.methods.mock.randomizer import Randomizer
 from conglomerate.methods.mock.calculator import Adder
@@ -24,7 +24,7 @@ class TestMethods(object):
         self._printResultFiles(method, ['stderr', 'stdout'])
 
     def testRandomizer(self):
-        chrlen = self._getSampleFiles()[2]
+        chrlen = self._getSampleFileNames()[2]
         method = Randomizer()
         method.setChromLenFileName(chrlen.name)
         method.setManualParam('max', 10)
@@ -33,7 +33,7 @@ class TestMethods(object):
         self._printResultFiles(method, ['stderr', 'stdout'])
 
     def testGenometriCorr(self):
-        track1, track2, chrlen = self._getSampleFiles()
+        track1, track2, chrlen = self._getSampleFileNames()
         method = GenometriCorr()
         method.setTrackFileNames([track1.name, track2.name])
         method.setChromLenFileName(chrlen.name)
@@ -43,14 +43,18 @@ class TestMethods(object):
         self._printResultFiles(method, ['stderr', 'stdout'])
 
     @staticmethod
-    def _getSampleFiles():
-        track1 = NamedTemporaryFile()
-        track2 = NamedTemporaryFile()
-        chrlen = NamedTemporaryFile()
-        open(track1.name, 'w').write('Track 1 contents')
-        open(track2.name, 'w').write('Track 2 contents')
-        open(chrlen.name, 'w').write('Chromosome lengths contents')
+    def _getSampleFileNames():
+        track1 = TestMethods._getSampleFileName('Track 1 contents\n')
+        track2 = TestMethods._getSampleFileName('Track 2 contents\n')
+        chrlen = TestMethods._getSampleFileName('Chromosome lengths contents\n')
         return track1, track2, chrlen
+
+    @staticmethod
+    def _getSampleFileName(contents):
+        sampleFile = NamedTemporaryFile(mode='w+', dir='/tmp')
+        sampleFile.write(contents)
+        sampleFile.flush()
+        return sampleFile
 
     @staticmethod
     def _printResultFiles(method, keys):

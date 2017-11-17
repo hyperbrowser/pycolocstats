@@ -14,22 +14,15 @@ class JobParamsDict(dict):
 
         allowedType = self.getType(key)
         if allowedType == PathStr:
-            val = self._assert_and_format_path_type(val)
+            assert isinstance(val, str), \
+                '"{}" not of correct type: {}'.format(val, str)
+            assert os.path.exists(val), \
+                'File "{}" does not exist'.format(val)
+            val = {'class': 'File', 'location': val}
         else:
             assert isinstance(val, allowedType), \
                 '"{}" not of correct type: {}'.format(val, allowedType)
         super(JobParamsDict, self).__setitem__(key, val)
-
-    def _assert_and_format_path_type(self, val):
-        assert isinstance(val, str), \
-            '"{}" not of correct type: {}'.format(val, str)
-        assert os.path.exists(val), \
-            'File "{}" does not exist'.format(val)
-
-        topDir = os.path.join(os.path.abspath(os.path.dirname(__file__)), '..', '..')
-        topDirRelPath = os.path.relpath(os.path.abspath(val), topDir)
-
-        return {'class': 'File', 'location': topDirRelPath}
 
     def getAllowedKeys(self):
         return self._paramDefDict.keys()
