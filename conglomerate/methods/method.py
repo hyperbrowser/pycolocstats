@@ -16,6 +16,10 @@ class Method(object):
 
     @abstractmethod
     def _getToolName(self):
+        """
+        :return: Name of the tool as specified as constants in tools/tool.py. Refers to the
+         directory name under the 'cwl' directory.
+        """
         pass
 
     @abstractmethod
@@ -41,6 +45,9 @@ class Method(object):
         pass
 
     def setManualParam(self, key, val):
+        """
+        For setting tool parameters directly, without going through properties (like allowOverlaps)
+        """
         self._params[key] = val
 
     def createJob(self):
@@ -62,4 +69,7 @@ class Method(object):
 
     @abstractmethod
     def getFullResults(self):
+        """
+        :return: Full result output as a string
+        """
         pass
