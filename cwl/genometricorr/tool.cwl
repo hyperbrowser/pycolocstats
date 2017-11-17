@@ -5,34 +5,30 @@ baseCommand:
   - Rscript
   - genometricorr.r
 inputs:
-  - id: operation
-    type: string
-    inputBinding:
-      position: 0
   - id: t1
     type: File
     inputBinding:
-      position: 1
+      position: 0
   - id: t2
     type: File
     inputBinding:
-      position: 2
+      position: 1
   - id: chrlen
     type: File
     inputBinding:
-      position: 3
+      position: 2
   - id: a
     type: float?
     inputBinding:
-      position: 4
+      position: 3
   - id: b
     type: float?
     inputBinding:
-      position: 5
+      position: 4
   - id: c
     type: int?
     inputBinding:
-      position: 6
+      position: 5
 outputs:
   stdout:
     type: stdout

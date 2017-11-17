@@ -1,54 +1,51 @@
 import os
 from tempfile import NamedTemporaryFile
 
-from conglomerate.methods.randomizer import Randomizer
-from conglomerate.methods.adder import Adder
-from conglomerate.methods.subtractor import Subtractor
-from conglomerate.methods.genometricorr import GenometriCorr
+from conglomerate.methods.mock.randomizer import Randomizer
+from conglomerate.methods.mock.calculator import Adder
+from conglomerate.methods.mock.calculator import Subtractor
+from conglomerate.methods.genometricorr.genometricorr import GenometriCorr
 from conglomerate.tools.runner import runAllMethodsInSequence
 
 
 class TestMethods(object):
     def testRandomizer(self):
         track1, track2, chrlen = self._getSampleFiles()
-        method = Randomizer(TRACK_1=track1.name,
-                            TRACK_2=track2.name,
-                            CHROM_LENGTHS=chrlen.name,
-                            LOGICAL_ARG_1=10,
-                            LOGICAL_ARG_2=6)
+        method = Randomizer()
+        method.setTrackFileNames([track1.name, track2.name])
+        method.setChromLenFileName(chrlen.name)
+        method.setManualParam('max', 10)
+        method.setManualParam('n', 6)
         runAllMethodsInSequence([method])
         self._printResultFiles(method, ['stderr', 'stdout'])
 
     def testAdder(self):
         track1, track2, chrlen = self._getSampleFiles()
-        method = Adder(TRACK_1=track1.name,
-                       TRACK_2=track2.name,
-                       CHROM_LENGTHS=chrlen.name,
-                       LOGICAL_ARG_1=4.0,
-                       LOGICAL_ARG_2=2.0,
-                       LOGICAL_ARG_3="add")
+        method = Adder()
+        method.setTrackFileNames([track1.name, track2.name])
+        method.setChromLenFileName(chrlen.name)
+        method.setManualParam('a', 4.0)
+        method.setManualParam('b', 2.0)
         runAllMethodsInSequence([method])
         self._printResultFiles(method, ['stderr', 'stdout'])
 
     def testSubtractor(self):
         track1, track2, chrlen = self._getSampleFiles()
-        method = Subtractor(TRACK_1=track1.name,
-                            TRACK_2=track2.name,
-                            CHROM_LENGTHS=chrlen.name,
-                            LOGICAL_ARG_1=4.0,
-                            LOGICAL_ARG_2=2.0,
-                            LOGICAL_ARG_3="subtract")
+        method = Subtractor()
+        method.setTrackFileNames([track1.name, track2.name])
+        method.setChromLenFileName(chrlen.name)
+        method.setManualParam('a', 4.0)
+        method.setManualParam('b', 2.0)
         runAllMethodsInSequence([method])
         self._printResultFiles(method, ['stderr', 'stdout'])
 
     def testGenometriCorr(self):
         track1, track2, chrlen = self._getSampleFiles()
-        method = GenometriCorr(TRACK_1=track1.name,
-                               TRACK_2=track2.name,
-                               CHROM_LENGTHS=chrlen.name,
-                               LOGICAL_ARG_1=4.0,
-                               LOGICAL_ARG_2=2.0,
-                               LOGICAL_ARG_3="subtract")
+        method = GenometriCorr()
+        method.setTrackFileNames([track1.name, track2.name])
+        method.setChromLenFileName(chrlen.name)
+        method.setManualParam('a', 4.0)
+        method.setManualParam('b', 2.0)
         runAllMethodsInSequence([method])
         self._printResultFiles(method, ['stderr', 'stdout'])
 

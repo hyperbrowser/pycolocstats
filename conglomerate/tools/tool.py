@@ -6,6 +6,11 @@ import yaml
 from conglomerate.tools.job import JobParamsDict, PathStr
 
 
+CALCULATOR_TOOL_NAME = 'calculator'
+RANDOMIZER_TOOL_NAME = 'randomizer'
+GENOMETRICORR_TOOL_NAME = 'genometricorr'
+
+
 class Tool(object):
     _cwlToolFactory = cwltool.factory.Factory()
 
@@ -48,8 +53,3 @@ class Tool(object):
             'string': str,
             'File': PathStr
         }[typeStr]
-
-
-CALCULATOR_TOOL = Tool('calculator')
-RANDOMIZER_TOOL = Tool('randomizer')
-GENOMETRICORR_TOOL = Tool('genometricorr')
