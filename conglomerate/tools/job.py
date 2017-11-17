@@ -1,7 +1,6 @@
+import cwltool
 import os
 import urllib
-
-import cwltool
 
 
 class JobParamsDict(dict):
