@@ -1,0 +1,2 @@
+class PathStr(str):
+    pass

@@ -3,8 +3,8 @@ import docker
 import pkg_resources
 import yaml
 
-from conglomerate.tools.job import JobParamsDict, PathStr
-
+from conglomerate.tools.jobparamsdict import JobParamsDict
+from conglomerate.tools.types import PathStr
 
 CALCULATOR_TOOL_NAME = 'calculator'
 RANDOMIZER_TOOL_NAME = 'randomizer'
@@ -40,7 +40,9 @@ class Tool(object):
 
     def createJobParamsDict(self):
         inputs = self._yaml['inputs']
-        paramDefDict = dict([(inp['id'], self.getPythonType(inp['type'])) for inp in inputs])
+        paramDefDict = dict(
+            [(inp['id'], dict(type=self.getPythonType(inp['type']), mandatory=self.isMandatoryParameter(inp['type'])))
+             for inp in inputs])
         return JobParamsDict(paramDefDict)
 
     @staticmethod
@@ -52,3 +54,7 @@ class Tool(object):
             'string': str,
             'File': PathStr
         }[typeStr]
+
+    @staticmethod
+    def isMandatoryParameter(cwlType):
+        return not cwlType.endswith('?')

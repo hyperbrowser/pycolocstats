@@ -3,6 +3,13 @@ from conglomerate.tools.job import Job
 from conglomerate.tools.tool import Tool
 
 
+class MissingMandatoryParameters(Exception):
+    def __init__(self, absentMandatoryParameters):
+        super(MissingMandatoryParameters, self).__init__(
+            'Missing mandatory parameters: %s' % ', '.join(absentMandatoryParameters))
+        self.absentMandatoryParameters = absentMandatoryParameters
+
+
 class Method(object):
     __metaclass__ = ABCMeta
 
@@ -51,6 +58,9 @@ class Method(object):
         self._params[key] = val
 
     def createJob(self):
+        absentMandatoryParameters = self._params.getAbsentMandatoryParameters()
+        if absentMandatoryParameters:
+            raise MissingMandatoryParameters(absentMandatoryParameters)
         return Job(self._getTool(), self._params)
 
     def setResultFilesDict(self, resultFilesDict):
