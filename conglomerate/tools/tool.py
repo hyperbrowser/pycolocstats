@@ -22,8 +22,7 @@ class Tool(object):
 
     def getCwlTool(self):
         if not self._cwlTool:
-            path = self._getToolPath()
-            docker.from_env().images.build(path=path, tag=self._getDockerImagePullInfo())
+            docker.from_env().images.pull(name='conglomerate/%s' % self._toolName, tag="latest")
             self._cwlTool = self._cwlToolFactory.make(self._getCWLFilePath())
             self._cwlTool.factory.execkwargs['use_container'] = True
         return self._cwlTool
