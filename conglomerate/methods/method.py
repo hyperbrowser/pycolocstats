@@ -20,6 +20,12 @@ class Method(object):
 
     @abstractmethod
     def _setDefaultParamValues(self):
+        """
+        Sets default values for parameters that:
+         1) are mandatory, or
+         2) where the required default value is different than the default value defined by the
+         tool (if the param is not specified).
+        """
         pass
 
     @abstractmethod
