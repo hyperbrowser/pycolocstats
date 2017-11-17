@@ -48,3 +48,8 @@ requirements:
           refseq <- transcripts(TxDb.Hsapiens.UCSC.hg19.knownGene)
           cpgis <- import(system.file("extdata", "UCSCcpgis_hg19.bed", package = "GenometriCorr"))
           seqinfo(cpgis) <- seqinfo(TxDb.Hsapiens.UCSC.hg19.knownGene)[seqnames(seqinfo(cpgis))]
+          pn.area <- 100
+          pn.dist <- 100
+          pn.jacc <- 100
+          cpgi_to_genes <- GenometriCorrelation(cpgis, refseq, chromosomes.to.proceed = c("chr1", "chr2", "chr3"), ecdf.area.permut.number = pn.area, mean.distance.permut.number = pn.dist, jaccard.measure.permut.number = pn.jacc, keep.distributions = TRUE, showProgressBar = FALSE)
+          print(cpgi_to_genes)
