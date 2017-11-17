@@ -17,18 +17,13 @@ inputs:
     type: File
     inputBinding:
       position: 2
-  - id: a
-    type: float?
-    inputBinding:
-      position: 3
-  - id: b
-    type: float?
-    inputBinding:
-      position: 4
-  - id: c
-    type: int?
-    inputBinding:
-      position: 5
+  - id: t1Format
+    type: string
+  - id: t2Format
+    type: string
+  - id: doMapping
+    type: boolean
+
 outputs:
   stdout:
     type: stdout
@@ -38,18 +33,44 @@ label: genometricorr
 requirements:
   - class: DockerRequirement
     dockerPull: 'conglomerate/genometricorr:latest'
+  - class: InlineJavascriptRequirement
   - class: InitialWorkDirRequirement
     listing:
+      - entryname: conf.ini
+        entry: |-
+          [data]
+          query=$(inputs.t1.path)
+          query.format=$(inputs.t1Format)
+          reference=$(inputs.t2.path)
+          reference.format=$(inputs.t2Format)
+          do.mapping=$(inputs.doMapping.toString().toUpperCase())
+
+          [chromosomes]
+          chr1
+          chr2
+          chr3
+
+          [chromosomes.length]
+          chr1=249250621
+
+          [options]
+          add.chr.as.prefix=FALSE
+          awhole.only=FALSE
+          suppress.evaluated.length.warning=FALSE
+          cut.all.over.length=FALSE
+          keep.distributions=TRUE
+          showTkProgressBar=FALSE
+          showProgressBar=FALSE
+
+          [tests]
+          ecdf.area.permut.number=10
+          mean.distance.permut.number=10
+          jaccard.measure.permut.number=10
+          random.seed=1248312
+
       - entryname: genometricorr.r
         entry: |-
           library("GenometriCorr")
-          library("rtracklayer")
-          library("TxDb.Hsapiens.UCSC.hg19.knownGene")
-          refseq <- transcripts(TxDb.Hsapiens.UCSC.hg19.knownGene)
-          cpgis <- import(system.file("extdata", "UCSCcpgis_hg19.bed", package = "GenometriCorr"))
-          seqinfo(cpgis) <- seqinfo(TxDb.Hsapiens.UCSC.hg19.knownGene)[seqnames(seqinfo(cpgis))]
-          pn.area <- 100
-          pn.dist <- 100
-          pn.jacc <- 100
-          cpgi_to_genes <- GenometriCorrelation(cpgis, refseq, chromosomes.to.proceed = c("chr1", "chr2", "chr3"), ecdf.area.permut.number = pn.area, mean.distance.permut.number = pn.dist, jaccard.measure.permut.number = pn.jacc, keep.distributions = TRUE, showProgressBar = FALSE)
-          print(cpgi_to_genes)
+          config <- new("GenometriCorrConfig", "conf.ini")
+          conf_res <- run.config(config)
+          print(conf_res)

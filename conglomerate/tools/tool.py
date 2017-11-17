@@ -52,6 +52,7 @@ class Tool(object):
             'int': int,
             'float': float,
             'string': str,
+            'boolean': bool,
             'File': PathStr
         }[typeStr]
 
