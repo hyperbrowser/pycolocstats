@@ -9,33 +9,26 @@ from conglomerate.tools.runner import runAllMethodsInSequence
 
 
 class TestMethods(object):
-    def testRandomizer(self):
-        track1, track2, chrlen = self._getSampleFiles()
-        method = Randomizer()
-        method.setTrackFileNames([track1.name, track2.name])
-        method.setChromLenFileName(chrlen.name)
-        method.setManualParam('max', 10)
-        method.setManualParam('n', 6)
-        runAllMethodsInSequence([method])
-        self._printResultFiles(method, ['stderr', 'stdout'])
-
     def testAdder(self):
-        track1, track2, chrlen = self._getSampleFiles()
         method = Adder()
-        method.setTrackFileNames([track1.name, track2.name])
-        method.setChromLenFileName(chrlen.name)
         method.setManualParam('a', 4.0)
         method.setManualParam('b', 2.0)
         runAllMethodsInSequence([method])
         self._printResultFiles(method, ['stderr', 'stdout'])
 
     def testSubtractor(self):
-        track1, track2, chrlen = self._getSampleFiles()
         method = Subtractor()
-        method.setTrackFileNames([track1.name, track2.name])
-        method.setChromLenFileName(chrlen.name)
         method.setManualParam('a', 4.0)
         method.setManualParam('b', 2.0)
+        runAllMethodsInSequence([method])
+        self._printResultFiles(method, ['stderr', 'stdout'])
+
+    def testRandomizer(self):
+        chrlen = self._getSampleFiles()[2]
+        method = Randomizer()
+        method.setChromLenFileName(chrlen.name)
+        method.setManualParam('max', 10)
+        method.setManualParam('n', 6)
         runAllMethodsInSequence([method])
         self._printResultFiles(method, ['stderr', 'stdout'])
 

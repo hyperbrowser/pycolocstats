@@ -13,18 +13,10 @@ inputs:
     type: int
     inputBinding:
       position: 1
-  - id: t1
-    type: File
-    inputBinding:
-      position: 2
-  - id: t2
-    type: File
-    inputBinding:
-      position: 3
   - id: chrlen
     type: File
     inputBinding:
-      position: 4
+      position: 2
 outputs:
   stdout:
     type: stdout
@@ -41,10 +33,6 @@ requirements:
           args <- commandArgs(TRUE)
           max <- as.integer(args[1])
           n <- as.integer(args[2])
-          t1 <- args[3]
-          t2 <- args[4]
-          chrlen <- args[5]
-          print(paste(readLines(t1), collapse="\n"))
-          print(paste(readLines(t2), collapse="\n"))
+          chrlen <- args[3]
           print(paste(readLines(chrlen), collapse="\n"))
           print(sample(1:max,n,replace=T))

@@ -10,15 +10,13 @@ class Randomizer(Method):
         pass
 
     def setTrackFileNames(self, trackFnList):
-        assert len(trackFnList) == 2
-        self._params['t1'] = trackFnList[0]
-        self._params['t2'] = trackFnList[1]
+        pass
 
     def setChromLenFileName(self, chromLenFileName):
         self._params['chrlen'] = chromLenFileName
 
     def setAllowOverlaps(self, allowOverlaps):
-        assert allowOverlaps is True
+        pass
 
     def getPValue(self):
         pass
