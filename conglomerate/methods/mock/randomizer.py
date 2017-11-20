@@ -18,6 +18,9 @@ class Randomizer(Method):
     def setAllowOverlaps(self, allowOverlaps):
         pass
 
+    def _parseResultFiles(self):
+        pass
+
     def getPValue(self):
         pass
 

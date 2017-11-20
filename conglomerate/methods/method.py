@@ -60,9 +60,14 @@ class Method(object):
 
     def setResultFilesDict(self, resultFilesDict):
         self._resultFilesDict = resultFilesDict
+        self._parseResultFiles()
 
     def getResultFilesDict(self):
         return self._resultFilesDict
+
+    @abstractmethod
+    def _parseResultFiles(self):
+        pass
 
     @abstractmethod
     def getPValue(self):

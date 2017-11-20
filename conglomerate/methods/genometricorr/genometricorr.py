@@ -20,6 +20,9 @@ class GenometriCorr(Method):
     def setAllowOverlaps(self, allowOverlaps):
         assert allowOverlaps is True
 
+    def _parseResultFiles(self):
+        pass
+
     def getPValue(self):
         pass
 
