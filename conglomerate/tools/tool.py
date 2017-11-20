@@ -6,8 +6,6 @@ import yaml
 from conglomerate.tools.jobparamsdict import JobParamsDict
 from conglomerate.tools.types import PathStr
 
-CALCULATOR_TOOL_NAME = 'calculator'
-RANDOMIZER_TOOL_NAME = 'randomizer'
 GENOMETRICORR_TOOL_NAME = 'genometricorr'
 
 
