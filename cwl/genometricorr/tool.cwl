@@ -20,9 +20,9 @@ inputs:
     inputBinding:
       loadContents: true
   - id: t1Format
-    type: string?
+    type: string
   - id: t2Format
-    type: string?
+    type: string
   - id: doMapping
     type: boolean?
   - id: addChrAsPrefix
@@ -60,35 +60,37 @@ requirements:
         entry: |-
           [data]
           query=$(inputs.t1.path)
-          query.format=$(inputs.t1Format ? inputs.t1Format : 'bed')
+          query.format=$(inputs.t1Format)
           reference=$(inputs.t2.path)
-          reference.format=$(inputs.t2Format ? inputs.t2Format : 'bed')
-          do.mapping=$(inputs.doMapping ? inputs.doMapping.toString().toUpperCase() : 'FALSE')
+          reference.format=$(inputs.t2Format)
+          $(inputs.doMapping ? 'do.mapping=' + inputs.doMapping : '')
 
           [chromosomes]
           $(inputs.chrlist ? inputs.chrlist.contents : '')
+
           [chromosomes.length]
           $(inputs.chrlen.contents)
 
           [options]
-          add.chr.as.prefix=$(inputs.addChrAsPrefix ? inputs.addChrAsPrefix.toString().toUpperCase() : 'FALSE')
-          awhole.only=$(inputs.awholeOnly ? inputs.awholeOnly.toString().toUpperCase() : 'FALSE')
-          suppress.evaluated.length.warning=$(inputs.suppressEvaluatedLengthWarning ? inputs.suppressEvaluatedLengthWarning.toString().toUpperCase() : 'FALSE')
-          cut.all.over.length=$(inputs.cutAllOverLength ? inputs.cutAllOverLength.toString().toUpperCase() : 'FALSE')
-          keep.distributions=$(inputs.keepDistributions ? inputs.keepDistributions.toString().toUpperCase() : 'TRUE')
           showTkProgressBar=FALSE
           showProgressBar=FALSE
+          $(inputs.addChrAsPrefix ? 'add.chr.as.prefix=' + inputs.addChrAsPrefix.toString().toUpperCase() : '')
+          $(inputs.awholeOnly ? 'awhole.only=' + inputs.awholeOnly.toString().toUpperCase() : '')
+          $(inputs.suppressEvaluatedLengthWarning ? 'suppress.evaluated.length.warning=' + inputs.suppressEvaluatedLengthWarning.toString().toUpperCase() : '')
+          $(inputs.cutAllOverLength ? 'cut.all.over.length=' + inputs.cutAllOverLength.toString().toUpperCase() : '')
+          $(inputs.keepDistributions ? 'keep.distributions=' + inputs.keepDistributions.toString().toUpperCase() : '')
 
           [tests]
-          ecdf.area.permut.number=$(inputs.ecdfPermNum ? inputs.ecdfPermNum : 10)
-          mean.distance.permut.number=$(inputs.meanPermNum ? inputs.meanPermNum : 10)
-          jaccard.measure.permut.number=$(inputs.jaccardPermNum ? inputs.jaccardPermNum : 10)
-          random.seed=$(inputs.randomSeed ? inputs.randomSeed : 1248312)
+          $(inputs.ecdfPermNum ? 'ecdf.area.permut.number=' + inputs.ecdfPermNum : '')
+          $(inputs.meanPermNum ? 'mean.distance.permut.number=' + inputs.meanPermNum : '')
+          $(inputs.jaccardPermNum ? 'jaccard.measure.permut.number=' + inputs.jaccardPermNum : '')
+          $(inputs.randomSeed ? 'random.seed=' + inputs.randomSeed : '')
 
       - entryname: genometricorr.r
         entry: |-
           y <- gsub("\\\\n", "\n", readLines("conf.ini"))
           cat(y, file="conf.ini", sep="\n")
+          print(paste(readLines("conf.ini")))
           library("GenometriCorr")
           config <- new("GenometriCorrConfig", "conf.ini")
           conf_res <- run.config(config)

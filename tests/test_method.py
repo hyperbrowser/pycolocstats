@@ -37,6 +37,8 @@ class TestMethods(object):
         method.setTrackFileNames([track1.name, track2.name])
         method.setChromLenFileName(chrlen.name)
         method.setManualParam('chrlist', chrlist.name)
+        method.setManualParam('t1Format', 'bed')
+        method.setManualParam('t2Format', 'bed')
         runAllMethodsInSequence([method])
         self._printResultFiles(method, ['stderr', 'stdout'])
 
