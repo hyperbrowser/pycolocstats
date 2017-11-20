@@ -6,8 +6,6 @@ import yaml
 from conglomerate.tools.jobparamsdict import JobParamsDict
 from conglomerate.tools.types import PathStr
 
-GENOMETRICORR_TOOL_NAME = 'genometricorr'
-
 
 class Tool(object):
     _cwlToolFactory = cwltool.factory.Factory()

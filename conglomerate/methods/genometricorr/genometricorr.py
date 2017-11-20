@@ -1,5 +1,5 @@
 from conglomerate.methods.method import Method
-from conglomerate.tools.tool import GENOMETRICORR_TOOL_NAME
+from conglomerate.tools.constants import GENOMETRICORR_TOOL_NAME
 
 
 class GenometriCorr(Method):
