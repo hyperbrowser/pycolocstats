@@ -7,10 +7,8 @@ baseCommand:
 inputs:
   - id: t1
     type: File
-    inputBinding:
   - id: t2
     type: File
-    inputBinding:
   - id: chrlen
     type: File
     inputBinding:
