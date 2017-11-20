@@ -32,9 +32,10 @@ class TestMethods(object):
         self._printResultFiles(method, ['stderr', 'stdout'])
 
     def testGenometriCorr(self):
-        track1, track2, chrlen = self._getSampleFileNames()
+        track1, track2, chrlist, chrlen = self._getSampleFileNames()
         method = GenometriCorr()
         method.setTrackFileNames([track1.name, track2.name])
+        method.setChromListFileName(chrlist.name)
         method.setChromLenFileName(chrlen.name)
         method.setManualParam('t1Format', 'bed')
         method.setManualParam('t2Format', 'bed')
@@ -52,7 +53,7 @@ class TestMethods(object):
                                                 'chr3\t127477031\t127478198\n'
                                                 'chr3\t127478198\t127479365\n'
                                                 'chr3\t127479365\t127480532\n'
-                                                'chr3\t127480532\t127481699')
+                                                'chr3\t127480532\t127481699\n')
         track2 = TestMethods._getSampleFileName('chr1\t213941196\t213942363\n'
                                                 'chr1\t213942363\t213943530\n'
                                                 'chr1\t213943530\t213944697\n'
@@ -61,9 +62,14 @@ class TestMethods(object):
                                                 'chr3\t127477031\t127478198\n'
                                                 'chr3\t127478198\t127479365\n'
                                                 'chr3\t127479365\t127480532\n'
-                                                'chr3\t127480532\t127481699')
-        chrlen = TestMethods._getSampleFileName('Chromosome lengths contents\n')
-        return track1, track2, chrlen
+                                                'chr3\t127480532\t127481699\n')
+        chrlist = TestMethods._getSampleFileName('chr1\n'
+                                                 'chr2\n'
+                                                 'chr3\n')
+        chrlen = TestMethods._getSampleFileName('chr1=249250621\n'
+                                                'chr2=249250621\n'
+                                                'chr3=249250621\n')
+        return track1, track2, chrlist, chrlen
 
     @staticmethod
     def _getSampleFileName(contents):

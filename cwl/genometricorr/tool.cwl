@@ -13,10 +13,16 @@ inputs:
     type: File
     inputBinding:
       position: 1
+  - id: chrlist
+    type: File?
+    inputBinding:
+      loadContents: true
+      position: 2
   - id: chrlen
     type: File
     inputBinding:
-      position: 2
+      loadContents: true
+      position: 3
   - id: t1Format
     type: string
   - id: t2Format
@@ -46,12 +52,10 @@ requirements:
           do.mapping=$(inputs.doMapping.toString().toUpperCase())
 
           [chromosomes]
-          chr1
-          chr2
-          chr3
+          $(inputs.chrlist ? inputs.chrlist.contents : '')
 
           [chromosomes.length]
-          chr1=249250621
+          $(inputs.chrlen.contents)
 
           [options]
           add.chr.as.prefix=FALSE
@@ -70,6 +74,8 @@ requirements:
 
       - entryname: genometricorr.r
         entry: |-
+          y <- gsub("\\\\n", "\n", readLines("conf.ini"))
+          cat(y, file="conf.ini", sep="\n")
           library("GenometriCorr")
           config <- new("GenometriCorrConfig", "conf.ini")
           conf_res <- run.config(config)
