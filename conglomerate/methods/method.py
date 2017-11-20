@@ -39,10 +39,6 @@ class Method(object):
         pass
 
     @abstractmethod
-    def setChromListFileName(self, chromListFile):
-        pass
-
-    @abstractmethod
     def setChromLenFileName(self, chromLenFile):
         pass
 

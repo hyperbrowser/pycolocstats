@@ -14,9 +14,6 @@ class GenometriCorr(Method):
         self._params['t1'] = trackFnList[0]
         self._params['t2'] = trackFnList[1]
 
-    def setChromListFileName(self, chromListFileName):
-        self._params['chrlist'] = chromListFileName
-
     def setChromLenFileName(self, chromLenFileName):
         self._params['chrlen'] = chromLenFileName
 
