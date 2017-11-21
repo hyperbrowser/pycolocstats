@@ -15,7 +15,7 @@ class Stereogene(Method):
         self._params['t2'] = trackFnList[1]
 
     def setChromLenFileName(self, chromLenFileName):
-        self._params['chrlen'] = chromLenFileName
+        self._params['chrom'] = chromLenFileName
 
     def setAllowOverlaps(self, allowOverlaps):
         assert allowOverlaps is True

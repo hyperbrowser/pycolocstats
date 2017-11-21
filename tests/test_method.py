@@ -26,6 +26,8 @@ class TestMethods(object):
         method = Stereogene()
         method.setTrackFileNames([track1, track2])
         method.setChromLenFileName(chrlen)
+        method.setManualParam('v', True)
+        method.setManualParam('silent', 0)
         runAllMethodsInSequence([method])
         self._printResultFiles(method, ['stderr', 'stdout'])
 
