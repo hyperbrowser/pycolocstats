@@ -1,10 +1,10 @@
 from conglomerate.methods.method import Method
-from conglomerate.tools.constants import STEREOGENE_TOOL_NAME
+from conglomerate.tools.constants import INTERVALSTATS_TOOL_NAME
 
 
-class StereoGene(Method):
+class IntervalStats(Method):
     def _getToolName(self):
-        return STEREOGENE_TOOL_NAME
+        return INTERVALSTATS_TOOL_NAME
 
     def _setDefaultParamValues(self):
         pass
@@ -15,7 +15,13 @@ class StereoGene(Method):
         self._params['t2'] = trackFnList[1]
 
     def setChromLenFileName(self, chromLenFileName):
-        self._params['chrom'] = chromLenFileName
+        self._params['d'] = chromLenFileName
+        # TODO: Add an extra column in between (filled with zeroes), e.g.:
+        # chr1	0	249250621
+        # chr10	0	135534747
+        # chr11	0	135006516
+        # ...
+        # etc
 
     def setAllowOverlaps(self, allowOverlaps):
         assert allowOverlaps is True

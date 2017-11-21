@@ -16,7 +16,7 @@ class GenometriCorr(Method):
 
     def setChromLenFileName(self, chromLenFileName):
         self._params['chrlen'] = chromLenFileName
-        # TODO: Exchange '\t' with '='
+        # TODO: Replace '\t' with '='
 
     def setAllowOverlaps(self, allowOverlaps):
         assert allowOverlaps is True

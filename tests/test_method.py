@@ -3,7 +3,8 @@ from tempfile import NamedTemporaryFile
 import pkg_resources
 
 from conglomerate.methods.genometricorr.genometricorr import GenometriCorr
-from conglomerate.methods.stereogene.stereogene import Stereogene
+from conglomerate.methods.intervalstats.intervalstats import IntervalStats
+from conglomerate.methods.stereogene.stereogene import StereoGene
 from conglomerate.tools.runner import runAllMethodsInSequence
 
 
@@ -21,13 +22,22 @@ class TestMethods(object):
         runAllMethodsInSequence([method])
         self._printResultFiles(method, ['stderr', 'stdout'])
 
-    def testStereogene(self):
+    def testStereoGene(self):
         track1, track2, chrlen = self._getSampleFileNames()
-        method = Stereogene()
+        method = StereoGene()
         method.setTrackFileNames([track1, track2])
         method.setChromLenFileName(chrlen)
         method.setManualParam('v', True)
         method.setManualParam('silent', 0)
+        runAllMethodsInSequence([method])
+        self._printResultFiles(method, ['stderr', 'stdout'])
+
+    def testIntervalStats(self):
+        track1, track2, chrlen = self._getSampleFileNames()
+        method = IntervalStats()
+        method.setTrackFileNames([track1, track2])
+        method.setChromLenFileName(chrlen)
+        method.setManualParam('o', 'output')
         runAllMethodsInSequence([method])
         self._printResultFiles(method, ['stderr', 'stdout'])
 
