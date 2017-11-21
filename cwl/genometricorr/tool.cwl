@@ -18,9 +18,9 @@ inputs:
     inputBinding:
       loadContents: true
   - id: t1Format
-    type: string
+    type: string?
   - id: t2Format
-    type: string
+    type: string?
   - id: doMapping
     type: boolean?
   - id: addChrAsPrefix
@@ -47,7 +47,7 @@ outputs:
     type: stdout
   stderr:
     type: stderr
-    output:
+  output:
     type: Directory
     outputBinding:
       glob: '.'
@@ -63,9 +63,9 @@ requirements:
         entry: |-
           [data]
           query=$(inputs.t1.path)
-          query.format=$(inputs.t1Format)
+          $(inputs.t1Format ? 'query.format=' + inputs.t1Format : '')
           reference=$(inputs.t2.path)
-          reference.format=$(inputs.t2Format)
+          $(inputs.t2Format ? 'reference.format=' + inputs.t2Format : '')
           $(inputs.doMapping ? 'do.mapping=' + inputs.doMapping : '')
 
           [chromosomes]

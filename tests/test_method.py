@@ -1,5 +1,7 @@
 from tempfile import NamedTemporaryFile
 
+import pkg_resources
+
 from conglomerate.methods.genometricorr.genometricorr import GenometriCorr
 from conglomerate.methods.stereogene.stereogene import Stereogene
 from conglomerate.tools.runner import runAllMethodsInSequence
@@ -7,11 +9,10 @@ from conglomerate.tools.runner import runAllMethodsInSequence
 
 class TestMethods(object):
     def testGenometriCorr(self):
-        track1, track2, chrlist, chrlen = self._getSampleFileNames()
+        track1, track2, chrlen = self._getSampleFileNames()
         method = GenometriCorr()
-        method.setTrackFileNames([track1.name, track2.name])
-        method.setChromLenFileName(chrlen.name)
-        method.setManualParam('chrlist', chrlist.name)
+        method.setTrackFileNames([track1, track2])
+        method.setChromLenFileName(chrlen)
         method.setManualParam('t1Format', 'bed')
         method.setManualParam('t2Format', 'bed')
         method.setManualParam('ecdfPermNum', 5)
@@ -21,40 +22,19 @@ class TestMethods(object):
         self._printResultFiles(method, ['stderr', 'stdout'])
 
     def testStereogene(self):
-        track1, track2, chrlist, chrlen = self._getSampleFileNames()
+        track1, track2, chrlen = self._getSampleFileNames()
         method = Stereogene()
-        method.setTrackFileNames([track1.name, track2.name])
-        method.setChromLenFileName(chrlen.name)
+        method.setTrackFileNames([track1, track2])
+        method.setChromLenFileName(chrlen)
         runAllMethodsInSequence([method])
         self._printResultFiles(method, ['stderr', 'stdout'])
 
     @staticmethod
     def _getSampleFileNames():
-        track1 = TestMethods._getSampleFileName('chr1\t213941196\t213942363\n'
-                                                'chr1\t213942363\t213943530\n'
-                                                'chr1\t213943537\t213944697\n'
-                                                'chr2\t158364697\t158365864\n'
-                                                'chr2\t158365864\t158367031\n'
-                                                'chr3\t127477031\t127478198\n'
-                                                'chr3\t127478198\t127479365\n'
-                                                'chr3\t127479365\t127480532\n'
-                                                'chr3\t127480532\t127481699\n')
-        track2 = TestMethods._getSampleFileName('chr1\t213941196\t213942363\n'
-                                                'chr1\t213942363\t213943530\n'
-                                                'chr1\t213943530\t213944697\n'
-                                                'chr2\t158364697\t158365864\n'
-                                                'chr2\t158365864\t158367031\n'
-                                                'chr3\t127477031\t127478198\n'
-                                                'chr3\t127478198\t127479365\n'
-                                                'chr3\t127479365\t127480532\n'
-                                                'chr3\t127480532\t127481699\n')
-        chrlist = TestMethods._getSampleFileName('chr1\n'
-                                                 'chr2\n'
-                                                 'chr3\n')
-        chrlen = TestMethods._getSampleFileName('chr1\t249250621\n'
-                                                'chr2\t249250621\n'
-                                                'chr3\t249250621\n')
-        return track1, track2, chrlist, chrlen
+        track1 = pkg_resources.resource_filename('tests.resources', 'H3K4me1_no_overlaps.bed')
+        track2 = pkg_resources.resource_filename('tests.resources', 'H3K4me3_no_overlaps.bed')
+        chrlen = pkg_resources.resource_filename('tests.resources', 'chrom_lengths.tabular')
+        return track1, track2, chrlen
 
     @staticmethod
     def _getSampleFileName(contents):
