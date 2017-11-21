@@ -1,5 +1,6 @@
 from tempfile import NamedTemporaryFile
 
+import os
 import pkg_resources
 
 from conglomerate.methods.genometricorr.genometricorr import GenometriCorr
@@ -18,7 +19,7 @@ class TestMethods(object):
         method.setManualParam('meanPermNum', 5)
         method.setManualParam('jaccardPermNum', 5)
         runAllMethodsInSequence([method])
-        self._printResultFiles(method, ['stderr', 'stdout'])
+        self._printResultFiles(method, ['stderr', 'stdout', 'output'])
 
     def testStereoGene(self):
         track1, track2, chrlen = self._getSampleFileNames()
@@ -28,7 +29,7 @@ class TestMethods(object):
         method.setManualParam('v', True)
         method.setManualParam('silent', 0)
         runAllMethodsInSequence([method])
-        self._printResultFiles(method, ['stderr', 'stdout'])
+        self._printResultFiles(method, ['stderr', 'stdout', 'output'])
 
     def testIntervalStats(self):
         track1, track2, chrlen = self._getSampleFileNames()
@@ -37,7 +38,7 @@ class TestMethods(object):
         method.setChromLenFileName(chrlen)
         method.setManualParam('o', 'output')
         runAllMethodsInSequence([method])
-        self._printResultFiles(method, ['stderr', 'stdout'])
+        self._printResultFiles(method, ['stderr', 'stdout', 'output'])
 
     @staticmethod
     def _getSampleFileNames():
@@ -56,4 +57,9 @@ class TestMethods(object):
     @staticmethod
     def _printResultFiles(method, keys):
         for key in keys:
-            print(key, '\n------\n', open(method.getResultFilesDict()[key]).read())
+            print(key)
+            print('------')
+            print('Local path: ' + method.getResultFilesDict()[key])
+            print('------')
+            print('\n'.join(os.listdir(method.getResultFilesDict()[key])) if key == 'output'
+                  else open(method.getResultFilesDict()[key]).read())
