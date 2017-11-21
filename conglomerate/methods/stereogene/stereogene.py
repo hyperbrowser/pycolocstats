@@ -1,10 +1,10 @@
 from conglomerate.methods.method import Method
-from conglomerate.tools.constants import GENOMETRICORR_TOOL_NAME
+from conglomerate.tools.constants import STEREOGENE_TOOL_NAME
 
 
-class GenometriCorr(Method):
+class Stereogene(Method):
     def _getToolName(self):
-        return GENOMETRICORR_TOOL_NAME
+        return STEREOGENE_TOOL_NAME
 
     def _setDefaultParamValues(self):
         pass
@@ -16,7 +16,6 @@ class GenometriCorr(Method):
 
     def setChromLenFileName(self, chromLenFileName):
         self._params['chrlen'] = chromLenFileName
-        # TODO: Exchange '\t' with '='
 
     def setAllowOverlaps(self, allowOverlaps):
         assert allowOverlaps is True

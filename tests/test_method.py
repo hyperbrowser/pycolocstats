@@ -1,6 +1,7 @@
 from tempfile import NamedTemporaryFile
 
 from conglomerate.methods.genometricorr.genometricorr import GenometriCorr
+from conglomerate.methods.stereogene.stereogene import Stereogene
 from conglomerate.tools.runner import runAllMethodsInSequence
 
 
@@ -16,6 +17,14 @@ class TestMethods(object):
         method.setManualParam('ecdfPermNum', 5)
         method.setManualParam('meanPermNum', 5)
         method.setManualParam('jaccardPermNum', 5)
+        runAllMethodsInSequence([method])
+        self._printResultFiles(method, ['stderr', 'stdout'])
+
+    def testStereogene(self):
+        track1, track2, chrlist, chrlen = self._getSampleFileNames()
+        method = Stereogene()
+        method.setTrackFileNames([track1.name, track2.name])
+        method.setChromLenFileName(chrlen.name)
         runAllMethodsInSequence([method])
         self._printResultFiles(method, ['stderr', 'stdout'])
 
@@ -42,14 +51,14 @@ class TestMethods(object):
         chrlist = TestMethods._getSampleFileName('chr1\n'
                                                  'chr2\n'
                                                  'chr3\n')
-        chrlen = TestMethods._getSampleFileName('chr1=249250621\n'
-                                                'chr2=249250621\n'
-                                                'chr3=249250621\n')
+        chrlen = TestMethods._getSampleFileName('chr1\t249250621\n'
+                                                'chr2\t249250621\n'
+                                                'chr3\t249250621\n')
         return track1, track2, chrlist, chrlen
 
     @staticmethod
     def _getSampleFileName(contents):
-        sampleFile = NamedTemporaryFile(mode='w+', dir='/tmp')
+        sampleFile = NamedTemporaryFile(mode='w+', dir='/tmp', suffix='.bed')
         sampleFile.write(contents)
         sampleFile.flush()
         return sampleFile

@@ -67,7 +67,7 @@ requirements:
           $(inputs.chrlist ? inputs.chrlist.contents : '')
 
           [chromosomes.length]
-          $(inputs.chrlen.contents)
+          $(inputs.chrlen.contents.replace(/\t/g, '='))
 
           [options]
           showTkProgressBar=FALSE
@@ -88,7 +88,6 @@ requirements:
         entry: |-
           y <- gsub("\\\\n", "\n", readLines("conf.ini"))
           cat(y, file="conf.ini", sep="\n")
-          print(paste(readLines("conf.ini")))
           library("GenometriCorr")
           config <- new("GenometriCorrConfig", "conf.ini")
           conf_res <- run.config(config)
