@@ -10,7 +10,6 @@ inputs:
     type: File
   - id: t2
     type: File
-    inputBinding:
   - id: chrom
     type: File
     inputBinding:
