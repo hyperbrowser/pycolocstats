@@ -14,8 +14,6 @@ class TestMethods(object):
         method = GenometriCorr()
         method.setTrackFileNames([track1, track2])
         method.setChromLenFileName(chrlen)
-        method.setManualParam('t1Format', 'bed')
-        method.setManualParam('t2Format', 'bed')
         method.setManualParam('ecdfPermNum', 5)
         method.setManualParam('meanPermNum', 5)
         method.setManualParam('jaccardPermNum', 5)
