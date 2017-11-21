@@ -18,6 +18,11 @@ outputs:
     type: stdout
   stderr:
     type: stderr
+  output:
+    type: Directory
+    outputBinding:
+      glob: '.'
+
 label: stereogene
 requirements:
   - class: DockerRequirement

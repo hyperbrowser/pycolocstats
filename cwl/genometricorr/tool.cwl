@@ -47,6 +47,11 @@ outputs:
     type: stdout
   stderr:
     type: stderr
+    output:
+    type: Directory
+    outputBinding:
+      glob: '.'
+
 label: genometricorr
 requirements:
   - class: DockerRequirement
