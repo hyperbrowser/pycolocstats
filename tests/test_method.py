@@ -4,6 +4,7 @@ import os
 import pkg_resources
 
 from conglomerate.methods.genometricorr.genometricorr import GenometriCorr
+from conglomerate.methods.giggle.giggle import Giggle
 from conglomerate.methods.intervalstats.intervalstats import IntervalStats
 from conglomerate.methods.stereogene.stereogene import StereoGene
 from conglomerate.tools.runner import runAllMethodsInSequence
@@ -11,7 +12,7 @@ from conglomerate.tools.runner import runAllMethodsInSequence
 
 class TestMethods(object):
     def testGenometriCorr(self):
-        track1, track2, track3, track4, chrlen = self._getSampleFileNames()
+        track1, track2, track3, track4, chrlen, track5, track6, track7, track8 = self._getSampleFileNames()
         method = GenometriCorr()
         method.setTrackFileNames([track1, track2])
         method.setChromLenFileName(chrlen)
@@ -22,7 +23,7 @@ class TestMethods(object):
         self._printResultFiles(method, ['stderr', 'stdout', 'output'])
 
     def testStereoGene(self):
-        track1, track2, track3, track4, chrlen = self._getSampleFileNames()
+        track1, track2, track3, track4, chrlen, track5, track6, track7, track8 = self._getSampleFileNames()
         method = StereoGene()
         method.setTrackFileNames([track1, track2, track3, track4])
         method.setChromLenFileName(chrlen)
@@ -32,11 +33,22 @@ class TestMethods(object):
         self._printResultFiles(method, ['stderr', 'stdout', 'output'])
 
     def testIntervalStats(self):
-        track1, track2, track3, track4, chrlen = self._getSampleFileNames()
+        track1, track2, track3, track4, chrlen, track5, track6, track7, track8 = self._getSampleFileNames()
         method = IntervalStats()
         method.setTrackFileNames([track1, track2])
         method.setChromLenFileName(chrlen)
         method.setManualParam('o', 'output')
+        runAllMethodsInSequence([method])
+        self._printResultFiles(method, ['stderr', 'stdout', 'output'])
+
+    def testGiggle(self):
+        track1, track2, track3, track4, chrlen, track5, track6, track7, track8 = self._getSampleFileNames()
+        method = Giggle()
+        method.setTrackFileNames([track5, track6, track7, track8])
+        method.setManualParam('index_o', 'index')
+        method.setManualParam('search_i', 'index')
+        method.setManualParam('search_v', True)
+        method.setManualParam('search_l', True)
         runAllMethodsInSequence([method])
         self._printResultFiles(method, ['stderr', 'stdout', 'output'])
 
@@ -47,7 +59,11 @@ class TestMethods(object):
         track3 = pkg_resources.resource_filename('tests.resources', 'H3K4me3_with_overlaps.bed')
         track4 = pkg_resources.resource_filename('tests.resources', 'H3K4me3_with_overlaps.bed')
         chrlen = pkg_resources.resource_filename('tests.resources', 'chrom_lengths.tabular')
-        return track1, track2, track3, track4, chrlen
+        track5 = pkg_resources.resource_filename('tests.resources', 'H3K4me1_no_overlaps.bed.gz')
+        track6 = pkg_resources.resource_filename('tests.resources', 'H3K4me3_no_overlaps.bed.gz')
+        track7 = pkg_resources.resource_filename('tests.resources', 'H3K4me3_with_overlaps.bed.gz')
+        track8 = pkg_resources.resource_filename('tests.resources', 'H3K4me3_with_overlaps.bed.gz')
+        return track1, track2, track3, track4, chrlen, track5, track6, track7, track8
 
     @staticmethod
     def _getSampleFileName(contents):
