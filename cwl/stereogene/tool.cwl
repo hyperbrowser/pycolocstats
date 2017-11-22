@@ -6,10 +6,12 @@ baseCommand:
   - entrypoint.sh
 
 inputs:
-  - id: t1
-    type: File
-  - id: t2
-    type: File
+  - id: tracks
+    type:
+      type: array
+      items: File
+    inputBinding:
+      position: 0
   - id: chrom
     type: File
     inputBinding:
@@ -186,6 +188,18 @@ requirements:
     listing:
       - entryname: entrypoint.sh
         entry: |-
-          cp $(inputs.t1.path) .
-          cp $(inputs.t2.path) .
-          /root/stereogene/src/StereoGene "$@" $(inputs.t1.basename) $(inputs.t2.basename)
+          cp $(inputs.chrom.path) .
+          cp ${
+            var files = '';
+            for (var i = 0; i < inputs.tracks.length; i++) {
+              files += inputs.tracks[i].path + ' ';
+            }
+            return files;
+          } .
+          /root/stereogene/src/StereoGene -chrom $(inputs.chrom.basename) \$(echo "$@" | sed 's@/private[^ ]*@@g' | sed 's@-chrom[^ ]*@@g') ${
+            var files = '';
+            for (var i = 0; i < inputs.tracks.length; i++) {
+              files += inputs.tracks[i].basename + ' ';
+            }
+            return files;
+          }
