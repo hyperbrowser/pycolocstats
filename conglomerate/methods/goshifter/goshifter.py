@@ -30,3 +30,16 @@ class GoShifter(Method):
 
     def getFullResults(self):
         pass
+
+
+    def preserveClumping(self, preserve):
+        pass
+
+    def setRestrictedAnalysisUniverse(self, restrictedAnalysisUniverse):
+        pass
+
+    def setColocMeasure(self, colocMeasure):
+        pass
+
+    def setHeterogeneityPreservation(self, preservationScheme, fn=None):
+        pass
