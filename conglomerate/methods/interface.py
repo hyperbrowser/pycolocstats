@@ -5,16 +5,16 @@ class ColocMeasure:
     pass
 
 
-class ColocMeasureOverlap:
+class ColocMeasureOverlap(ColocMeasure):
     #@takes("ColocMeasureOverlap", bool, bool)
     def __init__(self, includeFlanks, countWholeIntervals):
         self._includeFlanks = includeFlanks
         self._countWholeIntervals = countWholeIntervals
 
-class ColocMeasureProximity(ColocMeasureOverlap):
+class ColocMeasureProximity(ColocMeasure):
     pass
 
-class ColocMeasureCorrelation(ColocMeasureOverlap):
+class ColocMeasureCorrelation(ColocMeasure):
     pass
 
 class RestrictedAnalysisUniverse:
