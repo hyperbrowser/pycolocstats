@@ -11,7 +11,8 @@ class Giggle(Method):
 
     def setTrackFileNames(self, trackFnList):
         assert len(trackFnList) == 2
-        pass
+        self._params['search_q'] = trackFnList[0]
+        self._params['index_i'] = [trackFnList[1]]
 
     def setChromLenFileName(self, chromLenFileName):
         pass

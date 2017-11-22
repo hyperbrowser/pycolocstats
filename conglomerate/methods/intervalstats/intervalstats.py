@@ -11,8 +11,8 @@ class IntervalStats(Method):
 
     def setTrackFileNames(self, trackFnList):
         assert len(trackFnList) == 2
-        self._params['t1'] = trackFnList[0]
-        self._params['t2'] = trackFnList[1]
+        self._params['q'] = trackFnList[0]
+        self._params['r'] = trackFnList[1]
 
     def setChromLenFileName(self, chromLenFileName):
         self._params['d'] = chromLenFileName

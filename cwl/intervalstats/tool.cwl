@@ -5,11 +5,11 @@ baseCommand:
   - IntervalStats
 
 inputs:
-  - id: t1
+  - id: q
     type: File
     inputBinding:
       prefix: -q
-  - id: t2
+  - id: r
     type: File
     inputBinding:
       prefix: -r

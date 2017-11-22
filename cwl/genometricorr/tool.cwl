@@ -5,15 +5,15 @@ baseCommand:
   - Rscript
   - genometricorr.r
 inputs:
-  - id: t1
+  - id: query
     type: File
-  - id: t2
+  - id: reference
     type: File
-  - id: chrlen
+  - id: chromosomes_length
     type: File
     inputBinding:
       loadContents: true
-  - id: chrlist
+  - id: chromosomes
     type: File?
     inputBinding:
       loadContents: true
@@ -62,17 +62,17 @@ requirements:
       - entryname: conf.ini
         entry: |-
           [data]
-          query=$(inputs.t1.path)
+          query=$(inputs.query.path)
           $(inputs.t1Format ? 'query.format=' + inputs.t1Format : '')
-          reference=$(inputs.t2.path)
+          reference=$(inputs.reference.path)
           $(inputs.t2Format ? 'reference.format=' + inputs.t2Format : '')
           $(inputs.doMapping ? 'do.mapping=' + inputs.doMapping : '')
 
           [chromosomes]
-          $(inputs.chrlist ? inputs.chrlist.contents : '')
+          $(inputs.chromosomes ? inputs.chromosomes.contents : '')
 
           [chromosomes.length]
-          $(inputs.chrlen.contents.replace(/\t/g, '='))
+          $(inputs.chromosomes_length.contents.replace(/\t/g, '='))
 
           [options]
           showTkProgressBar=FALSE

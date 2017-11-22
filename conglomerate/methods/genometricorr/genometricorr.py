@@ -11,11 +11,11 @@ class GenometriCorr(Method):
 
     def setTrackFileNames(self, trackFnList):
         assert len(trackFnList) == 2
-        self._params['t1'] = trackFnList[0]
-        self._params['t2'] = trackFnList[1]
+        self._params['query'] = trackFnList[0]
+        self._params['reference'] = trackFnList[1]
 
     def setChromLenFileName(self, chromLenFileName):
-        self._params['chrlen'] = chromLenFileName
+        self._params['chromosomes_length'] = chromLenFileName
         # TODO: Replace '\t' with '='
 
     def setAllowOverlaps(self, allowOverlaps):
