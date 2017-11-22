@@ -10,9 +10,7 @@ class StereoGene(Method):
         pass
 
     def setTrackFileNames(self, trackFnList):
-        assert len(trackFnList) == 2
-        self._params['t1'] = trackFnList[0]
-        self._params['t2'] = trackFnList[1]
+        self._params['tracks'] = trackFnList
 
     def setChromLenFileName(self, chromLenFileName):
         self._params['chrom'] = chromLenFileName

@@ -1,6 +1,6 @@
 import os
 
-from conglomerate.tools.types import PathStr
+from conglomerate.tools.types import PathStr, PathStrList
 
 
 class JobParamsDict(dict):
@@ -9,19 +9,22 @@ class JobParamsDict(dict):
         self._paramDefDict = paramDefDict
 
     def __setitem__(self, key, val):
-        assert key in self.getAllowedKeys(), \
-            '"{}" not in allowed keys: {}'.format(key, ', '.join(self.getAllowedKeys()))
+        assert key in self.getAllowedKeys(), '"{}" not in allowed keys: {}'.format(key,
+                                                                                   ', '.join(self.getAllowedKeys()))
 
         allowedType = self.getType(key)
         if allowedType == PathStr:
-            assert isinstance(val, str), \
-                '"{}" not of correct type: {}'.format(val, str)
-            assert os.path.exists(val), \
-                'File "{}" does not exist'.format(val)
+            assert isinstance(val, str), '"{}" not of correct type: {}'.format(val, str)
+            assert os.path.exists(val), 'File "{}" does not exist'.format(val)
             val = {'class': 'File', 'location': val}
+        elif allowedType == PathStrList:
+            assert isinstance(val, list), '"{}" not of correct type: {}'.format(val, list)
+            assert all(isinstance(f, str) for f in val), 'Some of {} entries are not of correct type: {}'.format(val,
+                                                                                                                 str)
+            assert all(os.path.exists(f) for f in val), 'Some of "{}" does not exist'.format(val)
+            val = [{'class': 'File', 'location': f} for f in val]
         else:
-            assert isinstance(val, allowedType), \
-                '"{}" not of correct type: {}'.format(val, allowedType)
+            assert isinstance(val, allowedType), '"{}" not of correct type: {}'.format(val, allowedType)
         super(JobParamsDict, self).__setitem__(key, val)
 
     def getAllowedKeys(self):

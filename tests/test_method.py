@@ -11,7 +11,7 @@ from conglomerate.tools.runner import runAllMethodsInSequence
 
 class TestMethods(object):
     def testGenometriCorr(self):
-        track1, track2, chrlen = self._getSampleFileNames()
+        track1, track2, track3, track4, chrlen = self._getSampleFileNames()
         method = GenometriCorr()
         method.setTrackFileNames([track1, track2])
         method.setChromLenFileName(chrlen)
@@ -22,9 +22,9 @@ class TestMethods(object):
         self._printResultFiles(method, ['stderr', 'stdout', 'output'])
 
     def testStereoGene(self):
-        track1, track2, chrlen = self._getSampleFileNames()
+        track1, track2, track3, track4, chrlen = self._getSampleFileNames()
         method = StereoGene()
-        method.setTrackFileNames([track1, track2])
+        method.setTrackFileNames([track1, track2, track3, track4])
         method.setChromLenFileName(chrlen)
         method.setManualParam('v', True)
         method.setManualParam('silent', 0)
@@ -32,7 +32,7 @@ class TestMethods(object):
         self._printResultFiles(method, ['stderr', 'stdout', 'output'])
 
     def testIntervalStats(self):
-        track1, track2, chrlen = self._getSampleFileNames()
+        track1, track2, track3, track4, chrlen = self._getSampleFileNames()
         method = IntervalStats()
         method.setTrackFileNames([track1, track2])
         method.setChromLenFileName(chrlen)
@@ -44,8 +44,10 @@ class TestMethods(object):
     def _getSampleFileNames():
         track1 = pkg_resources.resource_filename('tests.resources', 'H3K4me1_no_overlaps.bed')
         track2 = pkg_resources.resource_filename('tests.resources', 'H3K4me3_no_overlaps.bed')
+        track3 = pkg_resources.resource_filename('tests.resources', 'H3K4me3_with_overlaps.bed')
+        track4 = pkg_resources.resource_filename('tests.resources', 'H3K4me3_with_overlaps.bed')
         chrlen = pkg_resources.resource_filename('tests.resources', 'chrom_lengths.tabular')
-        return track1, track2, chrlen
+        return track1, track2, track3, track4, chrlen
 
     @staticmethod
     def _getSampleFileName(contents):

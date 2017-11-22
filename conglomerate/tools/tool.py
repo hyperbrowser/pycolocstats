@@ -4,7 +4,7 @@ import pkg_resources
 import yaml
 
 from conglomerate.tools.jobparamsdict import JobParamsDict
-from conglomerate.tools.types import PathStr
+from conglomerate.tools.types import PathStr, PathStrList
 
 
 class Tool(object):
@@ -43,6 +43,8 @@ class Tool(object):
 
     @staticmethod
     def getPythonType(cwlType):
+        if isinstance(cwlType, dict):
+            return PathStrList
         typeStr = cwlType[:-1] if cwlType.endswith('?') else cwlType
         return {
             'int': int,
@@ -54,4 +56,4 @@ class Tool(object):
 
     @staticmethod
     def isMandatoryParameter(cwlType):
-        return not cwlType.endswith('?')
+        return True if isinstance(cwlType, dict) else not cwlType.endswith('?')
