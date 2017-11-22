@@ -1,5 +1,3 @@
-sudo: required
-
 language: python
 
 python:
@@ -15,7 +13,7 @@ before_install:
   - ./push.sh
 
 install:
-  - sudo pip install -r requirements.txt
+  - pip install -r requirements.txt
 
 script:
-  - sudo pytest
+  - pytest
