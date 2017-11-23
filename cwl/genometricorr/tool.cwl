@@ -4,6 +4,7 @@ id: genometricorr
 baseCommand:
   - Rscript
   - genometricorr.r
+
 inputs:
   - id: query
     type: File
