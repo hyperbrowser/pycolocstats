@@ -5,6 +5,7 @@ import pkg_resources
 
 from conglomerate.methods.genometricorr.genometricorr import GenometriCorr
 from conglomerate.methods.giggle.giggle import Giggle
+from conglomerate.methods.interface import RestrictedThroughInclusion
 from conglomerate.methods.intervalstats.intervalstats import IntervalStats
 from conglomerate.methods.lola.lola import LOLA
 from conglomerate.methods.stereogene.stereogene import StereoGene
@@ -56,10 +57,16 @@ class TestMethods(object):
     def testLOLA(self):
         track1, track2, track3, track4, chrlen, track5, track6, track7, track8, track9 = self._getSampleFileNames()
         method = LOLA()
+        # method.setQueryTrackFileNames([track9])
+        # method.setReferenceTrackFileNames([track3,track4])
+        # method.setRestrictedAnalysisUniverse(RestrictedThroughInclusion(track1))
+        # method.preserveClumping(False)
         method.setManualParam('userset', track9)
         method.setManualParam('useruniverse', track1)
         method.setManualParam('regiondb', [track3, track4])
         runAllMethodsInSequence([method])
+        print('TEMP1: ', (method.getPValue()))
+        print('TEMP2: ', (method.getTestStatistic()))
         self._printResultFiles(method, ['stderr', 'stdout', 'output'])
 
     @staticmethod

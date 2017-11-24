@@ -1,11 +1,13 @@
 from abc import ABCMeta, abstractmethod
+from conglomerate.methods.typecheck import takes, one_of
 
 
 class ColocMeasure:
     __metaclass__ = ABCMeta
 
+
 class ColocMeasureOverlap(ColocMeasure):
-    #@takes("ColocMeasureOverlap", bool, bool, int, int)
+    @takes("ColocMeasureOverlap", bool, bool, int, int)
     def __init__(self, includeFlanks, countWholeIntervals, flankSizeUpstream, flankSizeDownstream):
         self._includeFlanks = includeFlanks
         self._countWholeIntervals = countWholeIntervals
@@ -13,13 +15,13 @@ class ColocMeasureOverlap(ColocMeasure):
         self._flankSizeDownstream = flankSizeDownstream
 
 class ColocMeasureProximity(ColocMeasure):
-    # @takes("ColocMeasureProximity", one_of('start','midpoint','end','closest'), bool)
+    @takes("ColocMeasureProximity", one_of('start','midpoint','end','closest'), bool)
     def __init__(self, proximityAnchor, isGeometricDistance):
         self._proximityAnchor = proximityAnchor
         self._isGeometricDistance = isGeometricDistance
 
 class ColocMeasureCorrelation(ColocMeasure):
-    # @takes("ColocMeasureCorrelation", one_of('genome-wide', 'fine-scale', 'local'))
+    @takes("ColocMeasureCorrelation", one_of('genome-wide', 'fine-scale', 'local'))
     def __init__(self, typeOfCorrelation):
         self._typeOfCorrelation = typeOfCorrelation
 
@@ -29,7 +31,7 @@ class RestrictedAnalysisUniverse:
 
 class RestrictedThroughInclusion(RestrictedAnalysisUniverse):
     def __init__(self, path):
-        pass
+        self.path = path
 
 class RestrictedThroughExclusion(RestrictedAnalysisUniverse):
     def __init__(self, path):
@@ -93,12 +95,13 @@ class UniformInterface(object):
         pass
 
     @abstractmethod
-    #@takes("UniformInterface", ColocMeasure)
+    @takes("UniformInterface", ColocMeasure)
     def setColocMeasure(self, colocMeasure):
         pass
 
-    #@takes("UniformInterface", any(None,RestrictedAnalysisUniverse))
+
     @abstractmethod
+    #@takes("UniformInterface", any([None, RestrictedAnalysisUniverse]))
     def setRestrictedAnalysisUniverse(self, restrictedAnalysisUniverse):
         pass
 
@@ -115,7 +118,7 @@ class UniformInterface(object):
     PRESERVE_HETEROGENEITY_WITHIN_SUPPLIED_REGIONS = '...'
 
     @abstractmethod
-    # @takes("UniformInterface", bool)
+    @takes("UniformInterface", bool)
     def preserveClumping(self, preserve):
         pass
 
