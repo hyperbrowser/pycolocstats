@@ -2,34 +2,56 @@ from abc import ABCMeta, abstractmethod
 
 
 class ColocMeasure:
-    pass
-
+    __metaclass__ = ABCMeta
 
 class ColocMeasureOverlap(ColocMeasure):
-    #@takes("ColocMeasureOverlap", bool, bool)
-    def __init__(self, includeFlanks, countWholeIntervals):
+    #@takes("ColocMeasureOverlap", bool, bool, int, int)
+    def __init__(self, includeFlanks, countWholeIntervals, flankSizeUpstream, flankSizeDownstream):
         self._includeFlanks = includeFlanks
         self._countWholeIntervals = countWholeIntervals
+        self._flankSizeUpstream = flankSizeUpstream
+        self._flankSizeDownstream = flankSizeDownstream
 
 class ColocMeasureProximity(ColocMeasure):
-    pass
+    # @takes("ColocMeasureProximity", one_of('start','midpoint','end','closest'), bool)
+    def __init__(self, proximityAnchor, isGeometricDistance):
+        self._proximityAnchor = proximityAnchor
+        self._isGeometricDistance = isGeometricDistance
 
 class ColocMeasureCorrelation(ColocMeasure):
-    pass
+    # @takes("ColocMeasureCorrelation", one_of('genome-wide', 'fine-scale', 'local'))
+    def __init__(self, typeOfCorrelation):
+        self._typeOfCorrelation = typeOfCorrelation
+
 
 class RestrictedAnalysisUniverse:
-    pass
+    __metaclass__ = ABCMeta
 
 class RestrictedThroughInclusion(RestrictedAnalysisUniverse):
     def __init__(self, path):
         pass
 
 class RestrictedThroughExclusion(RestrictedAnalysisUniverse):
-    pass
+    def __init__(self, path):
+        pass
 
 class RestrictedThroughPreDefined(RestrictedAnalysisUniverse):
-    pass
+    def __init__(self, path):
+        pass
 
+class ConfounderHandlerSpec():
+    __metaclass__ = ABCMeta
+
+class ConfounderHandlerPoisson(ConfounderHandlerSpec):
+    def __init__(self,intensityFn):
+        pass
+
+class ConfounderHandlerPartialCorrelation(ConfounderHandlerSpec):
+    def __init__(self,confounderFn):
+        pass
+
+class ConfounderHandlerStratifiedSampling(ConfounderHandlerSpec):
+    pass
 
 class UniformInterface(object):
     __metaclass__ = ABCMeta
