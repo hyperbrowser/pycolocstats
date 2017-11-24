@@ -9,6 +9,14 @@ class GoShifter(Method):
     def _setDefaultParamValues(self):
         pass
 
+    def setQueryTrackFileNames(self, trackFnList):
+        "For pairwise analysis or one-against-many analysis, this would be a list of one filename"
+        pass
+
+    def setReferenceTrackFileNames(self, trackFnList):
+        "For pairwise analysis, this would be a list of one filename"
+        pass
+
     def setTrackFileNames(self, trackFnList):
         assert len(trackFnList) == 2
         pass

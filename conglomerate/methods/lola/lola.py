@@ -1,5 +1,6 @@
 from conglomerate.methods.method import Method
 from conglomerate.tools.constants import LOLA_TOOL_NAME
+import pandas as pd
 
 
 class LOLA(Method):
@@ -9,9 +10,16 @@ class LOLA(Method):
     def _setDefaultParamValues(self):
         pass
 
-    def setTrackFileNames(self, trackFnList):
-        assert len(trackFnList) == 2
+    def setQueryTrackFileNames(self, trackFnList):
+        "For pairwise analysis or one-against-many analysis, this would be a list of one filename"
+        assert len(trackFnList) == 1
         pass
+
+    def setReferenceTrackFileNames(self, trackFnList):
+        "For pairwise analysis, this would be a list of one filename"
+        assert len(trackFnList) == 1
+        pass
+
 
     def setChromLenFileName(self, chromLenFileName):
         pass
@@ -20,7 +28,7 @@ class LOLA(Method):
         assert allowOverlaps is True
 
     def _parseResultFiles(self):
-        pass
+
 
     def getPValue(self):
         pass

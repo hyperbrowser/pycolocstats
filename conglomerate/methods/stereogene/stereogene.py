@@ -9,8 +9,13 @@ class StereoGene(Method):
     def _setDefaultParamValues(self):
         pass
 
-    def setTrackFileNames(self, trackFnList):
-        self._params['tracks'] = trackFnList
+    def setQueryTrackFileNames(self, trackFnList):
+        "For pairwise analysis or one-against-many analysis, this would be a list of one filename"
+        pass
+
+    def setReferenceTrackFileNames(self, trackFnList):
+        "For pairwise analysis, this would be a list of one filename"
+        pass
 
     def setChromLenFileName(self, chromLenFileName):
         self._params['chrom'] = chromLenFileName

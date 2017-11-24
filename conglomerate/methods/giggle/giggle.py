@@ -9,9 +9,13 @@ class Giggle(Method):
     def _setDefaultParamValues(self):
         pass
 
-    def setTrackFileNames(self, trackFnList):
+    def setQueryTrackFileNames(self, trackFnList):
+        "For pairwise analysis or one-against-many analysis, this would be a list of one filename"
         self._params['search_q'] = trackFnList[0]
-        self._params['index_i'] = [trackFnList[1], trackFnList[2], trackFnList[3]]
+
+    def setReferenceTrackFileNames(self, trackFnList):
+        "For pairwise analysis, this would be a list of one filename"
+        self._params['index_i'] = [trackFnList[0], trackFnList[1], trackFnList[2]]
 
     def setChromLenFileName(self, chromLenFileName):
         pass

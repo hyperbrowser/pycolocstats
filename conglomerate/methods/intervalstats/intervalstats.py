@@ -9,10 +9,16 @@ class IntervalStats(Method):
     def _setDefaultParamValues(self):
         pass
 
-    def setTrackFileNames(self, trackFnList):
-        assert len(trackFnList) == 2
+    def setQueryTrackFileNames(self, trackFnList):
+        "For pairwise analysis or one-against-many analysis, this would be a list of one filename"
+        assert len(trackFnList) == 1
         self._params['q'] = trackFnList[0]
-        self._params['r'] = trackFnList[1]
+
+    def setReferenceTrackFileNames(self, trackFnList):
+        "For pairwise analysis, this would be a list of one filename"
+        assert len(trackFnList) == 1
+        self._params['r'] = trackFnList[0]
+
 
     def setChromLenFileName(self, chromLenFileName):
         self._params['d'] = chromLenFileName

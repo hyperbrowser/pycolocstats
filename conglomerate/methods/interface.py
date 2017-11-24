@@ -75,7 +75,13 @@ class UniformInterface(object):
         pass
 
     @abstractmethod
-    def setTrackFileNames(self, trackFileList):
+    def setQueryTrackFileNames(self, trackFileList):
+        "For pairwise analysis or one-against-many analysis, this would be a list of one filename"
+        pass
+
+    @abstractmethod
+    def setReferenceTrackFileNames(self, trackFileList):
+        "For pairwise analysis, this would be a list of one filename"
         pass
 
     @abstractmethod
