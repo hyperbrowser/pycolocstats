@@ -69,8 +69,9 @@ class TestMethods(object):
         # method.setManualParam('useruniverse', track1)
         # method.setManualParam('regiondb', [track3, track4])
         runAllMethodsInSequence([method])
-        print('TEMP1: ', (method.getPValue()))
-        print('TEMP2: ', (method.getTestStatistic()))
+        # commenting this out, because this breaks tests:
+        # print('TEMP1: ', (method.getPValue()))
+        # print('TEMP2: ', (method.getTestStatistic()))
         self._printResultFiles(method, ['stderr', 'stdout', 'output'])
 
     @staticmethod
