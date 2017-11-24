@@ -12,8 +12,9 @@ inputs:
     type: File
   - id: regiondb
     type:
-      type: array
-      items: File
+      - "null"
+      - type: array
+        items: File
   - id: minOverlap
     type: int?
   - id: cores
