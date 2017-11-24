@@ -29,37 +29,43 @@ class LOLA(Method):
         assert allowOverlaps is True
 
     def _parseResultFiles(self):
-        #TEMP while missing pandas which chakri really forced to install
-        self._pvals = {}
-        self._testStats = {}
-        return
-
-        import pandas as pd
         resultsFolderPath = self._resultFilesDict['output']
         mainOutput = resultsFolderPath + '/lolaResults/allEnrichments.tsv'
-        resultTable = pd.read_table(mainOutput)
+        # resultTable = pd.read_table(mainOutput)
+        fullTable= [line.split() for line in open(mainOutput)]
+        header = fullTable[0]
+        resultTable = fullTable[1:]
 
         refFns = self._params['regiondb']
         queryFn = self._params['userset']
-        refFileIndices = resultTable["dbSet"]
+        # refFileIndices = resultTable["dbSet"]
+        assert header[1] == 'dbSet'
+        refFileIndices = [int(row[1]) for row in resultTable]
 
         #Extract pvals
-        logPvals = resultTable["pValueLog"]
-        pvals = [math.pow(10, float(lp)) for lp in logPvals]
-        indicesAndPvalues = zip([refFileIndices, pvals])
+        # logPvals = resultTable["pValueLog"]
+        assert header[3] == "pValueLog"
+        logPvals = [float(row[3]) for row in resultTable]
+
+        #NB assuming that LOLA provides minus log10 values..
+        pvals = [math.pow(10, -lp) for lp in logPvals]
+        indicesAndPvalues = zip(refFileIndices, pvals)
         self._pvals = {}
         for index,pval in indicesAndPvalues:
-            self._pvals[(queryFn, refFns[index])] = pval
+            self._pvals[(queryFn['location'], refFns[index-1]['location'])] = pval
 
         #Extract test statistic
-        testStat = resultTable["logOddsRatio"]
-        indicesAndTestStat = zip([refFileIndices, testStat])
+        # testStat = resultTable["logOddsRatio"]
+        assert header[4] == "logOddsRatio"
+        testStat = [float(row[4]) for row in resultTable]
+
+        indicesAndTestStat = zip(refFileIndices, testStat)
         self._testStats = {}
         for index, ts in indicesAndTestStat:
-            self._testStats[(queryFn, refFns[index])] = '%.2f'%testStat + ' (logOddsRatio)'
+            self._testStats[(queryFn['location'], refFns[index-1]['location'])] = '%.2f'%ts + ' (logOddsRatio)'
 
     def getPValue(self):
-        return self._pval
+        return self._pvals
 
     def getTestStatistic(self):
         return self._testStats
