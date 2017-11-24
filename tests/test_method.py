@@ -16,7 +16,8 @@ class TestMethods(object):
     def testGenometriCorr(self):
         track1, track2, track3, track4, chrlen, track5, track6, track7, track8, track9 = self._getSampleFileNames()
         method = GenometriCorr()
-        method.setTrackFileNames([track1, track2])
+        method.setQueryTrackFileNames([track1])
+        method.setReferenceTrackFileNames([track2])
         method.setChromLenFileName(chrlen)
         method.setManualParam('ecdfPermNum', 5)
         method.setManualParam('meanPermNum', 5)
@@ -27,7 +28,8 @@ class TestMethods(object):
     def testStereoGene(self):
         track1, track2, track3, track4, chrlen, track5, track6, track7, track8, track9 = self._getSampleFileNames()
         method = StereoGene()
-        method.setTrackFileNames([track1, track2, track3, track4])
+        method.setQueryTrackFileNames([track1])
+        method.setReferenceTrackFileNames([track2,track3,track4])
         method.setChromLenFileName(chrlen)
         method.setManualParam('v', True)
         method.setManualParam('silent', 0)
@@ -37,7 +39,8 @@ class TestMethods(object):
     def testIntervalStats(self):
         track1, track2, track3, track4, chrlen, track5, track6, track7, track8, track9 = self._getSampleFileNames()
         method = IntervalStats()
-        method.setTrackFileNames([track1, track2])
+        method.setQueryTrackFileNames([track1])
+        method.setReferenceTrackFileNames([track2])
         method.setChromLenFileName(chrlen)
         method.setManualParam('o', 'output')
         runAllMethodsInSequence([method])
@@ -46,7 +49,8 @@ class TestMethods(object):
     def testGiggle(self):
         track1, track2, track3, track4, chrlen, track5, track6, track7, track8, track9 = self._getSampleFileNames()
         method = Giggle()
-        method.setTrackFileNames([track5, track6, track7, track8])
+        method.setQueryTrackFileNames([track5])
+        method.setReferenceTrackFileNames([track6,track7,track8])
         method.setManualParam('index_o', 'index')
         method.setManualParam('search_i', 'index')
         method.setManualParam('search_v', True)
@@ -65,8 +69,9 @@ class TestMethods(object):
         # method.setManualParam('useruniverse', track1)
         # method.setManualParam('regiondb', [track3, track4])
         runAllMethodsInSequence([method])
-        print('TEMP1: ', (method.getPValue()))
-        print('TEMP2: ', (method.getTestStatistic()))
+        # commenting this out, because this breaks tests:
+        # print('TEMP1: ', (method.getPValue()))
+        # print('TEMP2: ', (method.getTestStatistic()))
         self._printResultFiles(method, ['stderr', 'stdout', 'output'])
 
     @staticmethod

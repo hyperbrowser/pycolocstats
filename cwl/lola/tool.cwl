@@ -12,8 +12,18 @@ inputs:
     type: File
   - id: regiondb
     type:
-      type: array
-      items: File
+      - "null"
+      - type: array
+        items: File
+  - id: minOverlap
+    type: int?
+  - id: cores
+    type: int?
+  - id: redefineUserSets
+    type: boolean?
+  - id: fast
+    type: boolean?
+
 outputs:
   stdout:
     type: stdout
@@ -53,7 +63,13 @@ requirements:
           userset = GRanges(regionset_1)
           regionset_2 = readBed('$(inputs.useruniverse.basename)')
           useruniverse = GRanges(regionset_2)
+          # use this for loading LOLACore_170206 collection:
+          # regionDB = loadRegionDB('/home/biodocker/LOLACore_170206/scratch/ns5bc')
           regionDB = loadRegionDB('regiondb')
-          locResults = runLOLA(userset, useruniverse, regionDB, cores=4)
+          locResults = runLOLA(userset, useruniverse, regionDB, minOverlap = $(inputs.minOverlap ? inputs.minOverlap : 1), cores = $(inputs.cores ? inputs.cores : 1), redefineUserSets = $(inputs.redefineUserSets ? inputs.redefineUserSets.toString().toUpperCase() : 'FALSE'))
           print(locResults)
           writeCombinedEnrichment(locResults, outFolder= "lolaResults", includeSplits=TRUE)
+          con <- file("UniverseAppropriateness.txt")
+          sink(con, append=TRUE)
+          sink(con, append=TRUE, type="message")
+          checkUniverseAppropriateness(userset, useruniverse, cores = cores = $(inputs.cores ? inputs.cores : 1), fast = $(inputs.fast ? inputs.fast.toString().toUpperCase() : 'FALSE'))

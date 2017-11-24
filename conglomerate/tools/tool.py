@@ -43,7 +43,7 @@ class Tool(object):
 
     @staticmethod
     def getPythonType(cwlType):
-        if isinstance(cwlType, dict):
+        if isinstance(cwlType, dict) or isinstance(cwlType, list):
             return PathStrList
         typeStr = cwlType[:-1] if cwlType.endswith('?') else cwlType
         return {
@@ -56,4 +56,7 @@ class Tool(object):
 
     @staticmethod
     def isMandatoryParameter(cwlType):
-        return True if isinstance(cwlType, dict) else not cwlType.endswith('?')
+        if isinstance(cwlType, list):
+            return 'null' not in cwlType
+        else:
+            return True if isinstance(cwlType, dict) else not cwlType.endswith('?')
