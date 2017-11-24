@@ -143,7 +143,7 @@ no_check = False # set this to True to turn all checks off
 ################################################################################
 
 from inspect import getargspec, isfunction, isbuiltin, isclass
-from types import NoneType
+#from types import NoneType
 from re import compile as regex
 
 ################################################################################
@@ -187,7 +187,7 @@ class TypeChecker(Checker):
 
 Checker._registered.append((isclass, TypeChecker))
 
-nothing = NoneType
+nothing = type(None)
 
 ################################################################################
 
@@ -336,7 +336,7 @@ def takes(*args, **kwargs):
         checkers.append(checker)
 
     kwcheckers = {}
-    for kwname, kwarg in kwargs.iteritems():
+    for kwname, kwarg in kwargs.items():
         checker = Checker.create(kwarg)
         if checker is None:
             raise TypeError("@takes decorator got parameter %s of unsupported "
@@ -371,7 +371,7 @@ def takes(*args, **kwargs):
                                                   (method.__name__, i + 1, 
                                                    type_name(arg)))
 
-                for kwname, checker in kwcheckers.iteritems():
+                for kwname, checker in kwcheckers.items():
                     if not checker.check(kwargs.get(kwname, None)):
                         raise InputParameterError("%s() got invalid parameter "
                                                   "%s of type %s" %
