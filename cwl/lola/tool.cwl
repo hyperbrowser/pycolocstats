@@ -43,6 +43,7 @@ requirements:
     listing:
       - entryname: entrypoint.sh
         entry: |-
+          su biodocker
           cp $(inputs.userset.path) .
           cp $(inputs.useruniverse.path) .
           mkdir -p regiondb/collection/regions

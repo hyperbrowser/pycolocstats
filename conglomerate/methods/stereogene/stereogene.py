@@ -63,14 +63,14 @@ class StereoGene(Method):
         pass
 
     def _parseStatisticsFile(self, dirpath):
-        # import xml.etree.ElementTree as et
-        # from os.path import join
-        # tree = et.parse(join(dirpath, 'statistics.xml'))
-        # root = tree.getroot()
-        # runsDict = OrderedDict()
-        # for run in root:
-        #     runsDict[run.attrib['id']] = self._parseRun(run)
-        return {}
+        import xml.etree.ElementTree as et
+        from os.path import join
+        tree = et.parse(join(dirpath, 'statistics.xml'))
+        root = tree.getroot()
+        runsDict = OrderedDict()
+        for run in root:
+            runsDict[run.attrib['id']] = self._parseRun(run)
+        return runsDict
 
     def _parseRun(self, run):
         resDict = OrderedDict()

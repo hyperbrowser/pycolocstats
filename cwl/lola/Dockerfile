@@ -24,3 +24,5 @@ RUN wget http://cloud.databio.org.s3.amazonaws.com/regiondb/LOLACore_170206.tgz 
 mkdir -p /home/biodocker/LOLACore_170206 && \
 tar xf /home/biodocker/LOLACore_170206.tgz -C /home/biodocker/LOLACore_170206 && \
 rm /home/biodocker/LOLACore_170206.tgz
+
+USER root
