@@ -24,3 +24,5 @@ RUN git checkout release
 WORKDIR src
 
 RUN make
+
+USER root
