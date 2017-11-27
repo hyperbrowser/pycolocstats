@@ -17,10 +17,10 @@ WORKDIR /home/biodocker
 
 RUN git clone https://github.com/favorov/stereogene.git
 
-WORKDIR /home/biodocker/stereogene/
+WORKDIR stereogene
 
 RUN git checkout release
 
-WORKDIR /home/biodocker/stereogene/src
+WORKDIR src
 
 RUN make

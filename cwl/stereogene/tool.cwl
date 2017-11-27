@@ -188,6 +188,7 @@ requirements:
     listing:
       - entryname: entrypoint.sh
         entry: |-
+          #!/bin/bash
           cp $(inputs.chrom.path) .
           cp ${
             var files = '';
