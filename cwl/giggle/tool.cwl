@@ -53,13 +53,11 @@ requirements:
     listing:
       - entryname: entrypoint.sh
         entry: |-
-          mkdir -p $(inputs.index_o)
-          /root/giggle/bin/giggle index -o $(inputs.index_o) -i ${
+          /home/biodocker/giggle/bin/giggle index -o $(inputs.index_o) -i ${
             var files = '';
             for (var i = 0; i < inputs.index_i.length; i++) {
               files += inputs.index_i[i].path + ' ';
             }
             return files;
           }
-          mkdir -p $(inputs.search_i)
-          /root/giggle/bin/giggle search -i $(inputs.search_i) -q $(inputs.search_q.path)
+          /home/biodocker/giggle/bin/giggle search -i $(inputs.search_i) -q $(inputs.search_q.path)
