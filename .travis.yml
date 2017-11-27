@@ -18,5 +18,5 @@ install:
 script:
   - pytest
 
-after_success:
+after_script:
   - ls -la -R /tmp

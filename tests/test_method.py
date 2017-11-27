@@ -13,17 +13,17 @@ from conglomerate.tools.runner import runAllMethodsInSequence
 
 
 class TestMethods(object):
-    def testGenometriCorr(self):
-        track1, track2, track3, track4, chrlen, track5, track6, track7, track8, track9 = self._getSampleFileNames()
-        method = GenometriCorr()
-        method.setQueryTrackFileNames([track1])
-        method.setReferenceTrackFileNames([track2])
-        method.setChromLenFileName(chrlen)
-        method.setManualParam('ecdfPermNum', 5)
-        method.setManualParam('meanPermNum', 5)
-        method.setManualParam('jaccardPermNum', 5)
-        runAllMethodsInSequence([method])
-        self._printResultFiles(method, ['stderr', 'stdout', 'output'])
+    # def testGenometriCorr(self):
+    #     track1, track2, track3, track4, chrlen, track5, track6, track7, track8, track9 = self._getSampleFileNames()
+    #     method = GenometriCorr()
+    #     method.setQueryTrackFileNames([track1])
+    #     method.setReferenceTrackFileNames([track2])
+    #     method.setChromLenFileName(chrlen)
+    #     method.setManualParam('ecdfPermNum', 5)
+    #     method.setManualParam('meanPermNum', 5)
+    #     method.setManualParam('jaccardPermNum', 5)
+    #     runAllMethodsInSequence([method])
+    #     self._printResultFiles(method, ['stderr', 'stdout', 'output'])
 
     def testStereoGene(self):
         track1, track2, track3, track4, chrlen, track5, track6, track7, track8, track9 = self._getSampleFileNames()
@@ -37,43 +37,43 @@ class TestMethods(object):
         method._printResults()
         self._printResultFiles(method, ['stderr', 'stdout', 'output'])
 
-    def testIntervalStats(self):
-        track1, track2, track3, track4, chrlen, track5, track6, track7, track8, track9 = self._getSampleFileNames()
-        method = IntervalStats()
-        method.setQueryTrackFileNames([track1])
-        method.setReferenceTrackFileNames([track2])
-        method.setChromLenFileName(chrlen)
-        method.setManualParam('o', 'output')
-        runAllMethodsInSequence([method])
-        self._printResultFiles(method, ['stderr', 'stdout', 'output'])
-
-    def testGiggle(self):
-        track1, track2, track3, track4, chrlen, track5, track6, track7, track8, track9 = self._getSampleFileNames()
-        method = Giggle()
-        method.setQueryTrackFileNames([track5])
-        method.setReferenceTrackFileNames([track6,track7,track8])
-        method.setManualParam('index_o', 'index')
-        method.setManualParam('search_i', 'index')
-        method.setManualParam('search_v', True)
-        method.setManualParam('search_l', True)
-        runAllMethodsInSequence([method])
-        self._printResultFiles(method, ['stderr', 'stdout', 'output'])
-
-    def testLOLA(self):
-        track1, track2, track3, track4, chrlen, track5, track6, track7, track8, track9 = self._getSampleFileNames()
-        method = LOLA()
-        method.setQueryTrackFileNames([track9])
-        method.setReferenceTrackFileNames([track3,track4])
-        method.setRestrictedAnalysisUniverse(RestrictedThroughInclusion(track1))
-        method.preserveClumping(False)
-        # method.setManualParam('userset', track9)
-        # method.setManualParam('useruniverse', track1)
-        # method.setManualParam('regiondb', [track3, track4])
-        runAllMethodsInSequence([method])
-        # commenting this out, because this breaks tests:
-        # print('TEMP1: ', (method.getPValue()))
-        # print('TEMP2: ', (method.getTestStatistic()))
-        self._printResultFiles(method, ['stderr', 'stdout', 'output'])
+    # def testIntervalStats(self):
+    #     track1, track2, track3, track4, chrlen, track5, track6, track7, track8, track9 = self._getSampleFileNames()
+    #     method = IntervalStats()
+    #     method.setQueryTrackFileNames([track1])
+    #     method.setReferenceTrackFileNames([track2])
+    #     method.setChromLenFileName(chrlen)
+    #     method.setManualParam('o', 'output')
+    #     runAllMethodsInSequence([method])
+    #     self._printResultFiles(method, ['stderr', 'stdout', 'output'])
+    #
+    # def testGiggle(self):
+    #     track1, track2, track3, track4, chrlen, track5, track6, track7, track8, track9 = self._getSampleFileNames()
+    #     method = Giggle()
+    #     method.setQueryTrackFileNames([track5])
+    #     method.setReferenceTrackFileNames([track6,track7,track8])
+    #     method.setManualParam('index_o', 'index')
+    #     method.setManualParam('search_i', 'index')
+    #     method.setManualParam('search_v', True)
+    #     method.setManualParam('search_l', True)
+    #     runAllMethodsInSequence([method])
+    #     self._printResultFiles(method, ['stderr', 'stdout', 'output'])
+    #
+    # def testLOLA(self):
+    #     track1, track2, track3, track4, chrlen, track5, track6, track7, track8, track9 = self._getSampleFileNames()
+    #     method = LOLA()
+    #     method.setQueryTrackFileNames([track9])
+    #     method.setReferenceTrackFileNames([track3,track4])
+    #     method.setRestrictedAnalysisUniverse(RestrictedThroughInclusion(track1))
+    #     method.preserveClumping(False)
+    #     # method.setManualParam('userset', track9)
+    #     # method.setManualParam('useruniverse', track1)
+    #     # method.setManualParam('regiondb', [track3, track4])
+    #     runAllMethodsInSequence([method])
+    #     # commenting this out, because this breaks tests:
+    #     # print('TEMP1: ', (method.getPValue()))
+    #     # print('TEMP2: ', (method.getTestStatistic()))
+    #     self._printResultFiles(method, ['stderr', 'stdout', 'output'])
 
     @staticmethod
     def _getSampleFileNames():
