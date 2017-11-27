@@ -19,4 +19,4 @@ script:
   - pytest
 
 after_success:
-  - sudo chown -R $USER .
+  - ls -la -R /tmp
