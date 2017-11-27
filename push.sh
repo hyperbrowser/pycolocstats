@@ -2,8 +2,8 @@
 
 set -e
 
-for d in cwl/*/ ; do
-    IMAGE=${d/cwl/conglomerate}
-    IMAGE=${IMAGE%?};
-    docker push ${IMAGE}:latest
-done
+#for d in cwl/*/ ; do
+#    IMAGE=${d/cwl/conglomerate}
+#    IMAGE=${IMAGE%?};
+#    docker push ${IMAGE}:latest
+#done
