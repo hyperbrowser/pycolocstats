@@ -54,6 +54,7 @@ requirements:
       - entryname: entrypoint.sh
         entry: |-
           su biodocker
+          umask 022
           /home/biodocker/giggle/bin/giggle index -o $(inputs.index_o) -i ${
             var files = '';
             for (var i = 0; i < inputs.index_i.length; i++) {
