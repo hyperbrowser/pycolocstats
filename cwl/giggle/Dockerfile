@@ -13,7 +13,7 @@ WORKDIR /root
 
 RUN git clone https://github.com/ryanlayer/giggle.git
 
-WORKDIR /root/giggle/
+WORKDIR giggle
 
 RUN make
 

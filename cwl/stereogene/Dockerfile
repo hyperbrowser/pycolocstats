@@ -15,10 +15,10 @@ WORKDIR /root
 
 RUN git clone https://github.com/favorov/stereogene.git
 
-WORKDIR /root/stereogene/
+WORKDIR stereogene
 
 RUN git checkout release
 
-WORKDIR /root/stereogene/src
+WORKDIR src
 
 RUN make

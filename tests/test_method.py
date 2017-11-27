@@ -28,12 +28,13 @@ class TestMethods(object):
     def testStereoGene(self):
         track1, track2, track3, track4, chrlen, track5, track6, track7, track8, track9 = self._getSampleFileNames()
         method = StereoGene()
-        method.setQueryTrackFileNames([track1])
-        method.setReferenceTrackFileNames([track2,track3,track4])
+        method.setQueryTrackFileNames([track1,track2,track3,track4])
+        # method.setReferenceTrackFileNames([track2,track3,track4])
         method.setChromLenFileName(chrlen)
         method.setManualParam('v', True)
         method.setManualParam('silent', 0)
         runAllMethodsInSequence([method])
+        method._printResults()
         self._printResultFiles(method, ['stderr', 'stdout', 'output'])
 
     def testIntervalStats(self):

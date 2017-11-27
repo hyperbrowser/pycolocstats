@@ -22,5 +22,3 @@ RUN Rscript -e "source('http://bioconductor.org/biocLite.R')" \
 RUN Rscript -e "install.packages('gplots')" \
 -e "install.packages('RCurl')" \
 -e "install.packages('GenometriCorr', repos='http://genometricorr.sourceforge.net/R/', type='source')"
-
-USER biodocker
