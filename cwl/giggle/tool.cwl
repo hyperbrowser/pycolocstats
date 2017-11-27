@@ -53,8 +53,6 @@ requirements:
     listing:
       - entryname: entrypoint.sh
         entry: |-
-          su biodocker
-          umask 022
           /home/biodocker/giggle/bin/giggle index -o $(inputs.index_o) -i ${
             var files = '';
             for (var i = 0; i < inputs.index_i.length; i++) {
@@ -63,3 +61,4 @@ requirements:
             return files;
           }
           /home/biodocker/giggle/bin/giggle search -i $(inputs.search_i) -q $(inputs.search_q.path)
+          chmod 755 -R $(inputs.index_o) $(inputs.search_i)

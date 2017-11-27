@@ -43,7 +43,6 @@ requirements:
     listing:
       - entryname: entrypoint.sh
         entry: |-
-          su biodocker
           cp $(inputs.userset.path) .
           cp $(inputs.useruniverse.path) .
           mkdir -p regiondb/collection/regions
@@ -65,7 +64,7 @@ requirements:
           regionset_2 = readBed('$(inputs.useruniverse.basename)')
           useruniverse = GRanges(regionset_2)
           # use this for loading LOLACore_170206 collection:
-          # regionDB = loadRegionDB('/home/biodocker/LOLACore_170206/scratch/ns5bc')
+          # regionDB = loadRegionDB('/root/LOLACore_170206/scratch/ns5bc')
           regionDB = loadRegionDB('regiondb')
           locResults = runLOLA(userset, useruniverse, regionDB, minOverlap = $(inputs.minOverlap ? inputs.minOverlap : 1), cores = $(inputs.cores ? inputs.cores : 1), redefineUserSets = $(inputs.redefineUserSets ? inputs.redefineUserSets.toString().toUpperCase() : 'FALSE'))
           print(locResults)

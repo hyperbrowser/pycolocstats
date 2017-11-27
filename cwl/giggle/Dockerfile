@@ -9,9 +9,7 @@ RUN apt-get update && \
     apt-get purge && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-USER biodocker
-
-WORKDIR /home/biodocker
+WORKDIR /root
 
 RUN git clone https://github.com/ryanlayer/giggle.git
 
@@ -20,5 +18,3 @@ WORKDIR giggle
 RUN make
 
 WORKDIR bin
-
-USER root

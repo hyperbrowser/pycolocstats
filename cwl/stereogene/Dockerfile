@@ -11,9 +11,7 @@ RUN apt-get update && \
     apt-get purge && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-USER biodocker
-
-WORKDIR /home/biodocker
+WORKDIR /root
 
 RUN git clone https://github.com/favorov/stereogene.git
 
@@ -24,5 +22,3 @@ RUN git checkout release
 WORKDIR src
 
 RUN make
-
-USER root

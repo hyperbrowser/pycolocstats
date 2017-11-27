@@ -188,7 +188,6 @@ requirements:
     listing:
       - entryname: entrypoint.sh
         entry: |-
-          su biodocker
           cp $(inputs.chrom.path) .
           cp ${
             var files = '';
@@ -197,7 +196,7 @@ requirements:
             }
             return files;
           } .
-          /home/biodocker/stereogene/src/StereoGene -chrom $(inputs.chrom.basename) \$(echo "$@" | sed 's@/private/[^ ]*@@g' | sed 's@/var/[^ ]*@@g' | sed 's@-chrom[^ ]*@@g') ${
+          /root/stereogene/src/StereoGene -chrom $(inputs.chrom.basename) \$(echo "$@" | sed 's@/private/[^ ]*@@g' | sed 's@/var/[^ ]*@@g' | sed 's@-chrom[^ ]*@@g') ${
             var files = '';
             for (var i = 0; i < inputs.tracks.length; i++) {
               files += inputs.tracks[i].basename + ' ';
