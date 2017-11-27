@@ -188,7 +188,7 @@ requirements:
     listing:
       - entryname: entrypoint.sh
         entry: |-
-          #!/bin/bash
+          su biodocker
           cp $(inputs.chrom.path) .
           cp ${
             var files = '';
