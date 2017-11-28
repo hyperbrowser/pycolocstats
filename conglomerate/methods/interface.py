@@ -91,6 +91,11 @@ class UniformInterface(object):
         pass
 
     @abstractmethod
+    @takes(str, str)
+    def setPredefinedTrackIndexAndCollection(self, trackIndex, trackCollection):
+        pass
+
+    @abstractmethod
     def setChromLenFileName(self, chromLenFile):
         pass
 
@@ -102,7 +107,6 @@ class UniformInterface(object):
     @takes("UniformInterface", ColocMeasure)
     def setColocMeasure(self, colocMeasure):
         pass
-
 
     @abstractmethod
     #@takes("UniformInterface", any([None, RestrictedAnalysisUniverse]))
