@@ -22,3 +22,5 @@ RUN wget http://cloud.databio.org.s3.amazonaws.com/regiondb/LOLACore_170206.tgz 
 mkdir -p /root/LOLACore_170206 && \
 tar xf /root/LOLACore_170206.tgz -C /root/LOLACore_170206 && \
 rm /root/LOLACore_170206.tgz
+
+RUN mv /root/LOLACore_170206/scratch/ns5bc/* /root/LOLACore_170206/ && rm -rf /root/LOLACore_170206/scratch/
