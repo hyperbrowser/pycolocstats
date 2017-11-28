@@ -15,6 +15,12 @@ inputs:
       - "null"
       - type: array
         items: File
+  tracksName:
+    type: string?
+  tracksGenome:
+    type: string?
+  tracksCollection:
+    type: string?
   minOverlap:
     type: int?
   cores:
@@ -64,7 +70,7 @@ requirements:
           regionset_2 = readBed('$(inputs.useruniverse.basename)')
           useruniverse = GRanges(regionset_2)
           # use this for loading LOLACore_170206 collection:
-          # regionDB = loadRegionDB('/root/LOLACore_170206/')
+          # regionDB = loadRegionDB('/root/$(inputs.tracksName)/$(inputs.tracksGenome)/', '$(inputs.tracksCollection)')
           regionDB = loadRegionDB('regiondb')
           locResults = runLOLA(userset, useruniverse, regionDB, minOverlap = $(inputs.minOverlap ? inputs.minOverlap : 1), cores = $(inputs.cores ? inputs.cores : 1), redefineUserSets = $(inputs.redefineUserSets ? inputs.redefineUserSets.toString().toUpperCase() : 'FALSE'))
           print(locResults)
