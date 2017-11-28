@@ -6,165 +6,165 @@ baseCommand:
   - entrypoint.sh
 
 inputs:
-  - id: tracks
+  tracks:
     type:
       type: array
       items: File
     inputBinding:
       position: 0
-  - id: chrom
+  chrom:
     type: File
     inputBinding:
       prefix: -chrom
-  - id: v
+  v:
     type: boolean?
     inputBinding:
       prefix: -v
-  - id: syntax
+  syntax:
     type: boolean?
     inputBinding:
       prefix: -syntax
-  - id: verbose
+  verbose:
     type: int?
     inputBinding:
       prefix: -verbose
-  - id: s
+  s:
     type: boolean?
     inputBinding:
       prefix: -s
-  - id: silent
+  silent:
     type: int?
     inputBinding:
       prefix: -silent
-  - id: bin
+  bin:
     type: int?
     inputBinding:
       prefix: -bin
-  - id: clear
+  clear:
     type: int?
     inputBinding:
       prefix: -clear
-  - id: c
+  c:
     type: boolean?
     inputBinding:
       prefix: -c
-  - id: cfg
+  cfg:
     type: File?
     inputBinding:
       prefix: -cfg
-  - id: profPath
+  profPath:
     type: string?
     inputBinding:
       prefix: -profPath
-  - id: trackPath
+  trackPath:
     type: string?
     inputBinding:
       prefix: -trackPath
-  - id: resPath
+  resPath:
     type: string?
     inputBinding:
       prefix: -resPath
-  - id: confounder
+  confounder:
     type: string?
     inputBinding:
       prefix: -confounder
-  - id: statistics
+  statistics:
     type: string?
     inputBinding:
       prefix: -statistics
-  - id: params
+  params:
     type: string?
     inputBinding:
       prefix: -params
-  - id: log
+  log:
     type: string?
     inputBinding:
       prefix: -log
-  - id: BufSize
+  BufSize:
     type: int?
     inputBinding:
       prefix: -BufSize
-  - id: bpType
+  bpType:
     type: string?
     inputBinding:
       prefix: -bpType
-  - id: pcorProfile
+  pcorProfile:
     type: string?
     inputBinding:
       prefix: -pcorProfile
-  - id: NA
+  NA:
     type: boolean?
     inputBinding:
       prefix: -NA
-  - id: threshold
+  threshold:
     type: int?
     inputBinding:
       prefix: -threshold
-  - id: kernelSigma
+  kernelSigma:
     type: float?
     inputBinding:
       prefix: -kernelSigma
-  - id: wSize
+  wSize:
     type: int?
     inputBinding:
       prefix: -wSize
-  - id: maxNA
+  maxNA:
     type: float?
     inputBinding:
       prefix: -maxNA
-  - id: maxZero
+  maxZero:
     type: float?
     inputBinding:
       prefix: -maxZero
-  - id: nShuffle
+  nShuffle:
     type: int?
     inputBinding:
       prefix: -nShuffle
-  - id: outSpectr
+  outSpectr:
     type: int?
     inputBinding:
       prefix: -outSpectr
-  - id: outChrom
+  outChrom:
     type: int?
     inputBinding:
       prefix: -outChrom
-  - id: writeDistr
+  writeDistr:
     type: int?
     inputBinding:
       prefix: -writeDistr
-  - id: r
+  r:
     type: boolean?
     inputBinding:
       prefix: -r
-  - id: crossWidth
+  crossWidth:
     type: boolean?
     inputBinding:
       prefix: -crossWidth
-  - id: Distances
+  Distances:
     type: boolean?
     inputBinding:
       prefix: -Distances
-  - id: outLC
+  outLC:
     type: int?
     inputBinding:
       prefix: -outLC
-  - id: lc
+  lc:
     type: boolean?
     inputBinding:
       prefix: -lc
-  - id: LCScale
+  LCScale:
     type: string?
     inputBinding:
       prefix: -LCScale
-  - id: L_FDR
+  L_FDR:
     type: float?
     inputBinding:
       prefix: -L_FDR
-  - id: R_FDR
+  R_FDR:
     type: float?
     inputBinding:
       prefix: -R_FDR
-  - id: outRes
+  outRes:
     type: string?
     inputBinding:
       prefix: -outRes

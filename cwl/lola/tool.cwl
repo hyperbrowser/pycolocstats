@@ -6,22 +6,22 @@ baseCommand:
   - entrypoint.sh
 
 inputs:
-  - id: userset
+  userset:
     type: File
-  - id: useruniverse
+  useruniverse:
     type: File
-  - id: regiondb
+  regiondb:
     type:
       - "null"
       - type: array
         items: File
-  - id: minOverlap
+  minOverlap:
     type: int?
-  - id: cores
+  cores:
     type: int?
-  - id: redefineUserSets
+  redefineUserSets:
     type: boolean?
-  - id: fast
+  fast:
     type: boolean?
 
 outputs:

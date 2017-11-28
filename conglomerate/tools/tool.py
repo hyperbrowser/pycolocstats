@@ -37,7 +37,8 @@ class Tool(object):
     def createJobParamsDict(self):
         inputs = self._yaml['inputs']
         paramDefDict = dict(
-            [(inp['id'], dict(type=self.getPythonType(inp['type']), mandatory=self.isMandatoryParameter(inp['type'])))
+            [(inp, dict(type=self.getPythonType(inputs[inp]['type']),
+                        mandatory=self.isMandatoryParameter(inputs[inp]['type'])))
              for inp in inputs])
         return JobParamsDict(paramDefDict)
 

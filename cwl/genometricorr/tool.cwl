@@ -6,41 +6,41 @@ baseCommand:
   - genometricorr.r
 
 inputs:
-  - id: query
+  query:
     type: File
-  - id: reference
+  reference:
     type: File
-  - id: chromosomes_length
+  chromosomes_length:
     type: File
     inputBinding:
       loadContents: true
-  - id: chromosomes
+  chromosomes:
     type: File?
     inputBinding:
       loadContents: true
-  - id: t1Format
+  t1Format:
     type: string?
-  - id: t2Format
+  t2Format:
     type: string?
-  - id: doMapping
+  doMapping:
     type: boolean?
-  - id: addChrAsPrefix
+  addChrAsPrefix:
     type: boolean?
-  - id: awholeOnly
+  awholeOnly:
     type: boolean?
-  - id: suppressEvaluatedLengthWarning
+  suppressEvaluatedLengthWarning:
     type: boolean?
-  - id: cutAllOverLength
+  cutAllOverLength:
     type: boolean?
-  - id: keepDistributions
+  keepDistributions:
     type: boolean?
-  - id: ecdfPermNum
+  ecdfPermNum:
     type: int?
-  - id: meanPermNum
+  meanPermNum:
     type: int?
-  - id: jaccardPermNum
+  jaccardPermNum:
     type: int?
-  - id: randomSeed
+  randomSeed:
     type: int?
 
 outputs:

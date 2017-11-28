@@ -6,32 +6,32 @@ baseCommand:
   - entrypoint.sh
 
 inputs:
-  - id: index_i
+  index_i:
     type:
       type: array
       items: File
-  - id: index_s
+  index_s:
     type: boolean?
-  - id: index_o
+  index_o:
     type: string
-  - id: index_f
+  index_f:
     type: boolean?
 
-  - id: search_i
+  search_i:
     type: string
-  - id: search_q
+  search_q:
     type: File
-  - id: search_o
+  search_o:
     type: boolean?
-  - id: search_c
+  search_c:
     type: boolean?
-  - id: search_s
+  search_s:
     type: boolean?
-  - id: search_v
+  search_v:
     type: boolean?
-  - id: search_g
+  search_g:
     type: int?
-  - id: search_l
+  search_l:
     type: boolean?
 
 outputs:
