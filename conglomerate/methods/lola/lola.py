@@ -1,26 +1,22 @@
 import math
 
 from conglomerate.methods.interface import RestrictedThroughInclusion
-from conglomerate.methods.method import Method
+from conglomerate.methods.method import OneVsManyMethod
 from conglomerate.tools.constants import LOLA_TOOL_NAME
 
 
-class LOLA(Method):
+class LOLA(OneVsManyMethod):
     def _getToolName(self):
         return LOLA_TOOL_NAME
 
     def _setDefaultParamValues(self):
         pass
 
-    def setQueryTrackFileNames(self, trackFnList):
-        "For pairwise analysis or one-against-many analysis, this would be a list of one filename"
-        assert len(trackFnList) == 1
-        self.setManualParam('userset', trackFnList[0])
+    def _setQueryTrackFileName(self, trackFn):
+        self.setManualParam('userset', trackFn)
 
-    def setReferenceTrackFileNames(self, trackFnList):
-        "For pairwise analysis, this would be a list of one filename"
+    def _setReferenceTrackFileNames(self, trackFnList):
         self.setManualParam('regiondb', trackFnList)
-
 
     def setChromLenFileName(self, chromLenFileName):
         pass
@@ -52,7 +48,7 @@ class LOLA(Method):
         indicesAndPvalues = zip(refFileIndices, pvals)
         self._pvals = {}
         for index,pval in indicesAndPvalues:
-            self._pvals[(queryFn['location'], refFns[index-1]['location'])] = pval
+            self._pvals[(queryFn, refFns[index-1])] = pval
 
         #Extract test statistic
         # testStat = resultTable["logOddsRatio"]
@@ -62,7 +58,7 @@ class LOLA(Method):
         indicesAndTestStat = zip(refFileIndices, testStat)
         self._testStats = {}
         for index, ts in indicesAndTestStat:
-            self._testStats[(queryFn['location'], refFns[index-1]['location'])] = '%.2f'%ts + ' (logOddsRatio)'
+            self._testStats[(queryFn, refFns[index-1])] = '%.2f'%ts + ' (logOddsRatio)'
 
     def getPValue(self):
         return self._pvals

@@ -1,27 +1,19 @@
-from conglomerate.methods.method import Method
+from conglomerate.methods.method import OneVsOneMethod
 from conglomerate.tools.constants import GENOMETRICORR_TOOL_NAME
 
 
-class GenometriCorr(Method):
+class GenometriCorr(OneVsOneMethod):
     def _getToolName(self):
         return GENOMETRICORR_TOOL_NAME
 
     def _setDefaultParamValues(self):
         pass
 
+    def _setQueryTrackFileName(self, trackFn):
+        self._params['query'] = trackFn
 
-    def setQueryTrackFileNames(self, trackFnList):
-        "For pairwise analysis or one-against-many analysis, this would be a list of one filename"
-        assert len(trackFnList) == 1
-        self._params['query'] = trackFnList[0]
-
-
-    def setReferenceTrackFileNames(self, trackFnList):
-        "For pairwise analysis, this would be a list of one filename"
-        assert len(trackFnList) == 1
-        self._params['reference'] = trackFnList[0]
-
-
+    def _setReferenceTrackFileName(self, trackFn):
+        self._params['reference'] = trackFn
 
     def setChromLenFileName(self, chromLenFileName):
         self._params['chromosomes_length'] = chromLenFileName

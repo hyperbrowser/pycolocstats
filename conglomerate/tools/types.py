@@ -1,5 +1,6 @@
 class PathStr(str):
     pass
 
-class PathStrList(str):
+
+class PathStrList(list):
     pass

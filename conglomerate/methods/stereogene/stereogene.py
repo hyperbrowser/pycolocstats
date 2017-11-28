@@ -1,11 +1,10 @@
 from collections import OrderedDict
 
-from conglomerate.methods.method import Method
+from conglomerate.methods.method import OneVsOneMethod
 from conglomerate.tools.constants import STEREOGENE_TOOL_NAME
 
 
-class StereoGene(Method):
-
+class StereoGene(OneVsOneMethod):
     def __init__(self):
         self._results = None
         super(StereoGene, self).__init__()
@@ -14,16 +13,13 @@ class StereoGene(Method):
         return STEREOGENE_TOOL_NAME
 
     def _setDefaultParamValues(self):
-        pass
+        self._params['tracks'] = []
 
-    def setQueryTrackFileNames(self, trackFnList):
-        "For pairwise analysis or one-against-many analysis, this would be a list of one filename"
-        assert len(trackFnList) > 0
-        self._params['tracks'] = trackFnList
+    def _setQueryTrackFileName(self, trackFn):
+        self._params['tracks'] += [trackFn]
 
-    def setReferenceTrackFileNames(self, trackFnList):
-        "all input tracks are set as query tracks"
-        raise
+    def _setReferenceTrackFileName(self, trackFn):
+        self._params['tracks'] += [trackFn]
 
     def setChromLenFileName(self, chromLenFileName):
         self._params['chrom'] = chromLenFileName
