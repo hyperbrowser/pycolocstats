@@ -77,13 +77,17 @@ class UniformInterface(object):
         pass
 
     @abstractmethod
-    def setQueryTrackFileNames(self, trackFileList):
-        "For pairwise analysis or one-against-many analysis, this would be a list of one filename"
+    def setQueryTrackFileNames(self, trackFnList):
+        """
+        For pairwise analysis or one-against-many analysis, this would be a list of one filename
+        """
         pass
 
     @abstractmethod
-    def setReferenceTrackFileNames(self, trackFileList):
-        "For pairwise analysis, this would be a list of one filename"
+    def setReferenceTrackFileNames(self, trackFnList):
+        """
+        For pairwise analysis, this would be a list of one filename
+        """
         pass
 
     @abstractmethod
@@ -107,7 +111,6 @@ class UniformInterface(object):
 
     @abstractmethod
     def setHeterogeneityPreservation(self, preservationScheme, fn=None):
-        ""
         # assert preservationScheme in [PRESERVE_HETEROGENEITY_NOT, PRESERVE_HETEROGENEITY_AS_NEIGHBORHOOD, PRESERVE_HETEROGENEITY_WITHIN_SUPPLIED_REGIONS]
         # if preservationScheme==PRESERVE_HETEROGENEITY_WITHIN_SUPPLIED_REGIONS:
         #     assert fn is not None
