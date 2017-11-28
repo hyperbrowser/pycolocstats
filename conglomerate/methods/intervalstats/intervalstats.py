@@ -1,24 +1,19 @@
-from conglomerate.methods.method import Method
+from conglomerate.methods.method import OneVsOneMethod
 from conglomerate.tools.constants import INTERVALSTATS_TOOL_NAME
 
 
-class IntervalStats(Method):
+class IntervalStats(OneVsOneMethod):
     def _getToolName(self):
         return INTERVALSTATS_TOOL_NAME
 
     def _setDefaultParamValues(self):
         pass
 
-    def setQueryTrackFileNames(self, trackFnList):
-        "For pairwise analysis or one-against-many analysis, this would be a list of one filename"
-        assert len(trackFnList) == 1
-        self._params['q'] = trackFnList[0]
+    def _setQueryTrackFileName(self, trackFn):
+        self._params['q'] = trackFn
 
-    def setReferenceTrackFileNames(self, trackFnList):
-        "For pairwise analysis, this would be a list of one filename"
-        assert len(trackFnList) == 1
-        self._params['r'] = trackFnList[0]
-
+    def _setReferenceTrackFileName(self, trackFn):
+        self._params['r'] = trackFn
 
     def setChromLenFileName(self, chromLenFileName):
         self._params['d'] = chromLenFileName
@@ -43,7 +38,6 @@ class IntervalStats(Method):
 
     def getFullResults(self):
         pass
-
 
     def preserveClumping(self, preserve):
         pass

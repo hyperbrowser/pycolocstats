@@ -8,6 +8,7 @@ from conglomerate.methods.giggle.giggle import Giggle
 from conglomerate.methods.interface import RestrictedThroughInclusion
 from conglomerate.methods.intervalstats.intervalstats import IntervalStats
 from conglomerate.methods.lola.lola import LOLA
+from conglomerate.methods.multimethod import MultiMethod
 from conglomerate.methods.stereogene.stereogene import StereoGene
 from conglomerate.tools.runner import runAllMethodsInSequence
 
@@ -28,7 +29,8 @@ class TestMethods(object):
     def testStereoGene(self):
         track1, track2, track3, track4, chrlen, track5, track6, track7, track8, track9 = self._getSampleFileNames()
         method = StereoGene()
-        method.setQueryTrackFileNames([track1,track2,track3,track4])
+        method.setQueryTrackFileNames([track1])
+        method.setReferenceTrackFileNames([track2])
         # method.setReferenceTrackFileNames([track2,track3,track4])
         method.setChromLenFileName(chrlen)
         method.setManualParam('v', True)
@@ -47,11 +49,37 @@ class TestMethods(object):
         runAllMethodsInSequence([method])
         self._printResultFiles(method, ['stderr', 'stdout', 'output'])
 
+    def testIntervalStatsMultiOneVsMany(self):
+        track1, track2, track3, track4, chrlen, track5, track6, track7, track8, track9 = self._getSampleFileNames()
+        method = MultiMethod(IntervalStats, [track1], [track3, track4])
+        method.setChromLenFileName(chrlen)
+        method.setManualParam('o', 'output')
+        runAllMethodsInSequence([method])
+        self._printResultFiles(method, ['stderr', 'stdout', 'output'])
+
+    def testIntervalStatsMultiManyVsMany(self):
+        track1, track2, track3, track4, chrlen, track5, track6, track7, track8, track9 = self._getSampleFileNames()
+        method = MultiMethod(IntervalStats, [track1, track2], [track3, track4])
+        method.setChromLenFileName(chrlen)
+        method.setManualParam('o', 'output')
+        runAllMethodsInSequence([method])
+        self._printResultFiles(method, ['stderr', 'stdout', 'output'])
+
     def testGiggle(self):
         track1, track2, track3, track4, chrlen, track5, track6, track7, track8, track9 = self._getSampleFileNames()
         method = Giggle()
         method.setQueryTrackFileNames([track5])
-        method.setReferenceTrackFileNames([track6,track7,track8])
+        method.setReferenceTrackFileNames([track6, track7, track8])
+        method.setManualParam('index_o', 'index')
+        method.setManualParam('search_i', 'index')
+        method.setManualParam('search_v', True)
+        method.setManualParam('search_l', True)
+        runAllMethodsInSequence([method])
+        self._printResultFiles(method, ['stderr', 'stdout', 'output'])
+
+    def testGiggleMultiManyVsMany(self):
+        track1, track2, track3, track4, chrlen, track5, track6, track7, track8, track9 = self._getSampleFileNames()
+        method = MultiMethod(Giggle, [track5, track6], [track7, track8])
         method.setManualParam('index_o', 'index')
         method.setManualParam('search_i', 'index')
         method.setManualParam('search_v', True)
@@ -98,10 +126,16 @@ class TestMethods(object):
 
     @staticmethod
     def _printResultFiles(method, keys):
-        for key in keys:
-            print(key)
-            print('------')
-            print('Local path: ' + method.getResultFilesDict()[key])
-            print('------')
-            print('\n'.join(os.listdir(method.getResultFilesDict()[key])) if key == 'output'
-                  else open(method.getResultFilesDict()[key]).read())
+        if isinstance(method, MultiMethod):
+            resultFilesDictList = method.getResultFilesDictList()
+        else:
+            resultFilesDictList = [method.getResultFilesDict()]
+
+        for resultFilesDict in resultFilesDictList:
+            for key in keys:
+                print(key)
+                print('------')
+                print('Local path: ' + resultFilesDict[key])
+                print('------')
+                print('\n'.join(os.listdir(resultFilesDict[key])) if key == 'output'
+                      else open(resultFilesDict[key]).read())

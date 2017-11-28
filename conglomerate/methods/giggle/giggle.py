@@ -1,21 +1,19 @@
-from conglomerate.methods.method import Method
+from conglomerate.methods.method import OneVsManyMethod
 from conglomerate.tools.constants import GIGGLE_TOOL_NAME
 
 
-class Giggle(Method):
+class Giggle(OneVsManyMethod):
     def _getToolName(self):
         return GIGGLE_TOOL_NAME
 
     def _setDefaultParamValues(self):
         pass
 
-    def setQueryTrackFileNames(self, trackFnList):
-        "For pairwise analysis or one-against-many analysis, this would be a list of one filename"
-        self._params['search_q'] = trackFnList[0]
+    def _setQueryTrackFileName(self, trackFn):
+        self._params['search_q'] = trackFn
 
-    def setReferenceTrackFileNames(self, trackFnList):
-        "For pairwise analysis, this would be a list of one filename"
-        self._params['index_i'] = [trackFnList[0], trackFnList[1], trackFnList[2]]
+    def _setReferenceTrackFileNames(self, trackFnList):
+        self._params['index_i'] = trackFnList
 
     def setChromLenFileName(self, chromLenFileName):
         pass
@@ -34,7 +32,6 @@ class Giggle(Method):
 
     def getFullResults(self):
         pass
-
 
     def preserveClumping(self, preserve):
         pass
