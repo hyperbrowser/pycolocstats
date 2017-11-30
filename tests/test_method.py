@@ -59,7 +59,6 @@ class TestMethods(object):
         method._printResults()
         self._printResultFiles(method, ['stderr', 'stdout', 'output'])
 
-    @pytest.mark.skip
     def testIntervalStats(self, chrLenFile, tracks):
         method = IntervalStats()
         method.setQueryTrackFileNames([tracks[0]])
@@ -69,7 +68,6 @@ class TestMethods(object):
         runAllMethodsInSequence([method])
         self._printResultFiles(method, ['stderr', 'stdout', 'output'])
 
-    @pytest.mark.skip
     def testIntervalStatsMultiOneVsMany(self, chrLenFile, tracks):
         method = MultiMethod(IntervalStats, [tracks[0]], [tracks[2], tracks[3]])
         method.setChromLenFileName(chrLenFile)
@@ -77,7 +75,6 @@ class TestMethods(object):
         runAllMethodsInSequence([method])
         self._printResultFiles(method, ['stderr', 'stdout', 'output'])
 
-    @pytest.mark.skip
     def testIntervalStatsMultiManyVsMany(self, chrLenFile, tracks):
         method = MultiMethod(IntervalStats, [tracks[0], tracks[1]], [tracks[2], tracks[3]])
         method.setChromLenFileName(chrLenFile)
@@ -95,8 +92,6 @@ class TestMethods(object):
         method.setManualParam('search_i', 'index')
 
         runAllMethodsInSequence([method])
-        assert len(refTracks) == len(method.getParsedFullResults().getResults()), \
-            "Expected %i results got %i" % (len(refTracks), len(method.getParsedFullResults().getResults()))
         assert len(refTracks) == len(method.getTestStatistic()), \
             "Expected %i test statistic results got %i" % (len(refTracks), len(method.getTestStatistic()))
         assert len(refTracks) == len(method.getPValue()), \
@@ -105,7 +100,8 @@ class TestMethods(object):
 
     def testGiggleMultiManyVsMany(self, chrLenFile, tracks):
         refTracks = [tracks[9], tracks[10]]
-        method = MultiMethod(Giggle, [tracks[4], tracks[5]], refTracks)
+        qTracks = [tracks[4], tracks[5]]
+        method = MultiMethod(Giggle, qTracks, refTracks)
         method.setManualParam('index_o', 'index')
         method.setManualParam('search_i', 'index')
         method.setChromLenFileName(chrLenFile)
@@ -113,12 +109,11 @@ class TestMethods(object):
         # method.setManualParam('search_v', True)
         # method.setManualParam('search_l', True)
         runAllMethodsInSequence([method])
-        assert len(refTracks) == len(method.getParsedFullResults().getResults()), \
-            "Expected %i results got %i" % (len(refTracks), len(method.getParsedFullResults().getResults()))
-        assert len(refTracks) == len(method.getTestStatistic()), \
-            "Expected %i test statistic results got %i" % (len(refTracks), len(method.getTestStatistic()))
-        assert len(refTracks) == len(method.getPValue()), \
-            "Expected %i p-values got %i" % (len(refTracks), len(method.getPValue()))
+        expectedResulstNr = len(qTracks) * len(refTracks)
+        assert expectedResulstNr == len(method.getTestStatistic()), \
+            "Expected %i test statistic results got %i" % (expectedResulstNr, len(method.getTestStatistic()))
+        assert expectedResulstNr == len(method.getPValue()), \
+            "Expected %i p-values got %i" % (expectedResulstNr, len(method.getPValue()))
         self._printResultFiles(method, ['stderr', 'stdout', 'output'])
 
     def testLOLA(self, chrLenFile, tracks):
