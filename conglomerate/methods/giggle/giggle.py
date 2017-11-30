@@ -63,9 +63,6 @@ class Giggle(OneVsManyMethod):
     def getFullResults(self):
         return open(self.getResultFilesDict()['stdout']).read()
 
-    def getParsedFullResults(self):
-        return self._parsedResults
-
     def preserveClumping(self, preserve):
         pass
 

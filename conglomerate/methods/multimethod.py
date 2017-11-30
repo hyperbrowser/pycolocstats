@@ -66,7 +66,7 @@ class CallableAttributeList(list):
         if retList[0] is None:
             assert all([ret is None for ret in retList])
         elif isinstance(retList[0], dict):
-            retDict = {}
+            retDict = type(retList[0])()
             for ret in retList:
                 retDict.update(ret)
             return retDict

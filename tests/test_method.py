@@ -15,113 +15,123 @@ from conglomerate.methods.stereogene.stereogene import StereoGene
 from conglomerate.tools.runner import runAllMethodsInSequence
 
 
+@pytest.fixture(scope='function')
+def tracks():
+    return [pkg_resources.resource_filename('tests.resources', 'H3K4me1_no_overlaps.bed'),
+            pkg_resources.resource_filename('tests.resources', 'H3K4me3_no_overlaps.bed'),
+            pkg_resources.resource_filename('tests.resources', 'H3K4me1_with_overlaps.bed'),
+            pkg_resources.resource_filename('tests.resources', 'H3K4me3_with_overlaps.bed'),
+            pkg_resources.resource_filename('tests.resources', 'H3K4me1_no_overlaps.bed.gz'),
+            pkg_resources.resource_filename('tests.resources', 'H3K4me3_no_overlaps.bed.gz'),
+            pkg_resources.resource_filename('tests.resources', 'H3K4me1_with_overlaps.bed.gz'),
+            pkg_resources.resource_filename('tests.resources', 'H3K4me3_with_overlaps.bed.gz'),
+            pkg_resources.resource_filename('tests.resources', 'H3K4me1_no_overlaps_cropped.bed'),
+            pkg_resources.resource_filename('tests.resources', 'Refseq_Genes_cropped.bed.gz'),
+            pkg_resources.resource_filename('tests.resources', 'Ensembl_Genes_cropped.bed.gz')]
+
+@pytest.fixture(scope='function')
+def chrLenFile():
+    return pkg_resources.resource_filename('tests.resources', 'chrom_lengths.tabular')
+
+@pytest.mark.usefixtures('chrLenFile', 'tracks')
 class TestMethods(object):
-    def testGenometriCorr(self):
-        track1, track2, track3, track4, chrlen, track5, track6, track7, track8, track9, track10, track11 = self._getSampleFileNames()
+
+    def testGenometriCorr(self, chrLenFile, tracks):
         method = GenometriCorr()
-        method.setQueryTrackFileNames([track1])
-        method.setReferenceTrackFileNames([track2])
-        method.setChromLenFileName(chrlen)
+        method.setQueryTrackFileNames([tracks[0]])
+        method.setReferenceTrackFileNames([tracks[1]])
+        method.setChromLenFileName(chrLenFile)
         method.setManualParam('ecdfPermNum', 5)
         method.setManualParam('meanPermNum', 5)
         method.setManualParam('jaccardPermNum', 5)
         runAllMethodsInSequence([method])
         self._printResultFiles(method, ['stderr', 'stdout', 'output'])
 
-    def testStereoGene(self):
-        track1, track2, track3, track4, chrlen, track5, track6, track7, track8, track9, track10, track11 = self._getSampleFileNames()
+    def testStereoGene(self, chrLenFile, tracks):
         method = StereoGene()
-        method.setQueryTrackFileNames([track1])
-        method.setReferenceTrackFileNames([track2])
-        # method.setReferenceTrackFileNames([track2,track3,track4])
-        method.setChromLenFileName(chrlen)
+        method.setQueryTrackFileNames([tracks[0]])
+        method.setReferenceTrackFileNames([tracks[1]])
+        # method.setReferenceTrackFileNames([tracks[1],tracks[2],tracks[3]])
+        method.setChromLenFileName(chrLenFile)
         method.setManualParam('v', True)
         method.setManualParam('silent', 0)
         runAllMethodsInSequence([method])
         method._printResults()
         self._printResultFiles(method, ['stderr', 'stdout', 'output'])
 
-    def testIntervalStats(self):
-        track1, track2, track3, track4, chrlen, track5, track6, track7, track8, track9, track10, track11 = self._getSampleFileNames()
+    def testIntervalStats(self, chrLenFile, tracks):
         method = IntervalStats()
-        method.setQueryTrackFileNames([track1])
-        method.setReferenceTrackFileNames([track2])
-        method.setChromLenFileName(chrlen)
+        method.setQueryTrackFileNames([tracks[0]])
+        method.setReferenceTrackFileNames([tracks[1]])
+        method.setChromLenFileName(chrLenFile)
         method.setManualParam('o', 'output')
         runAllMethodsInSequence([method])
         self._printResultFiles(method, ['stderr', 'stdout', 'output'])
 
-    def testIntervalStatsMultiOneVsMany(self):
-        track1, track2, track3, track4, chrlen, track5, track6, track7, track8, track9, track10, track11 = self._getSampleFileNames()
-        method = MultiMethod(IntervalStats, [track1], [track3, track4])
-        method.setChromLenFileName(chrlen)
+    def testIntervalStatsMultiOneVsMany(self, chrLenFile, tracks):
+        method = MultiMethod(IntervalStats, [tracks[0]], [tracks[2], tracks[3]])
+        method.setChromLenFileName(chrLenFile)
         method.setManualParam('o', 'output')
         runAllMethodsInSequence([method])
         self._printResultFiles(method, ['stderr', 'stdout', 'output'])
 
-    def testIntervalStatsMultiManyVsMany(self):
-        track1, track2, track3, track4, chrlen, track5, track6, track7, track8, track9, track10, track11 = self._getSampleFileNames()
-        method = MultiMethod(IntervalStats, [track1, track2], [track3, track4])
-        method.setChromLenFileName(chrlen)
+    def testIntervalStatsMultiManyVsMany(self, chrLenFile, tracks):
+        method = MultiMethod(IntervalStats, [tracks[0], tracks[1]], [tracks[2], tracks[3]])
+        method.setChromLenFileName(chrLenFile)
         method.setManualParam('o', 'output')
         runAllMethodsInSequence([method])
         self._printResultFiles(method, ['stderr', 'stdout', 'output'])
 
-    def testGiggle(self):
-        track1, track2, track3, track4, chrlen, track5, track6, track7, track8, track9, track10, track11 = self._getSampleFileNames()
+    def testGiggle(self, chrLenFile, tracks):
         method = Giggle()
-        method.setQueryTrackFileNames([track5])
-        refTracks = [track6, track10, track11]
+        method.setQueryTrackFileNames([tracks[4]])
+        refTracks = [tracks[5], tracks[9], tracks[10]]
         method.setReferenceTrackFileNames(refTracks)
-        method.setChromLenFileName(chrlen)
+        method.setChromLenFileName(chrLenFile)
         method.setManualParam('index_o', 'index')
         method.setManualParam('search_i', 'index')
 
         runAllMethodsInSequence([method])
-        assert len(refTracks) == len(method.getParsedFullResults().getResults()), \
-            "Expected %i results got %i" % (len(refTracks), len(method.getParsedFullResults().getResults()))
         assert len(refTracks) == len(method.getTestStatistic()), \
             "Expected %i test statistic results got %i" % (len(refTracks), len(method.getTestStatistic()))
         assert len(refTracks) == len(method.getPValue()), \
             "Expected %i p-values got %i" % (len(refTracks), len(method.getPValue()))
         self._printResultFiles(method, ['stderr', 'stdout', 'output'])
 
-    def testGiggleMultiManyVsMany(self):
-        track1, track2, track3, track4, chrlen, track5, track6, track7, track8, track9, track10, track11 = self._getSampleFileNames()
-        refTracks = [track10, track11]
-        method = MultiMethod(Giggle, [track5, track6], refTracks)
+    def testGiggleMultiManyVsMany(self, chrLenFile, tracks):
+        refTracks = [tracks[9], tracks[10]]
+        qTracks = [tracks[4], tracks[5]]
+        method = MultiMethod(Giggle, qTracks, refTracks)
         method.setManualParam('index_o', 'index')
         method.setManualParam('search_i', 'index')
-        method.setChromLenFileName(chrlen)
+        method.setChromLenFileName(chrLenFile)
         # method.setManualParam('search_s', True)
         # method.setManualParam('search_v', True)
         # method.setManualParam('search_l', True)
         runAllMethodsInSequence([method])
-        assert len(refTracks) == len(method.getParsedFullResults().getResults()), \
-            "Expected %i results got %i" % (len(refTracks), len(method.getParsedFullResults().getResults()))
-        assert len(refTracks) == len(method.getTestStatistic()), \
-            "Expected %i test statistic results got %i" % (len(refTracks), len(method.getTestStatistic()))
-        assert len(refTracks) == len(method.getPValue()), \
-            "Expected %i p-values got %i" % (len(refTracks), len(method.getPValue()))
+        expectedResulstNr = len(qTracks) * len(refTracks)
+        assert expectedResulstNr == len(method.getTestStatistic()), \
+            "Expected %i test statistic results got %i" % (expectedResulstNr, len(method.getTestStatistic()))
+        assert expectedResulstNr == len(method.getPValue()), \
+            "Expected %i p-values got %i" % (expectedResulstNr, len(method.getPValue()))
         self._printResultFiles(method, ['stderr', 'stdout', 'output'])
 
-    def testLOLA(self):
-        track1, track2, track3, track4, chrlen, track5, track6, track7, track8, track9, track10, track11 = self._getSampleFileNames()
+    def testLOLA(self, chrLenFile, tracks):
         method = LOLA()
-        method.setQueryTrackFileNames([track9])
-        method.setReferenceTrackFileNames([track3,track4])
-        method.setRestrictedAnalysisUniverse(RestrictedThroughInclusion(track1))
+        method.setQueryTrackFileNames([tracks[8]])
+        method.setReferenceTrackFileNames([tracks[2],tracks[3]])
+        method.setRestrictedAnalysisUniverse(RestrictedThroughInclusion(tracks[0]))
         method.preserveClumping(False)
-        # method.setManualParam('userset', track9)
-        # method.setManualParam('useruniverse', track1)
-        # method.setManualParam('regiondb', [track3, track4])
+        # method.setManualParam('userset', tracks[8])
+        # method.setManualParam('useruniverse', tracks[0])
+        # method.setManualParam('regiondb', [tracks[2], tracks[3]])
         runAllMethodsInSequence([method])
         # commenting this out, because this breaks tests:
         # print('TEMP1: ', (method.getPValue()))
         # print('TEMP2: ', (method.getTestStatistic()))
         self._printResultFiles(method, ['stderr', 'stdout', 'output'])
 
-    def testGoShifter(self):
+    def testGoShifter(self, chrLenFile, tracks):
         method = GoShifter()
         snpmap = pkg_resources.resource_filename('tests.resources', 'snpmap.tabular')
         annotation = pkg_resources.resource_filename('tests.resources', 'annotation.bed.gz')
@@ -133,22 +143,6 @@ class TestMethods(object):
         method.setManualParam('o', 'output')
         runAllMethodsInSequence([method])
         self._printResultFiles(method, ['stderr', 'stdout', 'output'])
-
-    @staticmethod
-    def _getSampleFileNames():
-        track1 = pkg_resources.resource_filename('tests.resources', 'H3K4me1_no_overlaps.bed')
-        track2 = pkg_resources.resource_filename('tests.resources', 'H3K4me3_no_overlaps.bed')
-        track3 = pkg_resources.resource_filename('tests.resources', 'H3K4me1_with_overlaps.bed')
-        track4 = pkg_resources.resource_filename('tests.resources', 'H3K4me3_with_overlaps.bed')
-        chrlen = pkg_resources.resource_filename('tests.resources', 'chrom_lengths.tabular')
-        track5 = pkg_resources.resource_filename('tests.resources', 'H3K4me1_no_overlaps.bed.gz')
-        track6 = pkg_resources.resource_filename('tests.resources', 'H3K4me3_no_overlaps.bed.gz')
-        track7 = pkg_resources.resource_filename('tests.resources', 'H3K4me1_with_overlaps.bed.gz')
-        track8 = pkg_resources.resource_filename('tests.resources', 'H3K4me3_with_overlaps.bed.gz')
-        track9 = pkg_resources.resource_filename('tests.resources', 'H3K4me1_no_overlaps_cropped.bed')
-        track10 = pkg_resources.resource_filename('tests.resources', 'Refseq_Genes_cropped.bed.gz')
-        track11 = pkg_resources.resource_filename('tests.resources', 'Ensembl_Genes_cropped.bed.gz')
-        return track1, track2, track3, track4, chrlen, track5, track6, track7, track8, track9, track10, track11
 
     @staticmethod
     def _getSampleFileName(contents):
