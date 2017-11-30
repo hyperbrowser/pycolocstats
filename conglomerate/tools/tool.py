@@ -1,3 +1,5 @@
+from numbers import Number
+
 import cwltool.factory
 import docker
 import pkg_resources
@@ -51,6 +53,7 @@ class Tool(object):
         return {
             'int': int,
             'float': float,
+            'long': Number,
             'string': str,
             'boolean': bool,
             'File': PathStr

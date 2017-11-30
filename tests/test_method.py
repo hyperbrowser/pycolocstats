@@ -2,6 +2,7 @@ from tempfile import NamedTemporaryFile
 
 import os
 import pkg_resources
+import pytest
 
 from conglomerate.methods.genometricorr.genometricorr import GenometriCorr
 from conglomerate.methods.giggle.giggle import Giggle
@@ -16,7 +17,7 @@ from conglomerate.tools.runner import runAllMethodsInSequence
 
 class TestMethods(object):
     def testGenometriCorr(self):
-        track1, track2, track3, track4, chrlen, track5, track6, track7, track8, track9 = self._getSampleFileNames()
+        track1, track2, track3, track4, chrlen, track5, track6, track7, track8, track9, track10, track11 = self._getSampleFileNames()
         method = GenometriCorr()
         method.setQueryTrackFileNames([track1])
         method.setReferenceTrackFileNames([track2])
@@ -28,7 +29,7 @@ class TestMethods(object):
         self._printResultFiles(method, ['stderr', 'stdout', 'output'])
 
     def testStereoGene(self):
-        track1, track2, track3, track4, chrlen, track5, track6, track7, track8, track9 = self._getSampleFileNames()
+        track1, track2, track3, track4, chrlen, track5, track6, track7, track8, track9, track10, track11 = self._getSampleFileNames()
         method = StereoGene()
         method.setQueryTrackFileNames([track1])
         method.setReferenceTrackFileNames([track2])
@@ -41,7 +42,7 @@ class TestMethods(object):
         self._printResultFiles(method, ['stderr', 'stdout', 'output'])
 
     def testIntervalStats(self):
-        track1, track2, track3, track4, chrlen, track5, track6, track7, track8, track9 = self._getSampleFileNames()
+        track1, track2, track3, track4, chrlen, track5, track6, track7, track8, track9, track10, track11 = self._getSampleFileNames()
         method = IntervalStats()
         method.setQueryTrackFileNames([track1])
         method.setReferenceTrackFileNames([track2])
@@ -51,7 +52,7 @@ class TestMethods(object):
         self._printResultFiles(method, ['stderr', 'stdout', 'output'])
 
     def testIntervalStatsMultiOneVsMany(self):
-        track1, track2, track3, track4, chrlen, track5, track6, track7, track8, track9 = self._getSampleFileNames()
+        track1, track2, track3, track4, chrlen, track5, track6, track7, track8, track9, track10, track11 = self._getSampleFileNames()
         method = MultiMethod(IntervalStats, [track1], [track3, track4])
         method.setChromLenFileName(chrlen)
         method.setManualParam('o', 'output')
@@ -59,7 +60,7 @@ class TestMethods(object):
         self._printResultFiles(method, ['stderr', 'stdout', 'output'])
 
     def testIntervalStatsMultiManyVsMany(self):
-        track1, track2, track3, track4, chrlen, track5, track6, track7, track8, track9 = self._getSampleFileNames()
+        track1, track2, track3, track4, chrlen, track5, track6, track7, track8, track9, track10, track11 = self._getSampleFileNames()
         method = MultiMethod(IntervalStats, [track1, track2], [track3, track4])
         method.setChromLenFileName(chrlen)
         method.setManualParam('o', 'output')
@@ -67,29 +68,45 @@ class TestMethods(object):
         self._printResultFiles(method, ['stderr', 'stdout', 'output'])
 
     def testGiggle(self):
-        track1, track2, track3, track4, chrlen, track5, track6, track7, track8, track9 = self._getSampleFileNames()
+        track1, track2, track3, track4, chrlen, track5, track6, track7, track8, track9, track10, track11 = self._getSampleFileNames()
         method = Giggle()
         method.setQueryTrackFileNames([track5])
-        method.setReferenceTrackFileNames([track6, track7, track8])
+        refTracks = [track6, track10, track11]
+        method.setReferenceTrackFileNames(refTracks)
+        method.setChromLenFileName(chrlen)
         method.setManualParam('index_o', 'index')
         method.setManualParam('search_i', 'index')
-        method.setManualParam('search_v', True)
-        method.setManualParam('search_l', True)
+
         runAllMethodsInSequence([method])
+        assert len(refTracks) == len(method.getParsedFullResults().getResults()), \
+            "Expected %i results got %i" % (len(refTracks), len(method.getParsedFullResults().getResults()))
+        assert len(refTracks) == len(method.getTestStatistic()), \
+            "Expected %i test statistic results got %i" % (len(refTracks), len(method.getTestStatistic()))
+        assert len(refTracks) == len(method.getPValue()), \
+            "Expected %i p-values got %i" % (len(refTracks), len(method.getPValue()))
         self._printResultFiles(method, ['stderr', 'stdout', 'output'])
 
     def testGiggleMultiManyVsMany(self):
-        track1, track2, track3, track4, chrlen, track5, track6, track7, track8, track9 = self._getSampleFileNames()
-        method = MultiMethod(Giggle, [track5, track6], [track7, track8])
+        track1, track2, track3, track4, chrlen, track5, track6, track7, track8, track9, track10, track11 = self._getSampleFileNames()
+        refTracks = [track10, track11]
+        method = MultiMethod(Giggle, [track5, track6], refTracks)
         method.setManualParam('index_o', 'index')
         method.setManualParam('search_i', 'index')
-        method.setManualParam('search_v', True)
-        method.setManualParam('search_l', True)
+        method.setChromLenFileName(chrlen)
+        # method.setManualParam('search_s', True)
+        # method.setManualParam('search_v', True)
+        # method.setManualParam('search_l', True)
         runAllMethodsInSequence([method])
+        assert len(refTracks) == len(method.getParsedFullResults().getResults()), \
+            "Expected %i results got %i" % (len(refTracks), len(method.getParsedFullResults().getResults()))
+        assert len(refTracks) == len(method.getTestStatistic()), \
+            "Expected %i test statistic results got %i" % (len(refTracks), len(method.getTestStatistic()))
+        assert len(refTracks) == len(method.getPValue()), \
+            "Expected %i p-values got %i" % (len(refTracks), len(method.getPValue()))
         self._printResultFiles(method, ['stderr', 'stdout', 'output'])
 
     def testLOLA(self):
-        track1, track2, track3, track4, chrlen, track5, track6, track7, track8, track9 = self._getSampleFileNames()
+        track1, track2, track3, track4, chrlen, track5, track6, track7, track8, track9, track10, track11 = self._getSampleFileNames()
         method = LOLA()
         method.setQueryTrackFileNames([track9])
         method.setReferenceTrackFileNames([track3,track4])
@@ -129,7 +146,9 @@ class TestMethods(object):
         track7 = pkg_resources.resource_filename('tests.resources', 'H3K4me1_with_overlaps.bed.gz')
         track8 = pkg_resources.resource_filename('tests.resources', 'H3K4me3_with_overlaps.bed.gz')
         track9 = pkg_resources.resource_filename('tests.resources', 'H3K4me1_no_overlaps_cropped.bed')
-        return track1, track2, track3, track4, chrlen, track5, track6, track7, track8, track9
+        track10 = pkg_resources.resource_filename('tests.resources', 'Refseq_Genes_cropped.bed.gz')
+        track11 = pkg_resources.resource_filename('tests.resources', 'Ensembl_Genes_cropped.bed.gz')
+        return track1, track2, track3, track4, chrlen, track5, track6, track7, track8, track9, track10, track11
 
     @staticmethod
     def _getSampleFileName(contents):
