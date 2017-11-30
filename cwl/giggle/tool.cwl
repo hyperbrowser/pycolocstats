@@ -30,7 +30,7 @@ inputs:
   search_v:
     type: boolean?
   search_g:
-    type: int?
+    type: long?
   search_l:
     type: boolean?
 
@@ -53,16 +53,19 @@ requirements:
     listing:
       - entryname: entrypoint.sh
         entry: |-
-          /root/giggle/bin/giggle index \\\
-          $(inputs.index_s ? '-s' : '') \\\
-          $(inputs.index_f ? '-f' : '') \\\
-          -o $(inputs.index_o) -i ${
+          mkdir input_files
+          cp ${
             var files = '';
             for (var i = 0; i < inputs.index_i.length; i++) {
               files += inputs.index_i[i].path + ' ';
             }
             return files;
-          }
+          } input_files/
+          /root/giggle/bin/giggle index \\\
+          -o $(inputs.index_o) \\\
+          -i "input_files/*" \\\
+          $(inputs.index_s ? '-s' : '') \\\
+          $(inputs.index_f ? '-f' : '')
 
           /root/giggle/bin/giggle search \\\
           -i $(inputs.search_i) \\\
