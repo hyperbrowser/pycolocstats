@@ -5,6 +5,7 @@ import pkg_resources
 
 from conglomerate.methods.genometricorr.genometricorr import GenometriCorr
 from conglomerate.methods.giggle.giggle import Giggle
+from conglomerate.methods.goshifter.goshifter import GoShifter
 from conglomerate.methods.interface import RestrictedThroughInclusion
 from conglomerate.methods.intervalstats.intervalstats import IntervalStats
 from conglomerate.methods.lola.lola import LOLA
@@ -101,6 +102,19 @@ class TestMethods(object):
         # commenting this out, because this breaks tests:
         # print('TEMP1: ', (method.getPValue()))
         # print('TEMP2: ', (method.getTestStatistic()))
+        self._printResultFiles(method, ['stderr', 'stdout', 'output'])
+
+    def testGoShifter(self):
+        method = GoShifter()
+        snpmap = pkg_resources.resource_filename('tests.resources', 'snpmap.tabular')
+        annotation = pkg_resources.resource_filename('tests.resources', 'annotation.bed.gz')
+        proxies = pkg_resources.resource_filename('tests.resources', 'proxies.txt')
+        method.setManualParam('s', snpmap)
+        method.setManualParam('a', annotation)
+        method.setManualParam('i', proxies)
+        method.setManualParam('p', 10)
+        method.setManualParam('o', 'output')
+        runAllMethodsInSequence([method])
         self._printResultFiles(method, ['stderr', 'stdout', 'output'])
 
     @staticmethod
