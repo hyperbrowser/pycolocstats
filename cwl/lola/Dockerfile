@@ -18,9 +18,10 @@ RUN Rscript -e "source('http://bioconductor.org/biocLite.R')" \
 
 RUN Rscript -e "install.packages('reshape2')"
 
-RUN wget http://cloud.databio.org.s3.amazonaws.com/regiondb/LOLACore_170206.tgz -O /root/LOLACore_170206.tgz && \
-mkdir -p /root/LOLACore_170206 && \
-tar xf /root/LOLACore_170206.tgz -C /root/LOLACore_170206 && \
-rm /root/LOLACore_170206.tgz
+RUN mkdir /regiondb && \
+wget http://cloud.databio.org.s3.amazonaws.com/regiondb/LOLACore_170206.tgz -O /regiondb/LOLACore_170206.tgz && \
+mkdir -p /regiondb/LOLACore_170206 && \
+tar xf /regiondb/LOLACore_170206.tgz -C /regiondb/LOLACore_170206 && \
+rm /regiondb/LOLACore_170206.tgz
 
-RUN mv /root/LOLACore_170206/scratch/ns5bc/resources/regions/LOLACore/* /root/LOLACore_170206/ && rm -rf /root/LOLACore_170206/scratch/
+RUN mv /regiondb/LOLACore_170206/scratch/ns5bc/resources/regions/LOLACore/* /regiondb/LOLACore_170206/ && rm -rf /regiondb/LOLACore_170206/scratch/
