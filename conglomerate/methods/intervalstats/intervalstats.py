@@ -1,3 +1,5 @@
+from os import path
+
 from conglomerate.methods.method import OneVsOneMethod
 from conglomerate.tools.constants import INTERVALSTATS_TOOL_NAME
 from conglomerate.tools.util import getTemporaryFileName
@@ -42,7 +44,7 @@ class IntervalStats(OneVsOneMethod):
 
     def _parseResultFiles(self):
         #links to output files
-        resultsFolderPath = self._resultFilesDict['output'] + 'output'
+        resultsFolderPath = path.join(self._resultFilesDict['output'],'output')
 
         self._pvals = {}
         self._pvals[(self._params['q'], self._params['r'])] = {}
@@ -64,7 +66,7 @@ class IntervalStats(OneVsOneMethod):
         return self._testStats
 
     def getFullResults(self):
-        resultsFolderPath = self._resultFilesDict['output'] + 'output'
+        resultsFolderPath = path.join(self._resultFilesDict['output'], 'output')
         return open(resultsFolderPath).read()
 
     def preserveClumping(self, preserve):
