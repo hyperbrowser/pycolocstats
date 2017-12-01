@@ -31,16 +31,10 @@ class StereoGene(OneVsOneMethod):
         self._results = self._parseStatisticsFile(dirpath=self._resultFilesDict['output'])
 
     def getPValue(self):
-        if len(self._results) == 1:
-            return self._results.values()[0]['pVal']
-        else:
-            OrderedDict([(key, x['pVal']) for key, x in self._results.iteritems()])
+        return OrderedDict([(key, x['pVal']) for key, x in self._results.items()])
 
     def getTestStatistic(self):
-        if len(self._results) == 1:
-            return self._results.values()[0]['totCorr']
-        else:
-            OrderedDict([(key, x['totCorr']) for key, x in self._results.iteritems()])
+        return OrderedDict([(key, x['totCorr']) for key, x in self._results.items()])
 
     def getFullResults(self):
         return open(self._resultFilesDict['stdout']).read()
@@ -65,7 +59,8 @@ class StereoGene(OneVsOneMethod):
         root = tree.getroot()
         runsDict = OrderedDict()
         for run in root:
-            runsDict[run.attrib['id']] = self._parseRun(run)
+            parsedRun = self._parseRun(run)
+            runsDict[(parsedRun['track1'], parsedRun['track2'])] = parsedRun
         return runsDict
 
     def _parseRun(self, run):

@@ -51,13 +51,34 @@ class TestMethods(object):
         method = StereoGene()
         method.setQueryTrackFileNames([tracks[0]])
         method.setReferenceTrackFileNames([tracks[1]])
-        # method.setReferenceTrackFileNames([tracks[1],tracks[2],tracks[3]])
         method.setChromLenFileName(chrLenFile)
         method.setManualParam('v', True)
         method.setManualParam('silent', 0)
         runAllMethodsInSequence([method])
-        method._printResults()
         self._printResultFiles(method, ['stderr', 'stdout', 'output'])
+        self._assertMethodResultsSize(1, method)
+
+
+    def testStereoGeneOneVsMulti(self, chrLenFile, tracks):
+        refTracks = [tracks[2], tracks[3]]
+        method = MultiMethod(StereoGene, [tracks[0]], refTracks)
+        method.setChromLenFileName(chrLenFile)
+        method.setManualParam('v', True)
+        method.setManualParam('silent', 0)
+        runAllMethodsInSequence([method])
+        self._printResultFiles(method, ['stderr', 'stdout', 'output'])
+        self._assertMethodResultsSize(len(refTracks), method)
+
+    def testStereoGeneMultiVsMulti(self, chrLenFile, tracks):
+        qTracks = [tracks[0], tracks[1]]
+        refTracks = [tracks[2], tracks[3]]
+        method = MultiMethod(StereoGene, qTracks, refTracks)
+        method.setChromLenFileName(chrLenFile)
+        method.setManualParam('v', True)
+        method.setManualParam('silent', 0)
+        runAllMethodsInSequence([method])
+        self._printResultFiles(method, ['stderr', 'stdout', 'output'])
+        self._assertMethodResultsSize(len(qTracks)*len(refTracks), method)
 
     def testIntervalStats(self, chrLenFile, tracks):
         method = IntervalStats()
@@ -90,13 +111,9 @@ class TestMethods(object):
         method.setChromLenFileName(chrLenFile)
         method.setManualParam('index_o', 'index')
         method.setManualParam('search_i', 'index')
-
         runAllMethodsInSequence([method])
-        assert len(refTracks) == len(method.getTestStatistic()), \
-            "Expected %i test statistic results got %i" % (len(refTracks), len(method.getTestStatistic()))
-        assert len(refTracks) == len(method.getPValue()), \
-            "Expected %i p-values got %i" % (len(refTracks), len(method.getPValue()))
         self._printResultFiles(method, ['stderr', 'stdout', 'output'])
+        self._assertMethodResultsSize(len(refTracks), method)
 
     def testGiggleMultiManyVsMany(self, chrLenFile, tracks):
         refTracks = [tracks[9], tracks[10]]
@@ -105,16 +122,10 @@ class TestMethods(object):
         method.setManualParam('index_o', 'index')
         method.setManualParam('search_i', 'index')
         method.setChromLenFileName(chrLenFile)
-        # method.setManualParam('search_s', True)
-        # method.setManualParam('search_v', True)
-        # method.setManualParam('search_l', True)
         runAllMethodsInSequence([method])
         expectedResulstNr = len(qTracks) * len(refTracks)
-        assert expectedResulstNr == len(method.getTestStatistic()), \
-            "Expected %i test statistic results got %i" % (expectedResulstNr, len(method.getTestStatistic()))
-        assert expectedResulstNr == len(method.getPValue()), \
-            "Expected %i p-values got %i" % (expectedResulstNr, len(method.getPValue()))
         self._printResultFiles(method, ['stderr', 'stdout', 'output'])
+        self._assertMethodResultsSize(expectedResulstNr, method)
 
     def testLOLA(self, chrLenFile, tracks):
         method = LOLA()
@@ -131,6 +142,7 @@ class TestMethods(object):
         # print('TEMP2: ', (method.getTestStatistic()))
         self._printResultFiles(method, ['stderr', 'stdout', 'output'])
 
+    @pytest.mark.skip
     def testGoShifter(self, chrLenFile, tracks):
         method = GoShifter()
         snpmap = pkg_resources.resource_filename('tests.resources', 'snpmap.tabular')
@@ -166,3 +178,10 @@ class TestMethods(object):
                 print('------')
                 print('\n'.join(os.listdir(resultFilesDict[key])) if key == 'output'
                       else open(resultFilesDict[key]).read())
+
+    @staticmethod
+    def _assertMethodResultsSize(expectedResulstNr, method):
+        assert expectedResulstNr == len(method.getTestStatistic()), \
+            "%s: Expected %i test statistic results got %i" % (str(method), expectedResulstNr, len(method.getTestStatistic()))
+        assert expectedResulstNr == len(method.getPValue()), \
+            "%s: Expected %i p-values got %i" % (str(method), expectedResulstNr, len(method.getPValue()))
