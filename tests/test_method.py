@@ -142,7 +142,6 @@ class TestMethods(object):
         # print('TEMP2: ', (method.getTestStatistic()))
         self._printResultFiles(method, ['stderr', 'stdout', 'output'])
 
-    @pytest.mark.skip
     def testGoShifter(self, chrLenFile, tracks):
         method = GoShifter()
         snpmap = pkg_resources.resource_filename('tests.resources', 'snpmap.tabular')
