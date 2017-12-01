@@ -38,31 +38,36 @@ def chrLenFile():
 
 @pytest.mark.usefixtures('chrLenFile', 'tracks')
 class TestMethods(object):
-    def testUnified(self, tracks):
-        workingMethodObject = []
-        methodClasses = [GenometriCorr,StereoGene]
+    def testUnified(self, tracks, chrLenFile):
+        #define tracks and methods (will in real runs come in from GUI)
+        queryTrack = [tracks[0]]
+        refTracks = [tracks[1], tracks[2]]
+        methodClasses = [GenometriCorr, StereoGene]
+
+        #create selections (will in real runs come in from GUI)
         allowOverlapChoiceList = [('setAllowOverlaps',False), ('setAllowOverlaps',True)]
-        #selections['setAllowOverlaps'] = [False, True]
         preserveClumpingChoiceList = [('preserveClumping',False), ('preserveClumping',True)]
-        selectionsValues = [allowOverlapChoiceList, preserveClumpingChoiceList]
+        chrLenList = [('setChromLenFileName',chrLenFile)]
+        selectionsValues = [allowOverlapChoiceList, preserveClumpingChoiceList,chrLenList]
+
+
+        workingMethodObject = []
         multiChoiceList = product(*selectionsValues)
         for choiceTupleList in multiChoiceList:
-        # for allowOverlaps in allowOverlapChoiceList:
-        #     for preserveClumping in preserveClumpingChoiceList:
             for methodClass in methodClasses:
                 try:
-                    currMethod = MultiMethod( methodClass,[tracks[0]], [tracks[1]])
-                    #currMethod.setAllowOverlaps(allowOverlaps)
-                    for methodName,choice in choiceTupleList:
+                    currMethod = MultiMethod(methodClass, queryTrack, refTracks)
+                    for methodName, choice in choiceTupleList:
                         getattr(currMethod, methodName)(choice)
                 except Exception as e:
                     print(e)
                     continue
                 workingMethodObject.append(currMethod)
         print(len(workingMethodObject), workingMethodObject)
-        # runAllMethodsInSequence(workingMethodObject)
-        # for workingMethod in workingMethodObject:
-        #     self._printResultFiles(workingMethod, ['stderr', 'stdout', 'output'])
+
+        runAllMethodsInSequence(workingMethodObject)
+        for workingMethod in workingMethodObject:
+            self._printResultFiles(workingMethod, ['stderr', 'stdout', 'output'])
 
 
     def testGenometriCorr(self, chrLenFile, tracks):
