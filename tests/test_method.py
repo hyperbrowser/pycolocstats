@@ -1,3 +1,4 @@
+from itertools import product
 from tempfile import NamedTemporaryFile
 
 import os
@@ -37,6 +38,32 @@ def chrLenFile():
 
 @pytest.mark.usefixtures('chrLenFile', 'tracks')
 class TestMethods(object):
+    def testUnified(self, tracks):
+        workingMethodObject = []
+        methodClasses = [GenometriCorr,StereoGene]
+        allowOverlapChoiceList = [('setAllowOverlaps',False), ('setAllowOverlaps',True)]
+        #selections['setAllowOverlaps'] = [False, True]
+        preserveClumpingChoiceList = [('preserveClumping',False), ('preserveClumping',True)]
+        selectionsValues = [allowOverlapChoiceList, preserveClumpingChoiceList]
+        multiChoiceList = product(*selectionsValues)
+        for choiceTupleList in multiChoiceList:
+        # for allowOverlaps in allowOverlapChoiceList:
+        #     for preserveClumping in preserveClumpingChoiceList:
+            for methodClass in methodClasses:
+                try:
+                    currMethod = MultiMethod( methodClass,[tracks[0]], [tracks[1]])
+                    #currMethod.setAllowOverlaps(allowOverlaps)
+                    for methodName,choice in choiceTupleList:
+                        getattr(currMethod, methodName)(choice)
+                except Exception as e:
+                    print(e)
+                    continue
+                workingMethodObject.append(currMethod)
+        print(len(workingMethodObject), workingMethodObject)
+        # runAllMethodsInSequence(workingMethodObject)
+        # for workingMethod in workingMethodObject:
+        #     self._printResultFiles(workingMethod, ['stderr', 'stdout', 'output'])
+
 
     def testGenometriCorr(self, chrLenFile, tracks):
         method = GenometriCorr()
