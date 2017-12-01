@@ -26,6 +26,8 @@ def tracks():
             pkg_resources.resource_filename('tests.resources', 'H3K4me1_with_overlaps.bed.gz'),
             pkg_resources.resource_filename('tests.resources', 'H3K4me3_with_overlaps.bed.gz'),
             pkg_resources.resource_filename('tests.resources', 'H3K4me1_no_overlaps_cropped.bed'),
+            pkg_resources.resource_filename('tests.resources', 'H3K4me1_no_overlaps_large.bed.gz'),
+            pkg_resources.resource_filename('tests.resources', 'H3K4me3_no_overlaps_large.bed.gz'),
             pkg_resources.resource_filename('tests.resources', 'Refseq_Genes_cropped.bed.gz'),
             pkg_resources.resource_filename('tests.resources', 'Ensembl_Genes_cropped.bed.gz')]
 
@@ -105,8 +107,8 @@ class TestMethods(object):
 
     def testGiggle(self, chrLenFile, tracks):
         method = Giggle()
-        method.setQueryTrackFileNames([tracks[4]])
-        refTracks = [tracks[5], tracks[9], tracks[10]]
+        method.setQueryTrackFileNames([tracks[9]])
+        refTracks = [tracks[5], tracks[11], tracks[12]]
         method.setReferenceTrackFileNames(refTracks)
         method.setChromLenFileName(chrLenFile)
         method.setManualParam('index_o', 'index')
@@ -116,8 +118,8 @@ class TestMethods(object):
         self._assertMethodResultsSize(len(refTracks), method)
 
     def testGiggleMultiManyVsMany(self, chrLenFile, tracks):
-        refTracks = [tracks[9], tracks[10]]
-        qTracks = [tracks[4], tracks[5]]
+        refTracks = [tracks[11], tracks[12]]
+        qTracks = [tracks[9], tracks[10]]
         method = MultiMethod(Giggle, qTracks, refTracks)
         method.setManualParam('index_o', 'index')
         method.setManualParam('search_i', 'index')

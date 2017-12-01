@@ -11,5 +11,5 @@ def getTemporaryFileName(suffix='.bed'):
 
 
 def deleteAllTmpFiles():
-    for fn in TMP_FILENAME_STORAGE:
-        os.unlink(fn)
+    while TMP_FILENAME_STORAGE:
+        os.unlink(TMP_FILENAME_STORAGE.pop())
