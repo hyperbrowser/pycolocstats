@@ -16,7 +16,8 @@ install:
   - pip install -r requirements.txt
 
 script:
-  - travis_wait 60 pytest -s
+  - "travis_wait 30 sleep 1800 &"
+  - pytest -s
 
 after_script:
   - ls -la -R /tmp
