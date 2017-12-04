@@ -58,7 +58,10 @@ class TestMethods(object):
                 try:
                     currMethod = MultiMethod(methodClass, queryTrack, refTracks)
                     for methodName, choice in choiceTupleList:
-                        getattr(currMethod, methodName)(choice)
+                        if isinstance(choice, list):
+                            getattr(currMethod, methodName)(*choice)
+                        else:
+                            getattr(currMethod, methodName)(choice)
                 except Exception as e:
                     print(e)
                     continue
