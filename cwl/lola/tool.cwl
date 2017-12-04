@@ -15,11 +15,11 @@ inputs:
       - "null"
       - type: array
         items: File
-  tracksName:
+  trackIndex:
     type: string?
-  tracksGenome:
+  genome:
     type: string?
-  tracksCollection:
+  trackCollection:
     type: string?
   minOverlap:
     type: int?
@@ -53,11 +53,14 @@ requirements:
           cp $(inputs.useruniverse.path) .
           mkdir -p regiondb/collection/regions
           cp ${
-            var files = '';
-            for (var i = 0; i < inputs.regiondb.length; i++) {
-              files += inputs.regiondb[i].path + ' ';
+            if (inputs.regiondb != null) {
+              var files = '';
+              for (var i = 0; i < inputs.regiondb.length; i++) {
+                files += inputs.regiondb[i].path + ' ';
+              }
+              return files;
             }
-            return files;
+            return '';
           } regiondb/collection/regions
           Rscript lola.r
 
@@ -72,6 +75,15 @@ requirements:
           useruniverse = GRanges(regionset_2)
           # use this for loading LOLACore_170206 collection:
           # regionDB = loadRegionDB(dbLocation='/regiondb/LOLACore_170206/hg19/', collections=c('codex'))
+          ${
+            if (inputs.regiondb != null) {
+              return "regionDB = loadRegionDB('regiondb')";
+            } else if (inputs.trackIndex != null && inputs.genome != null && inputs.trackCollection != null) {
+              return "loadRegionDB(dbLocation='/regiondb/" + inputs.trackIndex + "/" + inputs.genome + "', collections=c('" + inputs.trackCollection + "'))";
+            } else {
+              throw 'You should specify either regiondb or reference collection!';
+            }
+          }
           regionDB = loadRegionDB('regiondb')
           locResults = runLOLA(userset, useruniverse, regionDB, minOverlap = $(inputs.minOverlap ? inputs.minOverlap : 1), cores = $(inputs.cores ? inputs.cores : 1), redefineUserSets = $(inputs.redefineUserSets ? inputs.redefineUserSets.toString().toUpperCase() : 'FALSE'))
           print(locResults)

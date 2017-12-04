@@ -161,20 +161,25 @@ class TestMethods(object):
         self._printResultFiles(method, ['stderr', 'stdout', 'output'])
         self._assertMethodResultsSize(expectedResulstNr, method)
 
-    def testLOLA(self, chrLenFile, tracks):
+    def testLOLADynamic(self, chrLenFile, tracks):
         method = LOLA()
         method.setQueryTrackFileNames([tracks[8]])
-        method.setReferenceTrackFileNames([tracks[2],tracks[3]])
+        method.setReferenceTrackFileNames([tracks[2], tracks[3]])
         method.setRestrictedAnalysisUniverse(RestrictedThroughInclusion(tracks[0]))
         method.preserveClumping(False)
-        # method.setManualParam('userset', tracks[8])
-        # method.setManualParam('useruniverse', tracks[0])
-        # method.setManualParam('regiondb', [tracks[2], tracks[3]])
         runAllMethodsInSequence([method])
-        # commenting this out, because this breaks tests:
-        # print('TEMP1: ', (method.getPValue()))
-        # print('TEMP2: ', (method.getTestStatistic()))
         self._printResultFiles(method, ['stderr', 'stdout', 'output'])
+
+    # def testLOLAReference(self, chrLenFile, tracks):
+    #     method = LOLA()
+    #     method.setQueryTrackFileNames([tracks[8]])
+    #     method.setRestrictedAnalysisUniverse(RestrictedThroughInclusion(tracks[0]))
+    #     method.setManualParam('trackIndex', 'LOLACore_170206')
+    #     method.setManualParam('genome', 'hg19')
+    #     method.setManualParam('trackCollection', 'codex')
+    #     method.preserveClumping(False)
+    #     runAllMethodsInSequence([method])
+    #     self._printResultFiles(method, ['stderr', 'stdout', 'output'])
 
     def testGoShifter(self, chrLenFile, tracks):
         method = GoShifter()
