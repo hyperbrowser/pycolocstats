@@ -133,3 +133,6 @@ class GiggleResults(object):
     def __repr__(self):
         firstLine = "#file	file_size	overlaps	odds_ratio	fishers_two_tail	fishers_left_tail	fishers_rigth_tail	combo_score"
         return "\n".join([firstLine] + self.getResults().values())
+
+    def setGenomeName(self, genomeName):
+        pass

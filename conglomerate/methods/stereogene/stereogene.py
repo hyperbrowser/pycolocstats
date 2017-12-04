@@ -79,3 +79,6 @@ class StereoGene(OneVsOneMethod):
     def getResults(self):
         return self._results
 
+
+    def setGenomeName(self, genomeName):
+        pass

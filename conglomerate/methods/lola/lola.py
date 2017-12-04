@@ -84,3 +84,6 @@ class LOLA(OneVsManyMethod):
 
     def setHeterogeneityPreservation(self, preservationScheme, fn=None):
         pass
+
+    def setGenomeName(self, genomeName):
+        pass

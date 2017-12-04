@@ -77,6 +77,14 @@ class UniformInterface(object):
         pass
 
     @abstractmethod
+    def setGenomeName(self, genomeName):
+        pass
+
+    @abstractmethod
+    def setChromLenFileName(self, chrLenFn):
+        pass
+
+    @abstractmethod
     def setQueryTrackFileNames(self, trackFnList):
         """
         For pairwise analysis or one-against-many analysis, this would be a list of one filename
