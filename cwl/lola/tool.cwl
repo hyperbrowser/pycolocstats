@@ -65,12 +65,13 @@ requirements:
         entry: |-
           library("LOLA")
           library("GenomicRanges")
+          library("simpleCache")
           regionset_1 = readBed('$(inputs.userset.basename)')
           userset = GRanges(regionset_1)
           regionset_2 = readBed('$(inputs.useruniverse.basename)')
           useruniverse = GRanges(regionset_2)
           # use this for loading LOLACore_170206 collection:
-          # regionDB = loadRegionDB('/root/$(inputs.tracksName)/$(inputs.tracksGenome)/', '$(inputs.tracksCollection)')
+          # regionDB = loadRegionDB(dbLocation='/regiondb/LOLACore_170206/hg19/', collections=c('codex'))
           regionDB = loadRegionDB('regiondb')
           locResults = runLOLA(userset, useruniverse, regionDB, minOverlap = $(inputs.minOverlap ? inputs.minOverlap : 1), cores = $(inputs.cores ? inputs.cores : 1), redefineUserSets = $(inputs.redefineUserSets ? inputs.redefineUserSets.toString().toUpperCase() : 'FALSE'))
           print(locResults)
