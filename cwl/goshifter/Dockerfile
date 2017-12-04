@@ -13,6 +13,6 @@ RUN pip install bx-python numpy
 
 WORKDIR /root
 
-RUN git clone https://github.com/immunogenomics/goshifter.git
+RUN git clone https://github.com/hyperbrowser/goshifter.git
 
 WORKDIR goshifter
