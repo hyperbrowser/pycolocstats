@@ -16,7 +16,8 @@ RUN echo "r <- getOption('repos'); r['CRAN'] <- 'http://cran.us.r-project.org'; 
 RUN Rscript -e "source('http://bioconductor.org/biocLite.R')" \
 -e "biocLite('LOLA')"
 
-RUN Rscript -e "install.packages('reshape2')"
+RUN Rscript -e "install.packages('reshape2')" \
+-e "install.packages('simpleCache')"
 
 RUN mkdir /regiondb && \
 wget http://cloud.databio.org.s3.amazonaws.com/regiondb/LOLACore_170206.tgz -O /regiondb/LOLACore_170206.tgz && \
