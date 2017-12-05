@@ -79,12 +79,11 @@ requirements:
             if (inputs.regiondb != null) {
               return "regionDB = loadRegionDB('regiondb')";
             } else if (inputs.trackIndex != null && inputs.genome != null && inputs.trackCollection != null) {
-              return "loadRegionDB(dbLocation='/regiondb/" + inputs.trackIndex + "/" + inputs.genome + "', collections=c('" + inputs.trackCollection + "'))";
+              return "regionDB = loadRegionDB(dbLocation='/regiondb/" + inputs.trackIndex + "/" + inputs.genome + "', collections=c('" + inputs.trackCollection + "'))";
             } else {
               throw 'You should specify either regiondb or reference collection!';
             }
           }
-          regionDB = loadRegionDB('regiondb')
           locResults = runLOLA(userset, useruniverse, regionDB, minOverlap = $(inputs.minOverlap ? inputs.minOverlap : 1), cores = $(inputs.cores ? inputs.cores : 1), redefineUserSets = $(inputs.redefineUserSets ? inputs.redefineUserSets.toString().toUpperCase() : 'FALSE'))
           print(locResults)
           writeCombinedEnrichment(locResults, outFolder= "lolaResults", includeSplits=TRUE)
