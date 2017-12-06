@@ -19,14 +19,17 @@ class StereoGene(OneVsOneMethod):
     def _setDefaultParamValues(self):
         self._params['tracks'] = []
 
+    def setGenomeName(self, genomeName):
+        pass
+
+    def setChromLenFileName(self, chromLenFileName):
+        self._params['chrom'] = chromLenFileName
+
     def _setQueryTrackFileName(self, trackFn):
         self._params['tracks'] += [trackFn]
 
     def _setReferenceTrackFileName(self, trackFn):
         self._params['tracks'] += [trackFn]
-
-    def setChromLenFileName(self, chromLenFileName):
-        self._params['chrom'] = chromLenFileName
 
     def setAllowOverlaps(self, allowOverlaps):
         assert allowOverlaps is True
@@ -81,7 +84,3 @@ class StereoGene(OneVsOneMethod):
 
     def getResults(self):
         return self._results
-
-
-    def setGenomeName(self, genomeName):
-        pass

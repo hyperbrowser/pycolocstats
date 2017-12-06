@@ -13,15 +13,18 @@ class GenometriCorr(OneVsOneMethod):
     def _setDefaultParamValues(self):
         pass
 
+    def setGenomeName(self, genomeName):
+        pass
+
+    def setChromLenFileName(self, chromLenFileName):
+        self._params['chromosomes_length'] = chromLenFileName
+        # TODO: Replace '\t' with '='
+
     def _setQueryTrackFileName(self, trackFn):
         self._params['query'] = trackFn
 
     def _setReferenceTrackFileName(self, trackFn):
         self._params['reference'] = trackFn
-
-    def setChromLenFileName(self, chromLenFileName):
-        self._params['chromosomes_length'] = chromLenFileName
-        # TODO: Replace '\t' with '='
 
     def setAllowOverlaps(self, allowOverlaps):
         assert allowOverlaps is True
@@ -49,7 +52,3 @@ class GenometriCorr(OneVsOneMethod):
 
     def setHeterogeneityPreservation(self, preservationScheme, fn=None):
         pass
-
-    def setGenomeName(self, genomeName):
-        pass
-

@@ -16,14 +16,17 @@ class LOLA(OneVsManyMethod):
     def _setDefaultParamValues(self):
         pass
 
+    def setGenomeName(self, genomeName):
+        pass
+
+    def setChromLenFileName(self, chromLenFileName):
+        pass
+
     def _setQueryTrackFileName(self, trackFn):
         self.setManualParam('userset', trackFn)
 
     def _setReferenceTrackFileNames(self, trackFnList):
         self.setManualParam('regiondb', trackFnList)
-
-    def setChromLenFileName(self, chromLenFileName):
-        pass
 
     def setAllowOverlaps(self, allowOverlaps):
         assert allowOverlaps is True
@@ -87,7 +90,4 @@ class LOLA(OneVsManyMethod):
         pass
 
     def setHeterogeneityPreservation(self, preservationScheme, fn=None):
-        pass
-
-    def setGenomeName(self, genomeName):
         pass

@@ -1,31 +1,28 @@
 from __future__ import absolute_import, division, print_function, unicode_literals
 
-from conglomerate.methods.method import Method
+from conglomerate.methods.method import OneVsOneMethod
 from conglomerate.tools.constants import GOSHIFTER_TOOL_NAME
 
 __metaclass__ = type
 
 
-class GoShifter(Method):
+class GoShifter(OneVsOneMethod):
     def _getToolName(self):
         return GOSHIFTER_TOOL_NAME
 
     def _setDefaultParamValues(self):
         pass
 
-    def setQueryTrackFileNames(self, trackFnList):
-        "For pairwise analysis or one-against-many analysis, this would be a list of one filename"
-        pass
-
-    def setReferenceTrackFileNames(self, trackFnList):
-        "For pairwise analysis, this would be a list of one filename"
-        pass
-
-    def setTrackFileNames(self, trackFnList):
-        assert len(trackFnList) == 2
+    def setGenomeName(self, genomeName):
         pass
 
     def setChromLenFileName(self, chromLenFileName):
+        pass
+
+    def _setQueryTrackFileName(self, trackFn):
+        pass
+
+    def _setReferenceTrackFileName(self, trackFn):
         pass
 
     def setAllowOverlaps(self, allowOverlaps):
@@ -53,7 +50,4 @@ class GoShifter(Method):
         pass
 
     def setHeterogeneityPreservation(self, preservationScheme, fn=None):
-        pass
-
-    def setGenomeName(self, genomeName):
         pass

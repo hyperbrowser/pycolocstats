@@ -20,12 +20,8 @@ class Giggle(OneVsManyMethod):
     def _setDefaultParamValues(self):
         self.setManualParam('search_s', True)
 
-    def _setQueryTrackFileName(self, trackFn):
-        self.qTrackFn = trackFn
-        self._params['search_q'] = trackFn
-
-    def _setReferenceTrackFileNames(self, trackFnList):
-        self._params['index_i'] = trackFnList
+    def setGenomeName(self, genomeName):
+        pass
 
     def setChromLenFileName(self, chromLenFileName):
         genomeLength = 0
@@ -40,6 +36,13 @@ class Giggle(OneVsManyMethod):
                         raise ValueError(line)
         if genomeLength:
             self.setManualParam('search_g', genomeLength)
+
+    def _setQueryTrackFileName(self, trackFn):
+        self.qTrackFn = trackFn
+        self._params['search_q'] = trackFn
+
+    def _setReferenceTrackFileNames(self, trackFnList):
+        self._params['index_i'] = trackFnList
 
     def setAllowOverlaps(self, allowOverlaps):
         assert allowOverlaps is True
@@ -133,6 +136,3 @@ class GiggleResults(object):
     def __repr__(self):
         firstLine = "#file	file_size	overlaps	odds_ratio	fishers_two_tail	fishers_left_tail	fishers_rigth_tail	combo_score"
         return "\n".join([firstLine] + self.getResults().values())
-
-    def setGenomeName(self, genomeName):
-        pass

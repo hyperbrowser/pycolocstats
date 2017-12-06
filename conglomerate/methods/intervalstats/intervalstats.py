@@ -16,11 +16,8 @@ class IntervalStats(OneVsOneMethod):
     def _setDefaultParamValues(self):
         pass
 
-    def _setQueryTrackFileName(self, trackFn):
-        self._params['q'] = trackFn
-
-    def _setReferenceTrackFileName(self, trackFn):
-        self._params['r'] = trackFn
+    def setGenomeName(self, genomeName):
+        pass
 
     def setChromLenFileName(self, chromLenFileName):
         contents = []
@@ -42,6 +39,12 @@ class IntervalStats(OneVsOneMethod):
         # chr11	0	135006516
         # ...
         # etc
+
+    def _setQueryTrackFileName(self, trackFn):
+        self._params['q'] = trackFn
+
+    def _setReferenceTrackFileName(self, trackFn):
+        self._params['r'] = trackFn
 
     def setAllowOverlaps(self, allowOverlaps):
         assert allowOverlaps is True
@@ -83,7 +86,4 @@ class IntervalStats(OneVsOneMethod):
         pass
 
     def setHeterogeneityPreservation(self, preservationScheme, fn=None):
-        pass
-
-    def setGenomeName(self, genomeName):
         pass

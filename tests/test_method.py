@@ -38,40 +38,38 @@ def chrLenFile():
 
 @pytest.mark.usefixtures('chrLenFile', 'tracks')
 class TestMethods(object):
-    def testUnified(self, tracks, chrLenFile):
-        #define tracks and methods (will in real runs come in from GUI)
-        queryTrack = [tracks[0]]
-        refTracks = [tracks[1], tracks[2]]
-        methodClasses = [GenometriCorr, StereoGene]
-
-        #create selections (will in real runs come in from GUI)
-        allowOverlapChoiceList = [('setAllowOverlaps',False), ('setAllowOverlaps',True)]
-        preserveClumpingChoiceList = [('preserveClumping',False), ('preserveClumping',True)]
-        chrLenList = [('setChromLenFileName',chrLenFile)]
-        selectionsValues = [allowOverlapChoiceList, preserveClumpingChoiceList,chrLenList]
-
-
-        workingMethodObject = []
-        multiChoiceList = product(*selectionsValues)
-        for choiceTupleList in multiChoiceList:
-            for methodClass in methodClasses:
-                try:
-                    currMethod = MultiMethod(methodClass, queryTrack, refTracks)
-                    for methodName, choice in choiceTupleList:
-                        if isinstance(choice, list):
-                            getattr(currMethod, methodName)(*choice)
-                        else:
-                            getattr(currMethod, methodName)(choice)
-                except Exception as e:
-                    print(e)
-                    continue
-                workingMethodObject.append(currMethod)
-        print(len(workingMethodObject), workingMethodObject)
-
-        runAllMethodsInSequence(workingMethodObject)
-        for workingMethod in workingMethodObject:
-            self._printResultFiles(workingMethod, ['stderr', 'stdout', 'output'])
-
+    # def testUnified(self, tracks, chrLenFile):
+    #     #define tracks and methods (will in real runs come in from GUI)
+    #     queryTrack = [tracks[0]]
+    #     refTracks = [tracks[1], tracks[2]]
+    #     methodClasses = [GenometriCorr, StereoGene]
+    #
+    #     #create selections (will in real runs come in from GUI)
+    #     allowOverlapChoiceList = [('setAllowOverlaps',False), ('setAllowOverlaps',True)]
+    #     preserveClumpingChoiceList = [('preserveClumping',False), ('preserveClumping',True)]
+    #     chrLenList = [('setChromLenFileName',chrLenFile)]
+    #     selectionsValues = [allowOverlapChoiceList, preserveClumpingChoiceList,chrLenList]
+    #
+    #     workingMethodObject = []
+    #     multiChoiceList = product(*selectionsValues)
+    #     for choiceTupleList in multiChoiceList:
+    #         for methodClass in methodClasses:
+    #             try:
+    #                 currMethod = MultiMethod(methodClass, queryTrack, refTracks)
+    #                 for methodName, choice in choiceTupleList:
+    #                     if isinstance(choice, list):
+    #                         getattr(currMethod, methodName)(*choice)
+    #                     else:
+    #                         getattr(currMethod, methodName)(choice)
+    #             except Exception as e:
+    #                 print(e)
+    #                 continue
+    #             workingMethodObject.append(currMethod)
+    #     print(len(workingMethodObject), workingMethodObject)
+    #
+    #     runAllMethodsInSequence(workingMethodObject)
+    #     for workingMethod in workingMethodObject:
+    #         self._printResultFiles(workingMethod, ['stderr', 'stdout', 'output'])
 
     def testGenometriCorr(self, chrLenFile, tracks):
         method = GenometriCorr()
@@ -94,7 +92,6 @@ class TestMethods(object):
         runAllMethodsInSequence([method])
         self._printResultFiles(method, ['stderr', 'stdout', 'output'])
         self._assertMethodResultsSize(1, method)
-
 
     def testStereoGeneOneVsMulti(self, chrLenFile, tracks):
         refTracks = [tracks[2], tracks[3]]

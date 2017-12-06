@@ -13,10 +13,13 @@ class MultiMethodAbstractMethodsMixin(object):
     def _setDefaultParamValues(self):
         raise AbstractMethodError()
 
-    def setPredefinedTrackIndexAndCollection(self, trackIndex, trackCollection):
+    def setGenomeName(self, genomeName):
         raise AbstractMethodError()
 
     def setChromLenFileName(self, chromLenFile):
+        raise AbstractMethodError()
+
+    def setPredefinedTrackIndexAndCollection(self, trackIndex, trackCollection):
         raise AbstractMethodError()
 
     def setAllowOverlaps(self, allowOverlaps):
