@@ -8,8 +8,9 @@ baseCommand:
 inputs:
   index_i:
     type:
-      type: array
-      items: File
+      - "null"
+      - type: array
+        items: File
   index_o:
     type: string
   index_s:
@@ -34,6 +35,13 @@ inputs:
   search_l:
     type: boolean?
 
+  trackIndex:
+    type: string?
+  genome:
+    type: string?
+  trackCollection:
+    type: string?
+
 outputs:
   stdout:
     type: stdout
@@ -55,11 +63,17 @@ requirements:
         entry: |-
           mkdir input_files
           cp ${
-            var files = '';
-            for (var i = 0; i < inputs.index_i.length; i++) {
-              files += inputs.index_i[i].path + ' ';
+            if (inputs.index_i != null) {
+              var files = '';
+              for (var i = 0; i < inputs.index_i.length; i++) {
+                files += inputs.index_i[i].path + ' ';
+              }
+              return files;
+            } else if (inputs.trackIndex != null && inputs.genome != null && inputs.trackCollection != null) {
+              return '/regiondb/' + inputs.trackIndex + '/' + inputs.genome + '/' + inputs.trackCollection + '/regions/*';
+            } else {
+              throw 'You should specify either index_i or reference collection!';
             }
-            return files;
           } input_files/
           /root/giggle/bin/giggle index \\\
           -o $(inputs.index_o) \\\

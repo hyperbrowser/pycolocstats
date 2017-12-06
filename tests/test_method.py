@@ -137,7 +137,7 @@ class TestMethods(object):
         runAllMethodsInSequence([method])
         self._printResultFiles(method, ['stderr', 'stdout', 'output'])
 
-    def testGiggle(self, chrLenFile, tracks):
+    def testGiggleDynamic(self, chrLenFile, tracks):
         method = Giggle()
         method.setQueryTrackFileNames([tracks[9]])
         refTracks = [tracks[5], tracks[11], tracks[12]]
@@ -148,6 +148,18 @@ class TestMethods(object):
         runAllMethodsInSequence([method])
         self._printResultFiles(method, ['stderr', 'stdout', 'output'])
         self._assertMethodResultsSize(len(refTracks), method)
+
+    def testGiggleReference(self, chrLenFile, tracks):
+        method = Giggle()
+        method.setQueryTrackFileNames([tracks[9]])
+        method.setManualParam('trackIndex', 'LOLACore_170206')
+        method.setManualParam('genome', 'hg19')
+        method.setManualParam('trackCollection', 'codex')
+        method.setChromLenFileName(chrLenFile)
+        method.setManualParam('index_o', 'index')
+        method.setManualParam('search_i', 'index')
+        runAllMethodsInSequence([method])
+        self._printResultFiles(method, ['stderr', 'stdout', 'output'])
 
     def testGiggleMultiManyVsMany(self, chrLenFile, tracks):
         refTracks = [tracks[11], tracks[12]]
