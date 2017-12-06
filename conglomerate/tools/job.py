@@ -1,7 +1,13 @@
+from __future__ import absolute_import, division, print_function, unicode_literals
+from future.standard_library import install_aliases
+install_aliases()
+
 import cwltool
-import urllib
+from urllib.parse import urlparse
 
 from conglomerate.tools.types import PathStr, PathStrList
+
+__metaclass__ = type
 
 
 class Job(object):
@@ -24,7 +30,7 @@ class Job(object):
         assert isinstance(toolResults, dict)
         for key, fileinfo in toolResults.items():
             assert isinstance(fileinfo, dict)
-            parsedLocation = urllib.parse.urlparse(fileinfo['location'])
+            parsedLocation = urlparse(fileinfo['location'])
             assert parsedLocation.scheme == 'file'
             resultFilesDict[key] = parsedLocation.path
         return resultFilesDict

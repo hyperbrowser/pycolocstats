@@ -1,4 +1,4 @@
-from numbers import Number
+from __future__ import absolute_import, division, print_function, unicode_literals
 
 import cwltool.factory
 import docker
@@ -7,6 +7,9 @@ import yaml
 
 from conglomerate.tools.jobparamsdict import JobParamsDict
 from conglomerate.tools.types import PathStr, PathStrList
+from numbers import Number
+
+__metaclass__ = type
 
 
 class Tool(object):
@@ -24,6 +27,7 @@ class Tool(object):
             self._cwlTool = self._cwlToolFactory.make(self._getCWLFilePath())
             self._cwlTool.factory.execkwargs['use_container'] = True
             self._cwlTool.factory.execkwargs['no_read_only'] = True
+            self._cwlTool.factory.execkwargs['tmpdir_prefix'] = 'tmp'
         return self._cwlTool
 
     def _getDockerImagePullInfo(self):

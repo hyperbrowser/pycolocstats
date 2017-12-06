@@ -1,5 +1,9 @@
+from __future__ import absolute_import, division, print_function, unicode_literals
+
 from conglomerate.methods.multimethod import MultiMethod
 from conglomerate.tools.util import deleteAllTmpFiles
+
+__metaclass__ = type
 
 
 def runAllMethodsInSequence(methods):

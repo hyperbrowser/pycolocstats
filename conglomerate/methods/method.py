@@ -1,10 +1,14 @@
-from abc import ABCMeta, abstractmethod
+from __future__ import absolute_import, division, print_function, unicode_literals
 
+from future.utils import with_metaclass
+from abc import ABCMeta, abstractmethod
 from conglomerate.methods.interface import UniformInterface
-from conglomerate.methods.typecheck import takes
+# from conglomerate.methods.typecheck import takes
 from conglomerate.tools.exceptions import MissingMandatoryParameters
 from conglomerate.tools.job import Job
 from conglomerate.tools.tool import Tool
+
+__metaclass__ = type
 
 
 class Method(UniformInterface):
@@ -36,9 +40,7 @@ class Method(UniformInterface):
         return self._resultFilesDict
 
 
-class SingleQueryTrackMethodMixin(object):
-    __metaclass__ = ABCMeta
-
+class SingleQueryTrackMethodMixin(with_metaclass(ABCMeta, object)):
     def setQueryTrackFileNames(self, trackFnList):
         assert len(trackFnList) == 1
         self._setQueryTrackFileName(trackFnList[0])
@@ -48,9 +50,7 @@ class SingleQueryTrackMethodMixin(object):
         pass
 
 
-class SingleReferenceTrackMethodMixin(object):
-    __metaclass__ = ABCMeta
-
+class SingleReferenceTrackMethodMixin(with_metaclass(ABCMeta, object)):
     def setReferenceTrackFileNames(self, trackFnList):
         assert len(trackFnList) == 1
         self._setReferenceTrackFileName(trackFnList[0])
@@ -59,10 +59,11 @@ class SingleReferenceTrackMethodMixin(object):
     def _setReferenceTrackFileName(self, trackFn):
         pass
 
+    def setPredefinedTrackIndexAndCollection(self, trackIndex, trackCollection):
+        pass
 
-class MultipleQueryTracksMethodMixin(object):
-    __metaclass__ = ABCMeta
 
+class MultipleQueryTracksMethodMixin(with_metaclass(ABCMeta, object)):
     def setQueryTrackFileNames(self, trackFnList):
         assert len(trackFnList) > 0
         self._setQueryTrackFileNames(trackFnList)
@@ -72,9 +73,7 @@ class MultipleQueryTracksMethodMixin(object):
         pass
 
 
-class MultipleReferenceTracksMethodMixin(object):
-    __metaclass__ = ABCMeta
-
+class MultipleReferenceTracksMethodMixin(with_metaclass(ABCMeta, object)):
     def setReferenceTrackFileNames(self, trackFnList):
         assert len(trackFnList) > 0
         self._setReferenceTrackFileNames(trackFnList)
@@ -83,14 +82,15 @@ class MultipleReferenceTracksMethodMixin(object):
     def _setReferenceTrackFileNames(self, trackFnList):
         pass
 
+    def setPredefinedTrackIndexAndCollection(self, trackIndex, trackCollection):
+        pass
 
-class CollectionReferenceTracksMethodMixin(object):
-    __metaclass__ = ABCMeta
 
+class CollectionReferenceTracksMethodMixin(with_metaclass(ABCMeta, object)):
     def setReferenceTrackFileNames(self, trackFnList):
         assert len(trackFnList) == 0
 
-    @takes(str, str)
+    # @takes(str, str)
     def setPredefinedTrackIndexAndCollection(self, trackIndex, trackCollection):
         self._setPredefinedTrackIndexAndCollection(trackIndex, trackCollection)
 
@@ -102,28 +102,28 @@ class CollectionReferenceTracksMethodMixin(object):
 class OneVsOneMethod(SingleQueryTrackMethodMixin,
                      SingleReferenceTrackMethodMixin,
                      Method):
-    __metaclass__ = ABCMeta
+    pass
 
 
 class OneVsManyMethod(SingleQueryTrackMethodMixin,
                       MultipleReferenceTracksMethodMixin,
                       Method):
-    __metaclass__ = ABCMeta
+    pass
 
 
 class ManyVsManyMethod(MultipleQueryTracksMethodMixin,
                        MultipleReferenceTracksMethodMixin,
                        Method):
-    __metaclass__ = ABCMeta
+    pass
 
 
 class OneVsCollectionMethod(SingleQueryTrackMethodMixin,
                             CollectionReferenceTracksMethodMixin,
                             Method):
-    __metaclass__ = ABCMeta
+    pass
 
 
 class ManyVsCollectionsMethod(MultipleQueryTracksMethodMixin,
                               CollectionReferenceTracksMethodMixin,
                               Method):
-    __metaclass__ = ABCMeta
+    pass

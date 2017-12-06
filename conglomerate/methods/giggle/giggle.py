@@ -1,11 +1,14 @@
+from __future__ import absolute_import, division, print_function, unicode_literals
+
 from collections import OrderedDict
 
 from conglomerate.methods.method import OneVsManyMethod
 from conglomerate.tools.constants import GIGGLE_TOOL_NAME
 
+__metaclass__ = type
+
 
 class Giggle(OneVsManyMethod):
-
     def __init__(self):
         self.qTrackFn = None
         self._parsedResults = None
@@ -37,7 +40,6 @@ class Giggle(OneVsManyMethod):
                         raise ValueError(line)
         if genomeLength:
             self.setManualParam('search_g', genomeLength)
-
 
     def setAllowOverlaps(self, allowOverlaps):
         assert allowOverlaps is True
@@ -77,7 +79,6 @@ class Giggle(OneVsManyMethod):
 
 
 class GiggleResult(object):
-
     def __init__(self, qFilePath, filePath, fileSize, overlaps, oddsRatio, pvalTwoTail, pvalLeftTail, pvalRightTail, comboScore):
         self.qFileName = self._getFileNameFromPath(qFilePath)
         self.qFilePath = qFilePath
@@ -108,7 +109,6 @@ class GiggleResult(object):
 
 
 class GiggleResults(object):
-
     def __init__(self):
         self._results = OrderedDict()
 

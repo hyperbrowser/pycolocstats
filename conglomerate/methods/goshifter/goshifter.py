@@ -1,5 +1,9 @@
+from __future__ import absolute_import, division, print_function, unicode_literals
+
 from conglomerate.methods.method import Method
 from conglomerate.tools.constants import GOSHIFTER_TOOL_NAME
+
+__metaclass__ = type
 
 
 class GoShifter(Method):
@@ -38,7 +42,6 @@ class GoShifter(Method):
 
     def getFullResults(self):
         pass
-
 
     def preserveClumping(self, preserve):
         pass

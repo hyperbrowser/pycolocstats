@@ -1,63 +1,76 @@
+from __future__ import absolute_import, division, print_function, unicode_literals
+
 from abc import ABCMeta, abstractmethod
-from conglomerate.methods.typecheck import takes, one_of
+from future.utils import with_metaclass
+# from conglomerate.methods.typecheck import takes, one_of
+
+__metaclass__ = type
 
 
-class ColocMeasure:
-    __metaclass__ = ABCMeta
+class ColocMeasure(with_metaclass(ABCMeta, object)):
+    pass
 
 
 class ColocMeasureOverlap(ColocMeasure):
-    @takes("ColocMeasureOverlap", bool, bool, int, int)
+    # @takes("ColocMeasureOverlap", bool, bool, int, int)
     def __init__(self, includeFlanks, countWholeIntervals, flankSizeUpstream, flankSizeDownstream):
         self._includeFlanks = includeFlanks
         self._countWholeIntervals = countWholeIntervals
         self._flankSizeUpstream = flankSizeUpstream
         self._flankSizeDownstream = flankSizeDownstream
 
+
 class ColocMeasureProximity(ColocMeasure):
-    @takes("ColocMeasureProximity", one_of('start','midpoint','end','closest'), bool)
+    # @takes("ColocMeasureProximity", one_of('start','midpoint','end','closest'), bool)
     def __init__(self, proximityAnchor, isGeometricDistance):
         self._proximityAnchor = proximityAnchor
         self._isGeometricDistance = isGeometricDistance
 
+
 class ColocMeasureCorrelation(ColocMeasure):
-    @takes("ColocMeasureCorrelation", one_of('genome-wide', 'fine-scale', 'local'))
+    # @takes("ColocMeasureCorrelation", one_of('genome-wide', 'fine-scale', 'local'))
     def __init__(self, typeOfCorrelation):
         self._typeOfCorrelation = typeOfCorrelation
 
 
-class RestrictedAnalysisUniverse:
-    __metaclass__ = ABCMeta
+class RestrictedAnalysisUniverse(with_metaclass(ABCMeta, object)):
+    pass
+
 
 class RestrictedThroughInclusion(RestrictedAnalysisUniverse):
     def __init__(self, path):
         self.path = path
 
+
 class RestrictedThroughExclusion(RestrictedAnalysisUniverse):
     def __init__(self, path):
         pass
+
 
 class RestrictedThroughPreDefined(RestrictedAnalysisUniverse):
     def __init__(self, path):
         pass
 
-class ConfounderHandlerSpec():
-    __metaclass__ = ABCMeta
+
+class ConfounderHandlerSpec(with_metaclass(ABCMeta, object)):
+    pass
+
 
 class ConfounderHandlerPoisson(ConfounderHandlerSpec):
-    def __init__(self,intensityFn):
+    def __init__(self, intensityFn):
         pass
 
+
 class ConfounderHandlerPartialCorrelation(ConfounderHandlerSpec):
-    def __init__(self,confounderFn):
+    def __init__(self, confounderFn):
         pass
+
 
 class ConfounderHandlerStratifiedSampling(ConfounderHandlerSpec):
     pass
 
-class UniformInterface(object):
-    __metaclass__ = ABCMeta
 
+class UniformInterface(with_metaclass(ABCMeta, object)):
     @abstractmethod
     def _getToolName(self):
         """
@@ -99,7 +112,7 @@ class UniformInterface(object):
         pass
 
     @abstractmethod
-    @takes(str, str)
+    # @takes(str, str)
     def setPredefinedTrackIndexAndCollection(self, trackIndex, trackCollection):
         pass
 
@@ -112,12 +125,12 @@ class UniformInterface(object):
         pass
 
     @abstractmethod
-    @takes("UniformInterface", ColocMeasure)
+    # @takes("UniformInterface", ColocMeasure)
     def setColocMeasure(self, colocMeasure):
         pass
 
     @abstractmethod
-    #@takes("UniformInterface", any([None, RestrictedAnalysisUniverse]))
+    ## @takes("UniformInterface", any([None, RestrictedAnalysisUniverse]))
     def setRestrictedAnalysisUniverse(self, restrictedAnalysisUniverse):
         pass
 
@@ -133,7 +146,7 @@ class UniformInterface(object):
     PRESERVE_HETEROGENEITY_WITHIN_SUPPLIED_REGIONS = '...'
 
     @abstractmethod
-    @takes("UniformInterface", bool)
+    # @takes("UniformInterface", bool)
     def preserveClumping(self, preserve):
         pass
 

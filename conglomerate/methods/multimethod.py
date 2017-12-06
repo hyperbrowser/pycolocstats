@@ -1,7 +1,53 @@
+from __future__ import absolute_import, division, print_function, unicode_literals
+
+from conglomerate.tools.exceptions import AbstractMethodError, ShouldNotOccurError
 from conglomerate.methods.method import Method, ManyVsManyMethod, OneVsOneMethod, OneVsManyMethod
 
+__metaclass__ = type
 
-class MultiMethod(Method):
+
+class MultiMethodAbstractMethodsMixin(object):
+    def _getToolName(self):
+        raise AbstractMethodError()
+
+    def _setDefaultParamValues(self):
+        raise AbstractMethodError()
+
+    def setPredefinedTrackIndexAndCollection(self, trackIndex, trackCollection):
+        raise AbstractMethodError()
+
+    def setChromLenFileName(self, chromLenFile):
+        raise AbstractMethodError()
+
+    def setAllowOverlaps(self, allowOverlaps):
+        raise AbstractMethodError()
+
+    def setColocMeasure(self, colocMeasure):
+        raise AbstractMethodError()
+
+    def setRestrictedAnalysisUniverse(self, restrictedAnalysisUniverse):
+        raise AbstractMethodError()
+
+    def setHeterogeneityPreservation(self, preservationScheme, fn=None):
+        raise AbstractMethodError()
+
+    def preserveClumping(self, preserve):
+        raise AbstractMethodError()
+
+    def _parseResultFiles(self):
+        raise AbstractMethodError()
+
+    def getPValue(self):
+        raise AbstractMethodError()
+
+    def getTestStatistic(self):
+        raise AbstractMethodError()
+
+    def getFullResults(self):
+        raise AbstractMethodError()
+
+
+class MultiMethod(MultiMethodAbstractMethodsMixin, Method):
     MEMBER_ATTRIBUTES = ['_methods']
 
     def __init__(self, methodCls, querytrackFnList, referencetrackFnList):
@@ -30,13 +76,13 @@ class MultiMethod(Method):
                 self._methods.append(method)
 
     def setQueryTrackFileNames(self, trackFnList):
-        raise NotImplementedError()
+        raise ShouldNotOccurError()
 
     def setReferenceTrackFileNames(self, trackFnList):
-        raise NotImplementedError()
+        raise ShouldNotOccurError()
 
     def setResultFilesDict(self, resultFilesDict):
-        raise NotImplementedError()
+        raise ShouldNotOccurError()
 
     def setResultFilesDictList(self, resultFilesDictList):
         assert len(resultFilesDictList) == len(self._methods)
@@ -44,13 +90,13 @@ class MultiMethod(Method):
             self._methods[i].setResultFilesDict(resultFilesDict)
 
     def getResultFilesDict(self):
-        raise NotImplementedError()
+        raise ShouldNotOccurError()
 
     def getResultFilesDictList(self):
         return [method.getResultFilesDict() for method in self._methods]
 
     def _getTool(self):
-        raise NotImplementedError()
+        raise ShouldNotOccurError()
 
     def __getattribute__(self, key):
         if key in MultiMethod.__dict__ or key in MultiMethod.MEMBER_ATTRIBUTES:

@@ -1,7 +1,11 @@
+from __future__ import absolute_import, division, print_function, unicode_literals
+
 from collections import OrderedDict
 
 from conglomerate.methods.method import OneVsOneMethod
 from conglomerate.tools.constants import STEREOGENE_TOOL_NAME
+
+__metaclass__ = type
 
 
 class StereoGene(OneVsOneMethod):
@@ -38,7 +42,6 @@ class StereoGene(OneVsOneMethod):
 
     def getFullResults(self):
         return open(self._resultFilesDict['stdout']).read()
-
 
     def preserveClumping(self, preserve):
         pass

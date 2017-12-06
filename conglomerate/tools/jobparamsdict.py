@@ -1,6 +1,11 @@
+from __future__ import absolute_import, division, print_function, unicode_literals
+
 import os
 
 from conglomerate.tools.types import PathStr, PathStrList
+from past.builtins import basestring
+
+__metaclass__ = type
 
 
 class JobParamsDict(dict):
@@ -14,12 +19,12 @@ class JobParamsDict(dict):
 
         allowedType = self.getType(key)
         if allowedType == PathStr:
-            assert isinstance(val, str), '"{}" not of correct type: {}'.format(val, str)
+            assert isinstance(val, basestring), '"{}" not of correct type: {}'.format(val, str)
             assert os.path.exists(val), 'File "{}" does not exist'.format(val)
             val = PathStr(val)
         elif allowedType == PathStrList:
             assert isinstance(val, list), '"{}" not of correct type: {}'.format(val, list)
-            assert all(isinstance(f, str) for f in val), \
+            assert all(isinstance(f, basestring) for f in val), \
                 'Some of the entries of "{}"  are not of correct type: {}'.format(val, str)
             assert all(os.path.exists(f) for f in val), \
                 'Some of the entries of "{}" do not exist'.format(val)

@@ -1,5 +1,10 @@
+from __future__ import absolute_import, division, print_function, unicode_literals
+
 import os
 from tempfile import mkstemp
+
+__metaclass__ = type
+
 
 TMP_FILENAME_STORAGE = []
 

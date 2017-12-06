@@ -1,8 +1,12 @@
+from __future__ import absolute_import, division, print_function, unicode_literals
+
 from os import path
 
 from conglomerate.methods.method import OneVsOneMethod
 from conglomerate.tools.constants import INTERVALSTATS_TOOL_NAME
 from conglomerate.tools.util import getTemporaryFileName
+
+__metaclass__ = type
 
 
 class IntervalStats(OneVsOneMethod):
@@ -43,7 +47,7 @@ class IntervalStats(OneVsOneMethod):
         assert allowOverlaps is True
 
     def _parseResultFiles(self):
-        #links to output files
+        # links to output files
         resultsFolderPath = path.join(self._resultFilesDict['output'],'output')
 
         self._pvals = {}
@@ -58,7 +62,6 @@ class IntervalStats(OneVsOneMethod):
                 self._pvals[(self._params['q'], self._params['r'])][newLine[0]] = newLine[6]
                 self._testStats[(self._params['q'], self._params['r'])][newLine[0]] = newLine[3]
 
-
     def getPValue(self):
         return self._pvals
 
@@ -70,7 +73,7 @@ class IntervalStats(OneVsOneMethod):
         return open(resultsFolderPath).read()
 
     def preserveClumping(self, preserve):
-        #not sure yet
+        # not sure yet
         assert preserve is False
 
     def setRestrictedAnalysisUniverse(self, restrictedAnalysisUniverse):

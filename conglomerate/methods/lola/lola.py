@@ -1,8 +1,12 @@
+from __future__ import absolute_import, division, print_function, unicode_literals
+
 import math
 
 from conglomerate.methods.interface import RestrictedThroughInclusion
 from conglomerate.methods.method import OneVsManyMethod
 from conglomerate.tools.constants import LOLA_TOOL_NAME
+
+__metaclass__ = type
 
 
 class LOLA(OneVsManyMethod):
