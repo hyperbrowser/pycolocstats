@@ -9,7 +9,7 @@ services:
 before_install:
   - docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
   - ./pull.sh
-  - travis_wait 20 ./build.sh
+  - ./build.sh
 
 install:
   - pip install -r requirements.txt
