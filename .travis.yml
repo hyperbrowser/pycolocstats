@@ -9,14 +9,16 @@ services:
 before_install:
   - docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
   - ./pull.sh
-  - ./build.sh
-  - ./push.sh
+  - travis_wait 20 ./build.sh
 
 install:
   - pip install -r requirements.txt
 
 script:
   - pytest -s
+
+after_success:
+  - ./push.sh
 
 after_script:
   - ls -la -R /tmp
