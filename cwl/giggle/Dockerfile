@@ -23,8 +23,7 @@ RUN mkdir /regiondb && \
 wget https://hyperbrowser.uio.no/hb/static/hyperbrowser/files/conglomerate/LOLACore_170206.tgz -O /regiondb/LOLACore_170206.tgz && \
 mkdir -p /regiondb/LOLACore_170206 && \
 tar xf /regiondb/LOLACore_170206.tgz -C /regiondb/LOLACore_170206 && \
-rm /regiondb/LOLACore_170206.tgz
-
-RUN mv /regiondb/LOLACore_170206/scratch/ns5bc/resources/regions/LOLACore/* /regiondb/LOLACore_170206/ && rm -rf /regiondb/LOLACore_170206/scratch/
-
-RUN find /regiondb/LOLACore_170206/ -name '*.bed' -type f -exec bgzip {} \;
+rm /regiondb/LOLACore_170206.tgz && \
+mv /regiondb/LOLACore_170206/scratch/ns5bc/resources/regions/LOLACore/* /regiondb/LOLACore_170206/ && \
+rm -rf /regiondb/LOLACore_170206/scratch/ && \
+find /regiondb/LOLACore_170206/ -name '*.bed' -type f -exec bgzip {} \;
