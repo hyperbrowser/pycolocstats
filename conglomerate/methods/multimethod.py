@@ -51,13 +51,14 @@ class MultiMethodAbstractMethodsMixin(object):
 
 
 class MultiMethod(MultiMethodAbstractMethodsMixin, Method):
-    MEMBER_ATTRIBUTES = ['_methods']
+    MEMBER_ATTRIBUTES = ['_methods','_methodCls','__repr__']
 
     def __init__(self, methodCls, querytrackFnList, referencetrackFnList):
         assert any(issubclass(methodCls, superCls)
                    for superCls in [OneVsOneMethod, OneVsManyMethod, ManyVsManyMethod])
 
         self._methods = []
+        self._methodCls = methodCls
 
         queryTracksInputs = [querytrackFnList]
         refTrackInputs = [referencetrackFnList]
@@ -108,6 +109,11 @@ class MultiMethod(MultiMethodAbstractMethodsMixin, Method):
             return CallableAttributeList([object.__getattribute__(self._methods[i], key)
                                           for i in range(len(self._methods))])
 
+    def __repr__(self):
+        if len(self._methods)>0:
+            return "MultiMethod of: " + repr(self._methods[0])
+        else:
+            return "Empty MultiMethod"
 
 class CallableAttributeList(list):
     def __call__(self, *args, **kwArgs):

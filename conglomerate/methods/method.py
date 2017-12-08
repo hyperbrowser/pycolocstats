@@ -39,6 +39,8 @@ class Method(UniformInterface):
     def getResultFilesDict(self):
         return self._resultFilesDict
 
+    def __repr__(self):
+        return self.__class__.__name__
 
 class SingleQueryTrackMethodMixin(with_metaclass(ABCMeta, object)):
     def setQueryTrackFileNames(self, trackFnList):
