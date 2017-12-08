@@ -99,7 +99,7 @@ requirements:
           conf_res <- run.config(config)
           print(conf_res)
 
-          res_df <- do.call(cbind,cpgi_to_genes)
+          res_df <- do.call(cbind,conf_res)
           output_rows <- c("query.population",
           "reference.population",
           "query.coverage",
