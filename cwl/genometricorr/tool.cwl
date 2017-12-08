@@ -99,7 +99,7 @@ requirements:
           conf_res <- run.config(config)
           print(conf_res)
 
-          res_df <- do.call(cbind,conf_res)
+          res_df <- do.call(cbind,cpgi_to_genes)
           output_rows <- c("query.population",
           "reference.population",
           "query.coverage",
@@ -120,7 +120,9 @@ requirements:
           "jaccard.measure.p.value",
           "jaccard.measure.lower.tail")
           new_res_df <- res_df[output_rows,]
-          final_res <- as.data.frame(cbind(rownames(new_res_df),new_res_df))
+          new_res <- apply(new_res_df,2,as.character)
+          final_res <- as.data.frame(cbind(rownames(new_res_df),new_res))
           colnames(final_res)[1] <- "genomet.arguments"
           write.table(final_res, "GenometriCorr_Output.txt",row.names=F,quote=F,sep='\t')
+
 
