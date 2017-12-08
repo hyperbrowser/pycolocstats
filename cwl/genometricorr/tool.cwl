@@ -98,8 +98,30 @@ requirements:
           config <- new("GenometriCorrConfig", "conf.ini")
           conf_res <- run.config(config)
           print(conf_res)
+
           res_df <- do.call(cbind,conf_res)
-          res_df <- as.data.frame(cbind(rownames(res_df),res_df))
-          colnames(res_df)[1] <- "genomet.arguments"
-          write.table(res_df, "GenometriCorr_Output.txt",row.names=F,quote=F,sep='\t')
+          output_rows <- c("query.population",
+          "reference.population",
+          "query.coverage",
+          "reference.coverage",
+          "relative.distances.ks.p.value",
+          "relative.distances.ecdf.deviation.area",
+          "relative.distances.ecdf.area.correlation",
+          "query.reference.intersection",
+          "query.reference.union",
+          "jaccard.measure",
+          "projection.test.p.value",
+          "projection.test.lower.tail",
+          "projection.test.obs.to.exp",
+          "scaled.absolute.min.distance.sum",
+          "reference.middles",
+          "relative.distances.ecdf.deviation.area.p.value",
+          "scaled.absolute.min.distance.sum.p.value",
+          "scaled.absolute.min.distance.sum.lower.tail",
+          "jaccard.measure.p.value",
+          "jaccard.measure.lower.tail")
+          new_res_df <- res_df[output_rows,]
+          final_res <- as.data.frame(cbind(rownames(new_res_df),new_res_df))
+          colnames(final_res)[1] <- "genomet.arguments"
+          write.table(final_res, "GenometriCorr_Output.txt",row.names=F,quote=F,sep='\t')
 
