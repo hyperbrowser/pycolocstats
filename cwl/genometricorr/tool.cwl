@@ -114,7 +114,6 @@ requirements:
           "projection.test.lower.tail",
           "projection.test.obs.to.exp",
           "scaled.absolute.min.distance.sum",
-          "reference.middles",
           "relative.distances.ecdf.deviation.area.p.value",
           "scaled.absolute.min.distance.sum.p.value",
           "scaled.absolute.min.distance.sum.lower.tail",
