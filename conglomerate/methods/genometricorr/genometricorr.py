@@ -7,6 +7,7 @@ __metaclass__ = type
 
 
 class GenometriCorr(OneVsOneMethod):
+
     def _getToolName(self):
         return GENOMETRICORR_TOOL_NAME
 
@@ -30,13 +31,29 @@ class GenometriCorr(OneVsOneMethod):
         assert allowOverlaps is True
 
     def _parseResultFiles(self):
-        pass
+        self._results = self._parseGenometricorrStdout(outputPath=self._resultFilesDict['stdout'])
+        print(self._results)
+
+    def _parseGenometricorrStdout(self, outputPath):
+        from collections import defaultdict
+        stdoutFile = outputPath
+        data = defaultdict(dict)
+        for line in open(stdoutFile):
+            cols = line.strip().split()
+            if len(cols) == 2:
+                regionNames = cols
+            elif len(cols) == 3:
+                data[cols[0]][regionNames[0]] = cols[1]
+                data[cols[0]][regionNames[1]] = cols[2]
+            # else:
+            #     raise AssertionError('Number of fields are not either two or three')
+        return data
 
     def getPValue(self):
-        pass
+        print(self._results['jaccard.measure.p.value']['awhole'])
 
     def getTestStatistic(self):
-        pass
+        print(self._results['jaccard.measure']['awhole'])
 
     def getFullResults(self):
         pass

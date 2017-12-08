@@ -98,3 +98,8 @@ requirements:
           config <- new("GenometriCorrConfig", "conf.ini")
           conf_res <- run.config(config)
           print(conf_res)
+          res_df <- do.call(cbind,conf_res)
+          res_df <- as.data.frame(cbind(rownames(res_df),res_df))
+          colnames(res_df)[1] <- "genomet.arguments"
+          write.table(res_df, "GenometriCorr_Output.txt",row.names=F,quote=F,sep='\t')
+
