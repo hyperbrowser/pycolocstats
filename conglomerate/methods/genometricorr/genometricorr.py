@@ -28,7 +28,7 @@ class GenometriCorr(OneVsOneMethod):
         self._params['reference'] = trackFn
 
     def setAllowOverlaps(self, allowOverlaps):
-        assert allowOverlaps is True
+        assert allowOverlaps is False
 
     def _parseResultFiles(self):
         self._results = self._parseGenometricorrStdout(outputPath=self._resultFilesDict['stdout'])
