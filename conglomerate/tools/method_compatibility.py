@@ -25,6 +25,6 @@ def getCompatibleMethodObjects(selectionsValues, queryTrack, refTracks, methodCl
     return workingMethodObjects
 
 def getCollapsedConfigurationsPerMethod(workingMethodObjects):
-    workingClasses = set([wmo._methodCls.__class__ for wmo in workingMethodObjects])
+    workingClasses = set([wmo._methodCls for wmo in workingMethodObjects])
     return [wc.__name__ + '(%i conf.)' % len([wmo for wmo in workingMethodObjects if wmo._methodCls.__class__ is wc])\
             for wc in workingClasses]
