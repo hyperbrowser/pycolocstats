@@ -5,7 +5,10 @@ from conglomerate.methods.multimethod import MultiMethod
 
 def getCompatibleMethodObjects(selectionsValues, queryTrack, refTracks, methodClasses):
     workingMethodObjects = []
-    multiChoiceList = product(*selectionsValues)
+    # print 'TEMP3: ', selectionsValues
+    # print 'TEMP4: ', [len(v) for v in selectionsValues]
+    multiChoiceList = list(product(*selectionsValues))
+    # print 'TEMP2', len(list(multiChoiceList)), len(list(methodClasses))
     for choiceTupleList in multiChoiceList:
         for methodClass in methodClasses:
             try:
@@ -15,11 +18,13 @@ def getCompatibleMethodObjects(selectionsValues, queryTrack, refTracks, methodCl
                         getattr(currMethod, methodName)(*choice)
                     else:
                         getattr(currMethod, methodName)(choice)
-            except Exception as e:
-                print(e)
+            except Exception, e:
+                print str(type(e)).replace('<','').replace('>',''), e
                 continue
             workingMethodObjects.append(currMethod)
     return workingMethodObjects
 
-def getCollapsedConfigurationsPerMethod():
-    pass
+def getCollapsedConfigurationsPerMethod(workingMethodObjects):
+    workingClasses = set([wmo._methodCls.__class__ for wmo in workingMethodObjects])
+    return [wc.__name__ + '(%i conf.)' % len([wmo for wmo in workingMethodObjects if wmo._methodCls.__class__ is wc])\
+            for wc in workingClasses]
