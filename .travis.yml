@@ -9,6 +9,7 @@ services:
 before_install:
   - docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
   - ./pull.sh
+  - docker images
   - ./build.sh
 
 install:
