@@ -86,7 +86,8 @@ class MultiMethod(MultiMethodAbstractMethodsMixin, Method):
         raise ShouldNotOccurError()
 
     def setResultFilesDict(self, resultFilesDict):
-        raise ShouldNotOccurError()
+        print 'TEMPdebug1: ', self._methodCls.__name__
+        raise ShouldNotOccurError(self._methodCls.__name__)
 
     def setResultFilesDictList(self, resultFilesDictList):
         assert len(resultFilesDictList) == len(self._methods)
@@ -95,8 +96,7 @@ class MultiMethod(MultiMethodAbstractMethodsMixin, Method):
             self._methods[i].setResultFilesDict(resultFilesDict)
 
     def getResultFilesDict(self):
-        print 'TEMPdebug1: ', self._methodCls.__name__
-        raise ShouldNotOccurError(self._methodCls.__name__)
+        raise ShouldNotOccurError()
 
     def getResultFilesDictList(self):
         return [method.getResultFilesDict() for method in self._methods]
