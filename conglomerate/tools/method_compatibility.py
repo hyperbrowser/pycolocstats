@@ -13,6 +13,7 @@ def getCompatibleMethodObjects(selectionsValues, queryTrack, refTracks, methodCl
         for methodClass in methodClasses:
             try:
                 currMethod = MultiMethod(methodClass, queryTrack, refTracks)
+                currMethod.annotatedChoices = choiceTupleList
                 for methodName, choice in choiceTupleList:
                     if isinstance(choice, list):
                         getattr(currMethod, methodName)(*choice)

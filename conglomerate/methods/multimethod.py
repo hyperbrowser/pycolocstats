@@ -51,7 +51,7 @@ class MultiMethodAbstractMethodsMixin(object):
 
 
 class MultiMethod(MultiMethodAbstractMethodsMixin, Method):
-    MEMBER_ATTRIBUTES = ['_methods','_methodCls','__repr__']
+    MEMBER_ATTRIBUTES = ['_methods','_methodCls','__repr__','annotatedChoices']
 
     def __init__(self, methodCls, querytrackFnList, referencetrackFnList):
         assert any(issubclass(methodCls, superCls)
@@ -86,13 +86,11 @@ class MultiMethod(MultiMethodAbstractMethodsMixin, Method):
         raise ShouldNotOccurError()
 
     def setResultFilesDict(self, resultFilesDict):
-        print('TEMPdebug1: ', self._methodCls.__name__)
         raise ShouldNotOccurError(self._methodCls.__name__)
 
     def setResultFilesDictList(self, resultFilesDictList):
         assert len(resultFilesDictList) == len(self._methods)
         for i, resultFilesDict in enumerate(resultFilesDictList):
-            print('TEMPdebug2 ',self._methods[i])
             self._methods[i].setResultFilesDict(resultFilesDict)
 
     def getResultFilesDict(self):
