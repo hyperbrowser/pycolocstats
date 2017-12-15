@@ -17,7 +17,7 @@ class IntervalStats(OneVsOneMethod):
         pass
 
     def setGenomeName(self, genomeName):
-        pass
+        assert genomeName is True
 
     def setChromLenFileName(self, chromLenFileName):
         contents = []
@@ -65,11 +65,23 @@ class IntervalStats(OneVsOneMethod):
                 self._pvals[(self._params['q'], self._params['r'])][newLine[0]] = newLine[6]
                 self._testStats[(self._params['q'], self._params['r'])][newLine[0]] = newLine[3]
 
+    def _parseIntervalStatsSummaryStat(self,threshold):
+        resultsFolderPath = path.join(self._resultFilesDict['output'], 'output')
+        mainOutput = resultsFolderPath
+        fullTable = [line.split() for line in open(mainOutput)]
+        pvals = []
+        for row in fullTable:
+            pval = row[6]
+            pvals.append(float(pval))
+        summaryStat = sum(pval <= threshold for pval in pvals) / float(len(pvals))
+        return summaryStat
+
     def getPValue(self):
         return self._pvals
 
     def getTestStatistic(self):
-        return self._testStats
+        #return self._testStats
+        summaryStat = self._parseIntervalStatsSummaryStat(threshold=0.05)
 
     def getFullResults(self):
         resultsFolderPath = path.join(self._resultFilesDict['output'], 'output')
@@ -86,4 +98,4 @@ class IntervalStats(OneVsOneMethod):
         pass
 
     def setHeterogeneityPreservation(self, preservationScheme, fn=None):
-        pass
+        assert preservationScheme is True
