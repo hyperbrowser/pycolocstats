@@ -15,7 +15,7 @@ class GenometriCorr(OneVsOneMethod):
         pass
 
     def setGenomeName(self, genomeName):
-        pass
+        assert genomeName is True
 
     def setChromLenFileName(self, chromLenFileName):
         self._params['chromosomes_length'] = chromLenFileName
@@ -31,32 +31,31 @@ class GenometriCorr(OneVsOneMethod):
         assert allowOverlaps is False
 
     def _parseResultFiles(self):
-        self._results = self._parseGenometricorrStdout(outputPath=self._resultFilesDict['stdout'])
-        print(self._results)
+        self._results = self._parseGenometricorrStdout()
 
-    def _parseGenometricorrStdout(self, outputPath):
+    def _parseGenometricorrStdout(self):
         from collections import defaultdict
-        stdoutFile = outputPath
-        data = defaultdict(dict)
-        for line in open(stdoutFile):
-            cols = line.strip().split()
-            if len(cols) == 2:
-                regionNames = cols
-            elif len(cols) == 3:
-                data[cols[0]][regionNames[0]] = cols[1]
-                data[cols[0]][regionNames[1]] = cols[2]
-            # else:
-            #     raise AssertionError('Number of fields are not either two or three')
+        resultsFolderPath = self._resultFilesDict['output']
+        mainOutput = resultsFolderPath + "/GenometriCorr_Output.txt"
+        fullTable = [line.split() for line in open(mainOutput)]
+        colheaders = fullTable[0][1:]
+        resultTable = fullTable[1:]
+        data = {}
+        for row in resultTable:
+            rowheader = row[0]
+            rowdata = row[1:]
+            rowdict = dict(zip(colheaders, rowdata))
+            data[rowheader] = rowdict
         return data
 
     def getPValue(self):
-        print(self._results['jaccard.measure.p.value']['awhole'])
+        return self._results['jaccard.measure.p.value']['awhole']
 
     def getTestStatistic(self):
-        print(self._results['jaccard.measure']['awhole'])
+        return self._results['jaccard.measure']['awhole']
 
     def getFullResults(self):
-        pass
+        return self._results
 
     def preserveClumping(self, preserve):
         pass
