@@ -16,6 +16,8 @@ def getCompatibleMethodObjects(selectionsValues, queryTrack, refTracks, methodCl
                 for methodName, choice in choiceTupleList:
                     if isinstance(choice, list):
                         getattr(currMethod, methodName)(*choice)
+                    elif isinstance(choice, dict):
+                            getattr(currMethod, methodName)(**choice)
                     else:
                         getattr(currMethod, methodName)(choice)
             except Exception, e:
