@@ -99,7 +99,6 @@ requirements:
           conf_res <- run.config(config)
           print(conf_res)
 
-          res_df <- do.call(cbind,conf_res)
           output_rows <- c("query.population",
           "reference.population",
           "query.coverage",
@@ -119,9 +118,11 @@ requirements:
           "scaled.absolute.min.distance.sum.lower.tail",
           "jaccard.measure.p.value",
           "jaccard.measure.lower.tail")
-          new_res_df <- res_df[output_rows,]
-          new_res <- apply(new_res_df,2,as.character)
-          final_res <- as.data.frame(cbind(rownames(new_res_df),new_res))
+          temp1 <- lapply(conf_res,function(x){x[output_rows]})
+          temp2 <- do.call(cbind,temp1)
+          temp3 <- as.data.frame(temp2)
+          new_res <- apply(temp3,2,as.character)
+          final_res <- as.data.frame(cbind(rownames(temp3),new_res))
           colnames(final_res)[1] <- "genomet.arguments"
           write.table(final_res, "GenometriCorr_Output.txt",row.names=F,quote=F,sep='\t')
 
