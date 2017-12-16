@@ -129,8 +129,6 @@ class TestMethods(object):
         refTracks = [tracks[5], tracks[11], tracks[12]]
         method.setReferenceTrackFileNames(refTracks)
         method.setChromLenFileName(chrLenFile)
-        method.setManualParam('index_o', 'index')
-        method.setManualParam('search_i', 'index')
         runAllMethodsInSequence([method])
         self._printResultFiles(method, ['stderr', 'stdout', 'output'])
         self._assertMethodResultsSize(len(refTracks), method)
@@ -142,8 +140,6 @@ class TestMethods(object):
         method.setManualParam('genome', 'hg19')
         method.setManualParam('trackCollection', 'codex')
         method.setChromLenFileName(chrLenFile)
-        method.setManualParam('index_o', 'index')
-        method.setManualParam('search_i', 'index')
         runAllMethodsInSequence([method])
         self._printResultFiles(method, ['stderr', 'stdout', 'output'])
 
@@ -151,8 +147,6 @@ class TestMethods(object):
         refTracks = [tracks[11], tracks[12]]
         qTracks = [tracks[9], tracks[10]]
         method = MultiMethod(Giggle, qTracks, refTracks)
-        method.setManualParam('index_o', 'index')
-        method.setManualParam('search_i', 'index')
         method.setChromLenFileName(chrLenFile)
         runAllMethodsInSequence([method])
         expectedResulstNr = len(qTracks) * len(refTracks)

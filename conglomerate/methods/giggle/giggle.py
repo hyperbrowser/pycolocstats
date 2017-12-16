@@ -19,6 +19,8 @@ class Giggle(OneVsManyMethod):
 
     def _setDefaultParamValues(self):
         self.setManualParam('search_s', True)
+        self.setManualParam('index_o', 'index')
+        self.setManualParam('search_i', 'index')
 
     def setGenomeName(self, genomeName):
         pass
