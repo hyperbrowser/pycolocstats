@@ -125,8 +125,8 @@ class TestMethods(object):
 
     def testGiggleDynamic(self, chrLenFile, tracks):
         method = Giggle()
-        method.setQueryTrackFileNames([tracks[9]])
-        refTracks = [tracks[5], tracks[11], tracks[12]]
+        method.setQueryTrackFileNames([tracks[0]])
+        refTracks = [tracks[1], tracks[11], tracks[12]]
         method.setReferenceTrackFileNames(refTracks)
         method.setChromLenFileName(chrLenFile)
         runAllMethodsInSequence([method])
