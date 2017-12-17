@@ -30,7 +30,7 @@ class JobParamsDict(dict):
                 'Some of the entries of "{}" do not exist'.format(val)
             val = PathStrList(val)
         else:
-            assert isinstance(val, allowedType), '"{}" not of correct type: {}'.format(val, allowedType)
+            assert isinstance(val, allowedType), '"{}" (type:{}) not of correct type: {}'.format(val, type(val), allowedType)
 
         super(JobParamsDict, self).__setitem__(key, val)
 
