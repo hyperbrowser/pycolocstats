@@ -27,3 +27,5 @@ rm /regiondb/LOLACore_170206.tgz && \
 mv /regiondb/LOLACore_170206/scratch/ns5bc/resources/regions/LOLACore/* /regiondb/LOLACore_170206/ && \
 rm -rf /regiondb/LOLACore_170206/scratch/ && \
 find /regiondb/LOLACore_170206/ -name '*.bed' -type f -exec bgzip {} \;
+
+RUN sed -i 's%#!/bin/sh%#!/bin/bash%g' ../scripts/sort_bed
