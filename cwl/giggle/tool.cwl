@@ -75,20 +75,18 @@ requirements:
               throw 'You should specify either index_i or reference collection!';
             }
           } input_files/
-          mkdir input_sorted
-          /root/giggle/bin/giggle/scripts/sort_bed "input_files/*.bed" input_sorted 4
+          /root/giggle/scripts/sort_bed "input_files/*bed" input_files
           /root/giggle/bin/giggle index \\\
           -o $(inputs.index_o) \\\
-          -i "input_sorted/*gz" \\\
+          -i "input_files/*gz" \\\
           $(inputs.index_s ? '-s' : '') \\\
           $(inputs.index_f ? '-f' : '')
 
-          mkdir search_sorted
-          /root/giggle/bin/giggle/scripts/sort_bed $(inputs.search_q.path) search_sorted
-          var search_sorted_path = 'search_sorted/' + $(inputs.search_q.path) + '.gz'
+          /root/giggle/scripts/sort_bed $(inputs.search_q.path) .
+          var search_sorted = $(inputs.search_q.path) + '.gz'
           /root/giggle/bin/giggle search \\\
           -i $(inputs.search_i) \\\
-          -q $(search_sorted_path) \\\
+          -q search_sorted \\\
           $(inputs.search_o ? '-o' : '') \\\
           $(inputs.search_c ? '-c' : '') \\\
           $(inputs.search_s ? '-s' : '') \\\
