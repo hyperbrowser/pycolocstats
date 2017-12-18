@@ -23,7 +23,7 @@ class Giggle(OneVsManyMethod):
         self.setManualParam('search_i', str('index'))
 
     def setGenomeName(self, genomeName):
-        assert genomeName == 'Human (hg19)'
+        assert genomeName == 'hg19'
 
     def setChromLenFileName(self, chromLenFileName):
         genomeLength = 0
@@ -68,7 +68,8 @@ class Giggle(OneVsManyMethod):
         return self._parsedResults.getResultsPerName('overlaps')
 
     def getFullResults(self):
-        return open(self.getResultFilesDict()['stdout']).read()
+        fullResults = open(self.getResultFilesDict()['stdout']).read()
+        return OrderedDict([(key,fullResults) for key in self._results.keys()])
 
     def preserveClumping(self, preserve):
         assert preserve is False

@@ -1,6 +1,7 @@
 from __future__ import absolute_import, division, print_function, unicode_literals
 
 import math
+from collections import OrderedDict
 
 from conglomerate.methods.interface import RestrictedThroughInclusion
 from conglomerate.methods.method import OneVsManyMethod
@@ -83,7 +84,8 @@ class LOLA(OneVsManyMethod):
     def getFullResults(self):
         resultsFolderPath = self._resultFilesDict['output']
         mainOutput = resultsFolderPath + '/lolaResults/allEnrichments.tsv'
-        return open(mainOutput).read()
+        fullResults = open(mainOutput).read()
+        return OrderedDict([(key, fullResults) for key in self._pvals.keys()])
 
     def preserveClumping(self, preserve):
         assert preserve is False

@@ -81,15 +81,16 @@ class IntervalStats(OneVsOneMethod):
         return summaryStat
 
     def getPValue(self):
-        return self._pvals
+        #return self._pvals
+        return {(self._params['q'], self._params['r']): 'N/A'}
 
     def getTestStatistic(self):
         #return self._testStats
-        summaryStat = self._parseIntervalStatsSummaryStat(threshold=0.05)
+        return {(self._params['q'], self._params['r']): self._parseIntervalStatsSummaryStat(threshold=0.05)}
 
     def getFullResults(self):
         resultsFolderPath = path.join(self._resultFilesDict['output'], 'output')
-        return open(resultsFolderPath).read()
+        return {(self._params['q'], self._params['r']): open(resultsFolderPath).read()}
 
     def preserveClumping(self, preserve):
         # not sure yet
