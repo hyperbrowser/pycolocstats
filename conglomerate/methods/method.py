@@ -4,6 +4,7 @@ from future.utils import with_metaclass
 from abc import ABCMeta, abstractmethod
 from conglomerate.methods.interface import UniformInterface
 # from conglomerate.methods.typecheck import takes
+from conglomerate.tools.constants import CATCH_METHOD_EXCEPTIONS
 from conglomerate.tools.exceptions import MissingMandatoryParameters
 from conglomerate.tools.job import Job
 from conglomerate.tools.tool import Tool
@@ -35,7 +36,13 @@ class Method(UniformInterface):
 
     def setResultFilesDict(self, resultFilesDict):
         self._resultFilesDict = resultFilesDict
-        self._parseResultFiles()
+        self._ranSuccessfully = True #will stay True unless parseResultFiles manually sets to False or throws Exception
+        try:
+            self._parseResultFiles()
+        except:
+            self._ranSuccessfully = False
+            if not CATCH_METHOD_EXCEPTIONS:
+                raise
 
     def getResultFilesDict(self):
         return self._resultFilesDict

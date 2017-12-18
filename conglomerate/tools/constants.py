@@ -4,3 +4,5 @@ INTERVALSTATS_TOOL_NAME = 'intervalstats'
 GOSHIFTER_TOOL_NAME = 'goshifter'
 GIGGLE_TOOL_NAME = 'giggle'
 LOLA_TOOL_NAME = 'lola'
+
+CATCH_METHOD_EXCEPTIONS = True

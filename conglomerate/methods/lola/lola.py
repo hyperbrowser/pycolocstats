@@ -34,10 +34,11 @@ class LOLA(OneVsManyMethod):
     def _parseResultFiles(self):
         resultsFolderPath = self._resultFilesDict['output']
         mainOutput = resultsFolderPath + '/lolaResults/allEnrichments.tsv'
-        import os.path
-        if not os.path.exists(mainOutput):
-            self._ranSuccessfully = False
-            return
+        #Probably not needed, as will otherwise raise exception..
+        #import os.path
+        # if not os.path.exists(mainOutput):
+        #     self._ranSuccessfully = False
+        #     return
         # resultTable = pd.read_table(mainOutput)
         fullTable= [line.split() for line in open(mainOutput)]
         header = fullTable[0]
@@ -99,5 +100,5 @@ class LOLA(OneVsManyMethod):
         pass
 
     def getErrorDetails(self):
-        assert not self._ranSuccessfully
+        assert not self.ranSuccessfully()
         return self._resultFilesDict['stdout']
