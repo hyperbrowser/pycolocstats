@@ -2,11 +2,11 @@ from __future__ import absolute_import, division, print_function, unicode_litera
 
 from collections import OrderedDict
 
+from conglomerate.methods.interface import ColocMeasureOverlap
 from conglomerate.methods.method import OneVsManyMethod
 from conglomerate.tools.constants import GIGGLE_TOOL_NAME
 
 __metaclass__ = type
-
 
 class Giggle(OneVsManyMethod):
     def __init__(self):
@@ -23,7 +23,7 @@ class Giggle(OneVsManyMethod):
         self.setManualParam('search_i', str('index'))
 
     def setGenomeName(self, genomeName):
-        pass
+        assert genomeName == 'hg19'
 
     def setChromLenFileName(self, chromLenFileName):
         genomeLength = 0
@@ -71,16 +71,18 @@ class Giggle(OneVsManyMethod):
         return open(self.getResultFilesDict()['stdout']).read()
 
     def preserveClumping(self, preserve):
-        pass
+        assert preserve is False
 
     def setRestrictedAnalysisUniverse(self, restrictedAnalysisUniverse):
-        pass
+        assert restrictedAnalysisUniverse is False
 
     def setColocMeasure(self, colocMeasure):
-        pass
+        assert isinstance(colocMeasure,ColocMeasureOverlap)
+        assert colocMeasure._countWholeIntervals is True
+
 
     def setHeterogeneityPreservation(self, preservationScheme, fn=None):
-        pass
+        assert preservationScheme is False
 
 
 class GiggleResult(object):
