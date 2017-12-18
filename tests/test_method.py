@@ -30,7 +30,8 @@ def tracks():
             pkg_resources.resource_filename('tests.resources', 'H3K4me1_no_overlaps_large.bed.gz'),
             pkg_resources.resource_filename('tests.resources', 'H3K4me3_no_overlaps_large.bed.gz'),
             pkg_resources.resource_filename('tests.resources', 'Refseq_Genes_cropped.bed.gz'),
-            pkg_resources.resource_filename('tests.resources', 'Ensembl_Genes_cropped.bed.gz')]
+            pkg_resources.resource_filename('tests.resources', 'Ensembl_Genes_cropped.bed.gz'),
+            pkg_resources.resource_filename('tests.resources', 'H3K4me3_no_overlaps_cropped.bed')]
 
 @pytest.fixture(scope='function')
 def chrLenFile():
@@ -125,8 +126,8 @@ class TestMethods(object):
 
     def testGiggleDynamic(self, chrLenFile, tracks):
         method = Giggle()
-        method.setQueryTrackFileNames([tracks[0]])
-        refTracks = [tracks[1], tracks[11], tracks[12]]
+        method.setQueryTrackFileNames([tracks[8]])
+        refTracks = [tracks[13], tracks[11], tracks[12]]
         method.setReferenceTrackFileNames(refTracks)
         method.setChromLenFileName(chrLenFile)
         runAllMethodsInSequence([method])
