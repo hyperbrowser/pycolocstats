@@ -112,7 +112,7 @@ class MultiMethod(MultiMethodAbstractMethodsMixin, Method):
     def ranSuccessfully(self):
         statuses = set([m.ranSuccessfully() for m in self._methods])
         assert len(statuses)==1
-        return statuses[0]
+        return list(statuses)[0]
 
 
     def __repr__(self):
