@@ -51,7 +51,7 @@ class MultiMethodAbstractMethodsMixin(object):
 
 
 class MultiMethod(MultiMethodAbstractMethodsMixin, Method):
-    MEMBER_ATTRIBUTES = ['_methods','_methodCls','__repr__','annotatedChoices']
+    MEMBER_ATTRIBUTES = ['_methods','_methodCls','__repr__','annotatedChoices', 'ranSuccessfully']
 
     def __init__(self, methodCls, querytrackFnList, referencetrackFnList):
         assert any(issubclass(methodCls, superCls)
@@ -108,6 +108,12 @@ class MultiMethod(MultiMethodAbstractMethodsMixin, Method):
         else:
             return CallableAttributeList([object.__getattribute__(self._methods[i], key)
                                           for i in range(len(self._methods))])
+
+    def ranSuccessfully(self):
+        statuses = set([m.ranSuccessfully() for m in self._methods])
+        assert len(statuses)==1
+        return statuses[0]
+
 
     def __repr__(self):
         if len(self._methods)>0:

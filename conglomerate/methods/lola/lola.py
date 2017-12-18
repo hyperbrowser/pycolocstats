@@ -34,6 +34,10 @@ class LOLA(OneVsManyMethod):
     def _parseResultFiles(self):
         resultsFolderPath = self._resultFilesDict['output']
         mainOutput = resultsFolderPath + '/lolaResults/allEnrichments.tsv'
+        import os.path
+        if not os.path.exists(mainOutput):
+            self._ranSuccessfully = False
+            return
         # resultTable = pd.read_table(mainOutput)
         fullTable= [line.split() for line in open(mainOutput)]
         header = fullTable[0]
@@ -66,6 +70,8 @@ class LOLA(OneVsManyMethod):
         self._testStats = {}
         for index, ts in indicesAndTestStat:
             self._testStats[(queryFn, refFns[index-1])] = '%.2f'%ts + ' (logOddsRatio)'
+
+        self._ranSuccessfully = True
 
     def getPValue(self):
         return self._pvals

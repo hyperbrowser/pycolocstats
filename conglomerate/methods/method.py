@@ -16,6 +16,7 @@ class Method(UniformInterface):
         self._params = self._getTool().createJobParamsDict()
         self._setDefaultParamValues()
         self._resultFilesDict = None
+        self._ranSuccessfully = None
 
     def _getTool(self):
         return Tool(self._getToolName())
@@ -38,6 +39,11 @@ class Method(UniformInterface):
 
     def getResultFilesDict(self):
         return self._resultFilesDict
+
+    def ranSuccessfully(self):
+        #Needs to be set to specific value before this method is called..
+        assert hasattr(self, '_ranSuccessfully') and self._ranSuccessfully in [False, True], self._ranSuccessfully
+        return self._ranSuccessfully
 
     def __repr__(self):
         return self.__class__.__name__
