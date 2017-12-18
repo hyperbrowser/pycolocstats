@@ -1,6 +1,7 @@
 from __future__ import absolute_import, division, print_function, unicode_literals
 
 from conglomerate.methods.multimethod import MultiMethod
+from conglomerate.tools.constants import CATCH_METHOD_EXCEPTIONS, VERBOSE_RUNNING
 from conglomerate.tools.util import deleteAllTmpFiles
 
 __metaclass__ = type
@@ -9,7 +10,14 @@ __metaclass__ = type
 def runAllMethodsInSequence(methods):
     try:
         for method in methods:
-            jobs = method.createJobs()
+            try:
+                jobs = method.createJobs()
+            except Exception, e:
+                if VERBOSE_RUNNING:
+                    print('Failing createJobs for: ', method)
+                if not CATCH_METHOD_EXCEPTIONS:
+                    raise
+                continue
             if not isinstance(method, MultiMethod):
                 assert len(jobs) == 1
                 job = jobs[0]

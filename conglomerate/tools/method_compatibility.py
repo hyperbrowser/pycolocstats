@@ -1,7 +1,7 @@
 from itertools import product
 
 from conglomerate.methods.multimethod import MultiMethod
-from conglomerate.tools.constants import CATCH_METHOD_EXCEPTIONS
+from conglomerate.tools.constants import CATCH_METHOD_EXCEPTIONS, VERBOSE_RUNNING
 
 
 def getCompatibleMethodObjects(selectionsValues, queryTrack, refTracks, methodClasses):
@@ -23,7 +23,8 @@ def getCompatibleMethodObjects(selectionsValues, queryTrack, refTracks, methodCl
                     else:
                         getattr(currMethod, methodName)(choice)
             except Exception, e:
-                print str(type(e)).replace('<','').replace('>',''), e
+                if VERBOSE_RUNNING:
+                    print 'Method not compatible: ', currMethod, str(type(e)).replace('<','').replace('>',''), e
                 if not CATCH_METHOD_EXCEPTIONS:
                     raise
                 continue
