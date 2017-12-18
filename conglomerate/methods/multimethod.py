@@ -51,7 +51,7 @@ class MultiMethodAbstractMethodsMixin(object):
 
 
 class MultiMethod(MultiMethodAbstractMethodsMixin, Method):
-    MEMBER_ATTRIBUTES = ['_methods','_methodCls','__repr__','annotatedChoices', 'ranSuccessfully']
+    MEMBER_ATTRIBUTES = ['_methods','_methodCls','__repr__','annotatedChoices', 'ranSuccessfully', 'getErrorDetails']
 
     def __init__(self, methodCls, querytrackFnList, referencetrackFnList):
         assert any(issubclass(methodCls, superCls)
@@ -110,10 +110,14 @@ class MultiMethod(MultiMethodAbstractMethodsMixin, Method):
                                           for i in range(len(self._methods))])
 
     def ranSuccessfully(self):
-        statuses = set([m.ranSuccessfully() for m in self._methods])
-        assert len(statuses)==1
-        return list(statuses)[0]
+        statuses = [m.ranSuccessfully() for m in self._methods]
+        return all(statuses)
 
+    def getErrorDetails(self):
+        for m in self._methods:
+            if not m.ranSuccessfully():
+                return 'Returning first failing run if many:\n' +\
+                       m.getErrorDetails()
 
     def __repr__(self):
         if len(self._methods)>0:

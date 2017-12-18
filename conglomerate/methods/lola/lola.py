@@ -97,3 +97,7 @@ class LOLA(OneVsManyMethod):
 
     def setHeterogeneityPreservation(self, preservationScheme, fn=None):
         pass
+
+    def getErrorDetails(self):
+        assert not self._ranSuccessfully
+        return self._resultFilesDict['stdout']

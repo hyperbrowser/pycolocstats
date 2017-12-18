@@ -45,6 +45,9 @@ class Method(UniformInterface):
         assert hasattr(self, '_ranSuccessfully') and self._ranSuccessfully in [False, True], self._ranSuccessfully
         return self._ranSuccessfully
 
+    def getErrorDetails(self):
+        return 'Error message parsing not implemented for this tool'
+
     def __repr__(self):
         return self.__class__.__name__
 
