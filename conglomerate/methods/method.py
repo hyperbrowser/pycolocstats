@@ -47,6 +47,9 @@ class Method(UniformInterface):
     def getResultFilesDict(self):
         return self._resultFilesDict
 
+    def setRunSuccessStatus(self, status):
+        self._ranSuccessfully = status
+
     def ranSuccessfully(self):
         #Needs to be set to specific value before this method is called..
         assert hasattr(self, '_ranSuccessfully') and self._ranSuccessfully in [False, True], self._ranSuccessfully
