@@ -75,15 +75,27 @@ requirements:
               throw 'You should specify either index_i or reference collection!';
             }
           } input_files/
+          /root/giggle/scripts/sort_bed "input_files/*bed" input_files &> /dev/null
           /root/giggle/bin/giggle index \\\
           -o $(inputs.index_o) \\\
-          -i "input_files/*" \\\
+          -i "input_files/*gz" \\\
           $(inputs.index_s ? '-s' : '') \\\
           $(inputs.index_f ? '-f' : '')
 
+          mkdir search_file
+          ${
+            if (inputs.search_q.path.endsWith('gz')) {
+                return 'cp ' + inputs.search_q.path + ' search_file/'
+              } else {
+                return '/root/giggle/scripts/sort_bed ' + inputs.search_q.path + ' search_file &> /dev/null'
+              }
+          }
+
+          #hackish way of accessing the query file, we assume
+
           /root/giggle/bin/giggle search \\\
           -i $(inputs.search_i) \\\
-          -q $(inputs.search_q.path) \\\
+          -q search_file/\$(ls -Art search_file | tail -n 1)\\\
           $(inputs.search_o ? '-o' : '') \\\
           $(inputs.search_c ? '-c' : '') \\\
           $(inputs.search_s ? '-s' : '') \\\
