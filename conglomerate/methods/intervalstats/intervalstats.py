@@ -21,7 +21,7 @@ class IntervalStats(OneVsOneMethod):
         pass
 
     def setGenomeName(self, genomeName):
-        assert genomeName is True
+        pass
 
     def setChromLenFileName(self, chromLenFileName):
         contents = []
