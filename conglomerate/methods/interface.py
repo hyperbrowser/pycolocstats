@@ -13,7 +13,7 @@ class ColocMeasure(with_metaclass(ABCMeta, object)):
 
 class ColocMeasureOverlap(ColocMeasure):
     # @takes("ColocMeasureOverlap", bool, bool, int, int)
-    def __init__(self, includeFlanks, countWholeIntervals, flankSizeUpstream, flankSizeDownstream):
+    def __init__(self, includeFlanks, countWholeIntervals, flankSizeUpstream=None, flankSizeDownstream=None):
         self._includeFlanks = includeFlanks
         self._countWholeIntervals = countWholeIntervals
         self._flankSizeUpstream = flankSizeUpstream
