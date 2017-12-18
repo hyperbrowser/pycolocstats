@@ -10,6 +10,10 @@ __metaclass__ = type
 
 
 class IntervalStats(OneVsOneMethod):
+    def __init__(self):
+        OneVsOneMethod.__init__(self)
+        self.setManualParam('o', 'output')
+
     def _getToolName(self):
         return INTERVALSTATS_TOOL_NAME
 
