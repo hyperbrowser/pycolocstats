@@ -18,6 +18,7 @@ class Method(UniformInterface):
         self._setDefaultParamValues()
         self._resultFilesDict = None
         self._ranSuccessfully = None
+        self._errorMessage = None
 
     def _getTool(self):
         return Tool(self._getToolName())
@@ -47,8 +48,10 @@ class Method(UniformInterface):
     def getResultFilesDict(self):
         return self._resultFilesDict
 
-    def setRunSuccessStatus(self, status):
+    def setRunSuccessStatus(self, status, errorMessage=None):
         self._ranSuccessfully = status
+        if errorMessage is not None:
+            self._errorMessage = errorMessage
 
     def ranSuccessfully(self):
         #Needs to be set to specific value before this method is called..
@@ -56,7 +59,10 @@ class Method(UniformInterface):
         return self._ranSuccessfully
 
     def getErrorDetails(self):
-        return 'Error message parsing not implemented for this tool'
+        if self._errorMessage is None:
+            return 'Error message parsing not implemented for this tool'
+        else:
+            return self._errorMessage
 
     def __repr__(self):
         return self.__class__.__name__

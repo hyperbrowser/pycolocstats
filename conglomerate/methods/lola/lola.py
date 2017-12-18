@@ -103,4 +103,12 @@ class LOLA(OneVsManyMethod):
 
     def getErrorDetails(self):
         assert not self.ranSuccessfully()
-        return self._resultFilesDict['stdout']
+        errorMessage = ''
+        if self._errorMessage is not None:
+            errorMessage += self._errorMessage
+        if self._resultFilesDict is not None:
+            errorMessage += self._resultFilesDict['stdout']
+        if errorMessage == '':
+            return 'No detailed information on error available'
+        else:
+            return errorMessage

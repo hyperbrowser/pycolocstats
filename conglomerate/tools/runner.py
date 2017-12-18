@@ -17,7 +17,7 @@ def runAllMethodsInSequence(methods):
                     print('Failing createJobs for: ', method)
                 if not CATCH_METHOD_EXCEPTIONS:
                     raise
-                method.setRunSuccessStatus(False)
+                method.setRunSuccessStatus(False, 'Failing to create job: '+str(e))
                 continue
             if not isinstance(method, MultiMethod):
                 assert len(jobs) == 1
