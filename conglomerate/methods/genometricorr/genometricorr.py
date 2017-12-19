@@ -67,3 +67,7 @@ class GenometriCorr(OneVsOneMethod):
 
     def setHeterogeneityPreservation(self, preservationScheme, fn=None):
         pass
+
+    def getErrorDetails(self):
+        assert not self.ranSuccessfully()
+        return self._resultFilesDict['stderr']
