@@ -14,8 +14,8 @@ def getCompatibleMethodObjects(selectionsValues, queryTrack, refTracks, methodCl
     # print 'TEMP2', len(list(multiChoiceList)), len(list(methodClasses))
     for choiceTupleList in multiChoiceList:
         for methodClass in methodClasses:
+            currMethod = MultiMethod(methodClass, queryTrack, refTracks)
             try:
-                currMethod = MultiMethod(methodClass, queryTrack, refTracks)
                 currMethod.annotatedChoices = dict(choiceTupleList)
                 for methodName, choice in choiceTupleList:
                     if isinstance(choice, list):
