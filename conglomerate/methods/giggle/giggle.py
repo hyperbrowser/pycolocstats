@@ -70,7 +70,7 @@ class Giggle(OneVsManyMethod):
 
     def getFullResults(self):
         fullResults = open(self.getResultFilesDict()['stdout']).read()
-        return OrderedDict([(key,fullResults) for key in self._parsedResults.keys()])
+        return OrderedDict([(key,fullResults) for key in self._parsedResults.getResultsPerName('overlaps').keys()])
 
     def preserveClumping(self, preserve):
         assert preserve is False
