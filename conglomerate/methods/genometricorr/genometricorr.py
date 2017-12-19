@@ -15,7 +15,7 @@ class GenometriCorr(OneVsOneMethod):
         pass
 
     def setGenomeName(self, genomeName):
-        assert genomeName is True
+        pass
 
     def setChromLenFileName(self, chromLenFileName):
         self._params['chromosomes_length'] = chromLenFileName

@@ -23,7 +23,8 @@ class Giggle(OneVsManyMethod):
         self.setManualParam('search_i', str('index'))
 
     def setGenomeName(self, genomeName):
-        assert genomeName == 'hg19'
+        #assert genomeName == 'hg19'
+        pass
 
     def setChromLenFileName(self, chromLenFileName):
         genomeLength = 0
