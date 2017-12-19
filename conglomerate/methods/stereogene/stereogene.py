@@ -85,3 +85,8 @@ class StereoGene(OneVsOneMethod):
 
     def getResults(self):
         return self._results
+
+    def getErrorDetails(self):
+        assert not self.ranSuccessfully()
+        #Not checked if informative
+        return open(self._resultFilesDict['stderr']).read()

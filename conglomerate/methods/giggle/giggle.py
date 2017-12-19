@@ -86,6 +86,11 @@ class Giggle(OneVsManyMethod):
     def setHeterogeneityPreservation(self, preservationScheme, fn=None):
         assert preservationScheme is False, preservationScheme
 
+    def getErrorDetails(self):
+        assert not self.ranSuccessfully()
+        #Not checked if informative
+        return open(self._resultFilesDict['stderr']).read()
+
 
 class GiggleResult(object):
     def __init__(self, qFilePath, filePath, fileSize, overlaps, oddsRatio, pvalTwoTail, pvalLeftTail, pvalRightTail, comboScore):

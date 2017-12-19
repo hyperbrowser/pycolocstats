@@ -70,4 +70,4 @@ class GenometriCorr(OneVsOneMethod):
 
     def getErrorDetails(self):
         assert not self.ranSuccessfully()
-        return self._resultFilesDict['stderr']
+        return open(self._resultFilesDict['stderr']).read()
