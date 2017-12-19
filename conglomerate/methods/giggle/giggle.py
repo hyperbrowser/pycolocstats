@@ -76,7 +76,7 @@ class Giggle(OneVsManyMethod):
         assert preserve is False
 
     def setRestrictedAnalysisUniverse(self, restrictedAnalysisUniverse):
-        assert restrictedAnalysisUniverse is False
+        assert restrictedAnalysisUniverse is None
 
     def setColocMeasure(self, colocMeasure):
         assert isinstance(colocMeasure,ColocMeasureOverlap)
