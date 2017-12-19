@@ -26,6 +26,7 @@ def getCompatibleMethodObjects(selectionsValues, queryTrack, refTracks, methodCl
             except Exception, e:
                 if VERBOSE_RUNNING:
                     print 'Method not compatible: ', currMethod, str(type(e)).replace('<','').replace('>',''), e
+                    print 'Traceback: '
                     traceback.print_exc()
                 if not CATCH_METHOD_EXCEPTIONS:
                     raise
