@@ -29,10 +29,13 @@ class Method(UniformInterface):
         """
         self._params[key] = val
 
-    def createJobs(self):
+    def checkForAbsentMandatoryParameters(self):
         absentMandatoryParameters = self._params.getAbsentMandatoryParameters()
         if absentMandatoryParameters:
             raise MissingMandatoryParameters(absentMandatoryParameters)
+
+    def createJobs(self):
+        self.checkForAbsentMandatoryParameters()
         return [Job(self._getTool(), self._params)]
 
     def setResultFilesDict(self, resultFilesDict):

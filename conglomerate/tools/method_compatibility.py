@@ -24,6 +24,7 @@ def getCompatibleMethodObjects(selectionsValues, queryTrack, refTracks, methodCl
                             getattr(currMethod, methodName)(**choice)
                     else:
                         getattr(currMethod, methodName)(choice)
+                currMethod.checkForAbsentMandatoryParameters()
             except Exception, e:
                 if VERBOSE_RUNNING:
                     print 'Method not compatible: ', currMethod, str(type(e)).replace('<','').replace('>',''), e
