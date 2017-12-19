@@ -61,6 +61,8 @@ class Giggle(OneVsManyMethod):
                     newResult = GiggleResult(*vals)
                     results.addResult(newResult.qFileName, newResult.fileName, newResult)
         self._parsedResults = results
+        if len(results.getResults())==0:
+            self.setRunSuccessStatus(False)
 
     def getPValue(self):
         return self._parsedResults.getResultsPerName('pvalTwoTail')
