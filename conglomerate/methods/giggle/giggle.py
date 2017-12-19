@@ -48,7 +48,7 @@ class Giggle(OneVsManyMethod):
         self._params['index_i'] = trackFnList
 
     def setAllowOverlaps(self, allowOverlaps):
-        assert allowOverlaps is True
+        assert allowOverlaps is True, allowOverlaps
 
     def _parseResultFiles(self):
         results = GiggleResults()
@@ -73,18 +73,18 @@ class Giggle(OneVsManyMethod):
         return OrderedDict([(key,fullResults) for key in self._parsedResults.getResultsPerName('overlaps').keys()])
 
     def preserveClumping(self, preserve):
-        assert preserve is False
+        assert preserve is False, preserve
 
     def setRestrictedAnalysisUniverse(self, restrictedAnalysisUniverse):
-        assert restrictedAnalysisUniverse is None
+        assert restrictedAnalysisUniverse is None, restrictedAnalysisUniverse
 
     def setColocMeasure(self, colocMeasure):
-        assert isinstance(colocMeasure,ColocMeasureOverlap)
-        assert colocMeasure._countWholeIntervals is True
+        assert isinstance(colocMeasure,ColocMeasureOverlap), type(colocMeasure)
+        assert colocMeasure._countWholeIntervals is True, colocMeasure._countWholeIntervals
 
 
     def setHeterogeneityPreservation(self, preservationScheme, fn=None):
-        assert preservationScheme is False
+        assert preservationScheme is False, preservationScheme
 
 
 class GiggleResult(object):
