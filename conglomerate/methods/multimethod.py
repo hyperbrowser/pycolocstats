@@ -116,7 +116,7 @@ class MultiMethod(MultiMethodAbstractMethodsMixin, Method):
     def getErrorDetails(self):
         for m in self._methods:
             if not m.ranSuccessfully():
-                return 'Returning first failing run if many:\n' +\
+                return 'Returning first failing run if many:<br>\n' +\
                        m.getErrorDetails()
 
     def __repr__(self):
