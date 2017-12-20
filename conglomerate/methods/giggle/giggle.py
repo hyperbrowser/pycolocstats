@@ -49,6 +49,7 @@ class Giggle(OneVsManyMethod):
         if trackFnList == ['dummy1','dummy2']:
             self.setManualParam('trackIndex', str('LOLACore_170206'))
             self.setManualParam('trackCollection', str('codex'))
+            self.setManualParam('genome', 'hg19')
         else:
             bedPathList = [self._getBedExtendedFileName(trackFn) for trackFn in trackFnList]
             self._params['index_i'] = bedPathList
