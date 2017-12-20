@@ -71,6 +71,8 @@ class Method(UniformInterface):
         return self.__class__.__name__
 
     def _getBedExtendedFileName(self, trackFn): #TODO: Replace with better handling of temporary files
+        if trackFn.endswith('bed'):
+            return trackFn
         from tempfile import mkdtemp
         import os
         import shutil
