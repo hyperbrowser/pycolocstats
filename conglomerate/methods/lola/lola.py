@@ -84,7 +84,7 @@ class LOLA(OneVsManyMethod):
     def getFullResults(self):
         resultsFolderPath = self._resultFilesDict['output']
         mainOutput = resultsFolderPath + '/lolaResults/allEnrichments.tsv'
-        fullResults = open(mainOutput).read()
+        fullResults = open(mainOutput).read().replace('\n','<br>\n')
         return OrderedDict([(key, fullResults) for key in self._pvals.keys()])
 
     def preserveClumping(self, preserve):

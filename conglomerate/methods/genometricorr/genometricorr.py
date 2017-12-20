@@ -39,6 +39,7 @@ class GenometriCorr(OneVsOneMethod):
     def _parseGenometricorrStdout(self):
         resultsFolderPath = self._resultFilesDict['output']
         mainOutput = resultsFolderPath + "/GenometriCorr_Output.txt"
+        self._fullResults = open(mainOutput).read().replace('\n','<br>\n')
         fullTable = [line.split() for line in open(mainOutput)]
         colheaders = fullTable[0][1:]
         resultTable = fullTable[1:]
@@ -57,7 +58,7 @@ class GenometriCorr(OneVsOneMethod):
         return {(self._params['query'],self._params['reference']):self._results['jaccard.measure']['awhole']}
 
     def getFullResults(self):
-        return {(self._params['query'],self._params['reference']): "Full results for Genometricorr not implemented.."}
+        return {(self._params['query'],self._params['reference']): self._fullResults}
 
     def preserveClumping(self, preserve):
         pass

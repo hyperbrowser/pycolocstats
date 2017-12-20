@@ -47,7 +47,7 @@ class StereoGene(OneVsOneMethod):
         return OrderedDict([(key, x['totCorr']) for key, x in self._results.items()])
 
     def getFullResults(self):
-        fullResults = open(self._resultFilesDict['stdout']).read()
+        fullResults = open(self._resultFilesDict['stdout']).read().replace('\n','<br>\n')
         return OrderedDict([(key, fullResults) for key in self._results.keys()])
 
     def preserveClumping(self, preserve):

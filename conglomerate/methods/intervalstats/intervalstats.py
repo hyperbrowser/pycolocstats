@@ -90,7 +90,7 @@ class IntervalStats(OneVsOneMethod):
 
     def getFullResults(self):
         resultsFolderPath = path.join(self._resultFilesDict['output'], 'output')
-        return {(self._params['q'], self._params['r']): open(resultsFolderPath).read()}
+        return {(self._params['q'], self._params['r']): open(resultsFolderPath).read().replace('\n','<br>\n')}
 
     def preserveClumping(self, preserve):
         # not sure yet
