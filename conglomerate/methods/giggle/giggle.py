@@ -41,11 +41,13 @@ class Giggle(OneVsManyMethod):
             self.setManualParam('search_g', genomeLength)
 
     def _setQueryTrackFileName(self, trackFn):
-        self.qTrackFn = trackFn
-        self._params['search_q'] = trackFn
+        bedPath = self._getBedExtendedFileName(trackFn)
+        self.qTrackFn = bedPath
+        self._params['search_q'] = bedPath
 
     def _setReferenceTrackFileNames(self, trackFnList):
-        self._params['index_i'] = trackFnList
+        bedPathList = [self._getBedExtendedFileName(trackFn) for trackFn in trackFnList]
+        self._params['index_i'] = bedPathList
 
     def setAllowOverlaps(self, allowOverlaps):
         assert allowOverlaps is True, allowOverlaps
