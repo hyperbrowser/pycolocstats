@@ -46,8 +46,12 @@ class Giggle(OneVsManyMethod):
         self._params['search_q'] = bedPath
 
     def _setReferenceTrackFileNames(self, trackFnList):
-        bedPathList = [self._getBedExtendedFileName(trackFn) for trackFn in trackFnList]
-        self._params['index_i'] = bedPathList
+        if trackFnList == ['dummy1','dummy2']:
+            self.setManualParam('trackIndex', 'LOLACore_170206')
+            self.setManualParam('trackCollection', 'codex')
+        else:
+            bedPathList = [self._getBedExtendedFileName(trackFn) for trackFn in trackFnList]
+            self._params['index_i'] = bedPathList
 
     def setAllowOverlaps(self, allowOverlaps):
         assert allowOverlaps is True, allowOverlaps

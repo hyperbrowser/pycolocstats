@@ -15,6 +15,7 @@ def getCompatibleMethodObjects(selectionsValues, queryTrack, refTracks, methodCl
     for choiceTupleList in multiChoiceList:
         for methodClass in methodClasses:
             try:
+                currMethod = None  # In case MultiMethod fails
                 currMethod = MultiMethod(methodClass, queryTrack, refTracks)
                 currMethod.annotatedChoices = dict(choiceTupleList)
                 for methodName, choice in choiceTupleList:
@@ -25,9 +26,10 @@ def getCompatibleMethodObjects(selectionsValues, queryTrack, refTracks, methodCl
                     else:
                         getattr(currMethod, methodName)(choice)
                 currMethod.checkForAbsentMandatoryParameters()
-            except Exception, e:
+            #except Exception, e:
+            except:
                 if VERBOSE_RUNNING:
-                    print 'Method not compatible: ', methodClass, str(type(e)).replace('<','').replace('>',''), e
+                    print 'Method not compatible: ', methodClass #, str(type(e)).replace('<','').replace('>',''), e
                     #print 'Traceback: ', traceback.print_tb(e.__traceback__)
                     traceback.print_exc()
                 if not const.CATCH_METHOD_EXCEPTIONS:

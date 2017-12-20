@@ -92,7 +92,7 @@ class LOLA(OneVsManyMethod):
 
     #@takes("UniformInterface", any([None, RestrictedThroughInclusion]))
     def setRestrictedAnalysisUniverse(self, restrictedAnalysisUniverse):
-        assert isinstance(restrictedAnalysisUniverse, RestrictedThroughInclusion)
+        assert isinstance(restrictedAnalysisUniverse, RestrictedThroughInclusion), type(restrictedAnalysisUniverse)
         self.setManualParam('useruniverse', restrictedAnalysisUniverse.path)
 
     def setColocMeasure(self, colocMeasure):
