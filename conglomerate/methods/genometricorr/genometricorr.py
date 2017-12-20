@@ -24,7 +24,6 @@ class GenometriCorr(OneVsOneMethod):
     def _getBedExtendedFileName(self, trackFn): #TODO: Replace with better handling of temporary files
         from tempfile import mkdtemp
         import os
-        os.get
         import shutil
         #bedPath = os.path.join(mkdtemp(), trackFn.replace('.dat','.bed'))
         bedPath = '/tmp/adHocBed/' + os.path.basename(trackFn).replace('.dat','.bed')
