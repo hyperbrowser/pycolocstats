@@ -26,10 +26,13 @@ class StereoGene(OneVsOneMethod):
         self._params['chrom'] = chromLenFileName
 
     def _setQueryTrackFileName(self, trackFn):
-        self._params['tracks'] += [trackFn]
+        bedPath = self._getBedExtendedFileName(trackFn)
+        self._params['tracks'] += [bedPath]
+
 
     def _setReferenceTrackFileName(self, trackFn):
-        self._params['tracks'] += [trackFn]
+        bedPath = self._getBedExtendedFileName(trackFn)
+        self._params['tracks'] += [bedPath]
 
     def setAllowOverlaps(self, allowOverlaps):
         assert allowOverlaps is True

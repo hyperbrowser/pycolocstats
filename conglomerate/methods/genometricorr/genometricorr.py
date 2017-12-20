@@ -21,16 +21,6 @@ class GenometriCorr(OneVsOneMethod):
         self._params['chromosomes_length'] = chromLenFileName
         # TODO: Replace '\t' with '='
 
-    def _getBedExtendedFileName(self, trackFn): #TODO: Replace with better handling of temporary files
-        from tempfile import mkdtemp
-        import os
-        import shutil
-        #bedPath = os.path.join(mkdtemp(), trackFn.replace('.dat','.bed'))
-        bedPath = '/tmp/adHocBed/' + os.path.basename(trackFn).replace('.dat','.bed')
-        #shutil.copytree(src=trackFn, dst=bedFn,symlinks=True)
-        shutil.copy(src=trackFn, dst=bedPath)
-        return bedPath
-
     def _setQueryTrackFileName(self, trackFn):
         bedPath = self._getBedExtendedFileName(trackFn)
         self._params['query'] = bedPath
