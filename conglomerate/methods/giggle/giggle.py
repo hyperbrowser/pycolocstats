@@ -47,8 +47,8 @@ class Giggle(OneVsManyMethod):
 
     def _setReferenceTrackFileNames(self, trackFnList):
         if trackFnList == ['dummy1','dummy2']:
-            self.setManualParam('trackIndex', 'LOLACore_170206')
-            self.setManualParam('trackCollection', 'codex')
+            self.setManualParam('trackIndex', str('LOLACore_170206'))
+            self.setManualParam('trackCollection', str('codex'))
         else:
             bedPathList = [self._getBedExtendedFileName(trackFn) for trackFn in trackFnList]
             self._params['index_i'] = bedPathList
