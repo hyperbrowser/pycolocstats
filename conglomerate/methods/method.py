@@ -37,6 +37,7 @@ class Method(UniformInterface):
 
     def createJobs(self):
         self.checkForAbsentMandatoryParameters()
+        self.performRequiredFileCopying()
         return [Job(self._getTool(), self._params)]
 
     def setResultFilesDict(self, resultFilesDict):
