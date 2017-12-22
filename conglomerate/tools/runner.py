@@ -10,6 +10,7 @@ __metaclass__ = type
 def runAllMethodsInSequence(methods):
     try:
         for method in methods:
+            print('Temp1: ', str(method))
             try:
                 jobs = method.createJobs()
             except Exception, e:
