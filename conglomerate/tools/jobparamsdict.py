@@ -20,14 +20,14 @@ class JobParamsDict(dict):
         allowedType = self.getType(key)
         if allowedType == PathStr:
             assert isinstance(val, basestring), '"{}" not of correct type: {}'.format(val, str)
-            assert os.path.exists(val), 'File "{}" does not exist'.format(val)
+            #assert os.path.exists(val), 'File "{}" does not exist'.format(val) #TODO: Had to temporarily disable due to generic copying from dat to bed..
             val = PathStr(val)
         elif allowedType == PathStrList:
             assert isinstance(val, list), '"{}" not of correct type: {}'.format(val, list)
             assert all(isinstance(f, basestring) for f in val), \
                 'Some of the entries of "{}"  are not of correct type: {}'.format(val, str)
-            assert all(os.path.exists(f) for f in val), \
-                'Some of the entries of "{}" do not exist'.format(val)
+            # assert all(os.path.exists(f) for f in val), \
+            #     'Some of the entries of "{}" do not exist'.format(val) #TODO: disabled due to dat to bed..
             val = PathStrList(val)
         else:
             assert isinstance(val, allowedType), '"{}" (type:{}) not of correct type: {}'.format(val, type(val), allowedType)

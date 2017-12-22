@@ -27,7 +27,12 @@ class LOLA(OneVsManyMethod):
         self.setManualParam('userset', trackFn)
 
     def _setReferenceTrackFileNames(self, trackFnList):
-        self.setManualParam('regiondb', trackFnList)
+        if trackFnList == ['dummy1','dummy2']:
+            self.setManualParam('trackIndex', str('LOLACore_170206'))
+            self.setManualParam('trackCollection', str('codex'))
+            self.setManualParam('genome', str('hg19'))
+        else:
+            self.setManualParam('regiondb', trackFnList)
 
     def setAllowOverlaps(self, allowOverlaps):
         assert allowOverlaps is True

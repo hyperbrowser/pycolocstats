@@ -19,6 +19,7 @@ class Method(UniformInterface):
         self._resultFilesDict = None
         self._ranSuccessfully = None
         self._errorMessage = None
+        self._requiredFileCopies = {}
 
     def _getTool(self):
         return Tool(self._getToolName())
@@ -75,12 +76,21 @@ class Method(UniformInterface):
             return trackFn
         from tempfile import mkdtemp
         import os
-        import shutil
+        #import shutil
         #bedPath = os.path.join(mkdtemp(), trackFn.replace('.dat','.bed'))
         bedPath = '/tmp/adHocBed/' + os.path.basename(trackFn).replace('.dat','.bed')
         #shutil.copytree(src=trackFn, dst=bedFn,symlinks=True)
-        shutil.copy(src=trackFn, dst=bedPath)
+        #shutil.copy(src=trackFn, dst=bedPath)
+        self._requiredFileCopies[trackFn] = bedPath
         return bedPath
+
+    def performRequiredFileCopying(self):
+        for src in self._requiredFileCopies:
+            dst = self._requiredFileCopies[src]
+            import shutil
+            shutil.copy(src, dst)
+    # def getRefTracksMappedToIndexParams(self, trackFnList):
+    #     assert trackFnList not in [ ['dummy1', 'dummy2'] ]
 
 class SingleQueryTrackMethodMixin(with_metaclass(ABCMeta, object)):
     def setQueryTrackFileNames(self, trackFnList):
