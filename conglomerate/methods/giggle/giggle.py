@@ -46,7 +46,7 @@ class Giggle(OneVsManyMethod):
         self._params['search_q'] = bedPath
 
     def getRefTracksMappedToIndexParams(self, trackFnList):
-        if trackFnList == ['dummy1', 'dummy2']:
+        if trackFnList == ['prebuilt', 'LOLACore_170206']:
             return {'trackIndex': str('LOLACore_170206'),
                     'trackCollection': str('codex'),
                    'genome': str('hg19')
@@ -59,7 +59,7 @@ class Giggle(OneVsManyMethod):
         # if indexParams != None:
         #     for key,val in indexParams.items():
         #         self.setManualParam(key, val)
-        if trackFnList == ['dummy1','dummy2']:
+        if trackFnList == ['prebuilt','LOLACore_170206']:
             self.setManualParam('trackIndex', str('LOLACore_170206'))
             self.setManualParam('trackCollection', str('codex'))
             self.setManualParam('genome', str('hg19'))

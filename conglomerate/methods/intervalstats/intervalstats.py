@@ -48,6 +48,7 @@ class IntervalStats(OneVsOneMethod):
         self._params['q'] = trackFn
 
     def _setReferenceTrackFileName(self, trackFn):
+        assert trackFn not in ['prebuilt', 'LOLACore_170206']
         self._params['r'] = trackFn
 
     def setAllowOverlaps(self, allowOverlaps):

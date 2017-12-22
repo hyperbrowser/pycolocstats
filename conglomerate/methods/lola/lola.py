@@ -27,7 +27,7 @@ class LOLA(OneVsManyMethod):
         self.setManualParam('userset', trackFn)
 
     def _setReferenceTrackFileNames(self, trackFnList):
-        if trackFnList == ['dummy1','dummy2']:
+        if trackFnList == ['prebuilt','LOLACore_170206']:
             self.setManualParam('trackIndex', str('LOLACore_170206'))
             self.setManualParam('trackCollection', str('codex'))
             self.setManualParam('genome', str('hg19'))

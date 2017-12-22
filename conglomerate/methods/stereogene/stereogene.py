@@ -31,6 +31,7 @@ class StereoGene(OneVsOneMethod):
 
 
     def _setReferenceTrackFileName(self, trackFn):
+        assert trackFn not in ['prebuilt', 'LOLACore_170206']
         bedPath = self._getBedExtendedFileName(trackFn)
         self._params['tracks'] += [bedPath]
 
