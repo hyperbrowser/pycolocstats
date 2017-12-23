@@ -109,4 +109,7 @@ class IntervalStats(OneVsOneMethod):
     def getErrorDetails(self):
         assert not self.ranSuccessfully()
         #Not checked if informative
-        return open(self._resultFilesDict['stderr']).read()
+        if 'stderr' in self._resultFilesDict:
+            return open(self._resultFilesDict['stderr']).read().replace('\n','<br>\n')
+        else:
+            return 'Genometricorr did not provide any error output'
