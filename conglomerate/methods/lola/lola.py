@@ -114,7 +114,7 @@ class LOLA(OneVsManyMethod):
         errorMessage = ''
         if self._errorMessage is not None:
             errorMessage += self._errorMessage
-        if self._resultFilesDict is not None:
+        if self._resultFilesDict is not None and 'stdout' in self._resultFilesDict:
             errorMessage += self._resultFilesDict['stdout']
         if errorMessage == '':
             return 'No detailed information on error available'
