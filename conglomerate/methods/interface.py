@@ -6,6 +6,12 @@ from future.utils import with_metaclass
 
 __metaclass__ = type
 
+class InvalidSpecification(object):
+    def __init__(self, reason):
+        self._reason = reason
+
+    def __str__(self):
+        return 'Invalid specificaiton, due to: ' + self._reason
 
 class ColocMeasure(with_metaclass(ABCMeta, object)):
     pass
