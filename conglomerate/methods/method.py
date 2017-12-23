@@ -79,7 +79,7 @@ class Method(UniformInterface):
         import os
         #import shutil
         #bedPath = os.path.join(mkdtemp(), trackFn.replace('.dat','.bed'))
-        bedPath = '/tmp/adHocBed/' + os.path.basename(trackFn).replace('.dat','.bed')
+        bedPath = '/data/tmp/congloTmp/adHocBed/' + os.path.basename(trackFn).replace('.dat','.bed')
         #shutil.copytree(src=trackFn, dst=bedFn,symlinks=True)
         #shutil.copy(src=trackFn, dst=bedPath)
         self._requiredFileCopies[trackFn] = bedPath

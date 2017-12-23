@@ -189,7 +189,7 @@ class TestMethods(object):
 
     @staticmethod
     def _getSampleFileName(contents):
-        sampleFile = NamedTemporaryFile(mode='w+', dir='/tmp', suffix='.bed')
+        sampleFile = NamedTemporaryFile(mode='w+', dir='/data/tmp/congloTmp', suffix='.bed')
         sampleFile.write(contents)
         sampleFile.flush()
         return sampleFile
