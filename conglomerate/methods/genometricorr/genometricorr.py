@@ -75,7 +75,7 @@ class GenometriCorr(OneVsOneMethod):
 
     def getErrorDetails(self):
         assert not self.ranSuccessfully()
-        if 'stderr' in self._resultFilesDict:
+        if self._resultFilesDict is not None and 'stderr' in self._resultFilesDict:
             return open(self._resultFilesDict['stderr']).read().replace('\n','<br>\n')
         else:
             return 'Genometricorr did not provide any error output'
