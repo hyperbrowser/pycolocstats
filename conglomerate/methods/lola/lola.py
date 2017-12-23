@@ -46,11 +46,14 @@ class LOLA(OneVsManyMethod):
         #     self._ranSuccessfully = False
         #     return
         # resultTable = pd.read_table(mainOutput)
-        fullTable= [line.split() for line in open(mainOutput)]
+        fullTable= [line.split('\t') for line in open(mainOutput)]
         header = fullTable[0]
         resultTable = fullTable[1:]
 
-        refFns = self._params['regiondb']
+        if 'regiondb' in self._params:
+            refFns = self._params['regiondb']
+        else:
+            refFns = [line.split('\t')[14] for line in open(mainOutput).readlines()[1:]]
         queryFn = self._params['userset']
         # refFileIndices = resultTable["dbSet"]
         assert header[1] == 'dbSet'
