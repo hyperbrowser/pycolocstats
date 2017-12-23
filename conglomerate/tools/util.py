@@ -10,7 +10,7 @@ TMP_FILENAME_STORAGE = []
 
 
 def getTemporaryFileName(suffix='.bed'):
-    tmpFileName = mkstemp(suffix=suffix, dir='/data/tmp/congloTmp')[1]
+    tmpFileName = mkstemp(suffix=suffix, dir='/tmp')[1]
     TMP_FILENAME_STORAGE.append(tmpFileName)
     return tmpFileName
 
