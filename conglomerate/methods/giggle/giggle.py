@@ -111,7 +111,10 @@ class Giggle(OneVsManyMethod):
     def getErrorDetails(self):
         assert not self.ranSuccessfully()
         #Not checked if informative
-        return open(self._resultFilesDict['stderr']).read()
+        if 'stderr' in self._resultFilesDict:
+            return open(self._resultFilesDict['stderr']).read()
+        else:
+            return 'Giggle produced no error output!'
 
 
 class GiggleResult(object):
