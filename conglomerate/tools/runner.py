@@ -1,5 +1,7 @@
 from __future__ import absolute_import, division, print_function, unicode_literals
 
+import time
+
 from conglomerate.methods.multimethod import MultiMethod
 from conglomerate.tools.constants import CATCH_METHOD_EXCEPTIONS, VERBOSE_RUNNING
 from conglomerate.tools.util import deleteAllTmpFiles
@@ -10,7 +12,9 @@ __metaclass__ = type
 def runAllMethodsInSequence(methods):
     try:
         for method in methods:
-            print('Temp1: ', str(method))
+            if VERBOSE_RUNNING:
+                startTime = time.time()
+                print('Running method:', str(method))
             try:
                 jobs = method.createJobs()
             except Exception, e:
@@ -29,6 +33,8 @@ def runAllMethodsInSequence(methods):
                 #assert isinstance(method, MultiMethod)
                 resultFilesDictList = [job.run() for job in jobs]
                 method.setResultFilesDictList(resultFilesDictList)
+            if VERBOSE_RUNNING:
+                print('Runtime: ',(time.time()-startTime)/60.0, ' minutes')
             # else:
             #     raise NotImplementedError()
     finally:
