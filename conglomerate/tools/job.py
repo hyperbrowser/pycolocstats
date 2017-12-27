@@ -19,6 +19,7 @@ class Job(object):
         try:
             cwlTool = self._tool.getCwlTool()
             params = self._mapParamsToCwl(self._params)
+            print('TEMP11 - sending to CWL: ',params)
             toolResults = cwlTool(**params)
             return self._createResultFilesDict(toolResults)
         except cwltool.factory.WorkflowStatus as ws:
