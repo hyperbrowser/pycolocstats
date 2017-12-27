@@ -24,22 +24,19 @@ class IntervalStats(OneVsOneMethod):
         pass
 
     def setChromLenFileName(self, chromLenFileName):
-        import pkg_resources
-        self._params['d'] = pkg_resources.resource_filename('tests.resources', 'chrom_lengths.tabular')
-        return
-        # contents = []
-        # with open(chromLenFileName, 'r') as f:
-        #     for line in f.readlines():
-        #         newl = line.strip('\n').split('\t')
-        #         contents.append([newl[0], '0', newl[1]])
-        #
-        # tempFileName = getTemporaryFileName()
-        # sampleFile = open(tempFileName, 'w')
-        # for c in contents:
-        #     sampleFile.write('\t'.join(c)+'\n')
-        # sampleFile.flush()
-        #
-        # self._params['d'] = sampleFile.name #chromLenFileName
+        contents = []
+        with open(chromLenFileName, 'r') as f:
+            for line in f.readlines():
+                newl = line.strip('\n').split('\t')
+                contents.append([newl[0], '0', newl[1]])
+
+        tempFileName = getTemporaryFileName()
+        sampleFile = open(tempFileName, 'w')
+        for c in contents:
+            sampleFile.write('\t'.join(c)+'\n')
+        sampleFile.flush()
+
+        self._params['d'] = sampleFile.name #chromLenFileName
         # TODO: Add an extra column in between (filled with zeroes), e.g.:
         # chr1	0	249250621
         # chr10	0	135534747
