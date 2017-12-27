@@ -33,23 +33,25 @@ def tracks():
             pkg_resources.resource_filename('tests.resources', 'Ensembl_Genes_cropped.bed.gz'),
             pkg_resources.resource_filename('tests.resources', 'H3K4me3_no_overlaps_cropped.bed')]
 
+
 @pytest.fixture(scope='function')
 def chrLenFile():
     return pkg_resources.resource_filename('tests.resources', 'chrom_lengths.tabular')
 
+
 @pytest.mark.usefixtures('chrLenFile', 'tracks')
 class TestMethods(object):
     def testUnified(self, tracks, chrLenFile):
-        #define tracks and methods (will in real runs come in from GUI)
+        # define tracks and methods (will in real runs come in from GUI)
         queryTrack = [tracks[0]]
         refTracks = [tracks[1], tracks[2]]
         methodClasses = [GenometriCorr, StereoGene]
 
-        #create selections (will in real runs come in from GUI)
-        allowOverlapChoiceList = [('setAllowOverlaps',False), ('setAllowOverlaps',True)]
-        preserveClumpingChoiceList = [('preserveClumping',False), ('preserveClumping',True)]
-        chrLenList = [('setChromLenFileName',chrLenFile)]
-        selectionsValues = [allowOverlapChoiceList, preserveClumpingChoiceList,chrLenList]
+        # create selections (will in real runs come in from GUI)
+        allowOverlapChoiceList = [('setAllowOverlaps', False), ('setAllowOverlaps', True)]
+        preserveClumpingChoiceList = [('preserveClumping', False), ('preserveClumping', True)]
+        chrLenList = [('setChromLenFileName', chrLenFile)]
+        selectionsValues = [allowOverlapChoiceList, preserveClumpingChoiceList, chrLenList]
         from conglomerate.tools.method_compatibility import getCompatibleMethodObjects
         workingMethodObjects = getCompatibleMethodObjects(selectionsValues, queryTrack, refTracks, methodClasses)
         print(len(workingMethodObjects), [wmo for wmo in workingMethodObjects])
@@ -99,7 +101,7 @@ class TestMethods(object):
         method.setManualParam('silent', 0)
         runAllMethodsInSequence([method])
         self._printResultFiles(method, ['stderr', 'stdout', 'output'])
-        self._assertMethodResultsSize(len(qTracks)*len(refTracks), method)
+        self._assertMethodResultsSize(len(qTracks) * len(refTracks), method)
 
     def testIntervalStats(self, chrLenFile, tracks):
         method = IntervalStats()
@@ -208,11 +210,12 @@ class TestMethods(object):
                 print('Local path: ' + resultFilesDict[key])
                 print('------')
                 print('\n'.join(os.listdir(resultFilesDict[key])) if key == 'output'
-                      else open(resultFilesDict[key]).read())
+                else open(resultFilesDict[key]).read())
 
     @staticmethod
     def _assertMethodResultsSize(expectedResulstNr, method):
         assert expectedResulstNr == len(method.getTestStatistic()), \
-            "%s: Expected %i test statistic results got %i" % (str(method), expectedResulstNr, len(method.getTestStatistic()))
+            "%s: Expected %i test statistic results got %i" % (
+                str(method), expectedResulstNr, len(method.getTestStatistic()))
         assert expectedResulstNr == len(method.getPValue()), \
             "%s: Expected %i p-values got %i" % (str(method), expectedResulstNr, len(method.getPValue()))
