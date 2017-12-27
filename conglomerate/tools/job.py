@@ -1,5 +1,8 @@
 from __future__ import absolute_import, division, print_function, unicode_literals
+import logging
 from future.standard_library import install_aliases
+from conglomerate.tools.constants import VERBOSE_RUNNING
+
 install_aliases()
 
 import cwltool
@@ -17,9 +20,10 @@ class Job(object):
 
     def run(self):
         try:
+            if not VERBOSE_RUNNING:
+                logging.getLogger("cwltool").disabled = 1
             cwlTool = self._tool.getCwlTool()
             params = self._mapParamsToCwl(self._params)
-            print('TEMP11 - sending to CWL: ',params)
             toolResults = cwlTool(**params)
             return self._createResultFilesDict(toolResults)
         except cwltool.factory.WorkflowStatus as ws:
