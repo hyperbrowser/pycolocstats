@@ -1,6 +1,8 @@
 from __future__ import absolute_import, division, print_function, unicode_literals
 import logging
 from future.standard_library import install_aliases
+
+from conglomerate.tools.ToolResultsCacher import ToolResultsCacher
 from conglomerate.tools.constants import VERBOSE_RUNNING
 
 install_aliases()
@@ -22,9 +24,15 @@ class Job(object):
         try:
             if not VERBOSE_RUNNING:
                 logging.getLogger("cwltool").disabled = 1
-            cwlTool = self._tool.getCwlTool()
             params = self._mapParamsToCwl(self._params)
-            toolResults = cwlTool(**params)
+            #added caching:
+            cacher = ToolResultsCacher(self._tool, self._params)
+            if cacher.cacheAvailable():
+                toolResults = cacher.load()
+            else:
+                cwlTool = self._tool.getCwlTool()
+                toolResults = cwlTool(**params)
+                cacher.store(toolResults)
             return self._createResultFilesDict(toolResults)
         except cwltool.factory.WorkflowStatus as ws:
             return self._createResultFilesDict(ws.out)
