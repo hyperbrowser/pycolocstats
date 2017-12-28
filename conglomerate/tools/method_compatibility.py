@@ -8,10 +8,7 @@ import conglomerate.tools.constants as const
 
 def getCompatibleMethodObjects(selectionsValues, queryTrack, refTracks, methodClasses):
     workingMethodObjects = []
-    # print 'TEMP3: ', selectionsValues
-    # print 'TEMP4: ', [len(v) for v in selectionsValues]
     multiChoiceList = list(product(*selectionsValues))
-    # print 'TEMP2', len(list(multiChoiceList)), len(list(methodClasses))
     for choiceTupleList in multiChoiceList:
         for methodClass in methodClasses:
             try:
@@ -26,11 +23,9 @@ def getCompatibleMethodObjects(selectionsValues, queryTrack, refTracks, methodCl
                     else:
                         getattr(currMethod, methodName)(choice)
                 currMethod.checkForAbsentMandatoryParameters()
-            #except Exception, e:
             except:
                 if VERBOSE_RUNNING:
                     print 'Method not compatible: ', methodClass #, str(type(e)).replace('<','').replace('>',''), e
-                    #print 'Traceback: ', traceback.print_tb(e.__traceback__)
                     traceback.print_exc()
                 if not const.CATCH_METHOD_EXCEPTIONS:
                     raise
