@@ -22,7 +22,7 @@ class ToolResultsCacher(object):
         #print('TEMP2: ', tuple(sorted(self._params.items())))
 
     def store(self, toolResults):
-        if STORE_IN_CACHE:
+        if STORE_IN_CACHE and self._cacheFn is not None:
             pickle.dump(toolResults, open(self._cacheFn,'w'))
 
     def load(self):
