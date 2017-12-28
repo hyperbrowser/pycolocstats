@@ -97,3 +97,15 @@ class StereoGene(OneVsOneMethod):
             return open(self._resultFilesDict['stderr']).read().replace('\n','<br>\n')
         else:
             return 'Genometricorr did not provide any error output'
+
+    def setRuntimeMode(self, mode):
+        #also set corrOnly!?
+        if mode =='quick':
+            numPerm = 100
+        elif mode == 'medium':
+            numPerm = 1000
+        elif mode == 'accurate':
+            numPerm = 10000
+        else:
+            raise
+        self.setManualParam('nShuffle', numPerm)

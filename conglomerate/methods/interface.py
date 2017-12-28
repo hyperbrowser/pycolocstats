@@ -174,3 +174,6 @@ class UniformInterface(with_metaclass(ABCMeta, object)):
         :return: Full result output as a string
         """
         pass
+
+    def setRuntimeMode(self, mode):
+        assert mode in ['quick', 'medium', 'accurate']

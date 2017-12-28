@@ -79,3 +79,16 @@ class GenometriCorr(OneVsOneMethod):
             return open(self._resultFilesDict['stderr']).read().replace('\n','<br>\n')
         else:
             return 'Genometricorr did not provide any error output'
+
+    def setRuntimeMode(self, mode):
+        if mode =='quick':
+            numPerm = 20
+        elif mode == 'medium':
+            numPerm = 100
+        elif mode == 'accurate':
+            numPerm = 500
+        else:
+            raise
+        self.setManualParam('ecdfPermNum', numPerm)
+        self.setManualParam('meanPermNum', numPerm)
+        self.setManualParam('jaccardPermNum', numPerm)
