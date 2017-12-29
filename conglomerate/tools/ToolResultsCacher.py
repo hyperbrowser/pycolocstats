@@ -27,12 +27,13 @@ class ToolResultsCacher(object):
         if STORE_IN_CACHE and self._cacheFn is not None:
             pickle.dump(toolResults, open(self._cacheFn,'w'))
             #At least for now, also needs to cache file contents
-            fileContents = {}
-            for key, fileinfo in toolResults.items():
-                from urlparse import urlparse
-                parsedLocation = urlparse(fileinfo['location'])
-                fileContents[parsedLocation.path] = open(parsedLocation.path).read()
-            pickle.dump(fileContents, open(self._cacheContentsFn,'w'))
+            # fileContents = {}
+            # for key, fileinfo in toolResults.items():
+            #     if not
+            #     from urlparse import urlparse
+            #     parsedLocation = urlparse(fileinfo['location'])
+            #     fileContents[parsedLocation.path] = open(parsedLocation.path).read()
+            # pickle.dump(fileContents, open(self._cacheContentsFn,'w'))
 
 
 
@@ -41,12 +42,19 @@ class ToolResultsCacher(object):
             if VERBOSE_RUNNING:
                 print 'Loading cached results for: ', self._toolName
             toolResults = pickle.load(open(self._cacheFn))
-            #reconstruct file contents:
-            fileContents = pickle.load(open(self._cacheContentsFn))
             for key, fileinfo in toolResults.items():
                 from urlparse import urlparse
                 parsedLocation = urlparse(fileinfo['location'])
-                open(parsedLocation.path, 'w').write(fileContents[parsedLocation.path])
+                import os
+                if not os.path.exists(parsedLocation.path):
+                    return None
+
+            #reconstruct file contents:
+            # fileContents = pickle.load(open(self._cacheContentsFn))
+            # for key, fileinfo in toolResults.items():
+            #     from urlparse import urlparse
+            #     parsedLocation = urlparse(fileinfo['location'])
+            #     open(parsedLocation.path, 'w').write(fileContents[parsedLocation.path])
 
             return toolResults
         else:
