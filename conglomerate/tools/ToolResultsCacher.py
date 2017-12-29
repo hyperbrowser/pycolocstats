@@ -14,7 +14,9 @@ class ToolResultsCacher(object):
         self._params = params
         try:
             self._cacheKey = str(hash((self._toolName, tuple(sorted(self._params.items())))))
-            self._cacheFn = self.CACHE_DISK_PATH + self._cacheKey
+            self._cacheFn = self.CACHE_DISK_PATH + self._cacheKey + '_results.pickle'
+            self._cacheContentsFn = self.CACHE_DISK_PATH + self._cacheKey + '_fileContents.pickle'
+
         except:
             self._cacheKey = None
             self._cacheFn = None
@@ -24,12 +26,29 @@ class ToolResultsCacher(object):
     def store(self, toolResults):
         if STORE_IN_CACHE and self._cacheFn is not None:
             pickle.dump(toolResults, open(self._cacheFn,'w'))
+            #At least for now, also needs to cache file contents
+            fileContents = {}
+            for key, fileinfo in toolResults.items():
+                from urlparse import urlparse
+                parsedLocation = urlparse(fileinfo['location'])
+                fileContents[parsedLocation.path] = open(parsedLocation.path).read()
+            pickle.dump(fileContents, open(self._cacheContentsFn,'w'))
+
+
 
     def load(self):
         if self.cacheAvailable():
             if VERBOSE_RUNNING:
                 print 'Loading cached results for: ', self._toolName
-            return pickle.load(open(self._cacheFn))
+            toolResults = pickle.load(open(self._cacheFn))
+            #reconstruct file contents:
+            fileContents = pickle.load(open(self._cacheContentsFn))
+            for key, fileinfo in toolResults.items():
+                from urlparse import urlparse
+                parsedLocation = urlparse(fileinfo['location'])
+                open(parsedLocation.path, 'w').write(fileContents[parsedLocation.path])
+
+            return toolResults
         else:
             return None
 
