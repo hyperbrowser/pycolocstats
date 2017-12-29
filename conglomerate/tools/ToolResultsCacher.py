@@ -8,7 +8,7 @@ import os
 
 class ToolResultsCacher(object):
     #CACHE_DISK_PATH = '/Users/sandve/egne_dokumenter/_faglig/conglomerateColoc/cache/'
-    CACHE_DISK_PATH = '/data/tmp/congloTmp/'
+    CACHE_DISK_PATH = '/data/tmp/congloTmp/toolResultsCache'
     def __init__(self, tool, params):
         self._toolName = tool._toolName
         self._params = params
