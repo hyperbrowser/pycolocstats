@@ -93,7 +93,9 @@ class IntervalStats(OneVsOneMethod):
 
     def getTestStatistic(self):
         #return self._testStats
-        return self.getRemappedResultDict({(self._params['q'], self._params['r']): self._parseIntervalStatsSummaryStat(threshold=0.05)})
+        testStatVal = self._parseIntervalStatsSummaryStat(threshold=0.05) / 0.05
+        testStat = '<span title="ratio of observed/expected proximity pvals below 0.05">' + '%.1f' %testStatVal + '</span>'
+        return self.getRemappedResultDict({(self._params['q'], self._params['r']): testStat })
 
     def getFullResults(self):
         resultsFolderPath = path.join(self._resultFilesDict['output'], 'output')

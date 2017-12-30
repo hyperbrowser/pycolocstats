@@ -63,7 +63,10 @@ class GenometriCorr(OneVsOneMethod):
         return self.getRemappedResultDict({(self._params['query'],self._params['reference']): self._results['jaccard.measure.p.value']['awhole']})
 
     def getTestStatistic(self):
-        return self.getRemappedResultDict({(self._params['query'],self._params['reference']):self._results['jaccard.measure']['awhole']})
+        testStat = '%1.f' % self._results['projection.test.obs.to.exp']['awhole'] + '(ratio observed/expected)'
+        return self.getRemappedResultDict(
+            {(self._params['query'], self._params['reference']): testStat})
+        #return self.getRemappedResultDict({(self._params['query'],self._params['reference']):self._results['jaccard.measure']['awhole']})
 
     def getFullResults(self):
         return self.getRemappedResultDict({(self._params['query'],self._params['reference']): self._fullResults})
