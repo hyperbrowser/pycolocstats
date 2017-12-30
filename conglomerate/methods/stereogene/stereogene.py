@@ -59,7 +59,7 @@ class StereoGene(OneVsOneMethod):
         pass
 
     def setRestrictedAnalysisUniverse(self, restrictedAnalysisUniverse):
-        pass
+        assert restrictedAnalysisUniverse is None, restrictedAnalysisUniverse
 
     def setColocMeasure(self, colocMeasure):
         pass

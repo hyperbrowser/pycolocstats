@@ -95,7 +95,7 @@ class IntervalStats(OneVsOneMethod):
     def getTestStatistic(self):
         #return self._testStats
         testStatVal = self._parseIntervalStatsSummaryStat(threshold=0.05) / 0.05
-        testStat = '<a href=" " title="ratio of observed/expected proximity pvals below 0.05">' + '%.1f' %testStatVal + '</a>'
+        testStat = '<a href=" " title="ratio of observed to expected number of proximity p-values below 0.05">' + '%.1f' %testStatVal + '</a>'
         return self.getRemappedResultDict({(self._params['q'], self._params['r']): testStat })
 
     def getFullResults(self):
@@ -107,7 +107,7 @@ class IntervalStats(OneVsOneMethod):
         assert preserve is False
 
     def setRestrictedAnalysisUniverse(self, restrictedAnalysisUniverse):
-        pass
+        assert restrictedAnalysisUniverse is None, restrictedAnalysisUniverse
 
     def setColocMeasure(self, colocMeasure):
         pass
