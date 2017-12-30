@@ -21,8 +21,9 @@ class GenometriCorr(OneVsOneMethod):
         self._params['chromosomes_length'] = chromLenFileName
         # TODO: Replace '\t' with '='
 
-    def _setQueryTrackFileName(self, trackFn):
-        bedPath = self._getBedExtendedFileName(trackFn)
+    def _setQueryTrackFileName(self, trackFile):
+        bedPath = self._getBedExtendedFileName(trackFile.path)
+        self._addTrackTitleMapping(bedPath, trackFile.title)
         self._params['query'] = bedPath
 
 

@@ -23,8 +23,9 @@ class LOLA(OneVsManyMethod):
     def setChromLenFileName(self, chromLenFileName):
         pass
 
-    def _setQueryTrackFileName(self, trackFn):
-        self.setManualParam('userset', trackFn)
+    def _setQueryTrackFileName(self, trackFile):
+        self._addTrackTitleMapping(trackFile.path, trackFile.title)
+        self.setManualParam('userset', trackFile.path)
 
     def _setReferenceTrackFileNames(self, trackFileList):
         if trackFileList == ['prebuilt','LOLACore_170206']:

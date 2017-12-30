@@ -40,8 +40,9 @@ class Giggle(OneVsManyMethod):
         if genomeLength:
             self.setManualParam('search_g', genomeLength)
 
-    def _setQueryTrackFileName(self, trackFn):
-        bedPath = self._getBedExtendedFileName(trackFn)
+    def _setQueryTrackFileName(self, trackFile):
+        bedPath = self._getBedExtendedFileName(trackFile.path)
+        self._addTrackTitleMapping(bedPath, trackFile.title)
         self.qTrackFn = bedPath
         self._params['search_q'] = bedPath
 

@@ -44,8 +44,9 @@ class IntervalStats(OneVsOneMethod):
         # ...
         # etc
 
-    def _setQueryTrackFileName(self, trackFn):
-        self._params['q'] = trackFn
+    def _setQueryTrackFileName(self, trackFile):
+        self._addTrackTitleMapping(trackFile.path, trackFile.title)
+        self._params['q'] = trackFile.path
 
     def _setReferenceTrackFileName(self, trackFile):
         from conglomerate.tools.TrackFile import TrackFile

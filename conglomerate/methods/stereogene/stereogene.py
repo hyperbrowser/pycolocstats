@@ -25,8 +25,9 @@ class StereoGene(OneVsOneMethod):
     def setChromLenFileName(self, chromLenFileName):
         self._params['chrom'] = chromLenFileName
 
-    def _setQueryTrackFileName(self, trackFn):
-        bedPath = self._getBedExtendedFileName(trackFn)
+    def _setQueryTrackFileName(self, trackFile):
+        bedPath = self._getBedExtendedFileName(trackFile.path)
+        self._addTrackTitleMapping(bedPath, trackFile.title)
         self._params['tracks'] += [bedPath]
 
 
