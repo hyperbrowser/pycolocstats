@@ -62,6 +62,8 @@ class ToolResultsCacher(object):
 
     def cacheAvailable(self):
         if LOAD_FROM_CACHE and self._cacheFn is not None:
+            if VERBOSE_RUNNING and not os.path.exists(self._cacheFn):
+                print 'No cached result found: ', {'Tool: ':self._toolName, 'Params: ':self._params.items()}
             return os.path.exists(self._cacheFn)
         else:
             return False
