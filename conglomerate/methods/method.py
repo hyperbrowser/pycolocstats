@@ -28,8 +28,9 @@ class Method(UniformInterface):
     def getRemappedResultDict(self, resultDict):
         remappedDict = {}
         for origKey in resultDict:
-            assert all([k in self._trackTitleMappings for k in origKey]), (origKey, self._trackTitleMappings)
-            remappedKey = tuple([self._trackTitleMappings[k] for k in origKey])
+            #assert all([k in self._trackTitleMappings for k in origKey]), (origKey, self._trackTitleMappings)
+            remappedKey = tuple([self._trackTitleMappings[k] if k in self._trackTitleMappings else k
+                                 for k in origKey])
             remappedDict[ remappedKey ] = resultDict[origKey]
         return remappedDict
 
