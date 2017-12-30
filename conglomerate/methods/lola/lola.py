@@ -88,16 +88,16 @@ class LOLA(OneVsManyMethod):
         self._ranSuccessfully = True
 
     def getPValue(self):
-        return self._pvals
+        return self.getRemappedResultDict(self._pvals)
 
     def getTestStatistic(self):
-        return self._testStats
+        return self.getRemappedResultDict(self._testStats)
 
     def getFullResults(self):
         resultsFolderPath = self._resultFilesDict['output']
         mainOutput = resultsFolderPath + '/lolaResults/allEnrichments.tsv'
         fullResults = open(mainOutput).read().replace('\n','<br>\n')
-        return OrderedDict([(key, fullResults) for key in self._pvals.keys()])
+        return self.getRemappedResultDict(OrderedDict([(key, fullResults) for key in self._pvals.keys()]))
 
     def preserveClumping(self, preserve):
         assert preserve is False

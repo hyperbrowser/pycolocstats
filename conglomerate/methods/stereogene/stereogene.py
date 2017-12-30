@@ -43,14 +43,14 @@ class StereoGene(OneVsOneMethod):
         self._results = self._parseStatisticsFile(dirpath=self._resultFilesDict['output'])
 
     def getPValue(self):
-        return OrderedDict([(key, x['pVal']) for key, x in self._results.items()])
+        return self.getRemappedResultDict(OrderedDict([(key, x['pVal']) for key, x in self._results.items()]))
 
     def getTestStatistic(self):
-        return OrderedDict([(key, x['totCorr']) for key, x in self._results.items()])
+        return self.getRemappedResultDict(OrderedDict([(key, x['totCorr']) for key, x in self._results.items()]))
 
     def getFullResults(self):
         fullResults = open(self._resultFilesDict['stdout']).read().replace('\n','<br>\n')
-        return OrderedDict([(key, fullResults) for key in self._results.keys()])
+        return self.getRemappedResultDict(OrderedDict([(key, fullResults) for key in self._results.keys()]))
 
     def preserveClumping(self, preserve):
         pass
