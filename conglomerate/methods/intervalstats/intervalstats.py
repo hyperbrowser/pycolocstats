@@ -47,7 +47,11 @@ class IntervalStats(OneVsOneMethod):
     def _setQueryTrackFileName(self, trackFn):
         self._params['q'] = trackFn
 
-    def _setReferenceTrackFileName(self, trackFn):
+    def _setReferenceTrackFileName(self, trackFile):
+        from conglomerate.tools.TrackFile import TrackFile
+        if isinstance(trackFile, TrackFile):
+            self._addTrackTitleMapping(trackFile.path, trackFile.title)
+            trackFn = trackFile.path
         assert trackFn not in ['prebuilt', 'LOLACore_170206']
         self._params['r'] = trackFn
 
@@ -83,15 +87,15 @@ class IntervalStats(OneVsOneMethod):
 
     def getPValue(self):
         #return self._pvals
-        return {(self._params['q'], self._params['r']): 'N/A'}
+        return self.getRemappedResultDict({(self._params['q'], self._params['r']): 'N/A'})
 
     def getTestStatistic(self):
         #return self._testStats
-        return {(self._params['q'], self._params['r']): self._parseIntervalStatsSummaryStat(threshold=0.05)}
+        return self.getRemappedResultDict({(self._params['q'], self._params['r']): self._parseIntervalStatsSummaryStat(threshold=0.05)})
 
     def getFullResults(self):
         resultsFolderPath = path.join(self._resultFilesDict['output'], 'output')
-        return {(self._params['q'], self._params['r']): open(resultsFolderPath).read().replace('\n','<br>\n')}
+        return self.getRemappedResultDict({(self._params['q'], self._params['r']): open(resultsFolderPath).read().replace('\n','<br>\n')})
 
     def preserveClumping(self, preserve):
         # not sure yet

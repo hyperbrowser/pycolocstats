@@ -20,6 +20,17 @@ class Method(UniformInterface):
         self._ranSuccessfully = None
         self._errorMessage = None
         self._requiredFileCopies = {}
+        self._trackTitleMappings = {}
+
+    def _addTrackTitleMapping(self, path, title):
+        self._trackTitleMappings[path] = title
+
+    def getRemappedResultDict(self, resultDict):
+        remappedDict = {}
+        for origKey in resultDict:
+            remappedKey = tuple([self._trackTitleMappings[k] for k in origKey])
+            remappedDict[ remappedKey ] = resultDict[origKey]
+        return remappedDict
 
     def _getTool(self):
         return Tool(self._getToolName())
