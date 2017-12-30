@@ -68,7 +68,8 @@ class Giggle(OneVsManyMethod):
             bedPathList = []
             for trackFile in trackFileList:
                 bedPath = self._getBedExtendedFileName(trackFile.path)
-                self._addTrackTitleMapping(bedPath+'.gz', trackFile.title)
+                import os
+                self._addTrackTitleMapping(os.path.basename(bedPath)+'.gz', trackFile.title)
                 bedPathList.append(bedPath)
             self._params['index_i'] = bedPathList
 
