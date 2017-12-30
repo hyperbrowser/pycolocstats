@@ -30,9 +30,10 @@ class StereoGene(OneVsOneMethod):
         self._params['tracks'] += [bedPath]
 
 
-    def _setReferenceTrackFileName(self, trackFn):
-        assert trackFn not in ['prebuilt', 'LOLACore_170206']
-        bedPath = self._getBedExtendedFileName(trackFn)
+    def _setReferenceTrackFileName(self, trackFile):
+        assert trackFile not in ['prebuilt', 'LOLACore_170206']
+        bedPath = self._getBedExtendedFileName(trackFile.path)
+        self._addTrackTitleMapping(bedPath, trackFile.title)
         self._params['tracks'] += [bedPath]
 
     def setAllowOverlaps(self, allowOverlaps):

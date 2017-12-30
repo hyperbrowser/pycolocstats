@@ -90,14 +90,14 @@ class Giggle(OneVsManyMethod):
             self.setRunSuccessStatus(False)
 
     def getPValue(self):
-        return self._parsedResults.getResultsPerName('pvalTwoTail')
+        return self.getRemappedResultDict(self._parsedResults.getResultsPerName('pvalTwoTail'))
 
     def getTestStatistic(self):
-        return self._parsedResults.getResultsPerName('overlaps')
+        return self.getRemappedResultDict(self._parsedResults.getResultsPerName('overlaps'))
 
     def getFullResults(self):
         fullResults = open(self.getResultFilesDict()['stdout']).read().replace('\n','<br>\n')
-        return OrderedDict([(key,fullResults) for key in self._parsedResults.getResultsPerName('overlaps').keys()])
+        return self.getRemappedResultDict(OrderedDict([(key,fullResults) for key in self._parsedResults.getResultsPerName('overlaps').keys()]))
 
     def preserveClumping(self, preserve):
         assert preserve is False, preserve

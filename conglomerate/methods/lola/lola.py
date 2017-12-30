@@ -26,12 +26,16 @@ class LOLA(OneVsManyMethod):
     def _setQueryTrackFileName(self, trackFn):
         self.setManualParam('userset', trackFn)
 
-    def _setReferenceTrackFileNames(self, trackFnList):
-        if trackFnList == ['prebuilt','LOLACore_170206']:
+    def _setReferenceTrackFileNames(self, trackFileList):
+        if trackFileList == ['prebuilt','LOLACore_170206']:
             self.setManualParam('trackIndex', str('LOLACore_170206'))
             self.setManualParam('trackCollection', str('codex'))
             self.setManualParam('genome', str('hg19'))
         else:
+            trackFnList = []
+            for trackFile in trackFileList:
+                self._addTrackTitleMapping(trackFile.path, trackFile.title)
+                trackFnList.append(trackFile.path)
             self.setManualParam('regiondb', trackFnList)
 
     def setAllowOverlaps(self, allowOverlaps):

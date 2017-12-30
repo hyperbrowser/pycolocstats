@@ -60,13 +60,13 @@ class GenometriCorr(OneVsOneMethod):
         return data
 
     def getPValue(self):
-        return {(self._params['query'],self._params['reference']): self._results['jaccard.measure.p.value']['awhole']}
+        return self.getRemappedResultDict({(self._params['query'],self._params['reference']): self._results['jaccard.measure.p.value']['awhole']})
 
     def getTestStatistic(self):
-        return {(self._params['query'],self._params['reference']):self._results['jaccard.measure']['awhole']}
+        return self.getRemappedResultDict({(self._params['query'],self._params['reference']):self._results['jaccard.measure']['awhole']})
 
     def getFullResults(self):
-        return {(self._params['query'],self._params['reference']): self._fullResults}
+        return self.getRemappedResultDict({(self._params['query'],self._params['reference']): self._fullResults})
 
     def preserveClumping(self, preserve):
         pass
