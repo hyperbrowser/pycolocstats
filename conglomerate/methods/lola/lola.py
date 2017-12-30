@@ -83,7 +83,7 @@ class LOLA(OneVsManyMethod):
         indicesAndTestStat = zip(refFileIndices, testStat)
         self._testStats = {}
         for index, ts in indicesAndTestStat:
-            self._testStats[(queryFn, refFns[index-1])] = '%.2f'%ts + ' (logOddsRatio)'
+            self._testStats[(queryFn, refFns[index-1])] = '<a href="" title="log odds ratio">' + '%.1f'%ts + '</a>'
 
         self._ranSuccessfully = True
 

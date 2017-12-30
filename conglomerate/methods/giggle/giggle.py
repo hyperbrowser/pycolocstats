@@ -94,7 +94,10 @@ class Giggle(OneVsManyMethod):
         return self.getRemappedResultDict(self._parsedResults.getResultsPerName('pvalTwoTail'))
 
     def getTestStatistic(self):
-        return self.getRemappedResultDict(self._parsedResults.getResultsPerName('overlaps'))
+        #return self.getRemappedResultDict(self._parsedResults.getResultsPerName('overlaps'))
+        testStat = '<a href="" title="">' + '%.1f'%self._parsedResults.getResultsPerName('oddsRatio') + '</a>'
+        return self.getRemappedResultDict(testStat)
+
 
     def getFullResults(self):
         fullResults = open(self.getResultFilesDict()['stdout']).read().replace('\n','<br>\n')

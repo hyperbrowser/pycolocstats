@@ -46,7 +46,9 @@ class StereoGene(OneVsOneMethod):
         return self.getRemappedResultDict(OrderedDict([(key, x['pVal']) for key, x in self._results.items()]))
 
     def getTestStatistic(self):
-        return self.getRemappedResultDict(OrderedDict([(key, x['totCorr']) for key, x in self._results.items()]))
+        return self.getRemappedResultDict(
+            OrderedDict([(key, '<a href="" title="Correlation coefficient">'+'%.1f'%x['totCorr']+'</a>')
+            for key, x in self._results.items()]))
 
     def getFullResults(self):
         fullResults = open(self._resultFilesDict['stdout']).read().replace('\n','<br>\n')
