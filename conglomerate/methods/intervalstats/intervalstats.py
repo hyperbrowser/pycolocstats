@@ -52,6 +52,8 @@ class IntervalStats(OneVsOneMethod):
         if isinstance(trackFile, TrackFile):
             self._addTrackTitleMapping(trackFile.path, trackFile.title)
             trackFn = trackFile.path
+        else:
+            trackFn = trackFile
         assert trackFn not in ['prebuilt', 'LOLACore_170206']
         self._params['r'] = trackFn
 

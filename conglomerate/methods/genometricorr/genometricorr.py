@@ -26,9 +26,16 @@ class GenometriCorr(OneVsOneMethod):
         self._params['query'] = bedPath
 
 
-    def _setReferenceTrackFileName(self, trackFn):
+    def _setReferenceTrackFileName(self, trackFile):
+        from conglomerate.tools.TrackFile import TrackFile
+        if isinstance(trackFile, TrackFile):
+            trackFn = trackFile.path
+        else:
+            trackFn = trackFile
         assert trackFn not in ['prebuilt', 'LOLACore_170206']
         bedPath = self._getBedExtendedFileName(trackFn)
+        if isinstance(trackFile, TrackFile):
+            self._addTrackTitleMapping(bedPath, trackFile.title)
         self._params['reference'] = bedPath
 
     def setAllowOverlaps(self, allowOverlaps):

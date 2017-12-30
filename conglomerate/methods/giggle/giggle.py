@@ -54,17 +54,22 @@ class Giggle(OneVsManyMethod):
         else:
             return None
 
-    def _setReferenceTrackFileNames(self, trackFnList):
+    def _setReferenceTrackFileNames(self, trackFileList):
         # indexParams = self.getRefTracksMappedToIndexParams(trackFnList)
         # if indexParams != None:
         #     for key,val in indexParams.items():
         #         self.setManualParam(key, val)
-        if trackFnList == ['prebuilt','LOLACore_170206']:
+        from conglomerate.tools.TrackFile import TrackFile
+        if trackFileList == ['prebuilt','LOLACore_170206']:
             self.setManualParam('trackIndex', str('LOLACore_170206'))
             self.setManualParam('trackCollection', str('codex'))
             self.setManualParam('genome', str('hg19'))
         else:
-            bedPathList = [self._getBedExtendedFileName(trackFn) for trackFn in trackFnList]
+            bedPathList = []
+            for trackFile in trackFileList:
+                bedPath = self._getBedExtendedFileName(trackFile.path)
+                self._addTrackTitleMapping(bedPath, trackFile.title)
+                bedPathList.append(bedPath)
             self._params['index_i'] = bedPathList
 
     def setAllowOverlaps(self, allowOverlaps):
