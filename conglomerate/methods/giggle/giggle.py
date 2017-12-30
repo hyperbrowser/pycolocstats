@@ -96,7 +96,7 @@ class Giggle(OneVsManyMethod):
 
     def getTestStatistic(self):
         #return self.getRemappedResultDict(self._parsedResults.getResultsPerName('overlaps'))
-        testStat = '<a href="" title="">' + '%.1f'%self._parsedResults.getResultsPerName('oddsRatio') + '</a>'
+        testStat = '<a href="" title="">' + '%s'%self._parsedResults.getResultsPerName('oddsRatio') + '</a>'
         return self.getRemappedResultDict(testStat)
 
 
