@@ -106,7 +106,8 @@ class LOLA(OneVsManyMethod):
     #@takes("UniformInterface", any([None, RestrictedThroughInclusion]))
     def setRestrictedAnalysisUniverse(self, restrictedAnalysisUniverse):
         assert isinstance(restrictedAnalysisUniverse, RestrictedThroughInclusion), type(restrictedAnalysisUniverse)
-        self.setManualParam('useruniverse', restrictedAnalysisUniverse.path)
+        trackFile = restrictedAnalysisUniverse.path
+        self.setManualParam('useruniverse', trackFile.path)
 
     def setColocMeasure(self, colocMeasure):
         pass

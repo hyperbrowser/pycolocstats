@@ -44,8 +44,8 @@ class RestrictedAnalysisUniverse(with_metaclass(ABCMeta, object)):
 
 
 class RestrictedThroughInclusion(RestrictedAnalysisUniverse):
-    def __init__(self, path):
-        self.path = path
+    def __init__(self, trackFile):
+        self.trackFile = trackFile
 
 
 class RestrictedThroughExclusion(RestrictedAnalysisUniverse):
