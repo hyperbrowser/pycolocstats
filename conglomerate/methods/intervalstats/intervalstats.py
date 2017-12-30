@@ -30,7 +30,10 @@ class IntervalStats(OneVsOneMethod):
                 newl = line.strip('\n').split('\t')
                 contents.append([newl[0], '0', newl[1]])
 
-        tempFileName = getTemporaryFileName()
+        #tempFileName = getTemporaryFileName()
+        import os
+        tempFileName = '/data/tmp/congloTmp/' + os.path.basename(chromLenFileName)
+
         sampleFile = open(tempFileName, 'w')
         for c in contents:
             sampleFile.write('\t'.join(c)+'\n')
