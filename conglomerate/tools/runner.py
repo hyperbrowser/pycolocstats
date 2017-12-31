@@ -12,6 +12,7 @@ __metaclass__ = type
 def runAllMethodsInSequence(methods):
     try:
         for method in methods:
+            print('Running tool:', method._methodCls.__name__, '<br>')
             if VERBOSE_RUNNING:
                 startTime = time.time()
                 print('Running method:', str(method))

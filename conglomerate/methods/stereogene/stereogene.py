@@ -4,6 +4,7 @@ from collections import OrderedDict
 
 from conglomerate.methods.method import OneVsOneMethod
 from conglomerate.tools.constants import STEREOGENE_TOOL_NAME
+import os
 
 __metaclass__ = type
 
@@ -27,14 +28,14 @@ class StereoGene(OneVsOneMethod):
 
     def _setQueryTrackFileName(self, trackFile):
         bedPath = self._getBedExtendedFileName(trackFile.path)
-        self._addTrackTitleMapping(bedPath, trackFile.title)
+        self._addTrackTitleMapping(os.path.basename(bedPath), trackFile.title)
         self._params['tracks'] += [bedPath]
 
 
     def _setReferenceTrackFileName(self, trackFile):
         assert trackFile not in ['prebuilt', 'LOLACore_170206']
         bedPath = self._getBedExtendedFileName(trackFile.path)
-        self._addTrackTitleMapping(bedPath, trackFile.title)
+        self._addTrackTitleMapping(os.path.basename(bedPath), trackFile.title)
         self._params['tracks'] += [bedPath]
 
     def setAllowOverlaps(self, allowOverlaps):
