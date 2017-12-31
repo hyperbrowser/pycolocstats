@@ -116,7 +116,8 @@ class IntervalStats(OneVsOneMethod):
         assert restrictedAnalysisUniverse is None, restrictedAnalysisUniverse
 
     def setColocMeasure(self, colocMeasure):
-        pass
+        from conglomerate.methods.interface import ColocMeasureProximity
+        assert isinstance(colocMeasure, ColocMeasureProximity), type(colocMeasure)
 
     def setHeterogeneityPreservation(self, preservationScheme, fn=None):
         assert preservationScheme is True

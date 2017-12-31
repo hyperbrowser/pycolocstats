@@ -63,7 +63,8 @@ class StereoGene(OneVsOneMethod):
         assert restrictedAnalysisUniverse is None, restrictedAnalysisUniverse
 
     def setColocMeasure(self, colocMeasure):
-        pass
+        from conglomerate.methods.interface import ColocMeasureCorrelation
+        assert isinstance(colocMeasure, ColocMeasureCorrelation), type(colocMeasure)
 
     def setHeterogeneityPreservation(self, preservationScheme, fn=None):
         pass

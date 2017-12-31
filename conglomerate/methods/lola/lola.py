@@ -3,7 +3,7 @@ from __future__ import absolute_import, division, print_function, unicode_litera
 import math
 from collections import OrderedDict
 
-from conglomerate.methods.interface import RestrictedThroughInclusion
+from conglomerate.methods.interface import RestrictedThroughInclusion, ColocMeasureOverlap
 from conglomerate.methods.method import OneVsManyMethod
 from conglomerate.tools.constants import LOLA_TOOL_NAME
 
@@ -113,7 +113,8 @@ class LOLA(OneVsManyMethod):
         self.setManualParam('useruniverse', restrictedAnalysisUniverse.trackFile.path)
 
     def setColocMeasure(self, colocMeasure):
-        pass
+        assert isinstance(colocMeasure,ColocMeasureOverlap), type(colocMeasure)
+        assert colocMeasure._countWholeIntervals is True, colocMeasure._countWholeIntervals
 
     def setHeterogeneityPreservation(self, preservationScheme, fn=None):
         pass
