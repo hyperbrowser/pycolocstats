@@ -1,5 +1,6 @@
 from __future__ import absolute_import, division, print_function, unicode_literals
 
+from conglomerate.methods.interface import ColocMeasureOverlap, ColocMeasureProximity
 from conglomerate.methods.method import OneVsOneMethod
 from conglomerate.tools.constants import GENOMETRICORR_TOOL_NAME
 
@@ -79,7 +80,7 @@ class GenometriCorr(OneVsOneMethod):
         assert restrictedAnalysisUniverse is None, restrictedAnalysisUniverse
 
     def setColocMeasure(self, colocMeasure):
-        pass
+        assert isinstance(colocMeasure, ColocMeasureOverlap), type(colocMeasure)
 
     def setHeterogeneityPreservation(self, preservationScheme, fn=None):
         pass
