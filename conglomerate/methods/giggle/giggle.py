@@ -92,7 +92,10 @@ class Giggle(OneVsManyMethod):
             self.setRunSuccessStatus(False)
 
     def getPValue(self):
-        return self.getRemappedResultDict(self._parsedResults.getResultsPerName('pvalTwoTail'))
+        pvalDict = self._parsedResults.getResultsPerName('pvalTwoTail')
+        for key in pvalDict.keys():
+            pvalDict[key] = '%.2e' % pvalDict[key]
+        return self.getRemappedResultDict(pvalDict)
 
     def getTestStatistic(self):
         #return self.getRemappedResultDict(self._parsedResults.getResultsPerName('overlaps'))
