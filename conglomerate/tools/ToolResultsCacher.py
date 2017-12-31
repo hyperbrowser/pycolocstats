@@ -20,6 +20,10 @@ class ToolResultsCacher(object):
         except:
             self._cacheKey = None
             self._cacheFn = None
+            if VERBOSE_RUNNING:
+                print 'Not able to determine cache key for method: ', self._toolName, 'based on params: ', repr(self._params)
+                import traceback
+                traceback.print_exc()
             #self._cacheKey = str(hash((self._toolName, tuple(sorted([x for x in self._params.items() if not x[1].startswith('/tmp')] )))))
         #print('TEMP2: ', tuple(sorted(self._params.items())))
 
