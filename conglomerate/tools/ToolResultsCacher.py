@@ -12,8 +12,13 @@ class ToolResultsCacher(object):
     def __init__(self, tool, params):
         self._toolName = tool._toolName
         self._params = params
+        cache_params = {}
+        for key,val in self._params.items():
+            if isinstance(val,list):
+                val = tuple(val)
+            cache_params[key] = val
         try:
-            self._cacheKey = str(hash((self._toolName, tuple(sorted(self._params.items())))))
+            self._cacheKey = str(hash((self._toolName, tuple(sorted(cache_params.items())))))
             self._cacheFn = self.CACHE_DISK_PATH + self._cacheKey + '_results.pickle'
             self._cacheContentsFn = self.CACHE_DISK_PATH + self._cacheKey + '_fileContents.pickle'
 
