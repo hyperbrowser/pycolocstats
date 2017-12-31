@@ -91,7 +91,7 @@ class LOLA(OneVsManyMethod):
     def getPValue(self):
         pvalDict = self._pvals
         for key in pvalDict.keys():
-            pvalDict[key] = '%.2e' % pvalDict[key]
+            pvalDict[key] = '%.2e' % pvalDict[key] if type(pvalDict[key])==float else str(pvalDict[key])
 
         return self.getRemappedResultDict(pvalDict)
 
