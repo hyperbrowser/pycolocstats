@@ -33,8 +33,8 @@ class IntervalStats(OneVsOneMethod):
 
         #tempFileName = getTemporaryFileName()
         import os
-        tempFileName = '/data/tmp/congloTmp/' + os.path.basename(chromLenFileName)
-
+        #tempFileName = '/data/tmp/congloTmp/' + os.path.basename(chromLenFileName)
+        tempFileName = getTemporaryFileName()
         sampleFile = open(tempFileName, 'w')
         for c in contents:
             sampleFile.write('\t'.join(c)+'\n')

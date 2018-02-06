@@ -21,6 +21,7 @@ class Method(UniformInterface):
         self._errorMessage = None
         self._requiredFileCopies = {}
         self._trackTitleMappings = {}
+        self._methodCls = self.__class__
 
     def _addTrackTitleMapping(self, path, title):
         self._trackTitleMappings[path] = title
@@ -97,7 +98,9 @@ class Method(UniformInterface):
         import os
         #import shutil
         #bedPath = os.path.join(mkdtemp(), trackFn.replace('.dat','.bed'))
-        bedPath = '/data/tmp/congloTmp/adHocBed/' + os.path.basename(trackFn).replace('.dat','.bed')
+        #bedPath = '/data/tmp/congloTmp/adHocBed/' + os.path.basename(trackFn).replace('.dat','.bed')
+        from conglomerate.tools.util import getTemporaryFileName
+        bedPath = getTemporaryFileName()
         #shutil.copytree(src=trackFn, dst=bedFn,symlinks=True)
         #shutil.copy(src=trackFn, dst=bedPath)
         self._requiredFileCopies[trackFn] = bedPath

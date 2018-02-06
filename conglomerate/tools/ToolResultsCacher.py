@@ -1,7 +1,7 @@
 from conglomerate.tools.constants import VERBOSE_RUNNING
 
-STORE_IN_CACHE = True
-LOAD_FROM_CACHE = True
+STORE_IN_CACHE = False
+LOAD_FROM_CACHE = False
 import pickle
 import os
 
