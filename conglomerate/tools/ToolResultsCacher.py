@@ -26,7 +26,7 @@ class ToolResultsCacher(object):
             self._cacheKey = None
             self._cacheFn = None
             if VERBOSE_RUNNING:
-                print 'Not able to determine cache key for method: ', self._toolName, 'based on params: ', repr(self._params)
+                print('Not able to determine cache key for method: ', self._toolName, 'based on params: ', repr(self._params))
                 import traceback
                 traceback.print_exc()
             #self._cacheKey = str(hash((self._toolName, tuple(sorted([x for x in self._params.items() if not x[1].startswith('/tmp')] )))))
@@ -49,7 +49,7 @@ class ToolResultsCacher(object):
     def load(self):
         if self.cacheAvailable():
             if VERBOSE_RUNNING:
-                print 'Loading cached results for: ', self._toolName
+                print('Loading cached results for: ', self._toolName)
             toolResults = pickle.load(open(self._cacheFn))
             for key, fileinfo in toolResults.items():
                 from urlparse import urlparse
@@ -72,7 +72,8 @@ class ToolResultsCacher(object):
     def cacheAvailable(self):
         if LOAD_FROM_CACHE and self._cacheFn is not None:
             if VERBOSE_RUNNING and not os.path.exists(self._cacheFn):
-                print 'No cached result found: ', {'Tool: ':self._toolName, 'Params: ':self._params.items()}
+                print('No cached result found: ',
+                      {'Tool: ': self._toolName, 'Params: ': self._params.items()})
             return os.path.exists(self._cacheFn)
         else:
             return False
