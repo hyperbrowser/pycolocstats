@@ -169,7 +169,8 @@ class UniformInterface(with_metaclass(ABCMeta, object)):
         pass
 
     #@abstractmethod
-    def getTestStatDescr(self):
+    @classmethod
+    def getTestStatDescr(cls):
         return 'not defined'
 
     @abstractmethod

@@ -97,7 +97,8 @@ class Giggle(OneVsManyMethod):
             pvalDict[key] = '%.2e' % pvalDict[key]
         return self.getRemappedResultDict(pvalDict)
 
-    def getTestStatDescr(self):
+    @classmethod
+    def getTestStatDescr(cls):
         return 'odds ratio'
 
     def getTestStatistic(self):
