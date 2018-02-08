@@ -101,7 +101,7 @@ class IntervalStats(OneVsOneMethod):
     def getTestStatistic(self):
         #return self._testStats
         testStatVal = self._parseIntervalStatsSummaryStat(threshold=0.05) / 0.05
-        testStat = '<a href=" " title="ratio of observed to expected number of proximity p-values below 0.05">' + '%.1f' %testStatVal + '</a>'
+        testStat = '<span title="ratio of observed to expected number of proximity p-values below 0.05">' + '%.1f' %testStatVal + '</span>'
         return self.getRemappedResultDict({(self._params['q'], self._params['r']): testStat })
 
     def getFullResults(self):
