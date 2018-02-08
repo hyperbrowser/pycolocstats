@@ -97,11 +97,14 @@ class Giggle(OneVsManyMethod):
             pvalDict[key] = '%.2e' % pvalDict[key]
         return self.getRemappedResultDict(pvalDict)
 
+    def getTestStatDescr(self):
+        return 'odds ratio'
+
     def getTestStatistic(self):
         #return self.getRemappedResultDict(self._parsedResults.getResultsPerName('overlaps'))
         testStatDict = self._parsedResults.getResultsPerName('oddsRatio')
         for key in testStatDict.keys():
-            testStatDict[key] = '<a href="" title="odds ratio">' + '%.1f'%(testStatDict[key]) + '</a>'
+            testStatDict[key] = '<a href="" title="%s">' + '%.1f'%(self.getTestStatDescr(), testStatDict[key]) + '</a>'
         return self.getRemappedResultDict(testStatDict)
 
 

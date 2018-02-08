@@ -168,6 +168,10 @@ class UniformInterface(with_metaclass(ABCMeta, object)):
     def getTestStatistic(self):
         pass
 
+    #@abstractmethod
+    def getTestStatDescr(self):
+        return 'not defined'
+
     @abstractmethod
     def getFullResults(self):
         """
