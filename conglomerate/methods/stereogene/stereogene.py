@@ -47,13 +47,13 @@ class StereoGene(OneVsOneMethod):
 
     def getPValue(self):
         return self.getRemappedResultDict(OrderedDict([
-            (key, SingleResultValue(self._getNumericFromStr(x['pVal']),
-                                    x['pVal'])) for key, x in self._results.items()]))
+            (key, SingleResultValue(x['pVal'],
+                                    str(x['pVal']))) for key, x in self._results.items()]))
 
     def getTestStatistic(self):
         return self.getRemappedResultDict(
             OrderedDict([(key,
-                          SingleResultValue(self._getNumericFromStr(x['totCorr']),
+                          SingleResultValue(x['totCorr'],
                                             '<span title="' + \
                                             self.getTestStatDescr() \
                                             + '">'+'%.1f'%x['totCorr']+'</span>'))
@@ -97,8 +97,8 @@ class StereoGene(OneVsOneMethod):
         resDict['track1'] = inputTag.attrib['track1']
         resDict['track2'] = inputTag.attrib['track2']
         res = run.find('res')
-        resDict['totCorr'] = res.attrib['totCorr']
-        resDict['pVal'] = res.attrib['pVal']
+        resDict['totCorr'] = float(res.attrib['totCorr'])
+        resDict['pVal'] = float(res.attrib['pVal'])
         return resDict
 
     def _printResults(self):
