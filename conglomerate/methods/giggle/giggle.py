@@ -4,6 +4,7 @@ from collections import OrderedDict
 
 from conglomerate.methods.interface import ColocMeasureOverlap
 from conglomerate.methods.method import OneVsManyMethod
+from conglomerate.tools.SingleResultValue import SingleResultValue
 from conglomerate.tools.constants import GIGGLE_TOOL_NAME
 
 __metaclass__ = type
@@ -105,7 +106,9 @@ class Giggle(OneVsManyMethod):
         #return self.getRemappedResultDict(self._parsedResults.getResultsPerName('overlaps'))
         testStatDict = self._parsedResults.getResultsPerName('oddsRatio')
         for key in testStatDict.keys():
-            testStatDict[key] = '<span title="%s">'%self.getTestStatDescr() + '%.1f'%(testStatDict[key]) + '</span>'
+            numericResult = testStatDict[key]
+            textualResult = '<span title="%s">' % self.getTestStatDescr() + '%.1f' % (numericResult) + '</span>'
+            testStatDict[key] = SingleResultValue(numericResult, textualResult)
         return self.getRemappedResultDict(testStatDict)
 
 
