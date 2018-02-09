@@ -72,6 +72,8 @@ class TestMethods(object):
         # method.setManualParam('jaccardPermNum', 5)
         # runAllMethodsInSequence([method])
         # self._printResultFiles(method, ['stderr', 'stdout', 'output'])
+        # print method.getPValue()
+        # print method.getTestStatistic()
 
     def testStereoGene(self, chrLenFile, tracks):
         method = StereoGene()
