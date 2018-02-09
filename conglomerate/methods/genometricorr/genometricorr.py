@@ -2,6 +2,7 @@ from __future__ import absolute_import, division, print_function, unicode_litera
 
 from conglomerate.methods.interface import ColocMeasureOverlap, ColocMeasureProximity
 from conglomerate.methods.method import OneVsOneMethod
+from conglomerate.tools.SingleResultValue import SingleResultValue
 from conglomerate.tools.constants import GENOMETRICORR_TOOL_NAME
 
 __metaclass__ = type
@@ -65,9 +66,11 @@ class GenometriCorr(OneVsOneMethod):
         return self.getRemappedResultDict({(self._params['query'],self._params['reference']): self._results['jaccard.measure.p.value']['awhole']})
 
     def getTestStatistic(self):
-        testStat = '<span title="ratio of observed to expected (according to projection test)">' + '%.2f' % float(self._results['projection.test.obs.to.exp']['awhole']) + '</span>'
+        numericResult = float(self._results['projection.test.obs.to.exp']['awhole'])
+        testStat = '<span title="ratio of observed to expected (according to projection test)">' + \
+                   '%.2f' % numericResult + '</span>'
         return self.getRemappedResultDict(
-            {(self._params['query'], self._params['reference']): testStat})
+            {(self._params['query'], self._params['reference']): SingleResultValue(numericResult, testStat)})
         #return self.getRemappedResultDict({(self._params['query'],self._params['reference']):self._results['jaccard.measure']['awhole']})
 
     def getFullResults(self):
