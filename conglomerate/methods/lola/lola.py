@@ -5,6 +5,7 @@ from collections import OrderedDict
 
 from conglomerate.methods.interface import RestrictedThroughInclusion, ColocMeasureOverlap
 from conglomerate.methods.method import OneVsManyMethod
+from conglomerate.tools.SingleResultValue import SingleResultValue
 from conglomerate.tools.constants import LOLA_TOOL_NAME
 
 __metaclass__ = type
@@ -84,7 +85,8 @@ class LOLA(OneVsManyMethod):
         indicesAndTestStat = zip(refFileIndices, testStat)
         self._testStats = {}
         for index, ts in indicesAndTestStat:
-            self._testStats[(queryFn, refFns[index-1])] = '<span title="log odds ratio">' + '%.1f'%ts + '</span>'
+            self._testStats[(queryFn, refFns[index-1])] = \
+                SingleResultValue(ts, '<span title="log odds ratio">' + '%.1f'%ts + '</span>')
 
         self._ranSuccessfully = True
 

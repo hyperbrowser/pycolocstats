@@ -3,6 +3,7 @@ from __future__ import absolute_import, division, print_function, unicode_litera
 from os import path
 
 from conglomerate.methods.method import OneVsOneMethod
+from conglomerate.tools.SingleResultValue import SingleResultValue
 from conglomerate.tools.constants import INTERVALSTATS_TOOL_NAME
 from conglomerate.tools.util import getTemporaryFileName
 import os
@@ -102,7 +103,7 @@ class IntervalStats(OneVsOneMethod):
         #return self._testStats
         testStatVal = self._parseIntervalStatsSummaryStat(threshold=0.05) / 0.05
         testStat = '<span title="ratio of observed to expected number of proximity p-values below 0.05">' + '%.1f' %testStatVal + '</span>'
-        return self.getRemappedResultDict({(self._params['q'], self._params['r']): testStat })
+        return self.getRemappedResultDict({(self._params['q'], self._params['r']): SingleResultValue(testStatVal, testStat)})
 
     def getFullResults(self):
         resultsFolderPath = path.join(self._resultFilesDict['output'], 'output')

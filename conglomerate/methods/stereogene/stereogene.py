@@ -3,6 +3,7 @@ from __future__ import absolute_import, division, print_function, unicode_litera
 from collections import OrderedDict
 
 from conglomerate.methods.method import OneVsOneMethod
+from conglomerate.tools.SingleResultValue import SingleResultValue
 from conglomerate.tools.constants import STEREOGENE_TOOL_NAME
 import os
 
@@ -49,7 +50,9 @@ class StereoGene(OneVsOneMethod):
 
     def getTestStatistic(self):
         return self.getRemappedResultDict(
-            OrderedDict([(key, '<span title="Correlation coefficient">'+'%.1f'%x['totCorr']+'</span>')
+            OrderedDict([(key,
+                          SingleResultValue(x['totCorr'],
+                                            '<span title="Correlation coefficient">'+'%.1f'%x['totCorr']+'</span>'))
             for key, x in self._results.items()]))
 
     def getFullResults(self):
