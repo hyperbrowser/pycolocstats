@@ -95,7 +95,7 @@ class Giggle(OneVsManyMethod):
     def getPValue(self):
         pvalDict = self._parsedResults.getResultsPerName('pvalTwoTail')
         for key in pvalDict.keys():
-            pvalDict[key] = '%.2e' % pvalDict[key]
+            pvalDict[key] = SingleResultValue(self._getNumericFromStr(pvalDict[key]), '%.2e' % pvalDict[key])
         return self.getRemappedResultDict(pvalDict)
 
     @classmethod

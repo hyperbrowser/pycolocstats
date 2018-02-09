@@ -114,6 +114,20 @@ class Method(UniformInterface):
     # def getRefTracksMappedToIndexParams(self, trackFnList):
     #     assert trackFnList not in [ ['dummy1', 'dummy2'] ]
 
+    def _getNumericFromStr(self, val):
+        try:
+            return float(val)
+        except:
+            pass
+
+        try:
+            return float(val.replace('<', '').strip())
+        except:
+            pass
+
+        return None
+
+
 class SingleQueryTrackMethodMixin(with_metaclass(ABCMeta, object)):
     def setQueryTrackFileNames(self, trackFnList):
         assert len(trackFnList) == 1

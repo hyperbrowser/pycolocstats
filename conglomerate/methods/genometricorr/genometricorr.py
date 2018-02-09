@@ -63,7 +63,10 @@ class GenometriCorr(OneVsOneMethod):
         return data
 
     def getPValue(self):
-        return self.getRemappedResultDict({(self._params['query'],self._params['reference']): self._results['jaccard.measure.p.value']['awhole']})
+        return self.getRemappedResultDict(
+            {(self._params['query'], self._params['reference']):
+                 SingleResultValue(self._getNumericFromStr(self._results['jaccard.measure.p.value']['awhole']),
+                                   self._results['jaccard.measure.p.value']['awhole'])})
 
     def getTestStatistic(self):
         numericResult = float(self._results['projection.test.obs.to.exp']['awhole'])

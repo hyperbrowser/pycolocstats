@@ -46,7 +46,9 @@ class StereoGene(OneVsOneMethod):
         self._results = self._parseStatisticsFile(dirpath=self._resultFilesDict['output'])
 
     def getPValue(self):
-        return self.getRemappedResultDict(OrderedDict([(key, x['pVal']) for key, x in self._results.items()]))
+        return self.getRemappedResultDict(OrderedDict([
+            (key, SingleResultValue(self._getNumericFromStr(x['pVal']),
+                                    x['pVal'])) for key, x in self._results.items()]))
 
     def getTestStatistic(self):
         return self.getRemappedResultDict(

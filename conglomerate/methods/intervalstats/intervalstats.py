@@ -97,7 +97,7 @@ class IntervalStats(OneVsOneMethod):
 
     def getPValue(self):
         #return self._pvals
-        return self.getRemappedResultDict({(self._params['q'], self._params['r']): 'N/A'})
+        return self.getRemappedResultDict({(self._params['q'], self._params['r']): SingleResultValue(None, 'N/A')})
 
     def getTestStatistic(self):
         #return self._testStats
