@@ -13,6 +13,11 @@ __metaclass__ = type
 class StereoGene(OneVsOneMethod):
     def __init__(self):
         self._results = None
+
+        #TODO: Remove this temporary fix when tool author has resolved why query and ref titles are sometimes mixed..
+        self._queryTitle = None
+        self._refTitle = None
+
         super(StereoGene, self).__init__()
 
     def _getToolName(self):
@@ -31,6 +36,7 @@ class StereoGene(OneVsOneMethod):
         bedPath = self._getBedExtendedFileName(trackFile.path)
         self._addTrackTitleMapping(os.path.basename(bedPath), trackFile.title)
         self._params['tracks'] += [bedPath]
+        self._queryTitle = trackFile.title
 
 
     def _setReferenceTrackFileName(self, trackFile):
@@ -38,6 +44,7 @@ class StereoGene(OneVsOneMethod):
         bedPath = self._getBedExtendedFileName(trackFile.path)
         self._addTrackTitleMapping(os.path.basename(bedPath), trackFile.title)
         self._params['tracks'] += [bedPath]
+        self._refTitle = trackFile.title
 
     def setAllowOverlaps(self, allowOverlaps):
         assert allowOverlaps is True
@@ -88,7 +95,11 @@ class StereoGene(OneVsOneMethod):
         runsDict = OrderedDict()
         for run in root:
             parsedRun = self._parseRun(run)
-            runsDict[(parsedRun['track1'], parsedRun['track2'])] = parsedRun
+            if parsedRun['track1']==self._refTitle and parsedRun['track2']==self._queryTitle:
+                runsDict[(parsedRun['track2'], parsedRun['track1'])] = parsedRun
+            else:
+                #The original code
+                runsDict[(parsedRun['track1'], parsedRun['track2'])] = parsedRun
         return runsDict
 
     def _parseRun(self, run):
@@ -113,7 +124,7 @@ class StereoGene(OneVsOneMethod):
         if self._resultFilesDict is not None and 'stderr' in self._resultFilesDict:
             return open(self._resultFilesDict['stderr']).read().replace('\n','<br>\n')
         else:
-            return 'Genometricorr did not provide any error output'
+            return 'Stereogene did not provide any error output'
 
     def setRuntimeMode(self, mode):
         #also set corrOnly!?
