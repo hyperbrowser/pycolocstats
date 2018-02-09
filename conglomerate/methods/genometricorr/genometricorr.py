@@ -100,7 +100,7 @@ class GenometriCorr(OneVsOneMethod):
         elif mode == 'accurate':
             numPerm = 500
         else:
-            raise
+            raise Exception('invalid mode')
         self.setManualParam('ecdfPermNum', numPerm)
         self.setManualParam('meanPermNum', numPerm)
         self.setManualParam('jaccardPermNum', numPerm)
