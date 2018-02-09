@@ -113,5 +113,5 @@ class StereoGene(OneVsOneMethod):
         elif mode == 'accurate':
             numPerm = 10000
         else:
-            raise
+            raise Exception('Invalid mode')
         self.setManualParam('nShuffle', numPerm)
