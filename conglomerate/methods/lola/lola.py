@@ -136,6 +136,8 @@ class LOLA(OneVsManyMethod):
             errorMessage += self._errorMessage
         if self._resultFilesDict is not None and 'stdout' in self._resultFilesDict:
             errorMessage += open(self._resultFilesDict['stdout']).read()
+        if self._resultFilesDict is not None and 'stderr' in self._resultFilesDict:
+            errorMessage += open(self._resultFilesDict['stderr']).read()
         if errorMessage == '':
             return 'No detailed information on error available'
         else:
