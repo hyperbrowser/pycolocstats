@@ -1,8 +1,6 @@
 from __future__ import absolute_import, division, print_function, unicode_literals
 
-import os
-
-from conglomerate.tools.types import PathStr, PathStrList
+from conglomerate.core.types import PathStr, PathStrList
 from past.builtins import basestring
 
 __metaclass__ = type

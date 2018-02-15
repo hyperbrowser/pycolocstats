@@ -1,9 +1,9 @@
 from __future__ import absolute_import, division, print_function, unicode_literals
 
-from conglomerate.methods.interface import ColocMeasureOverlap, ColocMeasureProximity
+from conglomerate.methods.interface import ColocMeasureOverlap
 from conglomerate.methods.method import OneVsOneMethod
 from conglomerate.tools.SingleResultValue import SingleResultValue
-from conglomerate.tools.constants import GENOMETRICORR_TOOL_NAME
+from conglomerate.core.constants import GENOMETRICORR_TOOL_NAME
 
 __metaclass__ = type
 

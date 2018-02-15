@@ -4,7 +4,7 @@ from collections import OrderedDict
 
 from conglomerate.methods.method import OneVsOneMethod
 from conglomerate.tools.SingleResultValue import SingleResultValue
-from conglomerate.tools.constants import STEREOGENE_TOOL_NAME
+from conglomerate.core.constants import STEREOGENE_TOOL_NAME
 import os
 
 __metaclass__ = type

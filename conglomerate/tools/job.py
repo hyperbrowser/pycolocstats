@@ -3,14 +3,14 @@ import logging
 from future.standard_library import install_aliases
 
 from conglomerate.tools.ToolResultsCacher import ToolResultsCacher
-from conglomerate.tools.config import VERBOSE_RUNNING
+from conglomerate.core.config import VERBOSE_RUNNING
 
 install_aliases()
 
 import cwltool
 from urllib.parse import urlparse
 
-from conglomerate.tools.types import PathStr, PathStrList
+from conglomerate.core.types import PathStr, PathStrList
 
 __metaclass__ = type
 

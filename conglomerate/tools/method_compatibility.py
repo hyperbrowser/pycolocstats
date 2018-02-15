@@ -2,7 +2,7 @@ import traceback
 from itertools import product
 
 from conglomerate.methods.multimethod import MultiMethod
-from conglomerate.tools.config import VERBOSE_RUNNING, CATCH_METHOD_EXCEPTIONS
+from conglomerate.core.config import VERBOSE_RUNNING, CATCH_METHOD_EXCEPTIONS
 
 
 def getCompatibleMethodObjects(selectionsValues, queryTrack, refTracks, methodClasses):

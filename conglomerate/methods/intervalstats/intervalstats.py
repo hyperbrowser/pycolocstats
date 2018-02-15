@@ -4,8 +4,8 @@ from os import path
 
 from conglomerate.methods.method import OneVsOneMethod
 from conglomerate.tools.SingleResultValue import SingleResultValue
-from conglomerate.tools.constants import INTERVALSTATS_TOOL_NAME
-from conglomerate.tools.util import getTemporaryFileName
+from conglomerate.core.constants import INTERVALSTATS_TOOL_NAME
+from conglomerate.core.util import getTemporaryFileName
 import os
 
 __metaclass__ = type
@@ -33,7 +33,6 @@ class IntervalStats(OneVsOneMethod):
                 contents.append([newl[0], '0', newl[1]])
 
         #tempFileName = getTemporaryFileName()
-        import os
         #tempFileName = '/data/tmp/congloTmp/' + os.path.basename(chromLenFileName)
         tempFileName = getTemporaryFileName()
         sampleFile = open(tempFileName, 'w')

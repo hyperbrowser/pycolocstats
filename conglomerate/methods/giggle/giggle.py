@@ -5,7 +5,7 @@ from collections import OrderedDict
 from conglomerate.methods.interface import ColocMeasureOverlap
 from conglomerate.methods.method import OneVsManyMethod
 from conglomerate.tools.SingleResultValue import SingleResultValue
-from conglomerate.tools.constants import GIGGLE_TOOL_NAME
+from conglomerate.core.constants import GIGGLE_TOOL_NAME
 
 __metaclass__ = type
 
@@ -61,7 +61,6 @@ class Giggle(OneVsManyMethod):
         # if indexParams != None:
         #     for key,val in indexParams.items():
         #         self.setManualParam(key, val)
-        from conglomerate.tools.TrackFile import TrackFile
         if trackFileList == ['prebuilt','LOLACore_170206']:
             self.setManualParam('trackIndex', str('LOLACore_170206'))
             self.setManualParam('trackCollection', str('codex'))

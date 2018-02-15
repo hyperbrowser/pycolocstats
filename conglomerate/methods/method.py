@@ -4,8 +4,8 @@ from future.utils import with_metaclass
 from abc import ABCMeta, abstractmethod
 from conglomerate.methods.interface import UniformInterface
 # from conglomerate.methods.typecheck import takes
-from conglomerate.tools.config import CATCH_METHOD_EXCEPTIONS, VERBOSE_RUNNING
-from conglomerate.tools.exceptions import MissingMandatoryParameters
+from conglomerate.core.config import CATCH_METHOD_EXCEPTIONS, VERBOSE_RUNNING
+from conglomerate.core.exceptions import MissingMandatoryParameters
 from conglomerate.tools.job import Job
 from conglomerate.tools.tool import Tool
 
@@ -94,12 +94,10 @@ class Method(UniformInterface):
     def _getBedExtendedFileName(self, trackFn): #TODO: Replace with better handling of temporary files
         if trackFn.endswith('bed'):
             return trackFn
-        from tempfile import mkdtemp
-        import os
         #import shutil
         #bedPath = os.path.join(mkdtemp(), trackFn.replace('.dat','.bed'))
         #bedPath = '/data/tmp/congloTmp/adHocBed/' + os.path.basename(trackFn).replace('.dat','.bed')
-        from conglomerate.tools.util import getTemporaryFileName
+        from conglomerate.core.util import getTemporaryFileName
         bedPath = getTemporaryFileName()
         #shutil.copytree(src=trackFn, dst=bedFn,symlinks=True)
         #shutil.copy(src=trackFn, dst=bedPath)

@@ -6,7 +6,7 @@ import pkg_resources
 import yaml
 
 from conglomerate.tools.jobparamsdict import JobParamsDict
-from conglomerate.tools.types import PathStr, PathStrList
+from conglomerate.core.types import PathStr, PathStrList
 from numbers import Number
 
 __metaclass__ = type
