@@ -1,9 +1,14 @@
+from __future__ import absolute_import, division, print_function, unicode_literals
+
+import pickle
+import os
+
 from conglomerate.core.config import VERBOSE_RUNNING
+
+__metaclass__ = type
 
 STORE_IN_CACHE = False
 LOAD_FROM_CACHE = False
-import pickle
-import os
 
 
 class ToolResultsCacher(object):

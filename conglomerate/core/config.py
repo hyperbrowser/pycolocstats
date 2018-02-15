@@ -1,3 +1,8 @@
+from __future__ import absolute_import, division, print_function, unicode_literals
+
+__metaclass__ = type
+
+
 CONFIG_SECTION = u'Conglomerate'
 DEFAULT_CONFIG_REL_FN = '../config/conglomerate.ini'
 

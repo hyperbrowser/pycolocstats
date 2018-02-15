@@ -1,8 +1,12 @@
+from __future__ import absolute_import, division, print_function, unicode_literals
+
 import traceback
 from itertools import product
 
 from conglomerate.methods.multimethod import MultiMethod
 from conglomerate.core.config import VERBOSE_RUNNING, CATCH_METHOD_EXCEPTIONS
+
+__metaclass__ = type
 
 
 def getCompatibleMethodObjects(selectionsValues, queryTrack, refTracks, methodClasses):
@@ -31,6 +35,7 @@ def getCompatibleMethodObjects(selectionsValues, queryTrack, refTracks, methodCl
                 continue
             workingMethodObjects.append(currMethod)
     return workingMethodObjects
+
 
 def getCollapsedConfigurationsPerMethod(workingMethodObjects):
     workingClasses = set([wmo._methodCls for wmo in workingMethodObjects])

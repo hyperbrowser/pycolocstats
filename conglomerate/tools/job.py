@@ -2,7 +2,7 @@ from __future__ import absolute_import, division, print_function, unicode_litera
 import logging
 from future.standard_library import install_aliases
 
-from conglomerate.tools.ToolResultsCacher import ToolResultsCacher
+from conglomerate.tools.cache import ToolResultsCacher
 from conglomerate.core.config import VERBOSE_RUNNING
 
 install_aliases()
