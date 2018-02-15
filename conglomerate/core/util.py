@@ -18,3 +18,8 @@ def getTemporaryFileName(suffix='.bed'):
 def deleteAllTmpFiles():
     while TMP_FILENAME_STORAGE:
         os.unlink(TMP_FILENAME_STORAGE.pop())
+
+
+def ensureDirExists(dirPath):
+    if not os.path.exists(dirPath):
+        os.makedirs(dirPath)

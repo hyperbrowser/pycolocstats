@@ -4,7 +4,8 @@ from future.utils import with_metaclass
 from abc import ABCMeta, abstractmethod
 from conglomerate.methods.interface import UniformInterface
 # from conglomerate.methods.typecheck import takes
-from conglomerate.core.config import CATCH_METHOD_EXCEPTIONS, VERBOSE_RUNNING
+from conglomerate.core.config import CATCH_METHOD_EXCEPTIONS, VERBOSE_RUNNING, \
+    DEFAULT_JOB_OUTPUT_DIR
 from conglomerate.core.exceptions import MissingMandatoryParameters
 from conglomerate.tools.job import Job
 from conglomerate.tools.tool import Tool
@@ -54,10 +55,10 @@ class Method(UniformInterface):
         if absentMandatoryParameters:
             raise MissingMandatoryParameters(absentMandatoryParameters)
 
-    def createJobs(self):
+    def createJobs(self, jobOutputDir=DEFAULT_JOB_OUTPUT_DIR):
         self.checkForAbsentMandatoryParameters()
         self.performRequiredFileCopying()
-        return [Job(self._getTool(), self._params)]
+        return [Job(self._getTool(), self._params, jobOutputDir)]
 
     def setResultFilesDict(self, resultFilesDict):
         self._resultFilesDict = resultFilesDict

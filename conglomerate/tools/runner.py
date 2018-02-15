@@ -3,13 +3,15 @@ from __future__ import absolute_import, division, print_function, unicode_litera
 import time
 
 from conglomerate.methods.multimethod import MultiMethod
-from conglomerate.core.config import CATCH_METHOD_EXCEPTIONS, VERBOSE_RUNNING
+from conglomerate.core.config import (CATCH_METHOD_EXCEPTIONS,
+                                      VERBOSE_RUNNING,
+                                      DEFAULT_JOB_OUTPUT_DIR)
 from conglomerate.core.util import deleteAllTmpFiles
 
 __metaclass__ = type
 
 
-def runAllMethodsInSequence(methods):
+def runAllMethodsInSequence(methods, jobOutputDir=DEFAULT_JOB_OUTPUT_DIR):
     try:
         for method in methods:
             print('Running tool:', method._methodCls.__name__, '<br>')
@@ -17,7 +19,7 @@ def runAllMethodsInSequence(methods):
                 startTime = time.time()
                 print('Running method:', str(method))
             try:
-                jobs = method.createJobs()
+                jobs = method.createJobs(jobOutputDir)
             except Exception, e:
                 if VERBOSE_RUNNING:
                     print('Failing createJobs for: ', method)

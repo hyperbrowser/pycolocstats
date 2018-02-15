@@ -1,24 +1,25 @@
 from __future__ import absolute_import, division, print_function, unicode_literals
-import logging
 from future.standard_library import install_aliases
 
+import cwltool
+import logging
+import os
+
+from conglomerate.core.config import VERBOSE_RUNNING, DEFAULT_JOB_OUTPUT_DIR
+from conglomerate.core.types import PathStr, PathStrList
 from conglomerate.tools.cache import ToolResultsCacher
-from conglomerate.core.config import VERBOSE_RUNNING
 
 install_aliases()
-
-import cwltool
 from urllib.parse import urlparse
-
-from conglomerate.core.types import PathStr, PathStrList
 
 __metaclass__ = type
 
 
 class Job(object):
-    def __init__(self, tool, params):
+    def __init__(self, tool, params, jobOutputDir=DEFAULT_JOB_OUTPUT_DIR):
         self._tool = tool
         self._params = params
+        self._jobOutputDir = jobOutputDir
 
     def run(self):
         try:
@@ -30,7 +31,7 @@ class Job(object):
             if cacher.cacheAvailable():
                 toolResults = cacher.load()
             else:
-                cwlTool = self._tool.getCwlTool()
+                cwlTool = self._tool.getCwlTool(self._jobOutputDir)
                 toolResults = cwlTool(**params)
                 cacher.store(toolResults)
             return self._createResultFilesDict(toolResults)

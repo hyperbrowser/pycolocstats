@@ -1,5 +1,5 @@
 [Conglomerate]
 catch_method_exceptions = true
 verbose_running = true
-tmp_dir = '/tmp'
-default_job_output_dir = '/tmp/conglo'
+tmp_dir = /tmp
+default_job_output_dir = /tmp
