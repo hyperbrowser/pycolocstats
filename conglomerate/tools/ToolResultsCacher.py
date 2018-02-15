@@ -1,4 +1,4 @@
-from conglomerate.tools.constants import VERBOSE_RUNNING
+from conglomerate.tools.config import VERBOSE_RUNNING
 
 STORE_IN_CACHE = False
 LOAD_FROM_CACHE = False

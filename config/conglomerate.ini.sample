@@ -1,0 +1,4 @@
+[Conglomerate]
+
+catch_method_exceptions = true
+verbose_running = true

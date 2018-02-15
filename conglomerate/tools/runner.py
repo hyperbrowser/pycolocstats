@@ -3,7 +3,7 @@ from __future__ import absolute_import, division, print_function, unicode_litera
 import time
 
 from conglomerate.methods.multimethod import MultiMethod
-from conglomerate.tools.constants import CATCH_METHOD_EXCEPTIONS, VERBOSE_RUNNING
+from conglomerate.tools.config import CATCH_METHOD_EXCEPTIONS, VERBOSE_RUNNING
 from conglomerate.tools.util import deleteAllTmpFiles
 
 __metaclass__ = type

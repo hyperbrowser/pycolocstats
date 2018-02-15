@@ -2,8 +2,7 @@ import traceback
 from itertools import product
 
 from conglomerate.methods.multimethod import MultiMethod
-from conglomerate.tools.constants import VERBOSE_RUNNING#, CATCH_METHOD_EXCEPTIONS
-import conglomerate.tools.constants as const
+from conglomerate.tools.config import VERBOSE_RUNNING, CATCH_METHOD_EXCEPTIONS
 
 
 def getCompatibleMethodObjects(selectionsValues, queryTrack, refTracks, methodClasses):
@@ -27,7 +26,7 @@ def getCompatibleMethodObjects(selectionsValues, queryTrack, refTracks, methodCl
                 if VERBOSE_RUNNING:
                     print('Method not compatible: ', methodClass) #, str(type(e)).replace('<','').replace('>',''), e
                     traceback.print_exc()
-                if not const.CATCH_METHOD_EXCEPTIONS:
+                if not CATCH_METHOD_EXCEPTIONS:
                     raise
                 continue
             workingMethodObjects.append(currMethod)

@@ -4,7 +4,7 @@ from future.utils import with_metaclass
 from abc import ABCMeta, abstractmethod
 from conglomerate.methods.interface import UniformInterface
 # from conglomerate.methods.typecheck import takes
-from conglomerate.tools.constants import CATCH_METHOD_EXCEPTIONS, VERBOSE_RUNNING
+from conglomerate.tools.config import CATCH_METHOD_EXCEPTIONS, VERBOSE_RUNNING
 from conglomerate.tools.exceptions import MissingMandatoryParameters
 from conglomerate.tools.job import Job
 from conglomerate.tools.tool import Tool

@@ -3,7 +3,7 @@ import logging
 from future.standard_library import install_aliases
 
 from conglomerate.tools.ToolResultsCacher import ToolResultsCacher
-from conglomerate.tools.constants import VERBOSE_RUNNING
+from conglomerate.tools.config import VERBOSE_RUNNING
 
 install_aliases()
 
