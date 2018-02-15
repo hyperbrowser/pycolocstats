@@ -5,7 +5,7 @@ from collections import OrderedDict
 
 from conglomerate.methods.interface import RestrictedThroughInclusion, ColocMeasureOverlap
 from conglomerate.methods.method import OneVsManyMethod
-from conglomerate.tools.SingleResultValue import SingleResultValue
+from conglomerate.core.types import SingleResultValue
 from conglomerate.core.constants import LOLA_TOOL_NAME
 
 __metaclass__ = type

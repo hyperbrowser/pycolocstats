@@ -3,7 +3,7 @@ from __future__ import absolute_import, division, print_function, unicode_litera
 from os import path
 
 from conglomerate.methods.method import OneVsOneMethod
-from conglomerate.tools.SingleResultValue import SingleResultValue
+from conglomerate.core.types import SingleResultValue, TrackFile
 from conglomerate.core.constants import INTERVALSTATS_TOOL_NAME
 from conglomerate.core.util import getTemporaryFileName
 import os
@@ -54,7 +54,6 @@ class IntervalStats(OneVsOneMethod):
         self._params['q'] = trackFile.path
 
     def _setReferenceTrackFileName(self, trackFile):
-        from conglomerate.tools.TrackFile import TrackFile
         if isinstance(trackFile, TrackFile):
             self._addTrackTitleMapping(os.path.basename(trackFile.path), trackFile.title)
             self._addTrackTitleMapping(trackFile.path, trackFile.title)

@@ -3,7 +3,7 @@ from __future__ import absolute_import, division, print_function, unicode_litera
 from collections import OrderedDict
 
 from conglomerate.methods.method import OneVsOneMethod
-from conglomerate.tools.SingleResultValue import SingleResultValue
+from conglomerate.core.types import SingleResultValue
 from conglomerate.core.constants import STEREOGENE_TOOL_NAME
 import os
 

@@ -13,7 +13,7 @@ from conglomerate.methods.intervalstats.intervalstats import IntervalStats
 from conglomerate.methods.lola.lola import LOLA
 from conglomerate.methods.multimethod import MultiMethod
 from conglomerate.methods.stereogene.stereogene import StereoGene
-from conglomerate.tools.TrackFile import TrackFile
+from conglomerate.core.types import TrackFile
 from conglomerate.tools.runner import runAllMethodsInSequence
 
 

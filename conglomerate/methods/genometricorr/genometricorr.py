@@ -2,7 +2,7 @@ from __future__ import absolute_import, division, print_function, unicode_litera
 
 from conglomerate.methods.interface import ColocMeasureOverlap
 from conglomerate.methods.method import OneVsOneMethod
-from conglomerate.tools.SingleResultValue import SingleResultValue
+from conglomerate.core.types import SingleResultValue, TrackFile
 from conglomerate.core.constants import GENOMETRICORR_TOOL_NAME
 
 __metaclass__ = type
@@ -30,7 +30,6 @@ class GenometriCorr(OneVsOneMethod):
 
 
     def _setReferenceTrackFileName(self, trackFile):
-        from conglomerate.tools.TrackFile import TrackFile
         if isinstance(trackFile, TrackFile):
             trackFn = trackFile.path
         else:
