@@ -3,6 +3,8 @@ from __future__ import absolute_import, division, print_function, unicode_litera
 import os
 from tempfile import mkstemp
 
+from conglomerate.core.config import TMP_DIR
+
 __metaclass__ = type
 
 
@@ -10,7 +12,7 @@ TMP_FILENAME_STORAGE = []
 
 
 def getTemporaryFileName(suffix='.bed'):
-    tmpFileName = mkstemp(suffix=suffix, dir='/tmp')[1]
+    tmpFileName = mkstemp(suffix=suffix, dir=TMP_DIR)[1]
     TMP_FILENAME_STORAGE.append(tmpFileName)
     return tmpFileName
 

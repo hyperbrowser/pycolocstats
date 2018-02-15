@@ -39,7 +39,7 @@ class Tool(object):
             ensureDirExists(jobOutputDir)
 
             self._cwlTool.factory.execkwargs['tmpdir_prefix'] = tmpDir + '/'
-            # self._cwlTool.factory.execkwargs['tmp_outdir_prefix'] = jobOutputDir + '/'
+            self._cwlTool.factory.execkwargs['tmp_outdir_prefix'] = jobOutputDir + '/'
 
         return self._cwlTool
 

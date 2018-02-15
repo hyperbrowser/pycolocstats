@@ -3,7 +3,7 @@ from __future__ import absolute_import, division, print_function, unicode_litera
 import pickle
 import os
 
-from conglomerate.core.config import VERBOSE_RUNNING
+from conglomerate.core.config import VERBOSE_RUNNING, TMP_DIR
 
 __metaclass__ = type
 
@@ -13,7 +13,7 @@ LOAD_FROM_CACHE = False
 
 class ToolResultsCacher(object):
     #CACHE_DISK_PATH = '/Users/sandve/egne_dokumenter/_faglig/conglomerateColoc/cache/'
-    CACHE_DISK_PATH = '/data/tmp/congloTmp/toolResultsCache/'
+    CACHE_DISK_PATH = TMP_DIR + '/congloTmp/toolResultsCache/'
     def __init__(self, tool, params):
         self._toolName = tool._toolName
         self._params = params
