@@ -19,25 +19,25 @@ from conglomerate.tools.runner import runAllMethodsInSequence
 
 @pytest.fixture(scope='function')
 def tracks():
-    return [TrackFile(pkg_resources.resource_filename('tests.resources', 'H3K4me1_no_overlaps.bed'),''),
-            TrackFile(pkg_resources.resource_filename('tests.resources', 'H3K4me3_no_overlaps.bed'),''),
-            TrackFile(pkg_resources.resource_filename('tests.resources', 'H3K4me1_with_overlaps.bed'),''),
-            TrackFile(pkg_resources.resource_filename('tests.resources', 'H3K4me3_with_overlaps.bed'),''),
-            TrackFile(pkg_resources.resource_filename('tests.resources', 'H3K4me1_no_overlaps.bed.gz'),''),
-            TrackFile(pkg_resources.resource_filename('tests.resources', 'H3K4me3_no_overlaps.bed.gz'),''),
-            TrackFile(pkg_resources.resource_filename('tests.resources', 'H3K4me1_with_overlaps.bed.gz'),''),
-            TrackFile(pkg_resources.resource_filename('tests.resources', 'H3K4me3_with_overlaps.bed.gz'),''),
-            TrackFile(pkg_resources.resource_filename('tests.resources', 'H3K4me1_no_overlaps_cropped.bed'),''),
-            TrackFile(pkg_resources.resource_filename('tests.resources', 'H3K4me1_no_overlaps_large.bed.gz'),''),
-            TrackFile(pkg_resources.resource_filename('tests.resources', 'H3K4me3_no_overlaps_large.bed.gz'),''),
-            TrackFile(pkg_resources.resource_filename('tests.resources', 'Refseq_Genes_cropped.bed.gz'),''),
-            TrackFile(pkg_resources.resource_filename('tests.resources', 'Ensembl_Genes_cropped.bed.gz'),''),
-            TrackFile(pkg_resources.resource_filename('tests.resources', 'H3K4me3_no_overlaps_cropped.bed'),'')]
+    return [TrackFile(pkg_resources.resource_filename('tests', 'resources/H3K4me1_no_overlaps.bed'),''),
+            TrackFile(pkg_resources.resource_filename('tests', 'resources/H3K4me3_no_overlaps.bed'),''),
+            TrackFile(pkg_resources.resource_filename('tests', 'resources/H3K4me1_with_overlaps.bed'),''),
+            TrackFile(pkg_resources.resource_filename('tests', 'resources/H3K4me3_with_overlaps.bed'),''),
+            TrackFile(pkg_resources.resource_filename('tests', 'resources/H3K4me1_no_overlaps.bed.gz'),''),
+            TrackFile(pkg_resources.resource_filename('tests', 'resources/H3K4me3_no_overlaps.bed.gz'),''),
+            TrackFile(pkg_resources.resource_filename('tests', 'resources/H3K4me1_with_overlaps.bed.gz'),''),
+            TrackFile(pkg_resources.resource_filename('tests', 'resources/H3K4me3_with_overlaps.bed.gz'),''),
+            TrackFile(pkg_resources.resource_filename('tests', 'resources/H3K4me1_no_overlaps_cropped.bed'),''),
+            TrackFile(pkg_resources.resource_filename('tests', 'resources/H3K4me1_no_overlaps_large.bed.gz'),''),
+            TrackFile(pkg_resources.resource_filename('tests', 'resources/H3K4me3_no_overlaps_large.bed.gz'),''),
+            TrackFile(pkg_resources.resource_filename('tests', 'resources/Refseq_Genes_cropped.bed.gz'),''),
+            TrackFile(pkg_resources.resource_filename('tests', 'resources/Ensembl_Genes_cropped.bed.gz'),''),
+            TrackFile(pkg_resources.resource_filename('tests', 'resources/H3K4me3_no_overlaps_cropped.bed'),'')]
 
 
 @pytest.fixture(scope='function')
 def chrLenFile():
-    return pkg_resources.resource_filename('tests.resources', 'chrom_lengths.tabular')
+    return pkg_resources.resource_filename('tests', 'resources/chrom_lengths.tabular')
 
 
 @pytest.mark.usefixtures('chrLenFile', 'tracks')
@@ -186,9 +186,9 @@ class TestMethods(object):
 
     def testGoShifter(self, chrLenFile, tracks):
         method = GoShifter()
-        snpmap = pkg_resources.resource_filename('tests.resources', 'snpmap.tabular')
-        annotation = pkg_resources.resource_filename('tests.resources', 'annotation.bed.gz')
-        proxies = pkg_resources.resource_filename('tests.resources', 'proxies.txt')
+        snpmap = pkg_resources.resource_filename('tests', 'resources/snpmap.tabular')
+        annotation = pkg_resources.resource_filename('tests', 'resources/annotation.bed.gz')
+        proxies = pkg_resources.resource_filename('tests', 'resources/proxies.txt')
         method.setManualParam('s', snpmap)
         method.setManualParam('a', annotation)
         method.setManualParam('i', proxies)

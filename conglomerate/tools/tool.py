@@ -36,10 +36,12 @@ class Tool(object):
         return dockerRequirement['dockerPull']
 
     def _getToolPath(self):
-        return pkg_resources.resource_filename('cwl', '%s' % self._toolName)
+        return pkg_resources.resource_filename('conglomerate',
+                                               '../cwl/{}'.format(self._toolName))
 
     def _getCWLFilePath(self):
-        return pkg_resources.resource_filename('cwl', '%s/tool.cwl' % self._toolName)
+        return pkg_resources.resource_filename('conglomerate',
+                                               '../cwl/{}/tool.cwl'.format(self._toolName))
 
     def createJobParamsDict(self):
         inputs = self._yaml['inputs']
