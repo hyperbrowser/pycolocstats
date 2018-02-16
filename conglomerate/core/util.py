@@ -11,7 +11,13 @@ __metaclass__ = type
 TMP_FILENAME_STORAGE = []
 
 
+def ensureDirExists(dirPath):
+    if not os.path.exists(dirPath):
+        os.makedirs(dirPath)
+
+
 def getTemporaryFileName(suffix='.bed'):
+    ensureDirExists(TMP_DIR)
     tmpFileName = mkstemp(suffix=suffix, dir=TMP_DIR)[1]
     TMP_FILENAME_STORAGE.append(tmpFileName)
     return tmpFileName
@@ -20,8 +26,3 @@ def getTemporaryFileName(suffix='.bed'):
 def deleteAllTmpFiles():
     while TMP_FILENAME_STORAGE:
         os.unlink(TMP_FILENAME_STORAGE.pop())
-
-
-def ensureDirExists(dirPath):
-    if not os.path.exists(dirPath):
-        os.makedirs(dirPath)
