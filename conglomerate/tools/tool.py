@@ -32,7 +32,6 @@ class Tool(object):
             self._cwlTool.factory.execkwargs['no_read_only'] = True
 
             tmpDir = os.path.abspath(TMP_DIR)
-            print(tmpDir, TMP_DIR)
             jobOutputDir = os.path.abspath(jobOutputDir)
 
             ensureDirExists(tmpDir)
