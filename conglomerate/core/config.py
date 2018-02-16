@@ -20,28 +20,29 @@ def getConfigFilename():
     import pkg_resources
     import shutil
 
+    defConfigFn = pkg_resources.resource_filename('conglomerate', DEFAULT_CONFIG_REL_FN)
+    sampleConfigFn = defConfigFn + '.sample'
+
     envConfigFn = os.environ.get('CONGLOMERATE_CONFIG')
-    if envConfigFn:
-        return envConfigFn
+    configFn = envConfigFn if envConfigFn else defConfigFn
+
+    if not os.path.exists(configFn):
+        shutil.copy(sampleConfigFn, configFn)
     else:
-        defConfigFn = pkg_resources.resource_filename('conglomerate', DEFAULT_CONFIG_REL_FN)
-        sampleConfigFn = defConfigFn + '.sample'
+        sampleCfgParser = getConfigParser(sampleConfigFn)
+        cfgParser = getConfigParser(configFn)
 
-        if not os.path.exists(defConfigFn):
-            shutil.copy(sampleConfigFn, defConfigFn)
-        else:
-            sampleCfgParser = getConfigParser(sampleConfigFn)
-            sampleCfgParser.read(defConfigFn)
+        if set(sampleCfgParser[CONFIG_SECTION].keys()) != set(cfgParser[CONFIG_SECTION].keys()):
+            sampleCfgParser.read(configFn)
+            with open(configFn, 'w') as configFile:
+               sampleCfgParser.write(configFile)
 
-            with open(defConfigFn, 'w') as defConfigFile:
-                sampleCfgParser.write(defConfigFile)
-
-        return defConfigFn
+    return configFn
 
 
 cfgParser = getConfigParser(getConfigFilename())
 
 CATCH_METHOD_EXCEPTIONS = cfgParser.getboolean(CONFIG_SECTION, 'catch_method_exceptions')
-VERBOSE_RUNNING = cfgParser.get(CONFIG_SECTION, 'verbose_running')
+VERBOSE_RUNNING = cfgParser.getboolean(CONFIG_SECTION, 'verbose_running')
 TMP_DIR = cfgParser.get(CONFIG_SECTION, 'tmp_dir')
 DEFAULT_JOB_OUTPUT_DIR = cfgParser.get(CONFIG_SECTION, 'default_job_output_dir')
