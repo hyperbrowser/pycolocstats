@@ -75,7 +75,7 @@ class StereoGene(OneVsOneMethod):
         return self.getRemappedResultDict(OrderedDict([(key, fullResults) for key in self._results.keys()]))
 
     def preserveClumping(self, preserve):
-        pass
+        assert preserve is False, preserve
 
     def setRestrictedAnalysisUniverse(self, restrictedAnalysisUniverse):
         assert restrictedAnalysisUniverse is None, restrictedAnalysisUniverse
@@ -85,7 +85,7 @@ class StereoGene(OneVsOneMethod):
         assert isinstance(colocMeasure, ColocMeasureCorrelation), type(colocMeasure)
 
     def setHeterogeneityPreservation(self, preservationScheme, fn=None):
-        pass
+        assert preservationScheme is None, preservationScheme
 
     def _parseStatisticsFile(self, dirpath):
         import xml.etree.ElementTree as et
@@ -138,3 +138,60 @@ class StereoGene(OneVsOneMethod):
         else:
             raise Exception('Invalid mode')
         self.setManualParam('nShuffle', numPerm)
+
+
+# The StereoGene program compares pairs of tracks and calculates kernel correlations
+# Usage:
+# $ ./StereoGene [-parameters] trackFile_1 trackFile_2 ... trackFile_n
+#
+#
+# ====================== common parameters ======================
+# -v 	verbose
+# -syntax 	strong syntax control in input files
+# -verbose <0|1>	verbose
+# -s 	no output to stdout
+# -silent <0|1>	no output to stdout
+#
+# ====================== preparation parameters ======================
+# -bin <int>	bin size for input averaging
+# -clear <0|1>	force binary profile preparation
+# -c 	force  binary profile preparation
+#
+# ====================== paths and files ======================
+# -cfg <string>	config file
+# -profPath <string>	path for binary profiles
+# -trackPath <string>	path for tracks
+# -resPath <string>	path for results
+# -confounder <string>	confounder filename
+# -statistics <string>	cumulative file with statistics
+# -params <string>	cumulative file with parameters
+# -log <string>	cumulative log-file
+#
+# ====================== input parameters ======================
+# -chrom <string>	chromosome file
+# -BufSize <int>	Buffer Size
+# -bpType <SCORE|SIGNAL|LOGPVAL> 	The value used as a score for BroadPeak input file
+# -pcorProfile <string>	Track for partial correlation
+# -NA 	use NA values as unknown and fill them by noise
+# -threshold <int>	threshold for input data for removing too small values: 0..250
+#
+# ====================== Analysis parameters ======================
+# -kernelSigma <float>	Kernel width
+# -wSize <int>	Window size
+# -maxNA <float>	Max number of NA values in window (percent)
+# -maxZero <float>	Max number of zero values in window (percent)
+# -nShuffle <int>	Number of shuffles for background calculation
+#
+# ====================== Output parameters ======================
+# -outSpectr <0|1>	write fourier spectrums
+# -outChrom <0|1>	write statistics by chromosomes
+# -writeDistr <0|1>	write foreground and background distributions
+# -r 	write R script for the result presentation
+# -crossWidth 	Width of cross-correlation plot
+# -Distances 	Write distance correlations
+# -outLC <0|1>	parameters for local correlation file
+# -lc 	produce profile correlation
+# -LCScale <LOG|LIN> 	Local correlation scale: LOG | LIN
+# -L_FDR <float>	threshold on left FDR when write the local correlation
+# -R_FDR <float>	threshold on right FDR when write the local correlation
+# -outRes <NONE|XML|TAB|BOTH> 	format for results in statistics file
