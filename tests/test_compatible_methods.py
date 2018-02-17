@@ -44,16 +44,17 @@ def refTracks(tracks):
 
 @pytest.mark.usefixtures('chrLenFile', 'tracks', 'queryTrack', 'refTracks')
 class TestMethods(TestMethodsBase):
-    def test_default_nobg(self):
+    def test_default_nobg(self,chrLenFile, queryTrack, refTracks):
         selectionValues = [[('setGenomeName', u'hg19')], [('setRestrictedAnalysisUniverse', None)],
                            [('setRuntimeMode', u'quick')]]
+        selectionValues.append([('setChromLenFileName', chrLenFile)])
         workingMethodObjects = WorkingMethodObjectParser(queryTrack, refTracks, selectionValues,
                                                          ALL_CONGLOMERATE_METHOD_CLASSES).getWorkingMethodObjects()
         selectionValues.append([('setChromLenFileName', chrLenFile)])
         methodNames = set([wmo.getMethodName() for wmo in workingMethodObjects])
         assert methodNames == set(['Giggle', 'GenometriCorr', 'IntervalStats'])
 
-    def test_default_inclusionbg(self):
+    def test_default_inclusionbg(self,chrLenFile, queryTrack, refTracks, tracks):
         selectionValues = [[('setGenomeName', u'hg19')], [('setRestrictedAnalysisUniverse', RestrictedThroughInclusion(tracks[3]))],
                            [('setRuntimeMode', u'quick')]]
         selectionValues.append([('setChromLenFileName', chrLenFile)])
@@ -61,3 +62,12 @@ class TestMethods(TestMethodsBase):
                                                          ALL_CONGLOMERATE_METHOD_CLASSES).getWorkingMethodObjects()
         methodNames = set([wmo.getMethodName() for wmo in workingMethodObjects])
         assert methodNames == set(['LOLA'])
+
+    def test_default_inclusionbgOrNoBg(self,chrLenFile, queryTrack, refTracks, tracks):
+        selectionValues = [[('setGenomeName', u'hg19')], [('setRestrictedAnalysisUniverse', RestrictedThroughInclusion(tracks[3])),('setRestrictedAnalysisUniverse', None)],
+                           [('setRuntimeMode', u'quick')]]
+        selectionValues.append([('setChromLenFileName', chrLenFile)])
+        workingMethodObjects = WorkingMethodObjectParser(queryTrack, refTracks, selectionValues,
+                                                         ALL_CONGLOMERATE_METHOD_CLASSES).getWorkingMethodObjects()
+        methodNames = set([wmo.getMethodName() for wmo in workingMethodObjects])
+        assert methodNames == set(['Giggle', 'GenometriCorr', 'IntervalStats','LOLA'])
