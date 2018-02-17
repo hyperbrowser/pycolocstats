@@ -2,7 +2,7 @@ import os
 import pkg_resources
 import pytest
 
-from conglomerate.methods.interface import RestrictedAnalysisUniverse, RestrictedThroughInclusion
+from conglomerate.methods.interface import RestrictedAnalysisUniverse, RestrictedThroughInclusion, ColocMeasureProximity
 from conglomerate.methods.lola.lola import LOLA
 from conglomerate.tools.WorkingMethodObjectParser import WorkingMethodObjectParser
 
@@ -71,3 +71,14 @@ class TestMethods(TestMethodsBase):
                                                          ALL_CONGLOMERATE_METHOD_CLASSES).getWorkingMethodObjects()
         methodNames = set([wmo.getMethodName() for wmo in workingMethodObjects])
         assert methodNames == set(['Giggle', 'GenometriCorr', 'IntervalStats','LOLA'])
+
+    def test_adv_proximity(self,chrLenFile, queryTrack, refTracks, tracks):
+        selectionValues = [[('setRestrictedAnalysisUniverse', None)], [('setColocMeasure',ColocMeasureProximity(None,None))], [('preserveClumping', False)], [('setGenomeName', u'hg19')],[('setRuntimeMode', u'quick')]]
+        selectionValues.append([('setChromLenFileName', chrLenFile)])
+        workingMethodObjects = WorkingMethodObjectParser(queryTrack, refTracks, selectionValues,
+                                                         ALL_CONGLOMERATE_METHOD_CLASSES).getWorkingMethodObjects()
+        methodNames = set([wmo.getMethodName() for wmo in workingMethodObjects])
+        assert methodNames == set(['IntervalStats'])
+
+
+
