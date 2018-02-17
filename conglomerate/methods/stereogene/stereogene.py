@@ -95,7 +95,6 @@ class StereoGene(OneVsOneMethod):
         runsDict = OrderedDict()
         for run in root:
             parsedRun = self._parseRun(run)
-            print('TEMP4: ', 't1',parsedRun['track1'],'t1', parsedRun['track2'], 'qt',self._queryTitle,'rt', self._refTitle)
             if parsedRun['track1']==self._refTitle and parsedRun['track2']==self._queryTitle:
                 runsDict[(parsedRun['track2'], parsedRun['track1'])] = parsedRun
             else:
