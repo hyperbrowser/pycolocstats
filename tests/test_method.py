@@ -40,8 +40,35 @@ def chrLenFile():
     return pkg_resources.resource_filename('tests', 'resources/chrom_lengths.tabular')
 
 
+class TestMethodsBase(object):
+    @staticmethod
+    def _printResultFiles(method, keys):
+        if isinstance(method, MultiMethod):
+            resultFilesDictList = method.getResultFilesDictList()
+        else:
+            resultFilesDictList = [method.getResultFilesDict()]
+
+        for resultFilesDict in resultFilesDictList:
+            for key in keys:
+                assert key in resultFilesDict, (key,resultFilesDict)
+                print(key)
+                print('------')
+                print('Local path: ' + resultFilesDict[key])
+                print('------')
+                print('\n'.join(os.listdir(resultFilesDict[key])) if key == 'output'
+                else open(resultFilesDict[key]).read())
+
+    @staticmethod
+    def _assertMethodResultsSize(expectedResulstNr, method):
+        assert expectedResulstNr == len(method.getTestStatistic()), \
+            "%s: Expected %i test statistic results got %i (got teststat: %s)" % (
+                str(method), expectedResulstNr, len(method.getTestStatistic()), method.getTestStatistic())
+        assert expectedResulstNr == len(method.getPValue()), \
+            "%s: Expected %i p-values got %i" % (str(method), expectedResulstNr, len(method.getPValue()))
+
+
 @pytest.mark.usefixtures('chrLenFile', 'tracks')
-class TestMethods(object):
+class TestMethods(TestMethodsBase):
     def testUnified(self, tracks, chrLenFile):
         # define tracks and methods (will in real runs come in from GUI)
         queryTrack = [tracks[0]]
@@ -203,28 +230,3 @@ class TestMethods(object):
         sampleFile.write(contents)
         sampleFile.flush()
         return sampleFile
-
-    @staticmethod
-    def _printResultFiles(method, keys):
-        if isinstance(method, MultiMethod):
-            resultFilesDictList = method.getResultFilesDictList()
-        else:
-            resultFilesDictList = [method.getResultFilesDict()]
-
-        for resultFilesDict in resultFilesDictList:
-            for key in keys:
-                assert key in resultFilesDict, (key,resultFilesDict)
-                print(key)
-                print('------')
-                print('Local path: ' + resultFilesDict[key])
-                print('------')
-                print('\n'.join(os.listdir(resultFilesDict[key])) if key == 'output'
-                else open(resultFilesDict[key]).read())
-
-    @staticmethod
-    def _assertMethodResultsSize(expectedResulstNr, method):
-        assert expectedResulstNr == len(method.getTestStatistic()), \
-            "%s: Expected %i test statistic results got %i (got teststat: %s)" % (
-                str(method), expectedResulstNr, len(method.getTestStatistic()), method.getTestStatistic())
-        assert expectedResulstNr == len(method.getPValue()), \
-            "%s: Expected %i p-values got %i" % (str(method), expectedResulstNr, len(method.getPValue()))

@@ -16,7 +16,7 @@ class SingleResultValue(object):
         self.numericResult = numericResult
         self.textualResult = textualResult
 
-    def __str__(self):
+    def __repr__(self):
         return self.textualResult
 
 

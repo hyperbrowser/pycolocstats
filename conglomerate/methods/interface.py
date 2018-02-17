@@ -40,7 +40,8 @@ class ColocMeasureCorrelation(ColocMeasure):
 
 
 class RestrictedAnalysisUniverse(with_metaclass(ABCMeta, object)):
-    pass
+    def __repr__(self):
+        return self.__class__.__name__ + '(' + self.trackFile + ')'
 
 
 class RestrictedThroughInclusion(RestrictedAnalysisUniverse):
