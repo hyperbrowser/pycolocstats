@@ -25,5 +25,5 @@ class TrackFile(object):
         self.path = path
         self.title = title
 
-    def __str__(self):
+    def __repr__(self):
         return 'TrackFile(%s:%s)' % (str(self.title), str(self.path))
