@@ -41,7 +41,7 @@ class ColocMeasureCorrelation(ColocMeasure):
 
 class RestrictedAnalysisUniverse(with_metaclass(ABCMeta, object)):
     def __repr__(self):
-        return self.__class__.__name__ + '(' + self.trackFile + ')'
+        return self.__class__.__name__ + '(' + str(self.trackFile) + ')'
 
 
 class RestrictedThroughInclusion(RestrictedAnalysisUniverse):
