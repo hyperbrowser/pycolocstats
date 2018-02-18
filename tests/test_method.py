@@ -179,6 +179,7 @@ class TestMethods(TestMethodsBase):
         method.setChromLenFileName(chrLenFile)
         runAllMethodsInSequence([method])
         self._printResultFiles(method, ['stderr', 'stdout', 'output'])
+        raise Exception("This is now failing silently")
 
     def testGiggleMultiManyVsMany(self, chrLenFile, tracks):
         refTracks = [tracks[11], tracks[12]]
