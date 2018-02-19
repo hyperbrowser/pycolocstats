@@ -126,6 +126,12 @@ class Method(UniformInterface):
 
         return None
 
+    def getMethodName(self):
+        return self._methodCls.__name__
+
+    def getMethodClass(self):
+        return self._methodCls
+
 
 class SingleQueryTrackMethodMixin(with_metaclass(ABCMeta, object)):
     def setQueryTrackFileNames(self, trackFnList):
