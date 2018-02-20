@@ -28,20 +28,21 @@ class GenometriCorr(OneVsOneMethod):
         self._addTrackTitleMapping(bedPath, trackFile.title)
         self._params['query'] = bedPath
 
-
     def _setReferenceTrackFileName(self, trackFile):
         if isinstance(trackFile, TrackFile):
             trackFn = trackFile.path
         else:
             trackFn = trackFile
-        assert trackFn not in ['prebuilt', 'LOLACore_170206']
+        if trackFn in ['prebuilt', 'LOLACore_170206']:
+            self.setNotCompatible()
         bedPath = self._getBedExtendedFileName(trackFn)
         if isinstance(trackFile, TrackFile):
             self._addTrackTitleMapping(bedPath, trackFile.title)
         self._params['reference'] = bedPath
 
     def setAllowOverlaps(self, allowOverlaps):
-        assert allowOverlaps is False
+        if not (allowOverlaps is False):
+            self.setNotCompatible()
 
     def _parseResultFiles(self):
         self._results = self._parseGenometricorrStdout()
@@ -90,10 +91,12 @@ class GenometriCorr(OneVsOneMethod):
         pass
 
     def setRestrictedAnalysisUniverse(self, restrictedAnalysisUniverse):
-        assert restrictedAnalysisUniverse is None, restrictedAnalysisUniverse
+        if restrictedAnalysisUniverse is not None:
+            self.setNotCompatible()
 
     def setColocMeasure(self, colocMeasure):
-        assert isinstance(colocMeasure, ColocMeasureOverlap), type(colocMeasure)
+        if not isinstance(colocMeasure, ColocMeasureOverlap):
+            self.setNotCompatible
 
     def setHeterogeneityPreservation(self, preservationScheme, fn=None):
         pass
