@@ -40,7 +40,7 @@ class StereoGene(OneVsOneMethod):
 
 
     def _setReferenceTrackFileName(self, trackFile):
-        if trackFile not in ['prebuilt', 'LOLACore_170206']:
+        if trackFile in ['prebuilt', 'LOLACore_170206']:
             self.setNotCompatible()
         #assert trackFile not in ['prebuilt', 'LOLACore_170206']
         bedPath = self._getBedExtendedFileName(trackFile.path)
@@ -90,7 +90,7 @@ class StereoGene(OneVsOneMethod):
 
     def setColocMeasure(self, colocMeasure):
         from conglomerate.methods.interface import ColocMeasureCorrelation
-        if not isinstance(colocMeasure, ColocMeasureCorrelation) and not type(colocMeasure):
+        if not isinstance(colocMeasure, ColocMeasureCorrelation):
             self.setNotCompatible()
         #assert isinstance(colocMeasure, ColocMeasureCorrelation), type(colocMeasure)
 

@@ -125,10 +125,7 @@ class Giggle(OneVsManyMethod):
             self.setNotCompatible()
 
     def setColocMeasure(self, colocMeasure):
-        if not isinstance(colocMeasure,ColocMeasureOverlap):
-            self.setNotCompatible()
-
-        if colocMeasure._countWholeIntervals is False:
+        if not isinstance(colocMeasure,ColocMeasureOverlap) or colocMeasure._countWholeIntervals is False:
             self.setNotCompatible()
 
 

@@ -78,7 +78,16 @@ class TestMethods(TestMethodsBase):
         workingMethodObjects = WorkingMethodObjectParser(queryTrack, refTracks, selectionValues,
                                                          ALL_CONGLOMERATE_METHOD_CLASSES).getWorkingMethodObjects()
         methodNames = set([wmo.getMethodName() for wmo in workingMethodObjects])
+        print 'TEMP1: ', methodNames
         assert methodNames == set(['IntervalStats'])
 
 
+    def test_default_inclusionbgOrNoBg_stereogene(self,chrLenFile, queryTrack, refTracks, tracks):
+        selectionValues = [[('setGenomeName', u'hg19')], [('setRestrictedAnalysisUniverse', RestrictedThroughInclusion(tracks[3])),('setRestrictedAnalysisUniverse', None)],
+                           [('setRuntimeMode', u'quick')]]
+        selectionValues.append([('setChromLenFileName', chrLenFile)])
+        workingMethodObjects = WorkingMethodObjectParser(queryTrack, refTracks, selectionValues,
+                                                         [StereoGene]).getWorkingMethodObjects()
+        methodNames = set([wmo.getMethodName() for wmo in workingMethodObjects])
+        assert methodNames == set(['StereoGene'])
 

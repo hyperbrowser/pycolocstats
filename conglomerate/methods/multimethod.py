@@ -51,7 +51,7 @@ class MultiMethodAbstractMethodsMixin(object):
 
 
 class MultiMethod(MultiMethodAbstractMethodsMixin, Method):
-    MEMBER_ATTRIBUTES = ['_methods','_methodCls','__repr__','annotatedChoices', 'ranSuccessfully', 'getErrorDetails', 'getMethodName', 'getMethodClass']
+    MEMBER_ATTRIBUTES = ['_methods','_methodCls','__repr__','annotatedChoices', 'ranSuccessfully', 'getErrorDetails', 'getMethodName', 'getMethodClass','getCompatibilityState','setNotCompatible','_compatibilityState']
 
     def __init__(self, methodCls, querytrackFnList, referencetrackFnList):
         assert any(issubclass(methodCls, superCls)
@@ -78,6 +78,10 @@ class MultiMethod(MultiMethodAbstractMethodsMixin, Method):
                 method.setQueryTrackFileNames(queryTrackInput)
                 method.setReferenceTrackFileNames(refTrackInput)
                 self._methods.append(method)
+
+    def getCompatibilityState(self):
+        statuses = [m.getCompatibilityState() for m in self._methods]
+        return all(statuses)
 
     def setQueryTrackFileNames(self, trackFnList):
         raise ShouldNotOccurError()

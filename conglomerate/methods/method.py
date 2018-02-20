@@ -60,7 +60,8 @@ class Method(UniformInterface):
     def checkForAbsentMandatoryParameters(self):
         absentMandatoryParameters = self._params.getAbsentMandatoryParameters()
         if absentMandatoryParameters:
-            raise MissingMandatoryParameters(absentMandatoryParameters)
+            self.setNotCompatible()
+            #raise MissingMandatoryParameters(absentMandatoryParameters)
 
     def createJobs(self, jobOutputDir=DEFAULT_JOB_OUTPUT_DIR):
         self.checkForAbsentMandatoryParameters()
