@@ -1,19 +1,7 @@
-from itertools import product
-from tempfile import NamedTemporaryFile
-
-import os
 import pkg_resources
 import pytest
 
-from conglomerate.methods.genometricorr.genometricorr import GenometriCorr
 from conglomerate.methods.giggle.giggle import Giggle
-from conglomerate.methods.goshifter.goshifter import GoShifter
-from conglomerate.methods.interface import RestrictedThroughInclusion
-from conglomerate.methods.intervalstats.intervalstats import IntervalStats
-from conglomerate.methods.lola.lola import LOLA
-from conglomerate.methods.multimethod import MultiMethod
-from conglomerate.methods.stereogene.stereogene import StereoGene
-from conglomerate.tools.TrackFile import TrackFile
 from conglomerate.tools.runner import runAllMethodsInSequence
 
 
