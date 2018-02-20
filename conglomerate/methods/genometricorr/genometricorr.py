@@ -96,7 +96,7 @@ class GenometriCorr(OneVsOneMethod):
 
     def setColocMeasure(self, colocMeasure):
         if not isinstance(colocMeasure, ColocMeasureOverlap):
-            self.setNotCompatible
+            self.setNotCompatible()
 
     def setHeterogeneityPreservation(self, preservationScheme, fn=None):
         pass
