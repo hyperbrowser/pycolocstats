@@ -52,7 +52,7 @@ class TestMethods(TestMethodsBase):
                                                          ALL_CONGLOMERATE_METHOD_CLASSES).getWorkingMethodObjects()
         selectionValues.append([('setChromLenFileName', chrLenFile)])
         methodNames = set([wmo.getMethodName() for wmo in workingMethodObjects])
-        assert methodNames == set(['Giggle', 'GenometriCorr', 'IntervalStats'])
+        assert methodNames == set(['Giggle', 'GenometriCorr', 'IntervalStats','StereoGene'])
 
     def test_default_inclusionbg(self,chrLenFile, queryTrack, refTracks, tracks):
         selectionValues = [[('setGenomeName', u'hg19')], [('setRestrictedAnalysisUniverse', RestrictedThroughInclusion(tracks[3]))],
@@ -70,7 +70,7 @@ class TestMethods(TestMethodsBase):
         workingMethodObjects = WorkingMethodObjectParser(queryTrack, refTracks, selectionValues,
                                                          ALL_CONGLOMERATE_METHOD_CLASSES).getWorkingMethodObjects()
         methodNames = set([wmo.getMethodName() for wmo in workingMethodObjects])
-        assert methodNames == set(['Giggle', 'GenometriCorr', 'IntervalStats','LOLA'])
+        assert methodNames == set(['Giggle', 'GenometriCorr', 'IntervalStats','LOLA','StereoGene'])
 
     def test_adv_proximity(self,chrLenFile, queryTrack, refTracks, tracks):
         selectionValues = [[('setRestrictedAnalysisUniverse', None)], [('setColocMeasure',ColocMeasureProximity(None,None))], [('preserveClumping', False)], [('setGenomeName', u'hg19')],[('setRuntimeMode', u'quick')]]
