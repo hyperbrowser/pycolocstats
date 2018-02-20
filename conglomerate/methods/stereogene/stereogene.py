@@ -63,7 +63,7 @@ class StereoGene(OneVsOneMethod):
                           SingleResultValue(x['Fg_Corr'],
                                             '<span title="' + \
                                             self.getTestStatDescr() \
-                                            + '">'+'%.1f'%x['Fg_Corr']+'</span>'))
+                                            + '">'+'%.5f'%x['Fg_Corr']+'</span>'))
             for key, x in self._results.items()]))
 
     @classmethod
