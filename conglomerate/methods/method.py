@@ -23,6 +23,13 @@ class Method(UniformInterface):
         self._requiredFileCopies = {}
         self._trackTitleMappings = {}
         self._methodCls = self.__class__
+        self._compatibilityState = True
+
+    def setNotCompatible(self):
+        self._compatibilityState = False
+
+    def getCompatibilityState(self):
+        return self._compatibilityState
 
     def _addTrackTitleMapping(self, path, title):
         self._trackTitleMappings[path] = title

@@ -27,13 +27,15 @@ def getCompatibleMethodObjects(selectionsValues, queryTrack, refTracks, methodCl
                         getattr(currMethod, methodName)(choice)
                 currMethod.checkForAbsentMandatoryParameters()
             except:
+                raise
                 if VERBOSE_RUNNING:
                     print('Method not compatible: ', methodClass) #, str(type(e)).replace('<','').replace('>',''), e
                     traceback.print_exc()
                 if not CATCH_METHOD_EXCEPTIONS:
                     raise
                 continue
-            workingMethodObjects.append(currMethod)
+            if currMethod.getCompatibilityState():
+                workingMethodObjects.append(currMethod)
     return workingMethodObjects
 
 
