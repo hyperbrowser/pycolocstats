@@ -57,7 +57,10 @@ class StereoGene(OneVsOneMethod):
         #assert allowOverlaps is True
 
     def _parseResultFiles(self):
-        self._results = self._parseStatisticsFile(dirpath=self._resultFilesDict['output'])
+        try:
+            self._results = self._parseStatisticsFile(dirpath=self._resultFilesDict['output'])
+        except Exception as e:
+            self.setRunSuccessStatus(False, str(e))
 
     def getPValue(self):
         return self.getRemappedResultDict(OrderedDict([
@@ -67,10 +70,10 @@ class StereoGene(OneVsOneMethod):
     def getTestStatistic(self):
         return self.getRemappedResultDict(
             OrderedDict([(key,
-                          SingleResultValue(x['Fg_Corr'],
+                          SingleResultValue(x['Corr'],
                                             '<span title="' + \
                                             self.getTestStatDescr() \
-                                            + '">'+'%.5f'%x['Fg_Corr']+'</span>'))
+                                            + '">'+'%.5f'%x['Corr']+'</span>'))
             for key, x in self._results.items()]))
 
     @classmethod
@@ -123,7 +126,7 @@ class StereoGene(OneVsOneMethod):
         resDict['track1'] = inputTag.attrib['track1']
         resDict['track2'] = inputTag.attrib['track2']
         res = run.find('res')
-        resDict['Fg_Corr'] = float(res.attrib['Fg_Corr'])
+        resDict['Corr'] = float(res.attrib['Fg_Corr']) if 'Fg_Corr' in res.attrib else float(res.attrib['totCorr'])
         resDict['pVal'] = float(res.attrib['pVal'])
         return resDict
 
