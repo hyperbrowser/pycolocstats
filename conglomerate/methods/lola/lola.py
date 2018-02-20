@@ -41,7 +41,8 @@ class LOLA(OneVsManyMethod):
             self.setManualParam('regiondb', trackFnList)
 
     def setAllowOverlaps(self, allowOverlaps):
-        assert allowOverlaps is True
+        if not allowOverlaps:
+            self.setNotCompatible()
 
     def _parseResultFiles(self):
         resultsFolderPath = self._resultFilesDict['output']
@@ -115,16 +116,19 @@ class LOLA(OneVsManyMethod):
         return self.getRemappedResultDict(OrderedDict([(key, fullResults) for key in self._pvals.keys()]))
 
     def preserveClumping(self, preserve):
-        assert preserve is False
+        if not preserve:
+            self.setNotCompatible()
 
     #@takes("UniformInterface", any([None, RestrictedThroughInclusion]))
     def setRestrictedAnalysisUniverse(self, restrictedAnalysisUniverse):
-        assert isinstance(restrictedAnalysisUniverse, RestrictedThroughInclusion), type(restrictedAnalysisUniverse)
-        self.setManualParam('useruniverse', restrictedAnalysisUniverse.trackFile.path)
+        if not isinstance(restrictedAnalysisUniverse, RestrictedThroughInclusion):
+            self.setNotCompatible()
+        else:
+            self.setManualParam('useruniverse', restrictedAnalysisUniverse.trackFile.path)
 
     def setColocMeasure(self, colocMeasure):
-        assert isinstance(colocMeasure,ColocMeasureOverlap), type(colocMeasure)
-        assert colocMeasure._countWholeIntervals is True, colocMeasure._countWholeIntervals
+        if not isinstance(colocMeasure, ColocMeasureOverlap) or not colocMeasure._countWholeIntervals:
+            self.setNotCompatible()
 
     def setHeterogeneityPreservation(self, preservationScheme, fn=None):
         pass
