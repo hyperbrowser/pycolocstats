@@ -40,14 +40,18 @@ class StereoGene(OneVsOneMethod):
 
 
     def _setReferenceTrackFileName(self, trackFile):
-        assert trackFile not in ['prebuilt', 'LOLACore_170206']
+        if trackFile not in ['prebuilt', 'LOLACore_170206']:
+            self.setNotCompatible()
+        #assert trackFile not in ['prebuilt', 'LOLACore_170206']
         bedPath = self._getBedExtendedFileName(trackFile.path)
         self._addTrackTitleMapping(os.path.basename(bedPath), trackFile.title)
         self._params['tracks'] += [bedPath]
         self._refTitle = trackFile.title
 
     def setAllowOverlaps(self, allowOverlaps):
-        assert allowOverlaps is True
+        if allowOverlaps is not False:
+            self.setNotCompatible()
+        #assert allowOverlaps is True
 
     def _parseResultFiles(self):
         self._results = self._parseStatisticsFile(dirpath=self._resultFilesDict['output'])
@@ -75,17 +79,25 @@ class StereoGene(OneVsOneMethod):
         return self.getRemappedResultDict(OrderedDict([(key, fullResults) for key in self._results.keys()]))
 
     def preserveClumping(self, preserve):
-        assert preserve is False, preserve
+        if preserve == True:
+            self.setNotCompatible()
+        #assert preserve is False, preserve
 
     def setRestrictedAnalysisUniverse(self, restrictedAnalysisUniverse):
-        assert restrictedAnalysisUniverse is None, restrictedAnalysisUniverse
+        if restrictedAnalysisUniverse is not None:
+            self.setNotCompatible()
+        #assert restrictedAnalysisUniverse is None, restrictedAnalysisUniverse
 
     def setColocMeasure(self, colocMeasure):
         from conglomerate.methods.interface import ColocMeasureCorrelation
-        assert isinstance(colocMeasure, ColocMeasureCorrelation), type(colocMeasure)
+        if not isinstance(colocMeasure, ColocMeasureCorrelation) and not type(colocMeasure):
+            self.setNotCompatible()
+        #assert isinstance(colocMeasure, ColocMeasureCorrelation), type(colocMeasure)
 
     def setHeterogeneityPreservation(self, preservationScheme, fn=None):
-        assert preservationScheme is None, preservationScheme
+        if preservationScheme is not None:
+            self.setNotCompatible()
+        #assert preservationScheme is None, preservationScheme
 
     def _parseStatisticsFile(self, dirpath):
         import xml.etree.ElementTree as et

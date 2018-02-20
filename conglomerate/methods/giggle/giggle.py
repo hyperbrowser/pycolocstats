@@ -75,7 +75,8 @@ class Giggle(OneVsManyMethod):
             self._params['index_i'] = bedPathList
 
     def setAllowOverlaps(self, allowOverlaps):
-        assert allowOverlaps is True, allowOverlaps
+        if allowOverlaps is False:
+            self.setNotCompatible()
 
     def _parseResultFiles(self):
         results = GiggleResults()
@@ -116,18 +117,24 @@ class Giggle(OneVsManyMethod):
         return self.getRemappedResultDict(OrderedDict([(key,fullResults) for key in self._parsedResults.getResultsPerName('overlaps').keys()]))
 
     def preserveClumping(self, preserve):
-        assert preserve is False, preserve
+        if preserve:
+            self.setNotCompatible()
 
     def setRestrictedAnalysisUniverse(self, restrictedAnalysisUniverse):
-        assert restrictedAnalysisUniverse is None, restrictedAnalysisUniverse
+        if restrictedAnalysisUniverse is not None:
+            self.setNotCompatible()
 
     def setColocMeasure(self, colocMeasure):
-        assert isinstance(colocMeasure,ColocMeasureOverlap), type(colocMeasure)
-        assert colocMeasure._countWholeIntervals is True, colocMeasure._countWholeIntervals
+        if not isinstance(colocMeasure,ColocMeasureOverlap):
+            self.setNotCompatible()
+
+        if colocMeasure._countWholeIntervals is False:
+            self.setNotCompatible()
 
 
     def setHeterogeneityPreservation(self, preservationScheme, fn=None):
-        assert preservationScheme is False, preservationScheme
+        if preservationScheme is True:
+            self.setNotCompatible()
 
     def getErrorDetails(self):
         assert not self.ranSuccessfully()
