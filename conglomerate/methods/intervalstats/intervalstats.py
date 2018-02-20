@@ -64,7 +64,8 @@ class IntervalStats(OneVsOneMethod):
         self._params['r'] = trackFn
 
     def setAllowOverlaps(self, allowOverlaps):
-        assert allowOverlaps is True
+        if not allowOverlaps:
+            self.setNotCompatible()
 
     def _parseResultFiles(self):
         # links to output files
@@ -115,17 +116,21 @@ class IntervalStats(OneVsOneMethod):
 
     def preserveClumping(self, preserve):
         # not sure yet
-        assert preserve is False
+        if preserve:
+            self.setNotCompatible()
 
     def setRestrictedAnalysisUniverse(self, restrictedAnalysisUniverse):
-        assert restrictedAnalysisUniverse is None, restrictedAnalysisUniverse
+        if restrictedAnalysisUniverse is not None:
+            self.setNotCompatible()
 
     def setColocMeasure(self, colocMeasure):
         from conglomerate.methods.interface import ColocMeasureProximity
-        assert isinstance(colocMeasure, ColocMeasureProximity), type(colocMeasure)
+        if not isinstance(colocMeasure, ColocMeasureProximity):
+            self.setNotCompatible()
 
     def setHeterogeneityPreservation(self, preservationScheme, fn=None):
-        assert preservationScheme is True
+        if preservationScheme is not True:
+            self.setNotCompatible()
 
     def getErrorDetails(self):
         assert not self.ranSuccessfully()
