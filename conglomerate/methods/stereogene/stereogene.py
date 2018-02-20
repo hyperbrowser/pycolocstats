@@ -33,6 +33,7 @@ class StereoGene(OneVsOneMethod):
         self._params['chrom'] = chromLenFileName
 
     def _setQueryTrackFileName(self, trackFile):
+        assert 'tracks' not in self._params or not self._params['tracks']
         bedPath = self._getBedExtendedFileName(trackFile.path)
         self._addTrackTitleMapping(os.path.basename(bedPath), trackFile.title)
         self._params['tracks'] += [bedPath]
@@ -42,7 +43,9 @@ class StereoGene(OneVsOneMethod):
     def _setReferenceTrackFileName(self, trackFile):
         if trackFile in ['prebuilt', 'LOLACore_170206']:
             self.setNotCompatible()
+            return
         #assert trackFile not in ['prebuilt', 'LOLACore_170206']
+        assert len(self._params['tracks']) == 1
         bedPath = self._getBedExtendedFileName(trackFile.path)
         self._addTrackTitleMapping(os.path.basename(bedPath), trackFile.title)
         self._params['tracks'] += [bedPath]
