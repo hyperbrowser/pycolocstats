@@ -63,6 +63,7 @@ class StereoGene(OneVsOneMethod):
         try:
             self._results = self._parseStatisticsFile(dirpath=self._resultFilesDict['output'])
         except Exception as e:
+            print("EXCEPTION: ", e)
             self.setRunSuccessStatus(False, str(e))
 
     def getPValue(self):
