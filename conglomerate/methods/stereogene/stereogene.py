@@ -118,7 +118,7 @@ class StereoGene(OneVsOneMethod):
         runsDict = OrderedDict()
         print("ROOT", len(root))
         for run in root:
-            runsDict[(self._queryTitle, self._refTitle)] == self._parseRun(run)
+            runsDict[(self._queryTitle, self._refTitle)] = self._parseRun(run)
         return runsDict
 
     def _parseRun(self, run):
