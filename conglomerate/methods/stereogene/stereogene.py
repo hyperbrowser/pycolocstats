@@ -63,15 +63,16 @@ class StereoGene(OneVsOneMethod):
         try:
             self._results = self._parseStatisticsFile(dirpath=self._resultFilesDict['output'])
         except Exception as e:
-            print("EXCEPTION: ", e)
             self.setRunSuccessStatus(False, str(e))
 
     def getPValue(self):
+        print('IN GET PVALUE')
         return self.getRemappedResultDict(OrderedDict([
             (key, SingleResultValue(x['pVal'],
                                     str(x['pVal']))) for key, x in self._results.items()]))
 
     def getTestStatistic(self):
+        print('IN GET TESTSTAT')
         return self.getRemappedResultDict(
             OrderedDict([(key,
                           SingleResultValue(x['Corr'],
@@ -115,15 +116,18 @@ class StereoGene(OneVsOneMethod):
         tree = et.parse(join(dirpath, 'statistics.xml'))
         root = tree.getroot()
         runsDict = OrderedDict()
+        print("ROOT", len(root))
         for run in root:
             runsDict[(self._queryTitle, self._refTitle)] == self._parseRun(run)
         return runsDict
 
     def _parseRun(self, run):
+        print('IN PARSE RUN!')
         resDict = OrderedDict()
         res = run.find('res')
         resDict['Corr'] = float(res.attrib['Fg_Corr']) if 'Fg_Corr' in res.attrib else float(res.attrib['totCorr'])
         resDict['pVal'] = float(res.attrib['pVal'])
+        print("RES DICT = ", resDict)
         return resDict
 
     def _printResults(self):
