@@ -115,25 +115,11 @@ class StereoGene(OneVsOneMethod):
         root = tree.getroot()
         runsDict = OrderedDict()
         for run in root:
-            parsedRun = self._parseRun(run)
-            print("Track1 Type: ", str(type(parsedRun['track1'])), " Val: ", str(parsedRun['track1']))
-            print("Track2 Type: ", str(type(parsedRun['track2'])), " Val: ", str(parsedRun['track2']))
-            print("QueryTitle Type: ", str(type(self._queryTitle)), " Val: ", str(self._queryTitle))
-            print("RefTitle Type: ", str(type(self._refTitle)), " Val: ", str(self._refTitle))
-            if parsedRun['track1']==self._refTitle and parsedRun['track2']==self._queryTitle:
-                print("Temp1")
-                runsDict[(parsedRun['track2'], parsedRun['track1'])] = parsedRun
-            else:
-                #The original code
-                print("Temp2")
-                runsDict[(parsedRun['track1'], parsedRun['track2'])] = parsedRun
+            runsDict[(self._queryTitle, self._refTitle)] == self._parseRun(run)
         return runsDict
 
     def _parseRun(self, run):
         resDict = OrderedDict()
-        inputTag = run.find('input')
-        resDict['track1'] = inputTag.attrib['track1']
-        resDict['track2'] = inputTag.attrib['track2']
         res = run.find('res')
         resDict['Corr'] = float(res.attrib['Fg_Corr']) if 'Fg_Corr' in res.attrib else float(res.attrib['totCorr'])
         resDict['pVal'] = float(res.attrib['pVal'])
