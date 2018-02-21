@@ -115,7 +115,9 @@ class Method(UniformInterface):
 
     def performRequiredFileCopying(self):
         for src in self._requiredFileCopies:
+            print("Source: ", str(src))
             dst = self._requiredFileCopies[src]
+            print("Dest: ", str(dst))
             import shutil
             shutil.copy(src, dst)
     # def getRefTracksMappedToIndexParams(self, trackFnList):
