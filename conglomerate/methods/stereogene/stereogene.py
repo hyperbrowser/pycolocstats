@@ -24,7 +24,8 @@ class StereoGene(OneVsOneMethod):
         return STEREOGENE_TOOL_NAME
 
     def _setDefaultParamValues(self):
-        self._params['tracks'] = []
+        # self._params['tracks'] = []
+        pass
 
     def setGenomeName(self, genomeName):
         pass
@@ -33,10 +34,11 @@ class StereoGene(OneVsOneMethod):
         self._params['chrom'] = chromLenFileName
 
     def _setQueryTrackFileName(self, trackFile):
-        assert 'tracks' not in self._params or not self._params['tracks']
+        # assert 'tracks' not in self._params or not self._params['tracks']
         bedPath = self._getBedExtendedFileName(trackFile.path)
         self._addTrackTitleMapping(os.path.basename(bedPath), trackFile.title)
-        self._params['tracks'] += [bedPath]
+        # self._params['tracks'] += [bedPath]
+        self._params['query'] = bedPath
         self._queryTitle = trackFile.title
 
 
@@ -45,10 +47,11 @@ class StereoGene(OneVsOneMethod):
             self.setNotCompatible()
             return
         #assert trackFile not in ['prebuilt', 'LOLACore_170206']
-        assert len(self._params['tracks']) == 1
+        # assert len(self._params['tracks']) == 1
         bedPath = self._getBedExtendedFileName(trackFile.path)
         self._addTrackTitleMapping(os.path.basename(bedPath), trackFile.title)
-        self._params['tracks'] += [bedPath]
+        # self._params['tracks'] += [bedPath]
+        self._params['reference'] = bedPath
         self._refTitle = trackFile.title
 
     def setAllowOverlaps(self, allowOverlaps):
