@@ -115,19 +115,11 @@ class StereoGene(OneVsOneMethod):
         root = tree.getroot()
         runsDict = OrderedDict()
         for run in root:
-            parsedRun = self._parseRun(run)
-            if parsedRun['track1']==self._refTitle and parsedRun['track2']==self._queryTitle:
-                runsDict[(parsedRun['track2'], parsedRun['track1'])] = parsedRun
-            else:
-                #The original code
-                runsDict[(parsedRun['track1'], parsedRun['track2'])] = parsedRun
+            runsDict[(self._queryTitle, self._refTitle)] = self._parseRun(run)
         return runsDict
 
     def _parseRun(self, run):
         resDict = OrderedDict()
-        inputTag = run.find('input')
-        resDict['track1'] = inputTag.attrib['track1']
-        resDict['track2'] = inputTag.attrib['track2']
         res = run.find('res')
         resDict['Corr'] = float(res.attrib['Fg_Corr']) if 'Fg_Corr' in res.attrib else float(res.attrib['totCorr'])
         resDict['pVal'] = float(res.attrib['pVal'])
