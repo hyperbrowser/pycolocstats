@@ -9,10 +9,16 @@ RUN apt-get update && \
     apt-get purge && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-RUN pip install bx-python numpy
+RUN conda install -c bioconda bx-python
+
+RUN pip install numpy
 
 WORKDIR /root
 
 RUN git clone https://github.com/hyperbrowser/goshifter.git
 
 WORKDIR goshifter
+
+RUN wget https://hyperbrowser.uio.no/hb/static/hyperbrowser/files/conglomerate/goShifter/hg38_eur.tar.gz && \
+tar -xzf hg38_eur.tar.gz && \
+rm hg38_eur.tar.gz
