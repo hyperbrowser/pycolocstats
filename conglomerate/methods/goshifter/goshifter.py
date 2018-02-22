@@ -27,6 +27,15 @@ class GoShifter(OneVsOneMethod):
     def _setReferenceTrackFileName(self, trackFn):
         pass
 
+    def prepareInputData(self):
+        #TODO: Diana!: Here you will transform from bed to snpmap or whatever..
+        #
+        queryTrackIsPoints = True #TODO: Diana!: Here you should instead check whether it is really points in the query track
+
+        if not queryTrackIsPoints:
+            raise Exception('GOShifter only works with single base pairs as input regions')
+        self.performGenericFileCopying()
+
     def setAllowOverlaps(self, allowOverlaps):
         assert allowOverlaps is True
 

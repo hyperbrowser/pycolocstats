@@ -65,7 +65,7 @@ class Method(UniformInterface):
 
     def createJobs(self, jobOutputDir=DEFAULT_JOB_OUTPUT_DIR):
         self.checkForAbsentMandatoryParameters()
-        self.performRequiredFileCopying()
+        self.prepareInputData()
         return [Job(self._getTool(), self._params, jobOutputDir)]
 
     def setResultFilesDict(self, resultFilesDict):
@@ -113,7 +113,10 @@ class Method(UniformInterface):
         self._requiredFileCopies[trackFn] = bedPath
         return bedPath
 
-    def performRequiredFileCopying(self):
+    def prepareInputData(self):
+        self.performGenericFileCopying()
+
+    def performGenericFileCopying(self):
         for src in self._requiredFileCopies:
             dst = self._requiredFileCopies[src]
             import shutil
