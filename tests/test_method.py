@@ -19,20 +19,20 @@ from conglomerate.tools.runner import runAllMethodsInSequence
 
 @pytest.fixture(scope='function')
 def tracks():
-    return [TrackFile(pkg_resources.resource_filename('tests', 'resources/H3K4me1_no_overlaps.bed'),''),
-            TrackFile(pkg_resources.resource_filename('tests', 'resources/H3K4me3_no_overlaps.bed'),''),
-            TrackFile(pkg_resources.resource_filename('tests', 'resources/H3K4me1_with_overlaps.bed'),''),
-            TrackFile(pkg_resources.resource_filename('tests', 'resources/H3K4me3_with_overlaps.bed'),''),
-            TrackFile(pkg_resources.resource_filename('tests', 'resources/H3K4me1_no_overlaps.bed.gz'),''),
-            TrackFile(pkg_resources.resource_filename('tests', 'resources/H3K4me3_no_overlaps.bed.gz'),''),
-            TrackFile(pkg_resources.resource_filename('tests', 'resources/H3K4me1_with_overlaps.bed.gz'),''),
-            TrackFile(pkg_resources.resource_filename('tests', 'resources/H3K4me3_with_overlaps.bed.gz'),''),
-            TrackFile(pkg_resources.resource_filename('tests', 'resources/H3K4me1_no_overlaps_cropped.bed'),''),
-            TrackFile(pkg_resources.resource_filename('tests', 'resources/H3K4me1_no_overlaps_large.bed.gz'),''),
-            TrackFile(pkg_resources.resource_filename('tests', 'resources/H3K4me3_no_overlaps_large.bed.gz'),''),
-            TrackFile(pkg_resources.resource_filename('tests', 'resources/Refseq_Genes_cropped.bed.gz'),''),
-            TrackFile(pkg_resources.resource_filename('tests', 'resources/Ensembl_Genes_cropped.bed.gz'),''),
-            TrackFile(pkg_resources.resource_filename('tests', 'resources/H3K4me3_no_overlaps_cropped.bed'),'')]
+    return [TrackFile(pkg_resources.resource_filename('tests', 'resources/H3K4me1_no_overlaps.bed'),'t1'),
+            TrackFile(pkg_resources.resource_filename('tests', 'resources/H3K4me3_no_overlaps.bed'),'t2'),
+            TrackFile(pkg_resources.resource_filename('tests', 'resources/H3K4me1_with_overlaps.bed'),'t3'),
+            TrackFile(pkg_resources.resource_filename('tests', 'resources/H3K4me3_with_overlaps.bed'),'t4'),
+            TrackFile(pkg_resources.resource_filename('tests', 'resources/H3K4me1_no_overlaps.bed.gz'),'t5'),
+            TrackFile(pkg_resources.resource_filename('tests', 'resources/H3K4me3_no_overlaps.bed.gz'),'t6'),
+            TrackFile(pkg_resources.resource_filename('tests', 'resources/H3K4me1_with_overlaps.bed.gz'),'t7'),
+            TrackFile(pkg_resources.resource_filename('tests', 'resources/H3K4me3_with_overlaps.bed.gz'),'t8'),
+            TrackFile(pkg_resources.resource_filename('tests', 'resources/H3K4me1_no_overlaps_cropped.bed'),'t9'),
+            TrackFile(pkg_resources.resource_filename('tests', 'resources/H3K4me1_no_overlaps_large.bed.gz'),'t10'),
+            TrackFile(pkg_resources.resource_filename('tests', 'resources/H3K4me3_no_overlaps_large.bed.gz'),'t11'),
+            TrackFile(pkg_resources.resource_filename('tests', 'resources/Refseq_Genes_cropped.bed.gz'),'t12'),
+            TrackFile(pkg_resources.resource_filename('tests', 'resources/Ensembl_Genes_cropped.bed.gz'),'t13'),
+            TrackFile(pkg_resources.resource_filename('tests', 'resources/H3K4me3_no_overlaps_cropped.bed'),'t14')]
 
 
 @pytest.fixture(scope='function')
@@ -201,16 +201,16 @@ class TestMethods(TestMethodsBase):
         runAllMethodsInSequence([method])
         self._printResultFiles(method, ['stderr', 'stdout', 'output'])
 
-    # def testLOLAReference(self, chrLenFile, tracks):
-    #     method = LOLA()
-    #     method.setQueryTrackFileNames([tracks[8]])
-    #     method.setRestrictedAnalysisUniverse(RestrictedThroughInclusion(tracks[0]))
-    #     method.setManualParam('trackIndex', 'LOLACore_170206')
-    #     method.setManualParam('genome', 'hg19')
-    #     method.setManualParam('trackCollection', 'codex')
-    #     method.preserveClumping(False)
-    #     runAllMethodsInSequence([method])
-    #     self._printResultFiles(method, ['stderr', 'stdout', 'output'])
+    def testLOLAReference(self, chrLenFile, tracks):
+        method = LOLA()
+        method.setQueryTrackFileNames([tracks[8]])
+        method.setRestrictedAnalysisUniverse(RestrictedThroughInclusion(tracks[0]))
+        method.setManualParam('trackIndex', 'LOLACore_170206')
+        method.setManualParam('genome', 'hg19')
+        method.setManualParam('trackCollection', 'codex')
+        method.preserveClumping(False)
+        runAllMethodsInSequence([method])
+        self._printResultFiles(method, ['stderr', 'stdout', 'output'])
 
     def testGoShifter(self, chrLenFile, tracks):
         method = GoShifter()
