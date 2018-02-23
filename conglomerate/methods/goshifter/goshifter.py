@@ -20,6 +20,8 @@ class GoShifter(OneVsOneMethod):
 
     def setChromLenFileName(self, chromLenFileName):
         pass
+        pass
+
 
     def _setQueryTrackFileName(self, trackFn):
         pass
