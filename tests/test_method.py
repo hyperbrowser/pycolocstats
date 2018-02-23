@@ -212,6 +212,7 @@ class TestMethods(TestMethodsBase):
         runAllMethodsInSequence([method])
         self._printResultFiles(method, ['stderr', 'stdout', 'output'])
 
+
     def testGoShifter(self, chrLenFile, tracks):
         method = GoShifter()
         snpmap = pkg_resources.resource_filename('tests', 'resources/snpmap.tabular')
