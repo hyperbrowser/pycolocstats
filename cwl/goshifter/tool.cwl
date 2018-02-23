@@ -14,10 +14,6 @@ inputs:
     type: File
     inputBinding:
       prefix: -a
-  i:
-    type: File
-    inputBinding:
-      prefix: -i
   p:
     type: int
     inputBinding:

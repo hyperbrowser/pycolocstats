@@ -22,7 +22,6 @@ class GoShifter(OneVsOneMethod):
     def setChromLenFileName(self, chromLenFileName):
         pass
 
-
     def _setQueryTrackFileName(self, trackFile):
         pass
 
@@ -36,15 +35,15 @@ class GoShifter(OneVsOneMethod):
         queryTrackIsPoints = True
         queryTrackDoesNotHaveRS = True
 
-        contents = []
+        contents = ['SNP', 'Chrom', 'BP']
         with open(self._params['s'], 'r') as f:
             for line in f.readlines():
                 newl = line.strip('\n').split('\t')
                 if len(newl) >= 4:
                     #provide proper order for snpmap file
-                    if int(newl[1] - newl[0]) != 1:
+                    if int(newl[2]) - int(newl[1]) != 1:
                         queryTrackIsPoints = False
-                    contents.append([newl[0], newl[1], newl[2]])
+                    contents.append([newl[0], newl[1], newl[3]])
                 else:
                     queryTrackDoesNotHaveRS = False
 
@@ -57,20 +56,25 @@ class GoShifter(OneVsOneMethod):
 
             self._params['s'] = sampleFile.name
 
-
         if not queryTrackIsPoints:
             raise Exception('GOShifter only works with single base pairs as input regions')
         if not queryTrackDoesNotHaveRS:
             raise Exception('GOShifter only works were column name is filled by rs')
+
         self.performGenericFileCopying()
 
     def setAllowOverlaps(self, allowOverlaps):
         assert allowOverlaps is True
 
     def _parseResultFiles(self):
-        self.setRunSuccessStatus(False, str('ssss'))
-        # textOut = self.getResultFilesDict()['stdout']
-        #
+        textOut = self.getResultFilesDict()['stdout']
+        print ('aaa')
+        print (textOut)
+
+        for fi in listdir(path.join(self._resultFilesDict['output'])):
+            with open(path.join(self._resultFilesDict['output'], fi), 'r') as f:
+                print(f.readlines())
+
         # self._pvals={}
         #
         # #get p-value from stdout output
