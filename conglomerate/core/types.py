@@ -22,6 +22,8 @@ class SingleResultValue(object):
 
 class TrackFile(object):
     def __init__(self, path, title):
+        assert path, 'Path missing for track %s' % title
+        assert title, 'Path missing for track %s' % path
         self.path = path
         self.title = title
 
