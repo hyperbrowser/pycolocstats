@@ -226,6 +226,7 @@ class TestMethods(TestMethodsBase):
         runAllMethodsInSequence([method])
         self._printResultFiles(method, ['stderr', 'stdout', 'output'])
 
+
     @staticmethod
     def _getSampleFileName(contents):
         sampleFile = NamedTemporaryFile(mode='w+', dir='/tmp', suffix='.bed')
