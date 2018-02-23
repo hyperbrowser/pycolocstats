@@ -10,7 +10,6 @@ inputs:
     type: File
     inputBinding:
       prefix: -s
-
   a:
     type: File
     inputBinding:
@@ -47,6 +46,10 @@ inputs:
     type: boolean?
     inputBinding:
       prefix: --no-ld
+  l:
+    type: string
+    inputBinding:
+      prefix: -l
   o:
     type: string
     inputBinding:
