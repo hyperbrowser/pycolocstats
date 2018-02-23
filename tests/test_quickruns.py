@@ -21,7 +21,7 @@ class TestMethods(object):
         selections = {} #BIG
         giggle = getTestableMethod(Giggle, selections, [tracks[0]])
         commandUsed = ''
-        print 'Command used: ', commandUsed
+        print('Command used: ', commandUsed)
         runAllMethodsInSequence((giggle))
         assert giggle.something == somethingElse
 

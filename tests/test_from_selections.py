@@ -79,6 +79,6 @@ class TestMethods(TestMethodsBase):
             testStat = wmo.getTestStatistic()
             pval = wmo.getPValue()
             if PRINT_TEST_STATISTICS:
-                print 'TestStat ', wmo.getMethodName(), ': ', testStat
+                print('TestStat ', wmo.getMethodName(), ': ', testStat)
             # self._assertMethodResultsSize(1, wmo)
 

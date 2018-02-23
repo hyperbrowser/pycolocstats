@@ -20,7 +20,7 @@ def runAllMethodsInSequence(methods, jobOutputDir=DEFAULT_JOB_OUTPUT_DIR):
                 print('Running method:', str(method))
             try:
                 jobs = method.createJobs(jobOutputDir)
-            except Exception, e:
+            except Exception as e:
                 if VERBOSE_RUNNING:
                     print('Failing createJobs for: ', method)
                 if not CATCH_METHOD_EXCEPTIONS:

@@ -78,7 +78,7 @@ class TestMethods(TestMethodsBase):
         workingMethodObjects = WorkingMethodObjectParser(queryTrack, refTracks, selectionValues,
                                                          ALL_CONGLOMERATE_METHOD_CLASSES).getWorkingMethodObjects()
         methodNames = set([wmo.getMethodName() for wmo in workingMethodObjects])
-        print 'TEMP1: ', methodNames
+        print('TEMP1: ', methodNames)
         assert methodNames == set(['IntervalStats'])
 
 

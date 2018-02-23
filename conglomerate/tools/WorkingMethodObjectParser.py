@@ -19,13 +19,13 @@ class WorkingMethodObjectParser:
     def getWorkingMethodObjects(self):
         if self._queryTrack is None or self._refTracks is None:
             if VERBOSE_RUNNING:
-                print 'No WMOs due to lacking tracks'
+                print('No WMOs due to lacking tracks')
             return None
         if VERBOSE_RUNNING:
-            print 'Considered methods: ', ','.join([x.__name__ for x in self._allMethodClasses])
+            print('Considered methods: ', ','.join([x.__name__ for x in self._allMethodClasses]))
         # selectionVals = selections.values()
         workingMethodObjects = getCompatibleMethodObjects(self._selectionVals, self._queryTrack, self._refTracks,
                                                           self._allMethodClasses)
         if VERBOSE_RUNNING:
-            print 'Compatible methods: ', ','.join([str(x) for x in workingMethodObjects])
+            print('Compatible methods: ', ','.join([str(x) for x in workingMethodObjects]))
         return workingMethodObjects
