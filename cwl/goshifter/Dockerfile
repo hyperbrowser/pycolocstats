@@ -19,6 +19,5 @@ WORKDIR goshifter
 
 RUN wget https://hyperbrowser.uio.no/hb/static/hyperbrowser/files/conglomerate/goShifter/hg38_eur.tar.gz && \
 tar -xzf hg38_eur.tar.gz && \
-rm hg38_eur.tar.gz
-
-RUN chmod -R 777 /root
+rm hg38_eur.tar.gz && \
+chmod -R 777 /root
