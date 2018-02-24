@@ -6,6 +6,10 @@ baseCommand:
   - /root/goshifter/goshifter.py
 
 inputs:
+  i:
+    type: File?
+    inputBinding:
+      prefix: -i
   s:
     type: File
     inputBinding:
@@ -43,7 +47,7 @@ inputs:
     inputBinding:
       prefix: --no-ld
   l:
-    type: string
+    type: string?
     inputBinding:
       prefix: -l
   o:
