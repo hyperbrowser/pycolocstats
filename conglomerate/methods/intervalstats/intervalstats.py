@@ -2,6 +2,7 @@ from __future__ import absolute_import, division, print_function, unicode_litera
 
 from os import path
 
+from conglomerate.methods.interface import RestrictedThroughInclusion
 from conglomerate.methods.method import OneVsOneMethod
 from conglomerate.core.types import SingleResultValue, TrackFile
 from conglomerate.core.constants import INTERVALSTATS_TOOL_NAME
@@ -26,27 +27,21 @@ class IntervalStats(OneVsOneMethod):
         pass
 
     def setChromLenFileName(self, chromLenFileName):
+        if 'd' in self._params:
+            pass
         contents = []
         with open(chromLenFileName, 'r') as f:
             for line in f.readlines():
                 newl = line.strip('\n').split('\t')
                 contents.append([newl[0], '0', newl[1]])
 
-        #tempFileName = getTemporaryFileName()
-        #tempFileName = '/data/tmp/congloTmp/' + os.path.basename(chromLenFileName)
         tempFileName = getTemporaryFileName()
         sampleFile = open(tempFileName, 'w')
         for c in contents:
             sampleFile.write('\t'.join(c)+'\n')
         sampleFile.flush()
 
-        self._params['d'] = sampleFile.name #chromLenFileName
-        # TODO: Add an extra column in between (filled with zeroes), e.g.:
-        # chr1	0	249250621
-        # chr10	0	135534747
-        # chr11	0	135006516
-        # ...
-        # etc
+        self._params['d'] = sampleFile.name
 
     def _setQueryTrackFileName(self, trackFile):
         self._addTrackTitleMapping(os.path.basename(trackFile.path), trackFile.title)
@@ -120,8 +115,10 @@ class IntervalStats(OneVsOneMethod):
             self.setNotCompatible()
 
     def setRestrictedAnalysisUniverse(self, restrictedAnalysisUniverse):
-        if restrictedAnalysisUniverse is not None:
+        if not isinstance(restrictedAnalysisUniverse, RestrictedThroughInclusion):
             self.setNotCompatible()
+        else:
+            self.setManualParam('d', restrictedAnalysisUniverse.trackFile.path)
 
     def setColocMeasure(self, colocMeasure):
         from conglomerate.methods.interface import ColocMeasureProximity
