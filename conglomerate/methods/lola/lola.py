@@ -89,7 +89,7 @@ class LOLA(OneVsManyMethod):
             self._testStats[(queryFn, refFns[index-1])] = \
                 SingleResultValue(ts, '<span title="' + \
                                   self.getTestStatDescr() \
-                                  + '">' + '%.1f'%ts + '</span>')
+                                  + '">' + '%.5f'%ts + '</span>')
 
         self._ranSuccessfully = True
 
