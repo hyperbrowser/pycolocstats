@@ -28,7 +28,7 @@ class IntervalStats(OneVsOneMethod):
 
     def setChromLenFileName(self, chromLenFileName):
         if 'd' in self._params:
-            pass
+            return
         contents = []
         with open(chromLenFileName, 'r') as f:
             for line in f.readlines():
