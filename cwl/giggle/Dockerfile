@@ -32,14 +32,20 @@ find /regiondb/LOLACore_170206/ -name '*.RData' -type f -exec rm {} \;
 RUN wget https://hyperbrowser.uio.no/hb/static/hyperbrowser/files/conglomerate/giggle/Giggle_hosted_260218/fantom_sort.tar.gz -O /regiondb/fantom_sort.tar.gz && \
 mkdir -p /regiondb/Giggle_hosted_260218/hg19 && \
 tar xf /regiondb/fantom_sort.tar.gz -C /regiondb/Giggle_hosted_260218/hg19 && \
-rm /regiondb/fantom_sort.tar.gz
+rm /regiondb/fantom_sort.tar.gz && \
+mkdir /regiondb/Giggle_hosted_260218/hg19/fantom_sort/regions && \
+mv /regiondb/Giggle_hosted_260218/hg19/fantom_sort/*.bed.gz /regiondb/Giggle_hosted_260218/hg19/fantom_sort/regions/
 
 RUN wget https://hyperbrowser.uio.no/hb/static/hyperbrowser/files/conglomerate/giggle/Giggle_hosted_260218/roadmap_sort.tar.gz -O /regiondb/roadmap_sort.tar.gz && \
 tar xf /regiondb/roadmap_sort.tar.gz -C /regiondb/Giggle_hosted_260218/hg19 && \
-rm /regiondb/roadmap_sort.tar.gz
+rm /regiondb/roadmap_sort.tar.gz && \
+mkdir /regiondb/Giggle_hosted_260218/hg19/roadmap_sort/regions && \
+mv /regiondb/Giggle_hosted_260218/hg19/roadmap_sort/*.bed.gz /regiondb/Giggle_hosted_260218/hg19/roadmap_sort/regions/
 
 RUN wget https://hyperbrowser.uio.no/hb/static/hyperbrowser/files/conglomerate/giggle/Giggle_hosted_260218/ucscweb_sort_valid_bed.tar.gz -O /regiondb/ucscweb_sort_valid_bed.tar.gz && \
 tar xf /regiondb/ucscweb_sort_valid_bed.tar.gz -C /regiondb/Giggle_hosted_260218/hg19 && \
-rm /regiondb/ucscweb_sort_valid_bed.tar.gz
+rm /regiondb/ucscweb_sort_valid_bed.tar.gz && \
+mkdir /regiondb/Giggle_hosted_260218/hg19/ucscweb_sort_valid_bed/regions && \
+mv /regiondb/Giggle_hosted_260218/hg19/ucscweb_sort_valid_bed/*.bed.gz /regiondb/Giggle_hosted_260218/hg19/ucscweb_sort_valid_bed/regions/
 
 RUN sed -i 's%#!/bin/sh%#!/bin/bash%g' ../scripts/sort_bed
