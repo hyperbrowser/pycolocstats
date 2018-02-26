@@ -20,7 +20,7 @@ RUN Rscript -e "install.packages('reshape2')" \
 -e "install.packages('simpleCache')"
 
 RUN mkdir /regiondb && \
-wget https://hyperbrowser.uio.no/hb/static/hyperbrowser/files/conglomerate/LOLACore_170206.tgz -O /regiondb/LOLACore_170206.tgz && \
+wget https://hyperbrowser.uio.no/hb/static/hyperbrowser/files/conglomerate/lola/LOLACore_170206.tgz -O /regiondb/LOLACore_170206.tgz && \
 mkdir -p /regiondb/LOLACore_170206 && \
 tar xf /regiondb/LOLACore_170206.tgz -C /regiondb/LOLACore_170206 && \
 rm /regiondb/LOLACore_170206.tgz && \
