@@ -35,6 +35,7 @@ class GenometriCorr(OneVsOneMethod):
             trackFn = trackFile
         if trackFn in ['prebuilt', 'LOLACore_170206']:
             self.setNotCompatible()
+            return
         bedPath = self._getBedExtendedFileName(trackFn)
         if isinstance(trackFile, TrackFile):
             self._addTrackTitleMapping(bedPath, trackFile.title)
