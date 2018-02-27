@@ -26,8 +26,20 @@ tar xf /regiondb/LOLACore_170206.tgz -C /regiondb/LOLACore_170206 && \
 rm /regiondb/LOLACore_170206.tgz && \
 mv /regiondb/LOLACore_170206/scratch/ns5bc/resources/regions/LOLACore/* /regiondb/LOLACore_170206/ && \
 rm -rf /regiondb/LOLACore_170206/scratch/ && \
+find /regiondb/LOLACore_170206/ -name "*.narrowPeak" -exec sh -c 'cut -f 1,2,3 $1 > "${1%.narrowPeak}.bed"' _ {} \; -exec rm {} \; && \
 find /regiondb/LOLACore_170206/ -name '*.bed' -type f -exec bgzip {} \; && \
 find /regiondb/LOLACore_170206/ -name '*.RData' -type f -exec rm {} \;
+
+RUN mkdir /regiondb && \
+wget -nv https://hyperbrowser.uio.no/hb/static/hyperbrowser/files/conglomerate/lola/LOLAExt_170206.tgz -O /regiondb/LOLAExt_170206.tgz && \
+mkdir -p /regiondb/LOLAExt_170206 && \
+tar xf /regiondb/LOLAExt_170206.tgz -C /regiondb/LOLAExt_170206 && \
+rm /regiondb/LOLAExt_170206.tgz && \
+mv /regiondb/LOLAExt_170206/scratch/ns5bc/resources/regions/LOLACore/* /regiondb/LOLAExt_170206/ && \
+rm -rf /regiondb/LOLAExt_170206/scratch/ && \
+find /regiondb/LOLAExt_170206/ -name "*.narrowPeak" -exec sh -c 'cut -f 1,2,3 $1 > "${1%.narrowPeak}.bed"' _ {} \; -exec rm {} \; && \
+find /regiondb/LOLAExt_170206/ -name '*.bed' -type f -exec bgzip {} \; && \
+find /regiondb/LOLAExt_170206/ -name '*.RData' -type f -exec rm {} \;
 
 RUN wget -nv https://hyperbrowser.uio.no/hb/static/hyperbrowser/files/conglomerate/giggle/Giggle_hosted_260218/fantom_sort.tar.gz -O /regiondb/fantom_sort.tar.gz && \
 mkdir -p /regiondb/Giggle_hosted_260218/hg19 && \
