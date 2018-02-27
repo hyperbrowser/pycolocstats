@@ -35,7 +35,7 @@ wget -nv https://hyperbrowser.uio.no/hb/static/hyperbrowser/files/conglomerate/l
 mkdir -p /regiondb/LOLAExt_170206 && \
 tar xf /regiondb/LOLAExt_170206.tgz -C /regiondb/LOLAExt_170206 && \
 rm /regiondb/LOLAExt_170206.tgz && \
-mv /regiondb/LOLAExt_170206/scratch/ns5bc/resources/regions/LOLACore/* /regiondb/LOLAExt_170206/ && \
+mv /regiondb/LOLAExt_170206/scratch/ns5bc/resources/regions/LOLAExt/* /regiondb/LOLAExt_170206/ && \
 rm -rf /regiondb/LOLAExt_170206/scratch/ && \
 find /regiondb/LOLAExt_170206/ -name "*.narrowPeak" -exec sh -c 'cut -f 1,2,3 $1 > "${1%.narrowPeak}.bed"' _ {} \; -exec rm {} \; && \
 find /regiondb/LOLAExt_170206/ -name '*.bed' -type f -exec bgzip {} \; && \
