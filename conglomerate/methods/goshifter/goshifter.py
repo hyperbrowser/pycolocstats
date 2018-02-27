@@ -1,7 +1,8 @@
 from __future__ import absolute_import, division, print_function, unicode_literals
 
 from os import path, listdir
-
+import gzip
+import shutil
 from conglomerate.core.util import getTemporaryFileName
 from conglomerate.methods.method import OneVsOneMethod
 from conglomerate.core.constants import GOSHIFTER_TOOL_NAME
@@ -14,10 +15,11 @@ class GoShifter(OneVsOneMethod):
         return GOSHIFTER_TOOL_NAME
 
     def _setDefaultParamValues(self):
-        pass
+        self.setManualParam('r', 0.9)
 
     def setGenomeName(self, genomeName):
-        pass
+        if genomeName != 'hg38':
+            self.setNotCompatible()
 
     def setChromLenFileName(self, chromLenFileName):
         pass
@@ -29,66 +31,100 @@ class GoShifter(OneVsOneMethod):
         pass
 
     def prepareInputData(self):
-        #TODO: Diana!: Here you will transform from bed to snpmap or whatever..
-        # queryTrackIsPoints = True #TODO: Diana!: Here you should instead check whether it is really points in the query track
 
+        #modify file self._params['s'] file into snpmap file
         queryTrackIsPoints = True
-        queryTrackDoesNotHaveRS = True
+        queryTracHaveRS = True
 
-        contents = ['SNP', 'Chrom', 'BP']
+        contents = []
+        contents.append(['SNP', 'Chrom', 'BP'])
         with open(self._params['s'], 'r') as f:
             for line in f.readlines():
                 newl = line.strip('\n').split('\t')
+                #check if it is a .bed file with at least 4 columns
                 if len(newl) >= 4:
                     #provide proper order for snpmap file
                     if int(newl[2]) - int(newl[1]) != 1:
                         queryTrackIsPoints = False
-                    contents.append([newl[0], newl[1], newl[3]])
+                        break
+                    if 'rs' not in newl[3]:
+                        queryTracHaveRS = False
+                        break
+                    contents.append([newl[3], newl[0], newl[1]])
                 else:
-                    queryTrackDoesNotHaveRS = False
+                    queryTracHaveRS = False
+                    break
 
-        if queryTrackIsPoints and queryTrackDoesNotHaveRS:
+        if queryTrackIsPoints and queryTracHaveRS:
             tempFileName = getTemporaryFileName()
+            print (tempFileName)
             sampleFile = open(tempFileName, 'w')
             for c in contents:
                 sampleFile.write('\t'.join(c) + '\n')
             sampleFile.flush()
-
             self._params['s'] = sampleFile.name
 
         if not queryTrackIsPoints:
-            raise Exception('GOShifter only works with single base pairs as input regions')
-        if not queryTrackDoesNotHaveRS:
-            raise Exception('GOShifter only works were column name is filled by rs')
+            self.setNotCompatible()
+            #raise Exception('GOShifter only works with single base pairs as input regions')
+        if not queryTracHaveRS:
+            self.setNotCompatible()
+            #raise Exception('GOShifter only works were column name is filled by rs')
+
+
+        #check if self._params['a'] is not empty or is a bed file with at least 3 columns
+        # emptyFile = path.getsize(self._params['a'])
+        # if emptyFile <= 0:
+        #     self.setNotCompatible()
+
+        # with open(self._params['a'], 'r') as f:
+        #     for line in f.readlines():
+        #         vals = line.strip().split()
+        #         if len(vals) < 3:
+        #             self.setNotCompatible()
+
+        # gz file annotation
+        tempFileNameA = getTemporaryFileName()
+        with open(self._params['a'], 'rb') as f_in, gzip.open(tempFileNameA, 'wb') as f_out:
+            shutil.copyfileobj(f_in, f_out)
+        self._params['a'] = tempFileNameA
+        print (self._params['a'])
 
         self.performGenericFileCopying()
 
     def setAllowOverlaps(self, allowOverlaps):
-        assert allowOverlaps is True
+        if allowOverlaps is True:
+            self.setNotCompatible()
 
     def _parseResultFiles(self):
-        textOut = self.getResultFilesDict()['stdout']
-        print ('aaa')
-        print (textOut)
+        textOutPath = self.getResultFilesDict()['stdout']
 
+        self._pvals = {}
+        # get p-value from stdout output
+        self._pvals[(self._params['s'], self._params['o'])] = -1
+        pValText = 'p-value = '
+        with open(textOutPath, 'r') as f:
+            for l in f.readlines():
+                if pValText in l:
+                    self._pvals[(self._params['s'], self._params['o'])] = l.strip('\n').replace(pValText, '')
+
+        self._testStats[(self._params['s'], self._params['o'])] = -1
         for fi in listdir(path.join(self._resultFilesDict['output'])):
-            with open(path.join(self._resultFilesDict['output'], fi), 'r') as f:
-                print(f.readlines())
+            if 'nperm10.enrich' in fi:
+                obsvervedval = 0
+                averageAllOtherValue = 0
+                with open(path.join(self._resultFilesDict['output'], fi), 'r') as f:
+                    for numL, l in enumerate(f.readlines()):
+                        if numL == 1:
+                            obsvervedval = float(l.strip().split('\t')[3])
+                        if numL > 1:
+                            averageAllOtherValue += float(l.strip().split('\t')[3])
+                self._testStats[(self._params['s'], self._params['o'])] = obsvervedval / (averageAllOtherValue/float(self._params['p']))
 
-        # self._pvals={}
-        #
-        # #get p-value from stdout output
-        # pValText = 'p-value = '
-        # valStart = textOut.find(pValText)
-        # valEnd = textOut.find('Detailed')
-        # self._pvals[(self._params['a'], self._params['o'])] = textOut[valStart + len(pValText):valEnd]
-        # self._testStats[(self._params['a'], self._params['o'])] = -1
-        #
-        # for fi in listdir(path.join(self._resultFilesDict['output'])):
-        #     if 'nperm10.enrich' in fi:
-        #         with open(path.join(self._resultFilesDict['output'], fi), 'r') as f:
-        #             self._testStats[(self._params['a'], self._params['o'])] = f.readlines()[1].split('\t')[1]
-
+        if self._pvals[(self._params['s'], self._params['o'])] != -1:
+            self._ranSuccessfully = True
+        if self._testStats[(self._params['s'], self._params['o'])] != -1:
+            self._ranSuccessfully = True
 
     def getPValue(self):
         return self._pvals
@@ -100,13 +136,34 @@ class GoShifter(OneVsOneMethod):
         return open(self.getResultFilesDict()['stdout']).read()
 
     def preserveClumping(self, preserve):
-        pass
+        if preserve == True:
+            self.setNotCompatible()
 
     def setRestrictedAnalysisUniverse(self, restrictedAnalysisUniverse):
-        pass
+        #check it
+        if restrictedAnalysisUniverse is not None:
+            self.setNotCompatible()
 
     def setColocMeasure(self, colocMeasure):
+        #take it from HB
+        #support bp and all region which is point
         pass
 
     def setHeterogeneityPreservation(self, preservationScheme, fn=None):
-        pass
+        if preservationScheme is not None:
+            self.setNotCompatible()
+
+    def getErrorDetails(self):
+        assert not self.ranSuccessfully()
+
+    def setRuntimeMode(self, mode):
+        #take from paper
+        if mode =='quick':
+            numPerm = 10
+        elif mode == 'medium':
+            numPerm = 100
+        elif mode == 'accurate':
+            numPerm = 1000
+        else:
+            raise Exception('Invalid mode')
+        self.setManualParam('p', numPerm)

@@ -23,7 +23,7 @@ inputs:
     inputBinding:
       prefix: -p
   r:
-    type: int?
+    type: float?
     inputBinding:
       prefix: -r
   w:
