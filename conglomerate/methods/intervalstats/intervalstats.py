@@ -115,7 +115,9 @@ class IntervalStats(OneVsOneMethod):
             self.setNotCompatible()
 
     def setRestrictedAnalysisUniverse(self, restrictedAnalysisUniverse):
-        if restrictedAnalysisUniverse is not None or not isinstance(restrictedAnalysisUniverse, RestrictedThroughInclusion):
+        if restrictedAnalysisUniverse is None:
+            return
+        if not isinstance(restrictedAnalysisUniverse, RestrictedThroughInclusion):
             self.setNotCompatible()
         else:
             self.setManualParam('d', restrictedAnalysisUniverse.trackFile.path)
