@@ -17,7 +17,7 @@ RUN git clone https://github.com/hyperbrowser/goshifter.git
 
 WORKDIR goshifter
 
-RUN wget https://hyperbrowser.uio.no/hb/static/hyperbrowser/files/conglomerate/goShifter/hg38_eur.tar.gz && \
+RUN wget -nv https://hyperbrowser.uio.no/hb/static/hyperbrowser/files/conglomerate/goShifter/hg38_eur.tar.gz && \
 tar -xzf hg38_eur.tar.gz && \
 rm hg38_eur.tar.gz && \
 chmod -R 777 /root
