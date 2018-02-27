@@ -4,7 +4,7 @@ USER root
 
 RUN apt-get update && \
     apt-get install -y \
-    gcc make autoconf zlib1g-dev libbz2-dev libcurl4-openssl-dev libssl-dev ruby liblzo2-dev && \
+    gcc make autoconf zlib1g-dev libbz2-dev libcurl4-openssl-dev libssl-dev ruby liblzo2-dev tabix && \
     apt-get clean && \
     apt-get purge && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
