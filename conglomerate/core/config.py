@@ -46,3 +46,4 @@ CATCH_METHOD_EXCEPTIONS = cfgParser.getboolean(CONFIG_SECTION, 'catch_method_exc
 VERBOSE_RUNNING = cfgParser.getboolean(CONFIG_SECTION, 'verbose_running')
 TMP_DIR = cfgParser.get(CONFIG_SECTION, 'tmp_dir')
 DEFAULT_JOB_OUTPUT_DIR = cfgParser.get(CONFIG_SECTION, 'default_job_output_dir')
+PULL_DOCKER_IMAGES = cfgParser.get(CONFIG_SECTION, 'pull_docker_images')

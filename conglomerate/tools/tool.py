@@ -6,7 +6,7 @@ import os
 import pkg_resources
 import yaml
 
-from conglomerate.core.config import DEFAULT_JOB_OUTPUT_DIR, TMP_DIR
+from conglomerate.core.config import DEFAULT_JOB_OUTPUT_DIR, TMP_DIR, PULL_DOCKER_IMAGES
 from conglomerate.core.types import PathStr, PathStrList
 from conglomerate.core.util import ensureDirExists
 from conglomerate.tools.jobparamsdict import JobParamsDict
@@ -26,7 +26,8 @@ class Tool(object):
 
     def getCwlTool(self, jobOutputDir=DEFAULT_JOB_OUTPUT_DIR):
         if not self._cwlTool:
-            docker.from_env().images.pull('conglomerate/%s' % self._toolName, tag="latest")
+            if PULL_DOCKER_IMAGES:
+                docker.from_env().images.pull('conglomerate/%s' % self._toolName, tag="latest")
             self._cwlTool = self._cwlToolFactory.make(self._getCWLFilePath())
             self._cwlTool.factory.execkwargs['use_container'] = True
             self._cwlTool.factory.execkwargs['no_read_only'] = True

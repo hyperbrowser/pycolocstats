@@ -3,3 +3,4 @@ catch_method_exceptions = true
 verbose_running = false
 tmp_dir = /tmp
 default_job_output_dir = /tmp
+pull_docker_images = true
