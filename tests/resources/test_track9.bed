@@ -1,0 +1,10 @@
+##track type: valued segments
+###seqid	start	end
+chr1	130	190
+chr1	200	280
+chr1	330	380
+chr2	100	130
+chr2	180	210
+chr3	5	85
+chr3	190	210
+chr3	300	310

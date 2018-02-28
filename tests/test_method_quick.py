@@ -4,6 +4,7 @@ import pytest
 
 from conglomerate.core.types import TrackFile
 from conglomerate.methods.genometricorr.genometricorr import GenometriCorr
+from conglomerate.methods.giggle.giggle import Giggle
 from conglomerate.methods.intervalstats.intervalstats import IntervalStats
 from conglomerate.methods.multimethod import MultiMethod
 from conglomerate.methods.stereogene.stereogene import StereoGene
@@ -18,6 +19,11 @@ def tracks():
             TrackFile(pkg_resources.resource_filename('tests', 'resources/test_track2.bed'),'track2'),
             TrackFile(pkg_resources.resource_filename('tests', 'resources/test_track3.bed'),'track3'),
             TrackFile(pkg_resources.resource_filename('tests', 'resources/test_track4.bed'),'track4'),
+            TrackFile(pkg_resources.resource_filename('tests', 'resources/test_track5.bed'),'track5'),
+            TrackFile(pkg_resources.resource_filename('tests', 'resources/test_track6.bed'),'track6'),
+            TrackFile(pkg_resources.resource_filename('tests', 'resources/test_track7.bed'),'track7'),
+            TrackFile(pkg_resources.resource_filename('tests', 'resources/test_track8.bed'),'track8'),
+            TrackFile(pkg_resources.resource_filename('tests', 'resources/test_track9.bed'),'track9'),
             ]
 
 
@@ -33,6 +39,20 @@ class TestMethods(TestMethodsBase):
         method = StereoGene()
         method.setQueryTrackFileNames([tracks[0]])
         method.setReferenceTrackFileNames([tracks[1]])
+        method.setChromLenFileName(chrLenFile)
+        method.setManualParam('v', True)
+        method.setManualParam('silent', 0)
+        method.setManualParam('wSize', 20)
+        method.setManualParam('bin', 5)
+        method.setManualParam('kernelSigma', 10.0)
+        runAllMethodsInSequence([method])
+        # self._printResultFiles(method, ['stderr', 'stdout', 'output'])
+        self._assertMethodResultsSize(1, method)
+
+    def testStereoGene_OneVsOne_header_in_data(self, chrLenFile, tracks):
+        method = StereoGene()
+        method.setQueryTrackFileNames([tracks[6]])
+        method.setReferenceTrackFileNames([tracks[7]])
         method.setChromLenFileName(chrLenFile)
         method.setManualParam('v', True)
         method.setManualParam('silent', 0)
@@ -70,6 +90,19 @@ class TestMethods(TestMethodsBase):
         # self._printResultFiles(method, ['stderr', 'stdout', 'output'])
         self._assertMethodResultsSize(1, method)
 
+    def testGenometriCorr_OneVsOne_header_in_data(self, chrLenFile, tracks):
+        # raise Exception('With current setup, too long running time to function as unit test')
+        method = GenometriCorr()
+        method.setQueryTrackFileNames([tracks[6]])
+        method.setReferenceTrackFileNames([tracks[7]])
+        method.setChromLenFileName(chrLenFile)
+        method.setManualParam('ecdfPermNum', 5)
+        method.setManualParam('meanPermNum', 5)
+        method.setManualParam('jaccardPermNum', 5)
+        runAllMethodsInSequence([method])
+        # self._printResultFiles(method, ['stderr', 'stdout', 'output'])
+        self._assertMethodResultsSize(1, method)
+
     def testIntervalStats_OneVsOne(self, chrLenFile, tracks):
         method = IntervalStats()
         method.setQueryTrackFileNames([tracks[0]])
@@ -85,6 +118,28 @@ class TestMethods(TestMethodsBase):
         method.setManualParam('o', 'output')
         runAllMethodsInSequence([method])
         self._assertMethodResultsSize(2, method)
+
+    def testGiggle_OneVsMany(self, chrLenFile, tracks):
+        method = Giggle()
+        method.setQueryTrackFileNames([tracks[0]])
+        refTracks = [tracks[1], tracks[2]]
+        method.setReferenceTrackFileNames(refTracks)
+        # method = MultiMethod(Giggle, [tracks[8]], refTracks)
+        method.setChromLenFileName(chrLenFile)
+        runAllMethodsInSequence([method])
+        self._printResultFiles(method, ['stderr', 'stdout', 'output'])
+        self._assertMethodResultsSize(len(refTracks), method)
+
+    def testGiggle_OneVsMany_header_in_data(self, chrLenFile, tracks):
+        method = Giggle()
+        method.setQueryTrackFileNames([tracks[6]])
+        refTracks = [tracks[7], tracks[8]]
+        method.setReferenceTrackFileNames(refTracks)
+        # method = MultiMethod(Giggle, [tracks[8]], refTracks)
+        method.setChromLenFileName(chrLenFile)
+        runAllMethodsInSequence([method])
+        self._printResultFiles(method, ['stderr', 'stdout', 'output'])
+        self._assertMethodResultsSize(len(refTracks), method)
 
     # @staticmethod
     # def _assertMethodResultsSize(expectedResulstNr, method):
