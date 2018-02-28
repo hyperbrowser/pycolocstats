@@ -34,14 +34,14 @@ class GoShifter(OneVsOneMethod):
         self._addTrackTitleMapping(bedPath, trackFile.title)
         self.qTrackFn = bedPath
         self._params['s'] = bedPath
-        self._orginalQueryFile = trackFile.path
+        self._orginalQueryFile = trackFile.title
 
     def _setReferenceTrackFileName(self, trackFile):
         bedPath = self._getBedExtendedFileName(trackFile.path)
         self._addTrackTitleMapping(bedPath, trackFile.title)
         self.qTrackFn = bedPath
         self._params['a'] = bedPath
-        self._orginalReferenceFile = trackFile.path
+        self._orginalReferenceFile = trackFile.title
 
     def prepareInputData(self):
 
