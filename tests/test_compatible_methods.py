@@ -1,6 +1,7 @@
 import pkg_resources
 import pytest
 
+from conglomerate.methods.goshifter.goshifter import GoShifter
 from conglomerate.methods.interface import RestrictedThroughInclusion, ColocMeasureProximity
 from conglomerate.tools.WorkingMethodObjectParser import WorkingMethodObjectParser
 
@@ -19,6 +20,8 @@ def tracks():
             TrackFile(pkg_resources.resource_filename('tests', 'resources/test_track2.bed'),'t2'),
             TrackFile(pkg_resources.resource_filename('tests', 'resources/test_track3.bed'),'t3'),
             TrackFile(pkg_resources.resource_filename('tests', 'resources/test_track4.bed'),'t4'),
+            TrackFile(pkg_resources.resource_filename('tests', 'resources/test_track5.bed'), 't5'),
+            TrackFile(pkg_resources.resource_filename('tests', 'resources/test_track6.bed'), 't6'),
             ]
 
 
@@ -47,6 +50,13 @@ class TestMethods(TestMethodsBase):
         selectionValues.append([('setChromLenFileName', chrLenFile)])
         methodNames = set([wmo.getMethodName() for wmo in workingMethodObjects])
         assert methodNames == set(['Giggle', 'GenometriCorr','StereoGene'])
+
+    def test_goShifter_genome_hg38(self, tracks):
+        selectionValues = [[('setGenomeName', u'hg38')],[('setRuntimeMode', u'quick')]]
+        workingMethodObjects = WorkingMethodObjectParser([tracks[4]], [tracks[5]], selectionValues,
+                                                         [GoShifter]).getWorkingMethodObjects()
+        methodNames = set([wmo.getMethodName() for wmo in workingMethodObjects])
+        assert methodNames == set(['GoShifter'])
 
     def test_default_inclusionbg(self,chrLenFile, queryTrack, refTracks, tracks):
         selectionValues = [[('setGenomeName', u'hg19')], [('setRestrictedAnalysisUniverse', RestrictedThroughInclusion(tracks[3]))],
