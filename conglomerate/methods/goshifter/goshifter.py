@@ -180,6 +180,10 @@ class GoShifter(OneVsOneMethod):
 
     def getErrorDetails(self):
         assert not self.ranSuccessfully()
+        if self._resultFilesDict is not None and 'stderr' in self._resultFilesDict:
+            return open(self._resultFilesDict['stderr']).read().replace('\n', '<br>\n')
+        else:
+            return 'GoShifter did not provide any error output'
 
     def setRuntimeMode(self, mode):
         #take from paper
