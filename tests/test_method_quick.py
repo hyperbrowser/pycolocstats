@@ -5,6 +5,7 @@ import pytest
 from conglomerate.core.types import TrackFile
 from conglomerate.methods.genometricorr.genometricorr import GenometriCorr
 from conglomerate.methods.giggle.giggle import Giggle
+from conglomerate.methods.goshifter.goshifter import GoShifter
 from conglomerate.methods.intervalstats.intervalstats import IntervalStats
 from conglomerate.methods.multimethod import MultiMethod
 from conglomerate.methods.stereogene.stereogene import StereoGene
@@ -140,6 +141,23 @@ class TestMethods(TestMethodsBase):
         runAllMethodsInSequence([method])
         self._printResultFiles(method, ['stderr', 'stdout', 'output'])
         self._assertMethodResultsSize(len(refTracks), method)
+
+
+    def testGoShifter(self, chrLenFile, tracks):
+        method = GoShifter()
+        # snpmap = pkg_resources.resource_filename('tests', 'resources/snpmap.tabular')
+        # annotation = pkg_resources.resource_filename('tests', 'resources/annotation.bed.gz')
+        # proxies = pkg_resources.resource_filename('tests', 'resources/proxies.txt')
+        method.setQueryTrackFileNames([tracks[4]])
+        method.setReferenceTrackFileNames([tracks[5]])
+        # method.setManualParam('s', snpmap)
+        # method.setManualParam('a', annotation)
+        method.setManualParam('l', '/root/goshifter/hg38_eur/')
+        method.setManualParam('p', 10)
+        method.setManualParam('o', 'output')
+        runAllMethodsInSequence([method])
+        self._printResultFiles(method, ['stderr', 'stdout', 'output'])
+        self._assertMethodResultsSize(1, method)
 
     # @staticmethod
     # def _assertMethodResultsSize(expectedResulstNr, method):

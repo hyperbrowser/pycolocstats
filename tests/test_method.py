@@ -212,23 +212,6 @@ class TestMethods(TestMethodsBase):
         runAllMethodsInSequence([method])
         self._printResultFiles(method, ['stderr', 'stdout', 'output'])
 
-    def testGoShifter(self, chrLenFile, tracks):
-        method = GoShifter()
-        # snpmap = pkg_resources.resource_filename('tests', 'resources/snpmap.tabular')
-        # annotation = pkg_resources.resource_filename('tests', 'resources/annotation.bed.gz')
-        # proxies = pkg_resources.resource_filename('tests', 'resources/proxies.txt')
-        snpmap = pkg_resources.resource_filename('tests', 'resources/test_track5.bed')
-        annotation = pkg_resources.resource_filename('tests', 'resources/test_track6.bed')
-        method.setManualParam('s', snpmap)
-        method.setManualParam('a', annotation)
-        method.setManualParam('l', '/root/goshifter/hg38_eur/')
-        method.setManualParam('p', 10)
-        method.setManualParam('o', 'output')
-        runAllMethodsInSequence([method])
-        self._printResultFiles(method, ['stderr', 'stdout', 'output'])
-        self._assertMethodResultsSize(1, method)
-
-
     @staticmethod
     def _getSampleFileName(contents):
         sampleFile = NamedTemporaryFile(mode='w+', dir='/tmp', suffix='.bed')

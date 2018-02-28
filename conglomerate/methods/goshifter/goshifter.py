@@ -4,8 +4,9 @@ from os import path, listdir
 import gzip
 import shutil
 
-from conglomerate.core.types import TrackFile
+from conglomerate.core.types import SingleResultValue
 from conglomerate.core.util import getTemporaryFileName
+from conglomerate.methods.interface import ColocMeasureOverlap
 from conglomerate.methods.method import OneVsOneMethod
 from conglomerate.core.constants import GOSHIFTER_TOOL_NAME
 
@@ -13,6 +14,14 @@ __metaclass__ = type
 
 
 class GoShifter(OneVsOneMethod):
+
+    def __init__(self, *args, **kwargs):
+        super(GoShifter, self).__init__(*args, **kwargs)
+        self._testStat = {}
+        self._pval = {}
+        self._orginalQueryFile = None
+        self._orginalReferenceFile = None
+
     def _getToolName(self):
         return GOSHIFTER_TOOL_NAME
 
@@ -116,22 +125,19 @@ class GoShifter(OneVsOneMethod):
 
         print ('textOutPath', textOutPath)
 
-        self._pvals = {}
         # get p-value from stdout output
         pTF = False
-        pValText = 'p-value = '
+        pValText = str('p-value = ')
         with open(textOutPath, 'r') as f:
             for l in f.readlines():
                 if pValText in l:
-                    print('I am here')
-                    print(l.strip('\n').replace(pValText, ''))
-                    self._pvals[(self._orginalQueryFile, self._orginalReferenceFile)] = l.strip('\n').replace(pValText, '')
+                    pval = float(str(l.strip().replace(pValText, str(''))))
+                    self._pval[(self._orginalQueryFile, self._orginalReferenceFile)] = pval
                     pTF = True
 
 
-        print ('self._resultFilesDict ', self._resultFilesDict)
+        print('self._resultFilesDict ', self._resultFilesDict)
 
-        self._testStats = {}
         tsTF = False
         for fi in listdir(path.join(self._resultFilesDict['output'])):
             if 'nperm10.enrich' in fi:
@@ -143,19 +149,26 @@ class GoShifter(OneVsOneMethod):
                             obsvervedval = float(l.strip().split('\t')[3])
                         if numL > 1:
                             averageAllOtherValue += float(l.strip().split('\t')[3])
-                print (obsvervedval / (averageAllOtherValue/float(self._params['p'])))
-                self._testStats[(self._orginalQueryFile, self._orginalReferenceFile)] = obsvervedval / (averageAllOtherValue/float(self._params['p']))
+                self._testStat[(self._orginalQueryFile, self._orginalReferenceFile)] = obsvervedval / (averageAllOtherValue / float(self._params['p']))
                 tsTF = True
 
 
         if not (pTF or tsTF):
             self._ranSuccessfully = False
 
+    @classmethod
+    def getTestStatDescr(cls):
+        return 'ratio of observed to average of the samples percentage of overlaping base-pairs'
+
     def getPValue(self):
-        return self._pvals
+        return self._pval
 
     def getTestStatistic(self):
-        return self._testStats
+        testStatVal = self._testStat.values()[0]
+        testStatText = '<span title="' + \
+                   self.getTestStatDescr() \
+                   + '">' + '%.5f' % testStatVal + '</span>'
+        return {(self._orginalQueryFile, self._orginalReferenceFile): SingleResultValue(testStatVal, testStatText)}
 
     def getFullResults(self):
         return open(self.getResultFilesDict()['stdout']).read()
@@ -170,9 +183,9 @@ class GoShifter(OneVsOneMethod):
             self.setNotCompatible()
 
     def setColocMeasure(self, colocMeasure):
-        #take it from HB
-        #support bp and all region which is point
-        pass
+        #TODO: might not be fully correct since it's only points
+        if not colocMeasure or not isinstance(colocMeasure, ColocMeasureOverlap):
+            self.setNotCompatible()
 
     def setHeterogeneityPreservation(self, preservationScheme, fn=None):
         if preservationScheme is not None:
