@@ -226,6 +226,7 @@ class TestMethods(TestMethodsBase):
         method.setManualParam('o', 'output')
         runAllMethodsInSequence([method])
         self._printResultFiles(method, ['stderr', 'stdout', 'output'])
+        self._assertMethodResultsSize(1, method)
 
 
     @staticmethod

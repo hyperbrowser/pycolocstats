@@ -109,6 +109,7 @@ class GoShifter(OneVsOneMethod):
                 if pValText in l:
                     self._pvals[(self._params['s'], self._params['o'])] = l.strip('\n').replace(pValText, '')
 
+        self._testStats = {}
         self._testStats[(self._params['s'], self._params['o'])] = -1
         for fi in listdir(path.join(self._resultFilesDict['output'])):
             if 'nperm10.enrich' in fi:
