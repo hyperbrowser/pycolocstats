@@ -30,10 +30,18 @@ class GoShifter(OneVsOneMethod):
         pass
 
     def _setQueryTrackFileName(self, trackFile):
-        self._params['s'] = trackFile.path
+        bedPath = self._getBedExtendedFileName(trackFile.path)
+        self._addTrackTitleMapping(bedPath, trackFile.title)
+        self.qTrackFn = bedPath
+        self._params['s'] = bedPath
+        self._orginalQueryFile = trackFile.path
 
     def _setReferenceTrackFileName(self, trackFile):
-        self._params['a'] = trackFile.path
+        bedPath = self._getBedExtendedFileName(trackFile.path)
+        self._addTrackTitleMapping(bedPath, trackFile.title)
+        self.qTrackFn = bedPath
+        self._params['a'] = bedPath
+        self._orginalReferenceFile = trackFile.path
 
     def prepareInputData(self):
 
@@ -106,15 +114,15 @@ class GoShifter(OneVsOneMethod):
 
         self._pvals = {}
         # get p-value from stdout output
-        self._pvals[(self._params['s'], self._params['o'])] = -1
+        self._pvals[(self._orginalQueryFile, self._orginalReferenceFile)] = -1
         pValText = 'p-value = '
         with open(textOutPath, 'r') as f:
             for l in f.readlines():
                 if pValText in l:
-                    self._pvals[(self._params['s'], self._params['o'])] = l.strip('\n').replace(pValText, '')
+                    self._pvals[(self._orginalQueryFile, self._orginalReferenceFile)] = l.strip('\n').replace(pValText, '')
 
         self._testStats = {}
-        self._testStats[(self._params['s'], self._params['o'])] = -1
+        self._testStats[(self._orginalQueryFile, self._orginalReferenceFile)] = -1
         for fi in listdir(path.join(self._resultFilesDict['output'])):
             if 'nperm10.enrich' in fi:
                 obsvervedval = 0
@@ -125,11 +133,11 @@ class GoShifter(OneVsOneMethod):
                             obsvervedval = float(l.strip().split('\t')[3])
                         if numL > 1:
                             averageAllOtherValue += float(l.strip().split('\t')[3])
-                self._testStats[(self._params['s'], self._params['o'])] = obsvervedval / (averageAllOtherValue/float(self._params['p']))
+                self._testStats[(self._orginalQueryFile, self._orginalReferenceFile)] = obsvervedval / (averageAllOtherValue/float(self._params['p']))
 
-        if self._pvals[(self._params['s'], self._params['o'])] != -1:
+        if self._pvals[(self._orginalQueryFile, self._orginalReferenceFile)] != -1:
             self._ranSuccessfully = True
-        if self._testStats[(self._params['s'], self._params['o'])] != -1:
+        if self._testStats[(self._orginalQueryFile, self._orginalReferenceFile)] != -1:
             self._ranSuccessfully = True
 
     def getPValue(self):
