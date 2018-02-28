@@ -20,6 +20,7 @@ class GoShifter(OneVsOneMethod):
         self.setManualParam('r', 0.9)
         # ldFile = TrackFile('/root/goshifter/hg38_eur/', 'ld file')
         self.setManualParam('l', str('/root/goshifter/hg38_eur/'))
+        self.setManualParam('o', str('output'))
 
 
     def setGenomeName(self, genomeName):
