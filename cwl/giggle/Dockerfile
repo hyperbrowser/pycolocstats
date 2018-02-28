@@ -30,8 +30,7 @@ find /regiondb/LOLACore_170206/ -name "*.narrowPeak" -exec sh -c 'cut -f 1,2,3 $
 find /regiondb/LOLACore_170206/ -name '*.bed' -type f -exec bgzip {} \; && \
 find /regiondb/LOLACore_170206/ -name '*.RData' -type f -exec rm {} \;
 
-RUN mkdir /regiondb && \
-wget -nv https://hyperbrowser.uio.no/hb/static/hyperbrowser/files/conglomerate/lola/LOLAExt_170206.tgz -O /regiondb/LOLAExt_170206.tgz && \
+RUN wget -nv https://hyperbrowser.uio.no/hb/static/hyperbrowser/files/conglomerate/lola/LOLAExt_170206.tgz -O /regiondb/LOLAExt_170206.tgz && \
 mkdir -p /regiondb/LOLAExt_170206 && \
 tar xf /regiondb/LOLAExt_170206.tgz -C /regiondb/LOLAExt_170206 && \
 rm /regiondb/LOLAExt_170206.tgz && \
