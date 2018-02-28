@@ -6,7 +6,9 @@ import os
 import pkg_resources
 import yaml
 
-from conglomerate.core.config import DEFAULT_JOB_OUTPUT_DIR, TMP_DIR, PULL_DOCKER_IMAGES
+from conglomerate.core.config import DEFAULT_JOB_OUTPUT_DIR, TMP_DIR, PULL_DOCKER_IMAGES, \
+    USE_TEST_DOCKER_IMAGES
+from conglomerate.core.constants import TEST_TOOL_SUFFIX
 from conglomerate.core.types import PathStr, PathStrList
 from conglomerate.core.util import ensureDirExists
 from conglomerate.tools.jobparamsdict import JobParamsDict
@@ -20,6 +22,13 @@ class Tool(object):
 
     def __init__(self, toolName):
         self._toolName = toolName
+
+        if USE_TEST_DOCKER_IMAGES:
+            oldToolName = self._toolName
+            self._toolName += TEST_TOOL_SUFFIX
+            if not os.path.exists(self._getCWLFilePath()):
+                self._toolName = oldToolName
+
         with open(self._getCWLFilePath(), 'r') as stream:
             self._yaml = yaml.load(stream)
         self._cwlTool = None
