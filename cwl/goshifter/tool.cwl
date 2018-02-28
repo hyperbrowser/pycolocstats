@@ -51,7 +51,7 @@ inputs:
     inputBinding:
       prefix: -l
   o:
-    type: string
+    type: string?
     inputBinding:
       prefix: -o
 

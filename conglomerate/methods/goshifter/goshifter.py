@@ -16,6 +16,7 @@ class GoShifter(OneVsOneMethod):
 
     def _setDefaultParamValues(self):
         self.setManualParam('r', 0.9)
+        # self._params['o'] = getTemporaryFileName()
 
     def setGenomeName(self, genomeName):
         if genomeName != 'hg38':
@@ -25,10 +26,10 @@ class GoShifter(OneVsOneMethod):
         pass
 
     def _setQueryTrackFileName(self, trackFile):
-        pass
+        self._params['s'] = trackFile.path
 
-    def _setReferenceTrackFileName(self, trackFn):
-        pass
+    def _setReferenceTrackFileName(self, trackFile):
+        self._params['a'] = trackFile.path
 
     def prepareInputData(self):
 
