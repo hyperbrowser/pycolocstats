@@ -113,18 +113,25 @@ class GoShifter(OneVsOneMethod):
     def _parseResultFiles(self):
         textOutPath = self.getResultFilesDict()['stdout']
 
+        print ('textOutPath', textOutPath)
+
         self._pvals = {}
         # get p-value from stdout output
-        self._pvals[(self._orginalQueryFile, self._orginalReferenceFile)] = -1
+        pTF = False
         pValText = 'p-value = '
         with open(textOutPath, 'r') as f:
             for l in f.readlines():
                 if pValText in l:
+                    print 'I am here'
                     print(l.strip('\n').replace(pValText, ''))
                     self._pvals[(self._orginalQueryFile, self._orginalReferenceFile)] = l.strip('\n').replace(pValText, '')
+                    pTF = True
+
+
+        print ('self._resultFilesDict ', self._resultFilesDict)
 
         self._testStats = {}
-        self._testStats[(self._orginalQueryFile, self._orginalReferenceFile)] = -1
+        tsTF = False
         for fi in listdir(path.join(self._resultFilesDict['output'])):
             if 'nperm10.enrich' in fi:
                 obsvervedval = 0
@@ -137,10 +144,10 @@ class GoShifter(OneVsOneMethod):
                             averageAllOtherValue += float(l.strip().split('\t')[3])
                 print (obsvervedval / (averageAllOtherValue/float(self._params['p'])))
                 self._testStats[(self._orginalQueryFile, self._orginalReferenceFile)] = obsvervedval / (averageAllOtherValue/float(self._params['p']))
+                tsTF = True
 
-        if self._pvals[(self._orginalQueryFile, self._orginalReferenceFile)] != -1:
-            self._ranSuccessfully = True
-        if self._testStats[(self._orginalQueryFile, self._orginalReferenceFile)] != -1:
+
+        if pTF == True or tsTF == True:
             self._ranSuccessfully = True
 
     def getPValue(self):
