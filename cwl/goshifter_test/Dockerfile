@@ -20,5 +20,6 @@ WORKDIR goshifter
 RUN wget -nv https://hyperbrowser.uio.no/hb/static/hyperbrowser/files/conglomerate/goShifter/hg38_eur.tar.gz && \
 tar -xzf hg38_eur.tar.gz && \
 rm hg38_eur.tar.gz && \
-ls /root/goshifter/hg38_eur | grep -E "chr1_|chr2_|chr3_" -v | xargs rm && \
+cd /root/goshifter/hg38_eur && \
+ls | grep -E "chr1_|chr2_|chr3_" -v | xargs rm && \
 chmod -R 777 /root
