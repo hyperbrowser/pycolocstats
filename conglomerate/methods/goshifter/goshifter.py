@@ -119,6 +119,7 @@ class GoShifter(OneVsOneMethod):
         with open(textOutPath, 'r') as f:
             for l in f.readlines():
                 if pValText in l:
+                    print(l.strip('\n').replace(pValText, ''))
                     self._pvals[(self._orginalQueryFile, self._orginalReferenceFile)] = l.strip('\n').replace(pValText, '')
 
         self._testStats = {}
@@ -133,6 +134,7 @@ class GoShifter(OneVsOneMethod):
                             obsvervedval = float(l.strip().split('\t')[3])
                         if numL > 1:
                             averageAllOtherValue += float(l.strip().split('\t')[3])
+                print (obsvervedval / (averageAllOtherValue/float(self._params['p'])))
                 self._testStats[(self._orginalQueryFile, self._orginalReferenceFile)] = obsvervedval / (averageAllOtherValue/float(self._params['p']))
 
         if self._pvals[(self._orginalQueryFile, self._orginalReferenceFile)] != -1:
