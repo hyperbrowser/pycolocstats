@@ -3,6 +3,8 @@ from __future__ import absolute_import, division, print_function, unicode_litera
 from os import path, listdir
 import gzip
 import shutil
+
+from conglomerate.core.types import TrackFile
 from conglomerate.core.util import getTemporaryFileName
 from conglomerate.methods.method import OneVsOneMethod
 from conglomerate.core.constants import GOSHIFTER_TOOL_NAME
@@ -16,7 +18,9 @@ class GoShifter(OneVsOneMethod):
 
     def _setDefaultParamValues(self):
         self.setManualParam('r', 0.9)
-        # self._params['o'] = getTemporaryFileName()
+        # ldFile = TrackFile('/root/goshifter/hg38_eur/', 'ld file')
+        self.setManualParam('l', str('/root/goshifter/hg38_eur/'))
+
 
     def setGenomeName(self, genomeName):
         if genomeName != 'hg38':

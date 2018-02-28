@@ -221,7 +221,7 @@ class TestMethods(TestMethodsBase):
         annotation = pkg_resources.resource_filename('tests', 'resources/test_track6.bed')
         method.setManualParam('s', snpmap)
         method.setManualParam('a', annotation)
-        method.setManualParam('l', '/root/goshifter/hg38_eur/')
+        # method.setManualParam('l', '/root/goshifter/hg38_eur/')
         method.setManualParam('p', 10)
         method.setManualParam('o', 'output')
         runAllMethodsInSequence([method])
