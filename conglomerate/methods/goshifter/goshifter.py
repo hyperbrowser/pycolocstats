@@ -148,8 +148,8 @@ class GoShifter(OneVsOneMethod):
                 tsTF = True
 
 
-        if pTF == True or tsTF == True:
-            self._ranSuccessfully = True
+        if not (pTF or tsTF):
+            self._ranSuccessfully = False
 
     def getPValue(self):
         return self._pvals
