@@ -122,7 +122,7 @@ class GoShifter(OneVsOneMethod):
         with open(textOutPath, 'r') as f:
             for l in f.readlines():
                 if pValText in l:
-                    print 'I am here'
+                    print('I am here')
                     print(l.strip('\n').replace(pValText, ''))
                     self._pvals[(self._orginalQueryFile, self._orginalReferenceFile)] = l.strip('\n').replace(pValText, '')
                     pTF = True
