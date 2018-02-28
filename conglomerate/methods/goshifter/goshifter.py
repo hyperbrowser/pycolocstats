@@ -76,6 +76,7 @@ class GoShifter(OneVsOneMethod):
             for c in contents:
                 sampleFile.write('\t'.join(c) + '\n')
             sampleFile.flush()
+            sampleFile.close()
             self._params['s'] = sampleFile.name
 
         if not queryTrackIsPoints:
@@ -102,7 +103,7 @@ class GoShifter(OneVsOneMethod):
         with open(self._params['a'], 'rb') as f_in, gzip.open(tempFileNameA, 'wb') as f_out:
             shutil.copyfileobj(f_in, f_out)
         self._params['a'] = tempFileNameA
-        print (self._params['a'])
+
 
         self.performGenericFileCopying()
 
