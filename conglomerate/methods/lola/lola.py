@@ -102,7 +102,7 @@ class LOLA(OneVsManyMethod):
         for key in pvalDict.keys():
             pvalDict[key] = SingleResultValue(
                 self._getNumericFromStr(pvalDict[key]),
-                '%.2e' % pvalDict[key] if type(pvalDict[key]) == float else str(pvalDict[key]))
+                '%.5f' % pvalDict[key] if type(pvalDict[key]) == float else str(pvalDict[key]))
 
         return self.getRemappedResultDict(pvalDict)
 
