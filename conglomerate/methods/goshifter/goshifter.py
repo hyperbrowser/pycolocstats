@@ -85,7 +85,6 @@ class GoShifter(OneVsOneMethod):
 
         if queryTrackIsPoints and queryTracHaveRS:
             tempFileName = getTemporaryFileName()
-            print (tempFileName)
             sampleFile = open(tempFileName, 'w')
             for c in contents:
                 sampleFile.write('\t'.join(c) + '\n')
@@ -128,8 +127,6 @@ class GoShifter(OneVsOneMethod):
     def _parseResultFiles(self):
         textOutPath = self.getResultFilesDict()['stdout']
 
-        print ('textOutPath', textOutPath)
-
         # get p-value from stdout output
         pTF = False
         pValText = str('p-value = ')
@@ -139,9 +136,6 @@ class GoShifter(OneVsOneMethod):
                     pval = float(str(l.strip().replace(pValText, str(''))))
                     self._pval[(self._orginalQueryFileTitle, self._orginalReferenceFileTitle)] = pval
                     pTF = True
-
-
-        print('self._resultFilesDict ', self._resultFilesDict)
 
         tsTF = False
         for fi in listdir(path.join(self._resultFilesDict['output'])):
@@ -156,10 +150,6 @@ class GoShifter(OneVsOneMethod):
                             averageAllOtherValue += float(l.strip().split('\t')[3])
                 self._testStat[(self._orginalQueryFileTitle, self._orginalReferenceFileTitle)] = obsvervedval / (averageAllOtherValue / float(self._params['p']))
                 tsTF = True
-
-        print('self._pval', self._pval)
-        print('self._testStat', self._testStat)
-        print('getFullResults', self.getFullResults())
 
         if not (pTF or tsTF):
             self._ranSuccessfully = False
