@@ -47,6 +47,10 @@ class GoShifter(OneVsOneMethod):
         self._orginalQueryFile = trackFile.title
 
     def _setReferenceTrackFileName(self, trackFile):
+        if trackFile in ['prebuilt', 'LOLACore_170206']:
+            self.setNotCompatible()
+            return
+
         bedPath = self._getBedExtendedFileName(trackFile.path)
         self._addTrackTitleMapping(bedPath, trackFile.title)
         self.qTrackFn = bedPath
