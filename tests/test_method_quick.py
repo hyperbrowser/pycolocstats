@@ -25,6 +25,7 @@ def tracks():
             TrackFile(pkg_resources.resource_filename('tests', 'resources/test_track7.bed'),'track7'),
             TrackFile(pkg_resources.resource_filename('tests', 'resources/test_track8.bed'),'track8'),
             TrackFile(pkg_resources.resource_filename('tests', 'resources/test_track9.bed'),'track9'),
+            TrackFile(pkg_resources.resource_filename('tests', 'resources/test_track10.bed'),'track10'),
             ]
 
 
@@ -149,6 +150,22 @@ class TestMethods(TestMethodsBase):
         # annotation = pkg_resources.resource_filename('tests', 'resources/annotation.bed.gz')
         # proxies = pkg_resources.resource_filename('tests', 'resources/proxies.txt')
         method.setQueryTrackFileNames([tracks[4]])
+        method.setReferenceTrackFileNames([tracks[5]])
+        # method.setManualParam('s', snpmap)
+        # method.setManualParam('a', annotation)
+        method.setManualParam('l', '/root/goshifter/hg38_eur/')
+        method.setManualParam('p', 10)
+        method.setManualParam('o', 'output')
+        runAllMethodsInSequence([method])
+        self._printResultFiles(method, ['stderr', 'stdout', 'output'])
+        self._assertMethodResultsSize(1, method)
+
+    def testGoShifter_header_in_data(self, chrLenFile, tracks):
+        method = GoShifter()
+        # snpmap = pkg_resources.resource_filename('tests', 'resources/snpmap.tabular')
+        # annotation = pkg_resources.resource_filename('tests', 'resources/annotation.bed.gz')
+        # proxies = pkg_resources.resource_filename('tests', 'resources/proxies.txt')
+        method.setQueryTrackFileNames([tracks[9]])
         method.setReferenceTrackFileNames([tracks[5]])
         # method.setManualParam('s', snpmap)
         # method.setManualParam('a', annotation)

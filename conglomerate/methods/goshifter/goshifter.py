@@ -68,6 +68,8 @@ class GoShifter(OneVsOneMethod):
         contents.append(['SNP', 'Chrom', 'BP'])
         with open(self._params['s'], 'r') as f:
             for line in f.readlines():
+                if not line.startswith('chr'):
+                    continue
                 newl = line.strip('\n').split('\t')
                 #check if it is a .bed file with at least 4 columns
                 if len(newl) >= 4:
