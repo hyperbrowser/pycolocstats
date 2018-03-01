@@ -86,6 +86,8 @@ class Giggle(OneVsManyMethod):
                     continue
                 else:
                     vals = [self.qTrackFn] + [x.strip() for x in line.strip().split()]
+                    if 'trackCollection' in self._params and vals[1].endswith('.gz'):
+                        vals[1] = vals[1][:-3]
                     newResult = GiggleResult(*vals)
                     results.addResult(newResult.qFileName, newResult.fileName, newResult)
         self._parsedResults = results
