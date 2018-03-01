@@ -19,8 +19,8 @@ class GoShifter(OneVsOneMethod):
         super(GoShifter, self).__init__(*args, **kwargs)
         self._testStat = {}
         self._pval = {}
-        self._orginalQueryFile = None
-        self._orginalReferenceFile = None
+        self._orginalQueryFileTitle = None
+        self._orginalReferenceFileTitle = None
 
     def _getToolName(self):
         return GOSHIFTER_TOOL_NAME
@@ -40,22 +40,22 @@ class GoShifter(OneVsOneMethod):
         pass
 
     def _setQueryTrackFileName(self, trackFile):
-        bedPath = self._getBedExtendedFileName(trackFile.path)
-        self._addTrackTitleMapping(bedPath, trackFile.title)
-        self.qTrackFn = bedPath
-        self._params['s'] = bedPath
-        self._orginalQueryFile = trackFile.title
+        #bedPath = self._getBedExtendedFileName(trackFile.path)
+        #self._addTrackTitleMapping(bedPath, trackFile.title)
+        #self.qTrackFn = bedPath
+        self._params['s'] = trackFile.path
+        self._orginalQueryFileTitle = trackFile.title
 
     def _setReferenceTrackFileName(self, trackFile):
         if trackFile in ['prebuilt', 'LOLACore_170206']:
             self.setNotCompatible()
             return
 
-        bedPath = self._getBedExtendedFileName(trackFile.path)
-        self._addTrackTitleMapping(bedPath, trackFile.title)
-        self.qTrackFn = bedPath
-        self._params['a'] = bedPath
-        self._orginalReferenceFile = trackFile.title
+        #bedPath = self._getBedExtendedFileName(trackFile.path)
+        #self._addTrackTitleMapping(bedPath, trackFile.title)
+        #self.qTrackFn = bedPath
+        self._params['a'] = trackFile.path
+        self._orginalReferenceFileTitle = trackFile.title
 
     def prepareInputData(self):
 
@@ -112,13 +112,13 @@ class GoShifter(OneVsOneMethod):
         #             self.setNotCompatible()
 
         # gz file annotation
-        tempFileNameA = getTemporaryFileName()
+        tempFileNameA = getTemporaryFileName(suffix='.bed.gz')
         with open(self._params['a'], 'rb') as f_in, gzip.open(tempFileNameA, 'wb') as f_out:
             shutil.copyfileobj(f_in, f_out)
         self._params['a'] = tempFileNameA
 
 
-        self.performGenericFileCopying()
+        #self.performGenericFileCopying()
 
     def setAllowOverlaps(self, allowOverlaps):
         if allowOverlaps is True:
@@ -136,7 +136,7 @@ class GoShifter(OneVsOneMethod):
             for l in f.readlines():
                 if pValText in l:
                     pval = float(str(l.strip().replace(pValText, str(''))))
-                    self._pval[(self._orginalQueryFile, self._orginalReferenceFile)] = pval
+                    self._pval[(self._orginalQueryFileTitle, self._orginalReferenceFileTitle)] = pval
                     pTF = True
 
 
@@ -153,7 +153,7 @@ class GoShifter(OneVsOneMethod):
                             obsvervedval = float(l.strip().split('\t')[3])
                         if numL > 1:
                             averageAllOtherValue += float(l.strip().split('\t')[3])
-                self._testStat[(self._orginalQueryFile, self._orginalReferenceFile)] = obsvervedval / (averageAllOtherValue / float(self._params['p']))
+                self._testStat[(self._orginalQueryFileTitle, self._orginalReferenceFileTitle)] = obsvervedval / (averageAllOtherValue / float(self._params['p']))
                 tsTF = True
 
 
@@ -172,7 +172,7 @@ class GoShifter(OneVsOneMethod):
         testStatText = '<span title="' + \
                    self.getTestStatDescr() \
                    + '">' + '%.5f' % testStatVal + '</span>'
-        return {(self._orginalQueryFile, self._orginalReferenceFile): SingleResultValue(testStatVal, testStatText)}
+        return {(self._orginalQueryFileTitle, self._orginalReferenceFileTitle): SingleResultValue(testStatVal, testStatText)}
 
     def getFullResults(self):
         return open(self.getResultFilesDict()['stdout']).read()
