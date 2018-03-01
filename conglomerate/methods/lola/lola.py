@@ -60,7 +60,7 @@ class LOLA(OneVsManyMethod):
         if 'regiondb' in self._params:
             refFns = self._params['regiondb']
         else:
-            refFns = [line.split('\t')[14] for line in open(mainOutput).readlines()[1:]]
+            refFns = [line.split()[-2] for line in open(mainOutput).readlines()[1:]]
         queryFn = self._params['userset']
         # refFileIndices = resultTable["dbSet"]
         assert header[1] == 'dbSet'
