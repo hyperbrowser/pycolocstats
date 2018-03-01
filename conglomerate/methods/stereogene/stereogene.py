@@ -63,7 +63,8 @@ class StereoGene(OneVsOneMethod):
         try:
             self._results = self._parseStatisticsFile(dirpath=self._resultFilesDict['output'])
         except Exception as e:
-            self.setRunSuccessStatus(False, str(e))
+            errorText = "Query: %s; Ref: %s; %s" % (self._queryTitle, self._refTitle, str(e))
+            self.setRunSuccessStatus(False, errorText)
 
     def getPValue(self):
         return self.getRemappedResultDict(OrderedDict([
