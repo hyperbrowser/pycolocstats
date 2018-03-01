@@ -169,7 +169,13 @@ class GoShifter(OneVsOneMethod):
         return 'ratio of observed to average of the samples percentage of overlaping base-pairs'
 
     def getPValue(self):
-        return self._pval
+        pvalDict = self._pval
+        for key in pvalDict.keys():
+            pvalDict[key] = SingleResultValue(
+                self._getNumericFromStr(pvalDict[key]),
+                '%.5f' % pvalDict[key] if type(pvalDict[key]) == float else str(pvalDict[key]))
+
+        return self.getRemappedResultDict(pvalDict)
 
     def getTestStatistic(self):
         testStatVal = self._testStat.values()[0]
