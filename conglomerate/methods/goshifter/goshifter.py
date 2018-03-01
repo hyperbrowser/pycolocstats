@@ -182,7 +182,7 @@ class GoShifter(OneVsOneMethod):
         fullResults = open(self._resultFilesDict['stdout']).read().replace('\n', '<br>\n')
 
         return self.getRemappedResultDict(
-            {(self._params['query'], self._params['reference']): fullResults})
+            {(self._orginalQueryFileTitle, self._orginalReferenceFileTitle): str(fullResults)})
 
     def preserveClumping(self, preserve):
         if preserve == True:
