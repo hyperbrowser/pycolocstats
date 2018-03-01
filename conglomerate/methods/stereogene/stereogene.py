@@ -123,7 +123,7 @@ class StereoGene(OneVsOneMethod):
         resDict = OrderedDict()
         res = run.find('res')
         resDict['Corr'] = float(res.attrib['Fg_Corr']) if 'Fg_Corr' in res.attrib else float(res.attrib['totCorr'])
-        resDict['pVal'] = float(res.attrib['pVal'])
+        resDict['pVal'] = float(res.attrib['pVal']) if 'pVal' in res.attrib else float(res.attrib['p-value'])
         return resDict
 
     def _printResults(self):
