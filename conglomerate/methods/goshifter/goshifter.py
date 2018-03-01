@@ -1,5 +1,6 @@
 from __future__ import absolute_import, division, print_function, unicode_literals
 
+from collections import OrderedDict
 from os import path, listdir
 import gzip
 import shutil
@@ -156,6 +157,9 @@ class GoShifter(OneVsOneMethod):
                 self._testStat[(self._orginalQueryFileTitle, self._orginalReferenceFileTitle)] = obsvervedval / (averageAllOtherValue / float(self._params['p']))
                 tsTF = True
 
+        print('self._pval', self._pval)
+        print('self._testStat', self._testStat)
+        print('getFullResults', self.getFullResults())
 
         if not (pTF or tsTF):
             self._ranSuccessfully = False
@@ -175,7 +179,10 @@ class GoShifter(OneVsOneMethod):
         return {(self._orginalQueryFileTitle, self._orginalReferenceFileTitle): SingleResultValue(testStatVal, testStatText)}
 
     def getFullResults(self):
-        return open(self.getResultFilesDict()['stdout']).read()
+        fullResults = open(self._resultFilesDict['stdout']).read().replace('\n', '<br>\n')
+
+        return self.getRemappedResultDict(
+            {(self._params['query'], self._params['reference']): fullResults})
 
     def preserveClumping(self, preserve):
         if preserve == True:
