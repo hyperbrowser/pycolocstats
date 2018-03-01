@@ -134,9 +134,11 @@ class StereoGene(OneVsOneMethod):
 
     def getErrorDetails(self):
         assert not self.ranSuccessfully()
-        #Not checked if informative
         if self._resultFilesDict is not None and 'stderr' in self._resultFilesDict:
-            return open(self._resultFilesDict['stderr']).read().replace('\n','<br>\n')
+            stdErrText = ""
+            with open(self._resultFilesDict['stderr']) as f:
+                stdErrText = f.read().replace('\n','<br>\n')
+            return "Query: %s; Ref: %s;<br> %s" % (self._queryTitle, self._refTitle, stdErrText)
         else:
             return 'Stereogene did not provide any error output'
 
