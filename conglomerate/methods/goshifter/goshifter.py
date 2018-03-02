@@ -28,7 +28,6 @@ class GoShifter(OneVsOneMethod):
 
     def _setDefaultParamValues(self):
         self.setManualParam('r', 0.9)
-        # ldFile = TrackFile('/root/goshifter/hg38_eur/', 'ld file')
         self.setManualParam('l', str('/root/goshifter/hg38_eur/'))
         self.setManualParam('o', str('output'))
 
@@ -41,9 +40,6 @@ class GoShifter(OneVsOneMethod):
         pass
 
     def _setQueryTrackFileName(self, trackFile):
-        #bedPath = self._getBedExtendedFileName(trackFile.path)
-        #self._addTrackTitleMapping(bedPath, trackFile.title)
-        #self.qTrackFn = bedPath
         self._params['s'] = trackFile.path
         self._orginalQueryFileTitle = trackFile.title
 
@@ -51,10 +47,6 @@ class GoShifter(OneVsOneMethod):
         if trackFile in ['prebuilt', 'LOLACore_170206']:
             self.setNotCompatible()
             return
-
-        #bedPath = self._getBedExtendedFileName(trackFile.path)
-        #self._addTrackTitleMapping(bedPath, trackFile.title)
-        #self.qTrackFn = bedPath
         self._params['a'] = trackFile.path
         self._orginalReferenceFileTitle = trackFile.title
 
@@ -68,6 +60,7 @@ class GoShifter(OneVsOneMethod):
         contents.append(['SNP', 'Chrom', 'BP'])
         with open(self._params['s'], 'r') as f:
             for line in f.readlines():
+                #check if there is any header
                 if not line.startswith('chr'):
                     continue
                 newl = line.strip('\n').split('\t')
@@ -101,26 +94,21 @@ class GoShifter(OneVsOneMethod):
             self.setNotCompatible()
             #raise Exception('GOShifter only works were column name is filled by rs')
 
-
-        #check if self._params['a'] is not empty or is a bed file with at least 3 columns
-        # emptyFile = path.getsize(self._params['a'])
-        # if emptyFile <= 0:
-        #     self.setNotCompatible()
-
-        # with open(self._params['a'], 'r') as f:
-        #     for line in f.readlines():
-        #         vals = line.strip().split()
-        #         if len(vals) < 3:
-        #             self.setNotCompatible()
-
         # gz file annotation
         tempFileNameA = getTemporaryFileName(suffix='.bed.gz')
-        with open(self._params['a'], 'rb') as f_in, gzip.open(tempFileNameA, 'wb') as f_out:
-            shutil.copyfileobj(f_in, f_out)
+
+        #check if there is any header in the file
+        contentAnnotationFile = ''
+        with open(self._params['a'], 'r') as f:
+            for line in f.readlines():
+                if not line.startswith('chr'):
+                    continue
+                contentAnnotationFile += line
+
+        g = gzip.open(tempFileNameA, 'w')
+        g.write(contentAnnotationFile)
+        g.close()
         self._params['a'] = tempFileNameA
-
-
-        #self.performGenericFileCopying()
 
     def setAllowOverlaps(self, allowOverlaps):
         if allowOverlaps is True:
@@ -208,7 +196,6 @@ class GoShifter(OneVsOneMethod):
             return 'GoShifter did not provide any error output'
 
     def setRuntimeMode(self, mode):
-        #take from paper
         if mode =='quick':
             numPerm = 10
         elif mode == 'medium':
