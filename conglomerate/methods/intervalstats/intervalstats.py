@@ -100,7 +100,7 @@ class IntervalStats(OneVsOneMethod):
         testStatVal = self._parseIntervalStatsSummaryStat(threshold=0.05) / 0.05
         testStat = '<span title="' + \
                    self.getTestStatDescr() \
-                   + '">' + '%.4e' %testStatVal + '</span>'
+                   + '">' + self._getFormattedVal(testStatVal) + '</span>'
         return self.getRemappedResultDict({(self._params['q'], self._params['r']): SingleResultValue(testStatVal, testStat)})
 
     @classmethod

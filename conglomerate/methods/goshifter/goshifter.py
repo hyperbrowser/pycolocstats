@@ -153,7 +153,7 @@ class GoShifter(OneVsOneMethod):
         for key in pvalDict.keys():
             pvalDict[key] = SingleResultValue(
                 self._getNumericFromStr(pvalDict[key]),
-                '%.4e' % pvalDict[key] if type(pvalDict[key]) == float else str(pvalDict[key]))
+                self._getFormattedVal(pvalDict[key]) if type(pvalDict[key]) == float else str(pvalDict[key]))
 
         return self.getRemappedResultDict(pvalDict)
 
@@ -161,7 +161,7 @@ class GoShifter(OneVsOneMethod):
         testStatVal = self._testStat.values()[0]
         testStatText = '<span title="' + \
                    self.getTestStatDescr() \
-                   + '">' + '%.4e' % testStatVal + '</span>'
+                   + '">' + self._getFormattedVal(testStatVal) + '</span>'
         return {(self._orginalQueryFileTitle, self._orginalReferenceFileTitle): SingleResultValue(testStatVal, testStatText)}
 
     def getFullResults(self):

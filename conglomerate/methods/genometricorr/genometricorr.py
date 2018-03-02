@@ -76,7 +76,7 @@ class GenometriCorr(OneVsOneMethod):
         testStat = '<span title="' + \
                    self.getTestStatDescr() \
                    + '">' + \
-                   '%.4e' % numericResult + '</span>'
+                   self._getFormattedVal(numericResult) + '</span>'
         return self.getRemappedResultDict(
             {(self._params['query'], self._params['reference']): SingleResultValue(numericResult, testStat)})
         #return self.getRemappedResultDict({(self._params['query'],self._params['reference']):self._results['jaccard.measure']['awhole']})

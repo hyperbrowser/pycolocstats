@@ -143,6 +143,11 @@ class Method(UniformInterface):
     def getMethodClass(self):
         return self._methodCls
 
+    def _getFormattedVal(self, val):
+        formatting = '%.4f'
+        if val < 0.0001:
+            formatting = '%.4e'
+        return formatting % val
 
 class SingleQueryTrackMethodMixin(with_metaclass(ABCMeta, object)):
     def setQueryTrackFileNames(self, trackFnList):
