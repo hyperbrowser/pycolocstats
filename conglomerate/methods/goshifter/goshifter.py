@@ -27,6 +27,7 @@ class GoShifter(OneVsOneMethod):
         return GOSHIFTER_TOOL_NAME
 
     def _setDefaultParamValues(self):
+        self.setManualParam('r', 0.8)
         self.setManualParam('l', str('/root/goshifter/hg38_eur/'))
         self.setManualParam('o', str('output'))
 
