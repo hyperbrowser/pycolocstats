@@ -109,7 +109,7 @@ class Giggle(OneVsManyMethod):
         testStatDict = self._parsedResults.getResultsPerName('oddsRatio')
         for key in testStatDict.keys():
             numericResult = testStatDict[key]
-            textualResult = '<span title="%s">' % self.getTestStatDescr() + '%.5f' % (numericResult) + '</span>'
+            textualResult = '<span title="%s">' % self.getTestStatDescr() + '%.4e' % (numericResult) + '</span>'
             testStatDict[key] = SingleResultValue(numericResult, textualResult)
         return self.getRemappedResultDict(testStatDict)
 

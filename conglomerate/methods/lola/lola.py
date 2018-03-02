@@ -89,7 +89,7 @@ class LOLA(OneVsManyMethod):
             self._testStats[(queryFn, refFns[index-1])] = \
                 SingleResultValue(ts, '<span title="' + \
                                   self.getTestStatDescr() \
-                                  + '">' + '%.5f'%ts + '</span>')
+                                  + '">' + '%.4e'%ts + '</span>')
 
         self._ranSuccessfully = True
 
@@ -102,7 +102,7 @@ class LOLA(OneVsManyMethod):
         for key in pvalDict.keys():
             pvalDict[key] = SingleResultValue(
                 self._getNumericFromStr(pvalDict[key]),
-                '%.5f' % pvalDict[key] if type(pvalDict[key]) == float else str(pvalDict[key]))
+                '%.4e' % pvalDict[key] if type(pvalDict[key]) == float else str(pvalDict[key]))
 
         return self.getRemappedResultDict(pvalDict)
 
