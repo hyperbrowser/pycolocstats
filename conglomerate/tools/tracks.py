@@ -46,11 +46,14 @@ class RefTrackCollectionRegistry(object):
             return [cls.PREBUILT]
 
     def isPartOfTrackCollSpec(self, trackFile):
-        return trackFile == self.PREBUILT or \
-               trackFile in self._trackIndex2CollectionReg or \
-               trackFile in self._allCollections
+        return isinstance(trackFile, basestring) and \
+               (trackFile == self.PREBUILT or
+                trackFile in self._trackIndex2CollectionReg or
+                trackFile in self._allCollections)
 
     def isTrackCollSpec(self, trackFiles):
+        if not all(isinstance(trackFile, basestring) for trackFile in trackFiles):
+            return False
         return (len(trackFiles) == 1 and
                 trackFiles[0] == self.PREBUILT) or \
                (len(trackFiles) == 3 and
