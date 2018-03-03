@@ -19,7 +19,8 @@ class RefTrackCollectionRegistry(object):
             for fn in files:
                 trackIndex, genome, trackCollection = os.path.join(root, fn).split(os.sep)[-3:]
                 self._genome2TrackIndexReg[genome].add(trackIndex)
-                assert trackCollection.endswith('.gsuite')
+                if not trackCollection.endswith('.gsuite'):
+                    continue
                 trackCollection = trackCollection[:-7]
                 self._trackIndex2CollectionReg[trackIndex].add(trackCollection)
                 self._allCollections.add(trackCollection)
