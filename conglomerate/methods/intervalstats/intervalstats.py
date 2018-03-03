@@ -27,21 +27,22 @@ class IntervalStats(OneVsOneMethod):
         pass
 
     def setChromLenFileName(self, chromLenFileName):
-        if 'd' in self._params:
-            return
-        contents = []
-        with open(chromLenFileName, 'r') as f:
-            for line in f.readlines():
-                newl = line.strip('\n').split('\t')
-                contents.append([newl[0], '0', newl[1]])
-
-        tempFileName = getTemporaryFileName()
-        sampleFile = open(tempFileName, 'w')
-        for c in contents:
-            sampleFile.write('\t'.join(c)+'\n')
-        sampleFile.flush()
-
-        self._params['d'] = sampleFile.name
+        pass
+        # if 'd' in self._params:
+        #     return
+        # contents = []
+        # with open(chromLenFileName, 'r') as f:
+        #     for line in f.readlines():
+        #         newl = line.strip('\n').split('\t')
+        #         contents.append([newl[0], '0', newl[1]])
+        #
+        # tempFileName = getTemporaryFileName()
+        # sampleFile = open(tempFileName, 'w')
+        # for c in contents:
+        #     sampleFile.write('\t'.join(c)+'\n')
+        # sampleFile.flush()
+        #
+        # self._params['d'] = sampleFile.name
 
     def _setQueryTrackFileName(self, trackFile):
         self._addTrackTitleMapping(os.path.basename(trackFile.path), trackFile.title)
@@ -118,7 +119,7 @@ class IntervalStats(OneVsOneMethod):
 
     def setRestrictedAnalysisUniverse(self, restrictedAnalysisUniverse):
         if restrictedAnalysisUniverse is None:
-            return
+            self.setNotCompatible()
         if not isinstance(restrictedAnalysisUniverse, RestrictedThroughInclusion):
             self.setNotCompatible()
         else:
