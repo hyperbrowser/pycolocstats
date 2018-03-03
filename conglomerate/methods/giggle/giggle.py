@@ -6,6 +6,7 @@ from conglomerate.methods.interface import ColocMeasureOverlap
 from conglomerate.methods.method import OneVsManyMethod
 from conglomerate.core.types import SingleResultValue
 from conglomerate.core.constants import GIGGLE_TOOL_NAME
+from conglomerate.tools.tracks import refTrackCollRegistry
 
 __metaclass__ = type
 
@@ -24,8 +25,7 @@ class Giggle(OneVsManyMethod):
         self.setManualParam('search_i', str('index'))
 
     def setGenomeName(self, genomeName):
-        #assert genomeName == 'hg19'
-        pass
+        self.setManualParam('genome', str(genomeName))
 
     def setChromLenFileName(self, chromLenFileName):
         genomeLength = 0
@@ -61,10 +61,12 @@ class Giggle(OneVsManyMethod):
         # if indexParams != None:
         #     for key,val in indexParams.items():
         #         self.setManualParam(key, val)
-        if trackFileList == ['prebuilt','LOLACore_170206']:
-            self.setManualParam('trackIndex', str('LOLACore_170206'))
-            self.setManualParam('trackCollection', str('codex'))
-            self.setManualParam('genome', str('hg19'))
+        registry = refTrackCollRegistry
+        if registry.isTrackCollSpec(trackFileList):
+            trackIndex, trackCollection = \
+                registry.getTrackIndexAndCollFromTrackCollSpec(trackFileList)
+            self.setManualParam('trackIndex', str(trackIndex))
+            self.setManualParam('trackCollection', str(trackCollection))
         else:
             bedPathList = []
             for trackFile in trackFileList:

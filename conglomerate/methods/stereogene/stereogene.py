@@ -41,9 +41,9 @@ class StereoGene(OneVsOneMethod):
         self._params['query'] = bedPath
         self._queryTitle = trackFile.title
 
-
     def _setReferenceTrackFileName(self, trackFile):
-        if trackFile in ['prebuilt', 'LOLACore_170206']:
+        from conglomerate.tools.tracks import refTrackCollRegistry
+        if refTrackCollRegistry.isPartOfTrackCollSpec(trackFile):
             self.setNotCompatible()
             return
         #assert trackFile not in ['prebuilt', 'LOLACore_170206']

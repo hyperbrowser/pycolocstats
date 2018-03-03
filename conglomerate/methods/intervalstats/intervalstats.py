@@ -49,15 +49,18 @@ class IntervalStats(OneVsOneMethod):
         self._params['q'] = trackFile.path
 
     def _setReferenceTrackFileName(self, trackFile):
+        from conglomerate.tools.tracks import refTrackCollRegistry
+        if refTrackCollRegistry.isPartOfTrackCollSpec(trackFile):
+            self.setNotCompatible()
+            return
+
         if isinstance(trackFile, TrackFile):
             self._addTrackTitleMapping(os.path.basename(trackFile.path), trackFile.title)
             self._addTrackTitleMapping(trackFile.path, trackFile.title)
             trackFn = trackFile.path
         else:
             trackFn = trackFile
-        if trackFn in ['prebuilt', 'LOLACore_170206']:
-            self.setNotCompatible()
-            return
+
         self._params['r'] = trackFn
 
     def setAllowOverlaps(self, allowOverlaps):

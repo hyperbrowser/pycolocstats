@@ -7,6 +7,7 @@ from conglomerate.methods.interface import RestrictedThroughInclusion, ColocMeas
 from conglomerate.methods.method import OneVsManyMethod
 from conglomerate.core.types import SingleResultValue
 from conglomerate.core.constants import LOLA_TOOL_NAME
+from conglomerate.tools.tracks import refTrackCollRegistry
 
 __metaclass__ = type
 
@@ -19,7 +20,7 @@ class LOLA(OneVsManyMethod):
         pass
 
     def setGenomeName(self, genomeName):
-        pass
+        self.setManualParam('genome', str(genomeName))
 
     def setChromLenFileName(self, chromLenFileName):
         pass
@@ -29,10 +30,12 @@ class LOLA(OneVsManyMethod):
         self.setManualParam('userset', trackFile.path)
 
     def _setReferenceTrackFileNames(self, trackFileList):
-        if trackFileList == ['prebuilt','LOLACore_170206']:
-            self.setManualParam('trackIndex', str('LOLACore_170206'))
-            self.setManualParam('trackCollection', str('codex'))
-            self.setManualParam('genome', str('hg19'))
+        registry = refTrackCollRegistry
+        if registry.isTrackCollSpec(trackFileList):
+            trackIndex, trackCollection = \
+                registry.getTrackIndexAndCollFromTrackCollSpec(trackFileList)
+            self.setManualParam('trackIndex', str(trackIndex))
+            self.setManualParam('trackCollection', str(trackCollection))
         else:
             trackFnList = []
             for trackFile in trackFileList:

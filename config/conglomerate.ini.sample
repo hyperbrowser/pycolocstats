@@ -5,3 +5,4 @@ tmp_dir = /tmp
 default_job_output_dir = /tmp
 pull_docker_images = true
 use_test_docker_images = false
+ref_coll_gsuites_path =

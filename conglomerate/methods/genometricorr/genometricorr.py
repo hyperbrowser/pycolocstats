@@ -29,13 +29,15 @@ class GenometriCorr(OneVsOneMethod):
         self._params['query'] = bedPath
 
     def _setReferenceTrackFileName(self, trackFile):
+        from conglomerate.tools.tracks import refTrackCollRegistry
+        if refTrackCollRegistry.isPartOfTrackCollSpec(trackFile):
+            self.setNotCompatible()
+            return
+
         if isinstance(trackFile, TrackFile):
             trackFn = trackFile.path
         else:
             trackFn = trackFile
-        if trackFn in ['prebuilt', 'LOLACore_170206']:
-            self.setNotCompatible()
-            return
         bedPath = self._getBedExtendedFileName(trackFn)
         if isinstance(trackFile, TrackFile):
             self._addTrackTitleMapping(bedPath, trackFile.title)

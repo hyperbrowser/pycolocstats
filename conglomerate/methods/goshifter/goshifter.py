@@ -44,7 +44,8 @@ class GoShifter(OneVsOneMethod):
         self._orginalQueryFileTitle = trackFile.title
 
     def _setReferenceTrackFileName(self, trackFile):
-        if trackFile in ['prebuilt', 'LOLACore_170206']:
+        from conglomerate.tools.tracks import refTrackCollRegistry
+        if refTrackCollRegistry.isPartOfTrackCollSpec(trackFile):
             self.setNotCompatible()
             return
         self._params['a'] = trackFile.path
