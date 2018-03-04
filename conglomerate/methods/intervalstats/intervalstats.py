@@ -124,6 +124,8 @@ class IntervalStats(OneVsOneMethod):
             return
         if not isinstance(restrictedAnalysisUniverse, RestrictedThroughInclusion):
             self.setNotCompatible()
+        elif not restrictedAnalysisUniverse.trackFile:
+            self.setNotCompatible()
         else:
             self.setManualParam('d', restrictedAnalysisUniverse.trackFile.path)
 

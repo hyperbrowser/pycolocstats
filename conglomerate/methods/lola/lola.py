@@ -126,6 +126,8 @@ class LOLA(OneVsManyMethod):
     def setRestrictedAnalysisUniverse(self, restrictedAnalysisUniverse):
         if not isinstance(restrictedAnalysisUniverse, RestrictedThroughInclusion):
             self.setNotCompatible()
+        elif not restrictedAnalysisUniverse.trackFile:
+            self.setNotCompatible()
         else:
             self.setManualParam('useruniverse', restrictedAnalysisUniverse.trackFile.path)
 
