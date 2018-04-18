@@ -31,6 +31,8 @@ setup(
 
     # The project's main homepage.
     url='https://github.com/hyperbrowser/conglomerate',
+    
+    download_url = 'https://github.com/hyperbrowser/conglomerate/archive/1.0b1.tar.gz',
 
     # Author details
     author='The Track Colocalization Conglomerate',
