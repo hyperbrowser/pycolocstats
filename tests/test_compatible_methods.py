@@ -7,7 +7,7 @@ from pycolocstats.tools.WorkingMethodObjectParser import WorkingMethodObjectPars
 
 from pycolocstats.core.types import TrackFile
 from pycolocstats.methods.stereogene.stereogene import StereoGene
-from pycolocstats.tools.WorkingMethodObjectParser import ALL_CONGLOMERATE_METHOD_CLASSES
+from pycolocstats.tools.WorkingMethodObjectParser import ALL_PYCOLOCSTATS_METHOD_CLASSES
 from tests.test_method import TestMethodsBase
 
 PRINT_RESULT_FILES = True
@@ -46,7 +46,7 @@ class TestMethods(TestMethodsBase):
                            [('setRuntimeMode', u'quick')]]
         selectionValues.append([('setChromLenFileName', chrLenFile)])
         workingMethodObjects = WorkingMethodObjectParser(queryTrack, refTracks, selectionValues,
-                                                         ALL_CONGLOMERATE_METHOD_CLASSES).getWorkingMethodObjects()
+                                                         ALL_PYCOLOCSTATS_METHOD_CLASSES).getWorkingMethodObjects()
         selectionValues.append([('setChromLenFileName', chrLenFile)])
         methodNames = set([wmo.getMethodName() for wmo in workingMethodObjects])
         assert methodNames == set(['Giggle', 'GenometriCorr','StereoGene'])
@@ -63,7 +63,7 @@ class TestMethods(TestMethodsBase):
                            [('setRuntimeMode', u'quick')]]
         selectionValues.append([('setChromLenFileName', chrLenFile)])
         workingMethodObjects = WorkingMethodObjectParser(queryTrack, refTracks, selectionValues,
-                                                         ALL_CONGLOMERATE_METHOD_CLASSES).getWorkingMethodObjects()
+                                                         ALL_PYCOLOCSTATS_METHOD_CLASSES).getWorkingMethodObjects()
         methodNames = set([wmo.getMethodName() for wmo in workingMethodObjects])
         assert methodNames == set(['LOLA', 'IntervalStats'])
 
@@ -72,7 +72,7 @@ class TestMethods(TestMethodsBase):
                            [('setRuntimeMode', u'quick')]]
         selectionValues.append([('setChromLenFileName', chrLenFile)])
         workingMethodObjects = WorkingMethodObjectParser(queryTrack, refTracks, selectionValues,
-                                                         ALL_CONGLOMERATE_METHOD_CLASSES).getWorkingMethodObjects()
+                                                         ALL_PYCOLOCSTATS_METHOD_CLASSES).getWorkingMethodObjects()
         methodNames = set([wmo.getMethodName() for wmo in workingMethodObjects])
         assert methodNames == set(['Giggle', 'GenometriCorr', 'IntervalStats','LOLA','StereoGene'])
 
@@ -80,7 +80,7 @@ class TestMethods(TestMethodsBase):
         selectionValues = [[('setRestrictedAnalysisUniverse', None)], [('setColocMeasure',ColocMeasureProximity(None,None))], [('preserveClumping', False)], [('setGenomeName', u'hg19')],[('setRuntimeMode', u'quick')]]
         selectionValues.append([('setChromLenFileName', chrLenFile)])
         workingMethodObjects = WorkingMethodObjectParser(queryTrack, refTracks, selectionValues,
-                                                         ALL_CONGLOMERATE_METHOD_CLASSES).getWorkingMethodObjects()
+                                                         ALL_PYCOLOCSTATS_METHOD_CLASSES).getWorkingMethodObjects()
         methodNames = set([wmo.getMethodName() for wmo in workingMethodObjects])
         print('TEMP1: ', methodNames)
         assert methodNames == set(['IntervalStats'])

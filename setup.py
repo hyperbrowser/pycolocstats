@@ -16,7 +16,8 @@ here = path.abspath(path.dirname(__file__))
 # # Get the long description from the README file
 # with open(path.join(here, 'README.rst'), encoding='utf-8') as f:
 #     long_description = f.read()
-description = 'Conglomerate of genomic track colocalization analysis methods'
+description = 'Python core package that collects various software for genomic track ' \
+              'co-localization analysis.'
 
 setup(
     name='pycolocstats',

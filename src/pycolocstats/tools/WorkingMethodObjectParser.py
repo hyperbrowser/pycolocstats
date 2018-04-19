@@ -6,7 +6,7 @@ from pycolocstats.methods.genometricorr.genometricorr import GenometriCorr
 from pycolocstats.methods.giggle.giggle import Giggle
 from pycolocstats.methods.intervalstats.intervalstats import IntervalStats
 from pycolocstats.methods.lola.lola import LOLA
-ALL_CONGLOMERATE_METHOD_CLASSES = [GenometriCorr, Giggle, IntervalStats, LOLA, StereoGene, GoShifter]
+ALL_PYCOLOCSTATS_METHOD_CLASSES = [GenometriCorr, Giggle, IntervalStats, LOLA, StereoGene, GoShifter]
 
 class WorkingMethodObjectParser:
 

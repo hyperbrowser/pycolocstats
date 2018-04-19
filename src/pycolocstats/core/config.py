@@ -3,7 +3,7 @@ from __future__ import absolute_import, division, print_function, unicode_litera
 __metaclass__ = type
 
 
-CONFIG_SECTION = u'Conglomerate'
+CONFIG_SECTION = u'pycolocstats'
 DEFAULT_CONFIG_REL_FN = '../../config/pycolocstats.ini'
 
 
@@ -23,7 +23,7 @@ def getConfigFilename():
     defConfigFn = pkg_resources.resource_filename('pycolocstats', DEFAULT_CONFIG_REL_FN)
     sampleConfigFn = defConfigFn + '.sample'
 
-    envConfigFn = os.environ.get('CONGLOMERATE_CONFIG')
+    envConfigFn = os.environ.get('PYCOLOCSTATS_CONFIG')
     configFn = envConfigFn if envConfigFn else defConfigFn
 
     if not os.path.exists(configFn):

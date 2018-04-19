@@ -11,7 +11,7 @@ from pycolocstats.methods.genometricorr.genometricorr import GenometriCorr
 from pycolocstats.methods.giggle.giggle import Giggle
 from pycolocstats.methods.multimethod import MultiMethod
 from pycolocstats.methods.stereogene.stereogene import StereoGene
-from pycolocstats.tools.WorkingMethodObjectParser import ALL_CONGLOMERATE_METHOD_CLASSES
+from pycolocstats.tools.WorkingMethodObjectParser import ALL_PYCOLOCSTATS_METHOD_CLASSES
 from pycolocstats.tools.runner import runAllMethodsInSequence
 from tests.test_method import TestMethodsBase
 
