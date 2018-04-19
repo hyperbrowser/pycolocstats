@@ -4,7 +4,7 @@ __metaclass__ = type
 
 
 CONFIG_SECTION = u'Conglomerate'
-DEFAULT_CONFIG_REL_FN = '../config/conglomerate.ini'
+DEFAULT_CONFIG_REL_FN = '../../config/conglomerate.ini'
 
 
 def getConfigParser(config_fn):

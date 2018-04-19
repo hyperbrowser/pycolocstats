@@ -11,7 +11,7 @@ def tracks():
 
 @pytest.fixture(scope='function')
 def chrLenFile():
-    return pkg_resources.resource_filename('tests.resources', 'chrom_lengths.tabular')
+    return pkg_resources.resource_filename('conglomerate', '../../tests/resources/chrom_lengths.tabular')
 
 
 @pytest.mark.usefixtures('chrLenFile', 'tracks')
