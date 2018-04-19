@@ -1,7 +1,12 @@
-import os
-from collections import defaultdict
+from __future__ import absolute_import, division, print_function, unicode_literals
 
+import os
+
+from collections import defaultdict
+from past.builtins import basestring
 from pycolocstats.core.config import REF_COLL_GSUITES_PATH
+
+__metaclass__ = type
 
 
 class RefTrackCollectionRegistry(object):
