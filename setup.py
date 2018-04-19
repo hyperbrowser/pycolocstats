@@ -32,7 +32,7 @@ setup(
     # The project's main homepage.
     url='https://github.com/hyperbrowser/conglomerate',
     
-    download_url = 'https://github.com/hyperbrowser/conglomerate/archive/1.0b1.tar.gz',
+    download_url='https://github.com/hyperbrowser/conglomerate/archive/1.0b1.tar.gz',
 
     # Author details
     author='The Track Colocalization Conglomerate',
@@ -97,7 +97,7 @@ setup(
     # installed, specify them here.  If using Python 2.6 or less, then these
     # have to be included in MANIFEST.in as well.
     package_data={
-        'conglomerate': ['tools/*'],
+        'conglomerate': ['resources/*', 'src/cwl/*'],
     },
 
     # Although 'package_data' is the preferred approach, in some case you may
