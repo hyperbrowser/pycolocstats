@@ -2,13 +2,13 @@ from __future__ import absolute_import, division, print_function, unicode_litera
 
 from future.utils import with_metaclass
 from abc import ABCMeta, abstractmethod
-from conglomerate.methods.interface import UniformInterface
-# from conglomerate.methods.typecheck import takes
-from conglomerate.core.config import CATCH_METHOD_EXCEPTIONS, VERBOSE_RUNNING, \
+from pycolocstats.methods.interface import UniformInterface
+# from pycolocstats.methods.typecheck import takes
+from pycolocstats.core.config import CATCH_METHOD_EXCEPTIONS, VERBOSE_RUNNING, \
     DEFAULT_JOB_OUTPUT_DIR
-from conglomerate.core.exceptions import MissingMandatoryParameters
-from conglomerate.tools.job import Job
-from conglomerate.tools.tool import Tool
+from pycolocstats.core.exceptions import MissingMandatoryParameters
+from pycolocstats.tools.job import Job
+from pycolocstats.tools.tool import Tool
 
 __metaclass__ = type
 
@@ -106,7 +106,7 @@ class Method(UniformInterface):
         #import shutil
         #bedPath = os.path.join(mkdtemp(), trackFn.replace('.dat','.bed'))
         #bedPath = '/data/tmp/congloTmp/adHocBed/' + os.path.basename(trackFn).replace('.dat','.bed')
-        from conglomerate.core.util import getTemporaryFileName
+        from pycolocstats.core.util import getTemporaryFileName
         bedPath = getTemporaryFileName()
         #shutil.copytree(src=trackFn, dst=bedFn,symlinks=True)
         #shutil.copy(src=trackFn, dst=bedPath)

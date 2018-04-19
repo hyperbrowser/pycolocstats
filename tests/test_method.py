@@ -5,39 +5,39 @@ import os
 import pkg_resources
 import pytest
 
-from conglomerate.methods.genometricorr.genometricorr import GenometriCorr
-from conglomerate.methods.giggle.giggle import Giggle
-from conglomerate.methods.goshifter.goshifter import GoShifter
-from conglomerate.methods.interface import RestrictedThroughInclusion
-from conglomerate.methods.intervalstats.intervalstats import IntervalStats
-from conglomerate.methods.lola.lola import LOLA
-from conglomerate.methods.multimethod import MultiMethod
-from conglomerate.methods.stereogene.stereogene import StereoGene
-from conglomerate.core.types import TrackFile
-from conglomerate.tools.runner import runAllMethodsInSequence
+from pycolocstats.methods.genometricorr.genometricorr import GenometriCorr
+from pycolocstats.methods.giggle.giggle import Giggle
+from pycolocstats.methods.goshifter.goshifter import GoShifter
+from pycolocstats.methods.interface import RestrictedThroughInclusion
+from pycolocstats.methods.intervalstats.intervalstats import IntervalStats
+from pycolocstats.methods.lola.lola import LOLA
+from pycolocstats.methods.multimethod import MultiMethod
+from pycolocstats.methods.stereogene.stereogene import StereoGene
+from pycolocstats.core.types import TrackFile
+from pycolocstats.tools.runner import runAllMethodsInSequence
 
 
 @pytest.fixture(scope='function')
 def tracks():
-    return [TrackFile(pkg_resources.resource_filename('conglomerate', '../../tests/resources/H3K4me1_no_overlaps.bed'),'t1'),
-            TrackFile(pkg_resources.resource_filename('conglomerate', '../../tests/resources/H3K4me3_no_overlaps.bed'),'t2'),
-            TrackFile(pkg_resources.resource_filename('conglomerate', '../../tests/resources/H3K4me1_with_overlaps.bed'),'t3'),
-            TrackFile(pkg_resources.resource_filename('conglomerate', '../../tests/resources/H3K4me3_with_overlaps.bed'),'t4'),
-            TrackFile(pkg_resources.resource_filename('conglomerate', '../../tests/resources/H3K4me1_no_overlaps.bed.gz'),'t5'),
-            TrackFile(pkg_resources.resource_filename('conglomerate', '../../tests/resources/H3K4me3_no_overlaps.bed.gz'),'t6'),
-            TrackFile(pkg_resources.resource_filename('conglomerate', '../../tests/resources/H3K4me1_with_overlaps.bed.gz'),'t7'),
-            TrackFile(pkg_resources.resource_filename('conglomerate', '../../tests/resources/H3K4me3_with_overlaps.bed.gz'),'t8'),
-            TrackFile(pkg_resources.resource_filename('conglomerate', '../../tests/resources/H3K4me1_no_overlaps_cropped.bed'),'t9'),
-            TrackFile(pkg_resources.resource_filename('conglomerate', '../../tests/resources/H3K4me1_no_overlaps_large.bed.gz'),'t10'),
-            TrackFile(pkg_resources.resource_filename('conglomerate', '../../tests/resources/H3K4me3_no_overlaps_large.bed.gz'),'t11'),
-            TrackFile(pkg_resources.resource_filename('conglomerate', '../../tests/resources/Refseq_Genes_cropped.bed.gz'),'t12'),
-            TrackFile(pkg_resources.resource_filename('conglomerate', '../../tests/resources/Ensembl_Genes_cropped.bed.gz'),'t13'),
-            TrackFile(pkg_resources.resource_filename('conglomerate', '../../tests/resources/H3K4me3_no_overlaps_cropped.bed'),'t14')]
+    return [TrackFile(pkg_resources.resource_filename('pycolocstats', '../../tests/resources/H3K4me1_no_overlaps.bed'),'t1'),
+            TrackFile(pkg_resources.resource_filename('pycolocstats', '../../tests/resources/H3K4me3_no_overlaps.bed'),'t2'),
+            TrackFile(pkg_resources.resource_filename('pycolocstats', '../../tests/resources/H3K4me1_with_overlaps.bed'),'t3'),
+            TrackFile(pkg_resources.resource_filename('pycolocstats', '../../tests/resources/H3K4me3_with_overlaps.bed'),'t4'),
+            TrackFile(pkg_resources.resource_filename('pycolocstats', '../../tests/resources/H3K4me1_no_overlaps.bed.gz'),'t5'),
+            TrackFile(pkg_resources.resource_filename('pycolocstats', '../../tests/resources/H3K4me3_no_overlaps.bed.gz'),'t6'),
+            TrackFile(pkg_resources.resource_filename('pycolocstats', '../../tests/resources/H3K4me1_with_overlaps.bed.gz'),'t7'),
+            TrackFile(pkg_resources.resource_filename('pycolocstats', '../../tests/resources/H3K4me3_with_overlaps.bed.gz'),'t8'),
+            TrackFile(pkg_resources.resource_filename('pycolocstats', '../../tests/resources/H3K4me1_no_overlaps_cropped.bed'),'t9'),
+            TrackFile(pkg_resources.resource_filename('pycolocstats', '../../tests/resources/H3K4me1_no_overlaps_large.bed.gz'),'t10'),
+            TrackFile(pkg_resources.resource_filename('pycolocstats', '../../tests/resources/H3K4me3_no_overlaps_large.bed.gz'),'t11'),
+            TrackFile(pkg_resources.resource_filename('pycolocstats', '../../tests/resources/Refseq_Genes_cropped.bed.gz'),'t12'),
+            TrackFile(pkg_resources.resource_filename('pycolocstats', '../../tests/resources/Ensembl_Genes_cropped.bed.gz'),'t13'),
+            TrackFile(pkg_resources.resource_filename('pycolocstats', '../../tests/resources/H3K4me3_no_overlaps_cropped.bed'),'t14')]
 
 
 @pytest.fixture(scope='function')
 def chrLenFile():
-    return pkg_resources.resource_filename('conglomerate', '../../tests/resources/chrom_lengths.tabular')
+    return pkg_resources.resource_filename('pycolocstats', '../../tests/resources/chrom_lengths.tabular')
 
 
 class TestMethodsBase(object):
@@ -80,7 +80,7 @@ class TestMethods(TestMethodsBase):
         preserveClumpingChoiceList = [('preserveClumping', False), ('preserveClumping', True)]
         chrLenList = [('setChromLenFileName', chrLenFile)]
         selectionsValues = [allowOverlapChoiceList, preserveClumpingChoiceList, chrLenList]
-        from conglomerate.tools.method_compatibility import getCompatibleMethodObjects
+        from pycolocstats.tools.method_compatibility import getCompatibleMethodObjects
         workingMethodObjects = getCompatibleMethodObjects(selectionsValues, queryTrack, refTracks, methodClasses)
         print(len(workingMethodObjects), [wmo for wmo in workingMethodObjects])
 

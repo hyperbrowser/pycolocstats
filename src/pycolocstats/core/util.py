@@ -3,7 +3,7 @@ from __future__ import absolute_import, division, print_function, unicode_litera
 import os
 from tempfile import mkstemp
 
-from conglomerate.core.config import TMP_DIR
+from pycolocstats.core.config import TMP_DIR
 
 __metaclass__ = type
 

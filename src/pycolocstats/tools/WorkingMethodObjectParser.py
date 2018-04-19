@@ -1,11 +1,11 @@
-from conglomerate.core.config import VERBOSE_RUNNING
-from conglomerate.methods.goshifter.goshifter import GoShifter
-from conglomerate.methods.stereogene.stereogene import StereoGene
-from conglomerate.tools.method_compatibility import getCompatibleMethodObjects
-from conglomerate.methods.genometricorr.genometricorr import GenometriCorr
-from conglomerate.methods.giggle.giggle import Giggle
-from conglomerate.methods.intervalstats.intervalstats import IntervalStats
-from conglomerate.methods.lola.lola import LOLA
+from pycolocstats.core.config import VERBOSE_RUNNING
+from pycolocstats.methods.goshifter.goshifter import GoShifter
+from pycolocstats.methods.stereogene.stereogene import StereoGene
+from pycolocstats.tools.method_compatibility import getCompatibleMethodObjects
+from pycolocstats.methods.genometricorr.genometricorr import GenometriCorr
+from pycolocstats.methods.giggle.giggle import Giggle
+from pycolocstats.methods.intervalstats.intervalstats import IntervalStats
+from pycolocstats.methods.lola.lola import LOLA
 ALL_CONGLOMERATE_METHOD_CLASSES = [GenometriCorr, Giggle, IntervalStats, LOLA, StereoGene, GoShifter]
 
 class WorkingMethodObjectParser:

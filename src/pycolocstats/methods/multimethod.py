@@ -1,7 +1,7 @@
 from __future__ import absolute_import, division, print_function, unicode_literals
 
-from conglomerate.core.exceptions import AbstractMethodError, ShouldNotOccurError
-from conglomerate.methods.method import Method, ManyVsManyMethod, OneVsOneMethod, OneVsManyMethod
+from pycolocstats.core.exceptions import AbstractMethodError, ShouldNotOccurError
+from pycolocstats.methods.method import Method, ManyVsManyMethod, OneVsOneMethod, OneVsManyMethod
 
 __metaclass__ = type
 

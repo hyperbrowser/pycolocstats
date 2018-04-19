@@ -3,7 +3,7 @@ from __future__ import absolute_import, division, print_function, unicode_litera
 import pickle
 import os
 
-from conglomerate.core.config import VERBOSE_RUNNING, TMP_DIR
+from pycolocstats.core.config import VERBOSE_RUNNING, TMP_DIR
 
 __metaclass__ = type
 

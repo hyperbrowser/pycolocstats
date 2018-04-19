@@ -4,7 +4,7 @@ __metaclass__ = type
 
 
 CONFIG_SECTION = u'Conglomerate'
-DEFAULT_CONFIG_REL_FN = '../../config/conglomerate.ini'
+DEFAULT_CONFIG_REL_FN = '../../config/pycolocstats.ini'
 
 
 def getConfigParser(config_fn):
@@ -20,7 +20,7 @@ def getConfigFilename():
     import pkg_resources
     import shutil
 
-    defConfigFn = pkg_resources.resource_filename('conglomerate', DEFAULT_CONFIG_REL_FN)
+    defConfigFn = pkg_resources.resource_filename('pycolocstats', DEFAULT_CONFIG_REL_FN)
     sampleConfigFn = defConfigFn + '.sample'
 
     envConfigFn = os.environ.get('CONGLOMERATE_CONFIG')

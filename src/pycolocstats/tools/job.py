@@ -5,9 +5,9 @@ import cwltool
 import logging
 import os
 
-from conglomerate.core.config import VERBOSE_RUNNING, DEFAULT_JOB_OUTPUT_DIR
-from conglomerate.core.types import PathStr, PathStrList
-from conglomerate.tools.cache import ToolResultsCacher
+from pycolocstats.core.config import VERBOSE_RUNNING, DEFAULT_JOB_OUTPUT_DIR
+from pycolocstats.core.types import PathStr, PathStrList
+from pycolocstats.tools.cache import ToolResultsCacher
 
 install_aliases()
 from urllib.parse import urlparse

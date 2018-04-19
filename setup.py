@@ -19,7 +19,7 @@ here = path.abspath(path.dirname(__file__))
 description = 'Conglomerate of genomic track colocalization analysis methods'
 
 setup(
-    name='conglomerate',
+    name='pycolocstats',
 
     # Versions should comply with PEP440.  For a discussion on single-sourcing
     # the version across setup.py and the project code, see
@@ -30,9 +30,9 @@ setup(
     long_description=description,
 
     # The project's main homepage.
-    url='https://github.com/hyperbrowser/conglomerate',
+    url='https://github.com/hyperbrowser/pycolocstats',
     
-    download_url='https://github.com/hyperbrowser/conglomerate/archive/1.0b1.tar.gz',
+    download_url='https://github.com/hyperbrowser/pycolocstats/archive/1.0b1.tar.gz',
 
     # Author details
     author='The Track Colocalization Conglomerate',
@@ -97,7 +97,7 @@ setup(
     # installed, specify them here.  If using Python 2.6 or less, then these
     # have to be included in MANIFEST.in as well.
     package_data={
-        'conglomerate': ['resources/*', 'src/cwl/*'],
+        'pycolocstats': ['resources/*', 'src/cwl/*'],
     },
 
     # Although 'package_data' is the preferred approach, in some case you may

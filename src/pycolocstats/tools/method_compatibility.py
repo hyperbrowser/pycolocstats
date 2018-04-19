@@ -3,8 +3,8 @@ from __future__ import absolute_import, division, print_function, unicode_litera
 import traceback
 from itertools import product
 
-from conglomerate.methods.multimethod import MultiMethod
-from conglomerate.core.config import VERBOSE_RUNNING, CATCH_METHOD_EXCEPTIONS
+from pycolocstats.methods.multimethod import MultiMethod
+from pycolocstats.core.config import VERBOSE_RUNNING, CATCH_METHOD_EXCEPTIONS
 
 __metaclass__ = type
 

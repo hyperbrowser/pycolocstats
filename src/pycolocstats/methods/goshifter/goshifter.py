@@ -5,11 +5,11 @@ from os import path, listdir
 import gzip
 import shutil
 
-from conglomerate.core.types import SingleResultValue
-from conglomerate.core.util import getTemporaryFileName
-from conglomerate.methods.interface import ColocMeasureOverlap
-from conglomerate.methods.method import OneVsOneMethod
-from conglomerate.core.constants import GOSHIFTER_TOOL_NAME
+from pycolocstats.core.types import SingleResultValue
+from pycolocstats.core.util import getTemporaryFileName
+from pycolocstats.methods.interface import ColocMeasureOverlap
+from pycolocstats.methods.method import OneVsOneMethod
+from pycolocstats.core.constants import GOSHIFTER_TOOL_NAME
 
 __metaclass__ = type
 
@@ -44,7 +44,7 @@ class GoShifter(OneVsOneMethod):
         self._orginalQueryFileTitle = trackFile.title
 
     def _setReferenceTrackFileName(self, trackFile):
-        from conglomerate.tools.tracks import refTrackCollRegistry
+        from pycolocstats.tools.tracks import refTrackCollRegistry
         if refTrackCollRegistry.isPartOfTrackCollSpec(trackFile):
             self.setNotCompatible()
             return

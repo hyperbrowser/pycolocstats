@@ -1,13 +1,13 @@
 import pkg_resources
 import pytest
 
-from conglomerate.methods.goshifter.goshifter import GoShifter
-from conglomerate.methods.interface import RestrictedThroughInclusion, ColocMeasureProximity
-from conglomerate.tools.WorkingMethodObjectParser import WorkingMethodObjectParser
+from pycolocstats.methods.goshifter.goshifter import GoShifter
+from pycolocstats.methods.interface import RestrictedThroughInclusion, ColocMeasureProximity
+from pycolocstats.tools.WorkingMethodObjectParser import WorkingMethodObjectParser
 
-from conglomerate.core.types import TrackFile
-from conglomerate.methods.stereogene.stereogene import StereoGene
-from conglomerate.tools.WorkingMethodObjectParser import ALL_CONGLOMERATE_METHOD_CLASSES
+from pycolocstats.core.types import TrackFile
+from pycolocstats.methods.stereogene.stereogene import StereoGene
+from pycolocstats.tools.WorkingMethodObjectParser import ALL_CONGLOMERATE_METHOD_CLASSES
 from tests.test_method import TestMethodsBase
 
 PRINT_RESULT_FILES = True
@@ -16,18 +16,18 @@ PRINT_TEST_STATISTICS = True
 @pytest.fixture(scope='function')
 def tracks():
     return [
-            TrackFile(pkg_resources.resource_filename('conglomerate', '../../tests/resources/test_track1.bed'),'t1'),
-            TrackFile(pkg_resources.resource_filename('conglomerate', '../../tests/resources/test_track2.bed'),'t2'),
-            TrackFile(pkg_resources.resource_filename('conglomerate', '../../tests/resources/test_track3.bed'),'t3'),
-            TrackFile(pkg_resources.resource_filename('conglomerate', '../../tests/resources/test_track4.bed'),'t4'),
-            TrackFile(pkg_resources.resource_filename('conglomerate', '../../tests/resources/test_track5.bed'), 't5'),
-            TrackFile(pkg_resources.resource_filename('conglomerate', '../../tests/resources/test_track6.bed'), 't6'),
+            TrackFile(pkg_resources.resource_filename('pycolocstats', '../../tests/resources/test_track1.bed'),'t1'),
+            TrackFile(pkg_resources.resource_filename('pycolocstats', '../../tests/resources/test_track2.bed'),'t2'),
+            TrackFile(pkg_resources.resource_filename('pycolocstats', '../../tests/resources/test_track3.bed'),'t3'),
+            TrackFile(pkg_resources.resource_filename('pycolocstats', '../../tests/resources/test_track4.bed'),'t4'),
+            TrackFile(pkg_resources.resource_filename('pycolocstats', '../../tests/resources/test_track5.bed'), 't5'),
+            TrackFile(pkg_resources.resource_filename('pycolocstats', '../../tests/resources/test_track6.bed'), 't6'),
             ]
 
 
 @pytest.fixture(scope='function')
 def chrLenFile():
-    return pkg_resources.resource_filename('conglomerate', '../../tests/resources/test_chrom_lengths_2.tabular')
+    return pkg_resources.resource_filename('pycolocstats', '../../tests/resources/test_chrom_lengths_2.tabular')
 
 @pytest.fixture(scope='function')
 @pytest.mark.usefixtures('tracks')

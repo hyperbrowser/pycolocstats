@@ -2,11 +2,11 @@ from __future__ import absolute_import, division, print_function, unicode_litera
 
 import time
 
-from conglomerate.methods.multimethod import MultiMethod
-from conglomerate.core.config import (CATCH_METHOD_EXCEPTIONS,
+from pycolocstats.methods.multimethod import MultiMethod
+from pycolocstats.core.config import (CATCH_METHOD_EXCEPTIONS,
                                       VERBOSE_RUNNING,
                                       DEFAULT_JOB_OUTPUT_DIR)
-from conglomerate.core.util import deleteAllTmpFiles
+from pycolocstats.core.util import deleteAllTmpFiles
 
 __metaclass__ = type
 

@@ -2,11 +2,11 @@ from __future__ import absolute_import, division, print_function, unicode_litera
 
 from collections import OrderedDict
 
-from conglomerate.methods.interface import ColocMeasureOverlap
-from conglomerate.methods.method import OneVsManyMethod
-from conglomerate.core.types import SingleResultValue
-from conglomerate.core.constants import GIGGLE_TOOL_NAME
-from conglomerate.tools.tracks import refTrackCollRegistry
+from pycolocstats.methods.interface import ColocMeasureOverlap
+from pycolocstats.methods.method import OneVsManyMethod
+from pycolocstats.core.types import SingleResultValue
+from pycolocstats.core.constants import GIGGLE_TOOL_NAME
+from pycolocstats.tools.tracks import refTrackCollRegistry
 
 __metaclass__ = type
 

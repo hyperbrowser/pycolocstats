@@ -6,12 +6,12 @@ import os
 import pkg_resources
 import yaml
 
-from conglomerate.core.config import DEFAULT_JOB_OUTPUT_DIR, TMP_DIR, PULL_DOCKER_IMAGES, \
+from pycolocstats.core.config import DEFAULT_JOB_OUTPUT_DIR, TMP_DIR, PULL_DOCKER_IMAGES, \
     USE_TEST_DOCKER_IMAGES
-from conglomerate.core.constants import TEST_TOOL_SUFFIX
-from conglomerate.core.types import PathStr, PathStrList
-from conglomerate.core.util import ensureDirExists
-from conglomerate.tools.jobparamsdict import JobParamsDict
+from pycolocstats.core.constants import TEST_TOOL_SUFFIX
+from pycolocstats.core.types import PathStr, PathStrList
+from pycolocstats.core.util import ensureDirExists
+from pycolocstats.tools.jobparamsdict import JobParamsDict
 from numbers import Number
 
 __metaclass__ = type
@@ -58,11 +58,11 @@ class Tool(object):
         return dockerRequirement['dockerPull']
 
     def _getToolPath(self):
-        return pkg_resources.resource_filename('conglomerate',
+        return pkg_resources.resource_filename('pycolocstats',
                                                '../cwl/{}'.format(self._toolName))
 
     def _getCWLFilePath(self):
-        return pkg_resources.resource_filename('conglomerate',
+        return pkg_resources.resource_filename('pycolocstats',
                                                '../cwl/{}/tool.cwl'.format(self._toolName))
 
     def createJobParamsDict(self):

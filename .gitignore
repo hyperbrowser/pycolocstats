@@ -101,4 +101,4 @@ ENV/
 .mypy_cache/
 
 # Conglomerate settings
-config/conglomerate.ini
+config/pycolocstats.ini

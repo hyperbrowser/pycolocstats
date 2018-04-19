@@ -2,11 +2,11 @@ from __future__ import absolute_import, division, print_function, unicode_litera
 
 from os import path
 
-from conglomerate.methods.interface import RestrictedThroughInclusion
-from conglomerate.methods.method import OneVsOneMethod
-from conglomerate.core.types import SingleResultValue, TrackFile
-from conglomerate.core.constants import INTERVALSTATS_TOOL_NAME
-from conglomerate.core.util import getTemporaryFileName
+from pycolocstats.methods.interface import RestrictedThroughInclusion
+from pycolocstats.methods.method import OneVsOneMethod
+from pycolocstats.core.types import SingleResultValue, TrackFile
+from pycolocstats.core.constants import INTERVALSTATS_TOOL_NAME
+from pycolocstats.core.util import getTemporaryFileName
 import os
 
 __metaclass__ = type
@@ -49,7 +49,7 @@ class IntervalStats(OneVsOneMethod):
         self._params['q'] = trackFile.path
 
     def _setReferenceTrackFileName(self, trackFile):
-        from conglomerate.tools.tracks import refTrackCollRegistry
+        from pycolocstats.tools.tracks import refTrackCollRegistry
         if refTrackCollRegistry.isPartOfTrackCollSpec(trackFile):
             self.setNotCompatible()
             return
@@ -130,7 +130,7 @@ class IntervalStats(OneVsOneMethod):
             self.setManualParam('d', restrictedAnalysisUniverse.trackFile.path)
 
     def setColocMeasure(self, colocMeasure):
-        from conglomerate.methods.interface import ColocMeasureProximity
+        from pycolocstats.methods.interface import ColocMeasureProximity
         if not isinstance(colocMeasure, ColocMeasureProximity):
             self.setNotCompatible()
 

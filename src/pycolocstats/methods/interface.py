@@ -2,7 +2,7 @@ from __future__ import absolute_import, division, print_function, unicode_litera
 
 from abc import ABCMeta, abstractmethod
 from future.utils import with_metaclass
-# from conglomerate.methods.typecheck import takes, one_of
+# from pycolocstats.methods.typecheck import takes, one_of
 
 __metaclass__ = type
 

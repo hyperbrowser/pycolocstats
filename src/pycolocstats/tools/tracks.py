@@ -1,7 +1,7 @@
 import os
 from collections import defaultdict
 
-from conglomerate.core.config import REF_COLL_GSUITES_PATH
+from pycolocstats.core.config import REF_COLL_GSUITES_PATH
 
 
 class RefTrackCollectionRegistry(object):

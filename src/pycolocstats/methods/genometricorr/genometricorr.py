@@ -1,9 +1,9 @@
 from __future__ import absolute_import, division, print_function, unicode_literals
 
-from conglomerate.methods.interface import ColocMeasureOverlap
-from conglomerate.methods.method import OneVsOneMethod
-from conglomerate.core.types import SingleResultValue, TrackFile
-from conglomerate.core.constants import GENOMETRICORR_TOOL_NAME
+from pycolocstats.methods.interface import ColocMeasureOverlap
+from pycolocstats.methods.method import OneVsOneMethod
+from pycolocstats.core.types import SingleResultValue, TrackFile
+from pycolocstats.core.constants import GENOMETRICORR_TOOL_NAME
 
 __metaclass__ = type
 
@@ -29,7 +29,7 @@ class GenometriCorr(OneVsOneMethod):
         self._params['query'] = bedPath
 
     def _setReferenceTrackFileName(self, trackFile):
-        from conglomerate.tools.tracks import refTrackCollRegistry
+        from pycolocstats.tools.tracks import refTrackCollRegistry
         if refTrackCollRegistry.isPartOfTrackCollSpec(trackFile):
             self.setNotCompatible()
             return

@@ -2,9 +2,9 @@ from __future__ import absolute_import, division, print_function, unicode_litera
 
 from collections import OrderedDict
 
-from conglomerate.methods.method import OneVsOneMethod
-from conglomerate.core.types import SingleResultValue
-from conglomerate.core.constants import STEREOGENE_TOOL_NAME
+from pycolocstats.methods.method import OneVsOneMethod
+from pycolocstats.core.types import SingleResultValue
+from pycolocstats.core.constants import STEREOGENE_TOOL_NAME
 import os
 
 __metaclass__ = type
@@ -42,7 +42,7 @@ class StereoGene(OneVsOneMethod):
         self._queryTitle = trackFile.title
 
     def _setReferenceTrackFileName(self, trackFile):
-        from conglomerate.tools.tracks import refTrackCollRegistry
+        from pycolocstats.tools.tracks import refTrackCollRegistry
         if refTrackCollRegistry.isPartOfTrackCollSpec(trackFile):
             self.setNotCompatible()
             return
@@ -99,7 +99,7 @@ class StereoGene(OneVsOneMethod):
         #assert restrictedAnalysisUniverse is None, restrictedAnalysisUniverse
 
     def setColocMeasure(self, colocMeasure):
-        from conglomerate.methods.interface import ColocMeasureCorrelation
+        from pycolocstats.methods.interface import ColocMeasureCorrelation
         if not isinstance(colocMeasure, ColocMeasureCorrelation):
             self.setNotCompatible()
         #assert isinstance(colocMeasure, ColocMeasureCorrelation), type(colocMeasure)
