@@ -106,7 +106,7 @@ class GoShifter(OneVsOneMethod):
                     continue
                 contentAnnotationFile += line
 
-        g = gzip.open(tempFileNameA, 'w')
+        g = gzip.open(tempFileNameA, 'wt')
         g.write(contentAnnotationFile)
         g.close()
         self._params['a'] = tempFileNameA
