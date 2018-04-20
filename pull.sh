@@ -14,7 +14,7 @@ fi
 for d in cwl/*/ ; do
     if echo ${TEST_IMAGES[@]} | grep -q -w -v ${d%?}_test/; then
         if [[ $d != *_test/ || "$USE_TEST_DOCKER_IMAGES" == "True" ]]; then
-            IMAGE=${d/cwl/conglomerate}
+            IMAGE=${d/cwl/colocstats}
             IMAGE=${IMAGE%?};
             echo Running: docker pull ${IMAGE}:latest
             docker pull ${IMAGE}:latest

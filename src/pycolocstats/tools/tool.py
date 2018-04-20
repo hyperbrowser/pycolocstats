@@ -36,7 +36,7 @@ class Tool(object):
     def getCwlTool(self, jobOutputDir=DEFAULT_JOB_OUTPUT_DIR):
         if not self._cwlTool:
             if PULL_DOCKER_IMAGES:
-                docker.from_env().images.pull('conglomerate/%s' % self._toolName, tag="latest")
+                docker.from_env().images.pull('colocstats/%s' % self._toolName, tag="latest")
             self._cwlTool = self._cwlToolFactory.make(self._getCWLFilePath())
             self._cwlTool.factory.execkwargs['use_container'] = True
             self._cwlTool.factory.execkwargs['no_read_only'] = True

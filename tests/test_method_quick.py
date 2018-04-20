@@ -1,4 +1,3 @@
-import os
 import pkg_resources
 import pytest
 
@@ -16,17 +15,17 @@ from tests.test_method import TestMethodsBase
 @pytest.fixture(scope='function')
 def tracks():
     return [
-            TrackFile(pkg_resources.resource_filename('pycolocstats', '../../tests/resources/test_track1.bed'),'track1'),
-            TrackFile(pkg_resources.resource_filename('pycolocstats', '../../tests/resources/test_track2.bed'),'track2'),
-            TrackFile(pkg_resources.resource_filename('pycolocstats', '../../tests/resources/test_track3.bed'),'track3'),
-            TrackFile(pkg_resources.resource_filename('pycolocstats', '../../tests/resources/test_track4.bed'),'track4'),
-            TrackFile(pkg_resources.resource_filename('pycolocstats', '../../tests/resources/test_track5.bed'),'track5'),
-            TrackFile(pkg_resources.resource_filename('pycolocstats', '../../tests/resources/test_track6.bed'),'track6'),
-            TrackFile(pkg_resources.resource_filename('pycolocstats', '../../tests/resources/test_track7.bed'),'track7'),
-            TrackFile(pkg_resources.resource_filename('pycolocstats', '../../tests/resources/test_track8.bed'),'track8'),
-            TrackFile(pkg_resources.resource_filename('pycolocstats', '../../tests/resources/test_track9.bed'),'track9'),
-            TrackFile(pkg_resources.resource_filename('pycolocstats', '../../tests/resources/test_track10.bed'),'track10'),
-            ]
+        TrackFile(pkg_resources.resource_filename('pycolocstats', '../../tests/resources/test_track1.bed'), 'track1'),
+        TrackFile(pkg_resources.resource_filename('pycolocstats', '../../tests/resources/test_track2.bed'), 'track2'),
+        TrackFile(pkg_resources.resource_filename('pycolocstats', '../../tests/resources/test_track3.bed'), 'track3'),
+        TrackFile(pkg_resources.resource_filename('pycolocstats', '../../tests/resources/test_track4.bed'), 'track4'),
+        TrackFile(pkg_resources.resource_filename('pycolocstats', '../../tests/resources/test_track5.bed'), 'track5'),
+        TrackFile(pkg_resources.resource_filename('pycolocstats', '../../tests/resources/test_track6.bed'), 'track6'),
+        TrackFile(pkg_resources.resource_filename('pycolocstats', '../../tests/resources/test_track7.bed'), 'track7'),
+        TrackFile(pkg_resources.resource_filename('pycolocstats', '../../tests/resources/test_track8.bed'), 'track8'),
+        TrackFile(pkg_resources.resource_filename('pycolocstats', '../../tests/resources/test_track9.bed'), 'track9'),
+        TrackFile(pkg_resources.resource_filename('pycolocstats', '../../tests/resources/test_track10.bed'), 'track10'),
+    ]
 
 
 @pytest.fixture(scope='function')
@@ -142,7 +141,6 @@ class TestMethods(TestMethodsBase):
         runAllMethodsInSequence([method])
         self._printResultFiles(method, ['stderr', 'stdout', 'output'])
         self._assertMethodResultsSize(len(refTracks), method)
-
 
     def testGoShifter(self, chrLenFile, tracks):
         method = GoShifter()

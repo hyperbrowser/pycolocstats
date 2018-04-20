@@ -56,7 +56,7 @@ outputs:
 label: genometricorr
 requirements:
   - class: DockerRequirement
-    dockerPull: 'conglomerate/genometricorr:latest'
+    dockerPull: 'colocstats/genometricorr:latest'
   - class: InlineJavascriptRequirement
   - class: InitialWorkDirRequirement
     listing:

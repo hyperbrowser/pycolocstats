@@ -43,7 +43,7 @@ outputs:
 label: lola
 requirements:
   - class: DockerRequirement
-    dockerPull: 'conglomerate/lola_test:latest'
+    dockerPull: 'colocstats/lola_test:latest'
   - class: InlineJavascriptRequirement
   - class: InitialWorkDirRequirement
     listing:

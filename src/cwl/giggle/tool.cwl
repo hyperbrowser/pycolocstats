@@ -55,7 +55,7 @@ outputs:
 label: giggle
 requirements:
   - class: DockerRequirement
-    dockerPull: 'conglomerate/giggle:latest'
+    dockerPull: 'colocstats/giggle:latest'
   - class: InlineJavascriptRequirement
   - class: InitialWorkDirRequirement
     listing:

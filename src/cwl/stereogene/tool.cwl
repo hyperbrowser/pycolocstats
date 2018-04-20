@@ -185,7 +185,7 @@ outputs:
 label: stereogene
 requirements:
   - class: DockerRequirement
-    dockerPull: 'conglomerate/stereogene:latest'
+    dockerPull: 'colocstats/stereogene:latest'
   - class: InlineJavascriptRequirement
   - class: InitialWorkDirRequirement
     listing:

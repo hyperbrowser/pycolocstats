@@ -68,4 +68,4 @@ outputs:
 label: goshifter
 requirements:
   - class: DockerRequirement
-    dockerPull: 'conglomerate/goshifter_test:latest'
+    dockerPull: 'colocstats/goshifter_test:latest'

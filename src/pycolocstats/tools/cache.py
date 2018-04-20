@@ -12,7 +12,6 @@ LOAD_FROM_CACHE = False
 
 
 class ToolResultsCacher(object):
-    #CACHE_DISK_PATH = '/Users/sandve/egne_dokumenter/_faglig/conglomerateColoc/cache/'
     CACHE_DISK_PATH = TMP_DIR + '/congloTmp/toolResultsCache/'
     def __init__(self, tool, params):
         self._toolName = tool._toolName

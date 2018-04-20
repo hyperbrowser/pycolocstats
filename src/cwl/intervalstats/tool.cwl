@@ -35,4 +35,4 @@ outputs:
 label: intervalstats
 requirements:
   - class: DockerRequirement
-    dockerPull: 'conglomerate/intervalstats:latest'
+    dockerPull: 'colocstats/intervalstats:latest'
