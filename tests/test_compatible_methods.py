@@ -49,7 +49,7 @@ class TestMethods(TestMethodsBase):
                                                          ALL_PYCOLOCSTATS_METHOD_CLASSES).getWorkingMethodObjects()
         selectionValues.append([('setChromLenFileName', chrLenFile)])
         methodNames = set([wmo.getMethodName() for wmo in workingMethodObjects])
-        assert methodNames == set(['Giggle', 'GenometriCorr','StereoGene'])
+        assert methodNames == set(['Giggle', 'GenometriCorr','StereoGene', 'IntervalStats'])
 
     def test_goShifter_genome_hg38(self, tracks):
         selectionValues = [[('setGenomeName', u'hg38')],[('setRuntimeMode', u'quick')]]
