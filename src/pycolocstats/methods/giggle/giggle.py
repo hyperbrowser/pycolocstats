@@ -117,7 +117,7 @@ class Giggle(OneVsManyMethod):
 
 
     def getFullResults(self):
-        fullResults = open(self.getResultFilesDict()['stdout']).read().replace('\n','<br>\n')
+        fullResults = self.resultsToHtml(stdoutFile=self.getResultFilesDict()['stdout'])
         return self.getRemappedResultDict(OrderedDict([(key,fullResults) for key in self._parsedResults.getResultsPerName('overlaps').keys()]))
 
     def preserveClumping(self, preserve):
@@ -144,6 +144,125 @@ class Giggle(OneVsManyMethod):
             return open(self._resultFilesDict['stderr']).read()
         else:
             return 'Giggle produced no error output!'
+
+    ##############################Code by tool author:####################################
+
+    @classmethod
+    def html_headers(cls):
+        return '<!DOCTYPE html> <html> <body>'
+
+    @classmethod
+    def html_footers(cls):
+        return '</body></html>'
+
+    @classmethod
+    def get_rgba_str(cls, v, V, v_mid):
+        min_v = min(V)
+        max_v = max(V)
+        from matplotlib import colors as mcolors
+
+        _seismic_data = ((0.0, 0.0, 0.3),
+                         (0.0, 0.0, 1.0),
+
+                         (1.0, 1.0, 1.0),
+
+                         (1.0, 0.0, 0.0),
+                         (0.5, 0.0, 0.0))
+
+        hm = mcolors.LinearSegmentedColormap.from_list( \
+            name='red_white_blue', \
+            colors=_seismic_data, N=256)
+
+        mapped_v = v_mid
+
+        if v_mid == None:
+            mapped_v = (float(v) - float(min_v)) / (float(max_v) - float(min_v))
+        else:
+            if v > v_mid:
+                mapped_v = (float(v) / float(max_v)) / 2.0 + 0.5
+            elif v < v_mid:
+                mapped_v = 0.5 - (float(v) / float(min_v)) / 2.0
+
+        floats = hm(mapped_v)
+        ints = [int(255 * x) for x in floats[:-1]]
+        ints.append(0.5)
+
+        rgba = 'rgba(' + ','.join([str(x) for x in ints]) + ')'
+
+        return rgba
+
+    @classmethod
+    def html_empty_stdout(cls, stderrFile=None, printStdErr=False):
+        htmlStr = '''
+               <p>Giggle produced no results<p>
+           '''
+        from os import linesep
+        if stderrFile and printStdErr:
+            with open(stderrFile, "rt") as f:
+                htmlStr += "<p>Error:<br>"
+                htmlStr += f.read().replace(linesep, "<br>")
+                htmlStr += "</p>"
+
+        return htmlStr
+
+    @classmethod
+    def resultsToHtml(cls, outputFolder=None, stdoutFile=None, stderrFile=None):
+        if not stdoutFile:
+            return cls.html_headers() + cls.html_empty_stdout(stderrFile, True) + cls.html_footers()
+
+        html_string = cls.html_headers()
+
+        html_string += '<table style="text-align: left;" >'
+        header = None
+        rows = []
+
+        giggle_scores = []
+        odds_ratios = []
+        fisher_two_tails = []
+
+        for l in open(stdoutFile, 'rt'):
+            if header == None:
+                header = l[1:].rstrip().split()
+            else:
+                A = l.rstrip().split()
+                rows.append(A)
+                giggle_scores.append(float(A[7]))
+                odds_ratios.append(float(A[3]))
+                fisher_two_tails.append(float(A[4]))
+
+        html_string += '<tr>'
+        html_string += ' '.join(['<th>' + x.replace('_', ' ') + '</th>' for x in header])
+        html_string += '</tr>'
+
+        rows.sort(key=lambda x: float(x[7]), reverse=True)
+
+        for row in rows:
+
+            html_string += '<tr>'
+            i = 0
+            for x in row:
+                if i == 3:
+                    odds_ratio = float(x)
+                    rgba = cls.get_rgba_str(odds_ratio, odds_ratios, 1.0)
+                    html_string += '<td  style="background-color: ' + rgba + ';">' + x + '</td>'
+                elif i == 4:
+                    fisher_two_tail = float(x)
+                    rgba = cls.get_rgba_str(fisher_two_tail, fisher_two_tails, None)
+                    html_string += '<td  style="background-color: ' + rgba + ';">' + x + '</td>'
+                elif i == 7:
+                    giggle_score = float(x)
+                    rgba = cls.get_rgba_str(giggle_score, giggle_scores, 0.0)
+                    html_string += '<td  style="background-color: ' + rgba + ';">' + x + '</td>'
+                else:
+                    html_string += '<td>' + x + '</td>'
+                i += 1
+            html_string += '</tr>\n'
+
+        html_string += '</table>'
+
+        html_string += cls.html_footers()
+
+        return html_string
 
 
 class GiggleResult(object):
