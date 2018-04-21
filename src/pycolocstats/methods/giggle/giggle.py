@@ -196,7 +196,7 @@ class GiggleResults(object):
         return results
 
     def getResultsPerNameList(self, resName):
-        return self.getResultsPerName(resName=resName).values()
+        return list(self.getResultsPerName(resName=resName).values())
 
     def __repr__(self):
         firstLine = "#file	file_size	overlaps	odds_ratio	fishers_two_tail	fishers_left_tail	fishers_rigth_tail	combo_score"

@@ -159,7 +159,7 @@ class GoShifter(OneVsOneMethod):
         return self.getRemappedResultDict(pvalDict)
 
     def getTestStatistic(self):
-        testStatVal = self._testStat.values()[0]
+        testStatVal = list(self._testStat.values())[0]
         testStatText = '<span title="' + \
                    self.getTestStatDescr() \
                    + '">' + self._getFormattedVal(testStatVal) + '</span>'

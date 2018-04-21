@@ -67,14 +67,14 @@ class GenometriCorr(OneVsOneMethod):
 
     def getPValue(self):
         rowDict = self._results['jaccard.measure.p.value']
-        pVal = rowDict['awhole'] if 'awhole' in rowDict else rowDict.values()[0]
+        pVal = rowDict['awhole'] if 'awhole' in rowDict else list(rowDict.values())[0]
         return self.getRemappedResultDict(
             {(self._params['query'], self._params['reference']):
                  SingleResultValue(self._getNumericFromStr(pVal), pVal)})
 
     def getTestStatistic(self):
         rowDict = self._results['projection.test.obs.to.exp']
-        numericResult = float(rowDict['awhole'] if 'awhole' in rowDict else rowDict.values()[0])
+        numericResult = float(rowDict['awhole'] if 'awhole' in rowDict else list(rowDict.values())[0])
         testStat = '<span title="' + \
                    self.getTestStatDescr() \
                    + '">' + \
