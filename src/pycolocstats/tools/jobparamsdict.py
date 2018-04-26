@@ -9,7 +9,6 @@ __metaclass__ = type
 
 class JobParamsDict(MutableMapping):
     def __init__(self, paramDefDict):
-        # super(JobParamsDict, self).__init__(self)
         self._paramDefDict = paramDefDict
         self._params = dict()
 
@@ -35,7 +34,6 @@ class JobParamsDict(MutableMapping):
         else:
             assert isinstance(val, allowedType), '"{}" (type:{}) not of correct type: {}'.format(val, type(val), allowedType)
 
-        # super(JobParamsDict, self).__setitem__(key, val)
         self._params[key] = val
 
     def __delitem__(self, key):
@@ -64,7 +62,6 @@ class JobParamsDict(MutableMapping):
         return absentMandatoryParameters
 
     def __repr__(self):
-        # retStr = super(JobParamsDict, self).__repr__()
         retStr = repr(self._params)
         retStr += '\nAllowed params:\n'
         for key in self.getAllowedKeys():
