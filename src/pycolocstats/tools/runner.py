@@ -7,7 +7,9 @@ from pycolocstats.core.config import (CATCH_METHOD_EXCEPTIONS,
                                       VERBOSE_RUNNING,
                                       DEFAULT_JOB_OUTPUT_DIR,
                                       ENABLE_METHODS_PARALLELISATION,
-                                      ENABLE_JOBS_PARALLELISATION)
+                                      MAX_PARALLEL_METHODS,
+                                      ENABLE_JOBS_PARALLELISATION,
+                                      MAX_PARALLEL_JOBS)
 from pycolocstats.core.util import deleteAllTmpFiles
 
 __metaclass__ = type
@@ -32,7 +34,7 @@ def _runAllMethodsInSequence(methods, jobOutputDir=DEFAULT_JOB_OUTPUT_DIR):
 
 
 def _runAllMethodsInParallel(methods, jobOutputDir=DEFAULT_JOB_OUTPUT_DIR):
-    with ProcessPoolExecutor(len(methods)) as pool:
+    with ProcessPoolExecutor(max_workers=MAX_PARALLEL_METHODS) as pool:
         results = pool.map(_runMethodMultiArgs, [(method, jobOutputDir) for method in methods])
         for i, result in enumerate(results):
             if not isinstance(methods[i], MultiMethod):
@@ -67,7 +69,7 @@ def _runMethod(method, jobOutputDir):
     else:
         # assert isinstance(method, MultiMethod)
         if ENABLE_JOBS_PARALLELISATION:
-            with ProcessPoolExecutor(len(jobs)) as pool:
+            with ProcessPoolExecutor(max_workers=MAX_PARALLEL_JOBS) as pool:
                 features = [pool.submit(job.run) for job in jobs]
                 pool.shutdown(wait=True)
             resultFilesDictList = [feature.result() for feature in features]

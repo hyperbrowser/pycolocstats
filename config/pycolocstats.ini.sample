@@ -7,4 +7,6 @@ pull_docker_images = true
 use_test_docker_images = false
 ref_coll_gsuites_path =
 enable_methods_parallelisation = false
+max_parallel_methods = 8
 enable_jobs_parallelisation = true
+max_parallel_jobs = 8
