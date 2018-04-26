@@ -6,7 +6,8 @@ from pycolocstats.methods.multimethod import MultiMethod
 from pycolocstats.core.config import (CATCH_METHOD_EXCEPTIONS,
                                       VERBOSE_RUNNING,
                                       DEFAULT_JOB_OUTPUT_DIR,
-                                      ENABLE_PARALLELISATION)
+                                      ENABLE_METHODS_PARALLELISATION,
+                                      ENABLE_JOBS_PARALLELISATION)
 from pycolocstats.core.util import deleteAllTmpFiles
 
 __metaclass__ = type
@@ -14,7 +15,7 @@ __metaclass__ = type
 
 def runAllMethods(methods, jobOutputDir=DEFAULT_JOB_OUTPUT_DIR):
     try:
-        if ENABLE_PARALLELISATION:
+        if ENABLE_METHODS_PARALLELISATION:
             _runAllMethodsInParallel(methods, jobOutputDir)
         else:
             _runAllMethodsInSequence(methods, jobOutputDir)
@@ -62,7 +63,13 @@ def _runMethod(method, jobOutputDir):
         method.setResultFilesDict(resultFilesDict)
     else:
         # assert isinstance(method, MultiMethod)
-        resultFilesDictList = [job.run() for job in jobs]
+        if ENABLE_JOBS_PARALLELISATION:
+            with ProcessPoolExecutor(len(jobs)) as pool:
+                features = [pool.submit(job.run) for job in jobs]
+                pool.shutdown(wait=True)
+            resultFilesDictList = [feature.result() for feature in features]
+        else:
+            resultFilesDictList = [job.run() for job in jobs]
         method.setResultFilesDictList(resultFilesDictList)
     if VERBOSE_RUNNING:
         print('Runtime: ', (time.time() - startTime) / 60.0, ' minutes')
