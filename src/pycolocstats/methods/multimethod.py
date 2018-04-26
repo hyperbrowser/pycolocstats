@@ -136,6 +136,15 @@ class MultiMethod(MultiMethodAbstractMethodsMixin, Method):
     def getMethodClass(self):
         return self._methodCls
 
+    def __getstate__(self):
+        return self._methods, self._methodCls
+
+    def __setstate__(self, state):
+        methods, methodCls = state
+        self._methods = methods
+        self._methodCls = methodCls
+
+
 class CallableAttributeList(list):
     def __call__(self, *args, **kwArgs):
         retList = [attr.__call__(*args, **kwArgs) for attr in self]
