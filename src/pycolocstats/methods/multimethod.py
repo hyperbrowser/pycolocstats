@@ -51,7 +51,19 @@ class MultiMethodAbstractMethodsMixin(object):
 
 
 class MultiMethod(MultiMethodAbstractMethodsMixin, Method):
-    MEMBER_ATTRIBUTES = ['_methods','_methodCls','__repr__','annotatedChoices', 'ranSuccessfully', 'getErrorDetails', 'getMethodName', 'getMethodClass','getCompatibilityState','setNotCompatible','_compatibilityState']
+    MEMBER_ATTRIBUTES = ['_methods',
+                         '_methodCls',
+                         '__repr__',
+                         '__getstate__',
+                         '__setstate__',
+                         'annotatedChoices',
+                         'ranSuccessfully',
+                         'getErrorDetails',
+                         'getMethodName',
+                         'getMethodClass',
+                         'getCompatibilityState',
+                         'setNotCompatible',
+                         '_compatibilityState',]
 
     def __init__(self, methodCls, querytrackFnList, referencetrackFnList):
         assert any(issubclass(methodCls, superCls)
