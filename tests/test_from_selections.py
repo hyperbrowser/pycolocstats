@@ -1,18 +1,12 @@
-import os
 import pkg_resources
 import pytest
 
-from pycolocstats.methods.interface import RestrictedAnalysisUniverse, RestrictedThroughInclusion
+from pycolocstats.core.types import TrackFile
+from pycolocstats.methods.giggle.giggle import Giggle
+from pycolocstats.methods.interface import RestrictedThroughInclusion
 from pycolocstats.methods.lola.lola import LOLA
 from pycolocstats.tools.WorkingMethodObjectParser import WorkingMethodObjectParser
-
-from pycolocstats.core.types import TrackFile
-from pycolocstats.methods.genometricorr.genometricorr import GenometriCorr
-from pycolocstats.methods.giggle.giggle import Giggle
-from pycolocstats.methods.multimethod import MultiMethod
-from pycolocstats.methods.stereogene.stereogene import StereoGene
-from pycolocstats.tools.WorkingMethodObjectParser import ALL_PYCOLOCSTATS_METHOD_CLASSES
-from pycolocstats.tools.runner import runAllMethodsInSequence
+from pycolocstats.tools.runner import runAllMethods
 from tests.test_method import TestMethodsBase
 
 PRINT_RESULT_FILES = True
@@ -138,7 +132,7 @@ class TestMethods(TestMethodsBase):
 
     def _checkThatRuns(self, queryTrack, refTracks, selectionValues, methodClasses):
         workingMethodObjects = WorkingMethodObjectParser(queryTrack, refTracks, selectionValues, methodClasses).getWorkingMethodObjects()
-        runAllMethodsInSequence(workingMethodObjects)
+        runAllMethods(workingMethodObjects)
         for wmo in workingMethodObjects:
             if PRINT_RESULT_FILES:
                 self._printResultFiles(wmo, ['stderr', 'stdout', 'output'])

@@ -1,4 +1,3 @@
-from itertools import product
 from tempfile import NamedTemporaryFile
 
 import os
@@ -7,14 +6,13 @@ import pytest
 
 from pycolocstats.methods.genometricorr.genometricorr import GenometriCorr
 from pycolocstats.methods.giggle.giggle import Giggle
-from pycolocstats.methods.goshifter.goshifter import GoShifter
 from pycolocstats.methods.interface import RestrictedThroughInclusion
 from pycolocstats.methods.intervalstats.intervalstats import IntervalStats
 from pycolocstats.methods.lola.lola import LOLA
 from pycolocstats.methods.multimethod import MultiMethod
 from pycolocstats.methods.stereogene.stereogene import StereoGene
 from pycolocstats.core.types import TrackFile
-from pycolocstats.tools.runner import runAllMethodsInSequence
+from pycolocstats.tools.runner import runAllMethods
 
 
 @pytest.fixture(scope='function')
@@ -50,13 +48,13 @@ class TestMethodsBase(object):
 
         for resultFilesDict in resultFilesDictList:
             for key in keys:
-                assert key in resultFilesDict, (key,resultFilesDict)
+                assert key in resultFilesDict, (key, resultFilesDict)
                 print(key)
                 print('------')
                 print('Local path: ' + resultFilesDict[key])
                 print('------')
                 print('\n'.join(os.listdir(resultFilesDict[key])) if key == 'output'
-                else open(resultFilesDict[key]).read())
+                      else open(resultFilesDict[key]).read())
 
     @staticmethod
     def _assertMethodResultsSize(expectedResulstNr, method):
@@ -109,7 +107,7 @@ class TestMethods(TestMethodsBase):
         method.setChromLenFileName(chrLenFile)
         method.setManualParam('v', True)
         method.setManualParam('silent', 0)
-        runAllMethodsInSequence([method])
+        runAllMethods([method])
         self._printResultFiles(method, ['stderr', 'stdout', 'output'])
         self._assertMethodResultsSize(1, method)
 
@@ -119,7 +117,7 @@ class TestMethods(TestMethodsBase):
         method.setChromLenFileName(chrLenFile)
         method.setManualParam('v', True)
         method.setManualParam('silent', 0)
-        runAllMethodsInSequence([method])
+        runAllMethods([method])
         self._printResultFiles(method, ['stderr', 'stdout', 'output'])
         self._assertMethodResultsSize(len(refTracks), method)
 
@@ -132,7 +130,7 @@ class TestMethods(TestMethodsBase):
         method.setChromLenFileName(chrLenFile)
         method.setManualParam('v', True)
         method.setManualParam('silent', 0)
-        runAllMethodsInSequence([method])
+        runAllMethods([method])
         self._printResultFiles(method, ['stderr', 'stdout', 'output'])
         self._assertMethodResultsSize(len(qTracks) * len(refTracks), method)
 
@@ -142,22 +140,43 @@ class TestMethods(TestMethodsBase):
         method.setReferenceTrackFileNames([tracks[1]])
         method.setChromLenFileName(chrLenFile)
         method.setManualParam('o', 'output')
-        runAllMethodsInSequence([method])
+        runAllMethods([method])
         self._printResultFiles(method, ['stderr', 'stdout', 'output'])
 
     def testIntervalStatsMultiOneVsMany(self, chrLenFile, tracks):
         method = MultiMethod(IntervalStats, [tracks[0]], [tracks[2], tracks[3]])
         method.setChromLenFileName(chrLenFile)
         method.setManualParam('o', 'output')
-        runAllMethodsInSequence([method])
+        runAllMethods([method])
         self._printResultFiles(method, ['stderr', 'stdout', 'output'])
 
     def testIntervalStatsMultiManyVsMany(self, chrLenFile, tracks):
         method = MultiMethod(IntervalStats, [tracks[0], tracks[1]], [tracks[2], tracks[3]])
         method.setChromLenFileName(chrLenFile)
         method.setManualParam('o', 'output')
-        runAllMethodsInSequence([method])
+        runAllMethods([method])
         self._printResultFiles(method, ['stderr', 'stdout', 'output'])
+
+    def testIntervalStatsMultipleMethods(self, chrLenFile, tracks):
+        method1 = IntervalStats()
+        method1.setQueryTrackFileNames([tracks[0]])
+        method1.setReferenceTrackFileNames([tracks[1]])
+        method1.setChromLenFileName(chrLenFile)
+        method1.setManualParam('o', 'output')
+
+        method2 = MultiMethod(IntervalStats, [tracks[0]], [tracks[2], tracks[3]])
+        method2.setChromLenFileName(chrLenFile)
+        method2.setManualParam('o', 'output')
+
+        method3 = MultiMethod(IntervalStats, [tracks[0], tracks[1]], [tracks[2], tracks[3]])
+        method3.setChromLenFileName(chrLenFile)
+        method3.setManualParam('o', 'output')
+
+        runAllMethods([method1, method2, method3])
+
+        self._printResultFiles(method1, ['stderr', 'stdout', 'output'])
+        self._printResultFiles(method2, ['stderr', 'stdout', 'output'])
+        self._printResultFiles(method3, ['stderr', 'stdout', 'output'])
 
     def testGiggleDynamic(self, chrLenFile, tracks):
         method = Giggle()
@@ -166,7 +185,7 @@ class TestMethods(TestMethodsBase):
         method.setReferenceTrackFileNames(refTracks)
         # method = MultiMethod(Giggle, [tracks[8]], refTracks)
         method.setChromLenFileName(chrLenFile)
-        runAllMethodsInSequence([method])
+        runAllMethods([method])
         self._printResultFiles(method, ['stderr', 'stdout', 'output'])
         self._assertMethodResultsSize(len(refTracks), method)
 
@@ -177,7 +196,7 @@ class TestMethods(TestMethodsBase):
         method.setManualParam('genome', 'hg19')
         method.setManualParam('trackCollection', 'codex')
         method.setChromLenFileName(chrLenFile)
-        runAllMethodsInSequence([method])
+        runAllMethods([method])
         self._printResultFiles(method, ['stderr', 'stdout', 'output'])
         raise Exception("This is now failing silently")
 
@@ -186,7 +205,7 @@ class TestMethods(TestMethodsBase):
         qTracks = [tracks[9], tracks[10]]
         method = MultiMethod(Giggle, qTracks, refTracks)
         method.setChromLenFileName(chrLenFile)
-        runAllMethodsInSequence([method])
+        runAllMethods([method])
         expectedResulstNr = len(qTracks) * len(refTracks)
         self._printResultFiles(method, ['stderr', 'stdout', 'output'])
         self._assertMethodResultsSize(expectedResulstNr, method)
@@ -198,7 +217,7 @@ class TestMethods(TestMethodsBase):
         method.setReferenceTrackFileNames([tracks[2], tracks[3]])
         method.setRestrictedAnalysisUniverse(RestrictedThroughInclusion(tracks[0]))
         method.preserveClumping(False)
-        runAllMethodsInSequence([method])
+        runAllMethods([method])
         self._printResultFiles(method, ['stderr', 'stdout', 'output'])
 
     def testLOLAReference(self, chrLenFile, tracks):
@@ -209,7 +228,7 @@ class TestMethods(TestMethodsBase):
         method.setManualParam('genome', 'hg19')
         method.setManualParam('trackCollection', 'codex')
         method.preserveClumping(False)
-        runAllMethodsInSequence([method])
+        runAllMethods([method])
         self._printResultFiles(method, ['stderr', 'stdout', 'output'])
 
     @staticmethod

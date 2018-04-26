@@ -8,7 +8,7 @@ from pycolocstats.methods.goshifter.goshifter import GoShifter
 from pycolocstats.methods.intervalstats.intervalstats import IntervalStats
 from pycolocstats.methods.multimethod import MultiMethod
 from pycolocstats.methods.stereogene.stereogene import StereoGene
-from pycolocstats.tools.runner import runAllMethodsInSequence
+from pycolocstats.tools.runner import runAllMethods
 from tests.test_method import TestMethodsBase
 
 
@@ -46,7 +46,7 @@ class TestMethods(TestMethodsBase):
         method.setManualParam('wSize', 20)
         method.setManualParam('bin', 5)
         method.setManualParam('kernelSigma', 10.0)
-        runAllMethodsInSequence([method])
+        runAllMethods([method])
         # self._printResultFiles(method, ['stderr', 'stdout', 'output'])
         self._assertMethodResultsSize(1, method)
 
@@ -60,7 +60,7 @@ class TestMethods(TestMethodsBase):
         method.setManualParam('wSize', 20)
         method.setManualParam('bin', 5)
         method.setManualParam('kernelSigma', 10.0)
-        runAllMethodsInSequence([method])
+        runAllMethods([method])
         # self._printResultFiles(method, ['stderr', 'stdout', 'output'])
         self._assertMethodResultsSize(1, method)
 
@@ -74,7 +74,7 @@ class TestMethods(TestMethodsBase):
         method.setManualParam('wSize', 20)
         method.setManualParam('bin', 5)
         method.setManualParam('kernelSigma', 10.0)
-        runAllMethodsInSequence([method])
+        runAllMethods([method])
         # self._printResultFiles(method, ['stderr', 'stdout', 'output'])
         self._assertMethodResultsSize(2, method)
 
@@ -91,7 +91,7 @@ class TestMethods(TestMethodsBase):
         method.setManualParam('wSize', 20)
         method.setManualParam('bin', 5)
         method.setManualParam('kernelSigma', 10.0)
-        runAllMethodsInSequence([method])
+        runAllMethods([method])
         # self._printResultFiles(method, ['stderr', 'stdout', 'output'])
         self._assertMethodResultsSize(2, method)
 
@@ -104,7 +104,7 @@ class TestMethods(TestMethodsBase):
         method.setManualParam('ecdfPermNum', 5)
         method.setManualParam('meanPermNum', 5)
         method.setManualParam('jaccardPermNum', 5)
-        runAllMethodsInSequence([method])
+        runAllMethods([method])
         # self._printResultFiles(method, ['stderr', 'stdout', 'output'])
         self._assertMethodResultsSize(1, method)
 
@@ -117,7 +117,7 @@ class TestMethods(TestMethodsBase):
         method.setManualParam('ecdfPermNum', 5)
         method.setManualParam('meanPermNum', 5)
         method.setManualParam('jaccardPermNum', 5)
-        runAllMethodsInSequence([method])
+        runAllMethods([method])
         # self._printResultFiles(method, ['stderr', 'stdout', 'output'])
         self._assertMethodResultsSize(1, method)
 
@@ -127,14 +127,14 @@ class TestMethods(TestMethodsBase):
         method.setReferenceTrackFileNames([tracks[1]])
         method.setChromLenFileName(chrLenFile)
         method.setManualParam('o', 'output')
-        runAllMethodsInSequence([method])
+        runAllMethods([method])
         self._assertMethodResultsSize(1, method)
 
     def testIntervalStats_OneVsMany(self, chrLenFile, tracks):
         method = MultiMethod(IntervalStats, [tracks[0]], tracks[1:3])
         method.setChromLenFileName(chrLenFile)
         method.setManualParam('o', 'output')
-        runAllMethodsInSequence([method])
+        runAllMethods([method])
         self._assertMethodResultsSize(2, method)
 
     def testGiggle_OneVsMany(self, chrLenFile, tracks):
@@ -144,7 +144,7 @@ class TestMethods(TestMethodsBase):
         method.setReferenceTrackFileNames(refTracks)
         # method = MultiMethod(Giggle, [tracks[8]], refTracks)
         method.setChromLenFileName(chrLenFile)
-        runAllMethodsInSequence([method])
+        runAllMethods([method])
         self._printResultFiles(method, ['stderr', 'stdout', 'output'])
         self._assertMethodResultsSize(len(refTracks), method)
 
@@ -156,7 +156,7 @@ class TestMethods(TestMethodsBase):
         method.setReferenceTrackFileNames(refTracks)
         # method = MultiMethod(Giggle, [tracks[8]], refTracks)
         method.setChromLenFileName(chrLenFile)
-        runAllMethodsInSequence([method])
+        runAllMethods([method])
         self._printResultFiles(method, ['stderr', 'stdout', 'output'])
         self._assertMethodResultsSize(len(refTracks), method)
 
@@ -172,7 +172,7 @@ class TestMethods(TestMethodsBase):
         method.setManualParam('l', '/root/goshifter/hg38_eur/')
         method.setManualParam('p', 10)
         method.setManualParam('o', 'output')
-        runAllMethodsInSequence([method])
+        runAllMethods([method])
         self._printResultFiles(method, ['stderr', 'stdout', 'output'])
         self._assertMethodResultsSize(1, method)
 
@@ -188,7 +188,7 @@ class TestMethods(TestMethodsBase):
         method.setManualParam('l', '/root/goshifter/hg38_eur/')
         method.setManualParam('p', 10)
         method.setManualParam('o', 'output')
-        runAllMethodsInSequence([method])
+        runAllMethods([method])
         self._printResultFiles(method, ['stderr', 'stdout', 'output'])
         self._assertMethodResultsSize(1, method)
 
