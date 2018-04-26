@@ -54,7 +54,8 @@ class MultiMethod(MultiMethodAbstractMethodsMixin, Method):
     MEMBER_ATTRIBUTES = ['_methods',
                          '_methodCls',
                          '__repr__',
-                         '__getstate__',
+                         '__reduce__',
+                         '__reduce_ex__',
                          '__setstate__',
                          'annotatedChoices',
                          'ranSuccessfully',
@@ -65,12 +66,15 @@ class MultiMethod(MultiMethodAbstractMethodsMixin, Method):
                          'setNotCompatible',
                          '_compatibilityState',]
 
-    def __init__(self, methodCls, querytrackFnList, referencetrackFnList):
+    def __init__(self, methodCls, querytrackFnList, referencetrackFnList, loadPickle=False):
         assert any(issubclass(methodCls, superCls)
                    for superCls in [OneVsOneMethod, OneVsManyMethod, ManyVsManyMethod])
 
         self._methods = []
         self._methodCls = methodCls
+
+        if loadPickle:
+            return
 
         queryTracksInputs = [querytrackFnList]
         refTrackInputs = [referencetrackFnList]
@@ -148,13 +152,13 @@ class MultiMethod(MultiMethodAbstractMethodsMixin, Method):
     def getMethodClass(self):
         return self._methodCls
 
-    def __getstate__(self):
-        return self._methods, self._methodCls
-
     def __setstate__(self, state):
         methods, methodCls = state
         self._methods = methods
         self._methodCls = methodCls
+
+    def __reduce__(self):
+        return MultiMethod, (self._methodCls, None, None, True), (self._methods, self._methodCls)
 
 
 class CallableAttributeList(list):

@@ -78,6 +78,23 @@ class TestMethods(TestMethodsBase):
         # self._printResultFiles(method, ['stderr', 'stdout', 'output'])
         self._assertMethodResultsSize(2, method)
 
+    def testStereoGene_OneVsMany_pickling(self, chrLenFile, tracks):
+        refTracks = [tracks[0], tracks[1]]
+        qTracks = [tracks[2]]
+        method = MultiMethod(StereoGene, qTracks, refTracks)
+        from pickle import dumps, loads
+        methodStr = dumps(method)
+        method = loads(methodStr)
+        method.setChromLenFileName(chrLenFile)
+        method.setManualParam('v', True)
+        method.setManualParam('silent', 0)
+        method.setManualParam('wSize', 20)
+        method.setManualParam('bin', 5)
+        method.setManualParam('kernelSigma', 10.0)
+        runAllMethodsInSequence([method])
+        # self._printResultFiles(method, ['stderr', 'stdout', 'output'])
+        self._assertMethodResultsSize(2, method)
+
     def testGenometriCorr_OneVsOne(self, chrLenFile, tracks):
         # raise Exception('With current setup, too long running time to function as unit test')
         method = GenometriCorr()
