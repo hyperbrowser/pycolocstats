@@ -15,6 +15,9 @@ __metaclass__ = type
 
 def runAllMethods(methods, jobOutputDir=DEFAULT_JOB_OUTPUT_DIR):
     try:
+        if ENABLE_METHODS_PARALLELISATION and ENABLE_JOBS_PARALLELISATION:
+            raise RuntimeError("enable_methods_parallelisation and enable_jobs_parallelisation should never be 'true' "
+                               "at the same time!")
         if ENABLE_METHODS_PARALLELISATION:
             _runAllMethodsInParallel(methods, jobOutputDir)
         else:
