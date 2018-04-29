@@ -1,6 +1,9 @@
+numpy
+matplotlib
 future
 docker
 pyyaml
 cwltool
 pytest
 configparser
+pandas
