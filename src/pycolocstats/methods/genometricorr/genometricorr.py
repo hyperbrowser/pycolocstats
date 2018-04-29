@@ -88,7 +88,13 @@ class GenometriCorr(OneVsOneMethod):
         return 'ratio of observed to expected (according to projection test)'
 
     def getFullResults(self):
-        return self.getRemappedResultDict({(self._params['query'],self._params['reference']): self._fullResults})
+
+        from . import fullresults
+        html = fullresults.gc_html(self._resultFilesDict['output'],
+                                   self._resultFilesDict['stdout'],
+                                   self._resultFilesDict['stderr'])
+
+        return self.getRemappedResultDict({(self._params['query'],self._params['reference']): str(html)})
 
     def preserveClumping(self, preserve):
         pass
