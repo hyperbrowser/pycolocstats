@@ -1,7 +1,8 @@
 from __future__ import absolute_import, division, print_function, unicode_literals
 
+
 from abc import ABCMeta, abstractmethod
-from future.utils import with_metaclass
+from future.utils import with_metaclass, python_2_unicode_compatible
 # from pycolocstats.methods.typecheck import takes, one_of
 
 __metaclass__ = type
@@ -17,6 +18,7 @@ class ColocMeasure(with_metaclass(ABCMeta, object)):
     pass
 
 
+@python_2_unicode_compatible
 class ColocMeasureOverlap(ColocMeasure):
     # @takes("ColocMeasureOverlap", bool, bool, int, int)
     def __init__(self, includeFlanks, countWholeIntervals, flankSizeUpstream=None, flankSizeDownstream=None):
@@ -25,18 +27,29 @@ class ColocMeasureOverlap(ColocMeasure):
         self._flankSizeUpstream = flankSizeUpstream
         self._flankSizeDownstream = flankSizeDownstream
 
+    def __str__(self):
+        return u'Overlap'
 
+
+@python_2_unicode_compatible
 class ColocMeasureProximity(ColocMeasure):
     # @takes("ColocMeasureProximity", one_of('start','midpoint','end','closest'), bool)
     def __init__(self, proximityAnchor, isGeometricDistance):
         self._proximityAnchor = proximityAnchor
         self._isGeometricDistance = isGeometricDistance
 
+    def __str__(self):
+        return u'Proximity (Geometric distance)' if self._isGeometricDistance else u'Proximity'
 
+
+@python_2_unicode_compatible
 class ColocMeasureCorrelation(ColocMeasure):
     # @takes("ColocMeasureCorrelation", one_of('genome-wide', 'fine-scale', 'local'))
     def __init__(self, typeOfCorrelation):
         self._typeOfCorrelation = typeOfCorrelation
+
+    def __str__(self):
+        return  u'Correlation ({})'.format(self._typeOfCorrelation) if self._typeOfCorrelation else u'Correlation'
 
 
 class RestrictedAnalysisUniverse(with_metaclass(ABCMeta, object)):
@@ -44,14 +57,22 @@ class RestrictedAnalysisUniverse(with_metaclass(ABCMeta, object)):
         return self.__class__.__name__ + '(' + str(self.trackFile) + ')'
 
 
+@python_2_unicode_compatible
 class RestrictedThroughInclusion(RestrictedAnalysisUniverse):
     def __init__(self, trackFile):
         self.trackFile = trackFile
 
+    def __str__(self):
+        return u'Restricted regions (use regions from track)'
 
+
+@python_2_unicode_compatible
 class RestrictedThroughExclusion(RestrictedAnalysisUniverse):
     def __init__(self, path):
         pass
+
+    def __str__(self):
+        return u'Restricted regions (exclude regions from track)'
 
 
 class RestrictedThroughPreDefined(RestrictedAnalysisUniverse):
