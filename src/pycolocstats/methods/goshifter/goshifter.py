@@ -9,7 +9,7 @@ from pycolocstats.core.types import SingleResultValue
 from pycolocstats.core.util import getTemporaryFileName
 from pycolocstats.methods.interface import ColocMeasureOverlap
 from pycolocstats.methods.method import OneVsOneMethod
-from pycolocstats.core.constants import GOSHIFTER_TOOL_NAME
+from pycolocstats.core.constants import GOSHIFTER_TOOL_NAME, CWL_OUTPUT_FOLDER_NAME
 
 __metaclass__ = type
 
@@ -166,10 +166,16 @@ class GoShifter(OneVsOneMethod):
         return {(self._orginalQueryFileTitle, self._orginalReferenceFileTitle): SingleResultValue(testStatVal, testStatText)}
 
     def getFullResults(self):
-        fullResults = open(self._resultFilesDict['stdout']).read().replace('\n', '<br>\n')
+        # fullResults = open(self._resultFilesDict['stdout']).read().replace('\n', '<br>\n')
+
+        from . import fullresults
+        fullResHtml = fullresults.toHtml(self._resultFilesDict['output'],
+                                         self._resultFilesDict['stdout'],
+                                         self._resultFilesDict['stderr'],
+                                         pathPrefix=CWL_OUTPUT_FOLDER_NAME)
 
         return self.getRemappedResultDict(
-            {(self._orginalQueryFileTitle, self._orginalReferenceFileTitle): str(fullResults)})
+            {(self._orginalQueryFileTitle, self._orginalReferenceFileTitle): str(fullResHtml)})
 
     def preserveClumping(self, preserve):
         if preserve == True:
