@@ -63,6 +63,12 @@ requirements:
             return '';
           } regiondb/collection/regions
           Rscript lola.r
+          wget -nv https://hyperbrowser.uio.no/hb/static/hyperbrowser/files/pycolocstats/lola/web.tar.gz
+          tar xf web.tar.gz
+          rm web.tar.gz
+          rm web/allEnrichments.tsv
+          mv web/* lolaResults
+          rm -rf web
 
       - entryname: lola.r
         entry: |-
