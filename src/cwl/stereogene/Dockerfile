@@ -13,12 +13,10 @@ RUN apt-get update && \
 
 WORKDIR /root
 
-RUN git clone https://github.com/favorov/stereogene.git
+RUN git clone -b release https://github.com/favorov/stereogene.git
 
-WORKDIR stereogene
+WORKDIR stereogene/src
 
-RUN git checkout release
+RUN mkdir -p ./obj
 
-WORKDIR src
-
-RUN make
+RUN make -f StereoGene.mak
