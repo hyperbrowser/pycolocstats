@@ -107,6 +107,7 @@ class TestMethods(TestMethodsBase):
         runAllMethods([method])
         # self._printResultFiles(method, ['stderr', 'stdout', 'output'])
         self._assertMethodResultsSize(1, method)
+        method.getFullResults()
 
     def testGenometriCorr_OneVsOne_header_in_data(self, chrLenFile, tracks):
         # raise Exception('With current setup, too long running time to function as unit test')

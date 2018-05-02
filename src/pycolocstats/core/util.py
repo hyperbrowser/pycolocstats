@@ -26,3 +26,12 @@ def getTemporaryFileName(suffix='.bed'):
 def deleteAllTmpFiles():
     while TMP_FILENAME_STORAGE:
         os.unlink(TMP_FILENAME_STORAGE.pop())
+
+
+def getLastTwoPartsOfFilePath(absFilePath):
+    from os.path import sep
+    if absFilePath:
+        pathSplitted = absFilePath.split(sep)
+        return sep.join(pathSplitted[-2:]) if len(pathSplitted) > 1 else sep.join(pathSplitted)
+    else:
+        return ""

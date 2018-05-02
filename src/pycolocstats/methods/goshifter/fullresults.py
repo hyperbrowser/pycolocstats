@@ -120,19 +120,33 @@ def plotting(modified, outputFolder):  # Getting input and plotting
     return outputFolder + os.sep + 'barplot.png'
 
 
-def HTML(plotted, outputFolder):  # Create HTML file
-    outputhtml = outputFolder + os.sep + 'Goshifter_Result.html'
-    text_file = open(outputhtml, "w")
-    text_file.write(toHtml())
-    text_file.close()
-    return outputFolder + os.sep + 'Goshifter_Result.html'
+# def HTML(plotted, outputFolder):  # Create HTML file
+#     outputhtml = outputFolder + os.sep + 'Goshifter_Result.html'
+#     text_file = open(outputhtml, "w")
+#     text_file.write(toHtml())
+#     text_file.close()
+#     return outputFolder + os.sep + 'Goshifter_Result.html'
 
 
-def toHtml(outputFolder, stdoutFn, stderrFn):
+def toHtml(outputFolder, stdoutFn, stderrFn, pathPrefix=""):
     modified = modifyinputs(outputFolder, stdoutFn, stderrFn)
     plotted = plotting(modified, outputFolder)
     #clean() #not sure if needed
-    return "<html>\n\t<body>\n\t\t<img src=\"barplot.png\">\n\t<body>\n<html>"
+
+    rootFolderName = outputFolder.split(os.sep)[-1] if outputFolder else ""
+
+    plotFilePath = pathPrefix + os.sep + rootFolderName + os.sep + "barplot.png"
+
+    from os import linesep
+    raw_html = ""
+    raw_html += "<html>" + linesep
+    raw_html += "\t<body>" + linesep
+    raw_html += "\t\t\"<img src=\"" + plotFilePath + "\">" + linesep
+    raw_html += "\t</body>" + linesep
+    raw_html += "</html>"
+
+    # return "<html>\n\t<body>\n\t\t<img src=\"barplot.png\">\n\t<body>\n<html>"
+    return raw_html
 
 
 def clean():
@@ -141,29 +155,29 @@ def clean():
     cmd = 'rm *_Copy'
     os.system(cmd)
     return
-
-
-if __name__ == '__main__':
-    starttime = time.time()
-    if len(sys.argv) < 1:  # The list of command line arguments passed to a Python script
-        # print (USAGE % sys.argv[0])
-        sys.exit(1)
-
-    opts, args = getopt.getopt(sys.argv[1:], "", ['outputFolder=', 'stdoutFile=', 'stderrFile='])
-    for o, a in opts:
-        if o == '--outputFolder':
-            outputFolder = a
-        if o == '--stdoutFile':
-            stdoutFile = a
-        if o == '--stderrFile':
-            stderrFile = a
-
-    logfile = open("log.txt", "w")
-    modified = modifyinputs(outputFolder, stdoutFile, stderrFile)
-    plotted = plotting(modified, outputFolder)
-    html = HTML(plotted, outputFolder)
-    clean(html)
-
-    logfile.close()
-    endtime = time.time()
-    print('it takes %.3f minutes or %.3f seconds' % ((endtime - starttime) / 60, endtime - starttime))
+#
+#
+# if __name__ == '__main__':
+#     starttime = time.time()
+#     if len(sys.argv) < 1:  # The list of command line arguments passed to a Python script
+#         # print (USAGE % sys.argv[0])
+#         sys.exit(1)
+#
+#     opts, args = getopt.getopt(sys.argv[1:], "", ['outputFolder=', 'stdoutFile=', 'stderrFile='])
+#     for o, a in opts:
+#         if o == '--outputFolder':
+#             outputFolder = a
+#         if o == '--stdoutFile':
+#             stdoutFile = a
+#         if o == '--stderrFile':
+#             stderrFile = a
+#
+#     # logfile = open("log.txt", "w")
+#     modified = modifyinputs(outputFolder, stdoutFile, stderrFile)
+#     plotted = plotting(modified, outputFolder)
+#     html = HTML(plotted, outputFolder)
+#     clean(html)
+#
+#     # logfile.close()
+#     endtime = time.time()
+#     print('it takes %.3f minutes or %.3f seconds' % ((endtime - starttime) / 60, endtime - starttime))
