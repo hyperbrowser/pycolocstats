@@ -134,7 +134,7 @@ class Giggle(OneVsManyMethod):
 
 
     def setHeterogeneityPreservation(self, preservationScheme, fn=None):
-        if preservationScheme is True:
+        if preservationScheme != self.PRESERVE_HETEROGENEITY_NOT:
             self.setNotCompatible()
 
     def getErrorDetails(self):

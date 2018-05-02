@@ -105,9 +105,8 @@ class StereoGene(OneVsOneMethod):
         #assert isinstance(colocMeasure, ColocMeasureCorrelation), type(colocMeasure)
 
     def setHeterogeneityPreservation(self, preservationScheme, fn=None):
-        if preservationScheme is not None:
+        if preservationScheme != self.PRESERVE_HETEROGENEITY_NOT:
             self.setNotCompatible()
-        #assert preservationScheme is None, preservationScheme
 
     def _parseStatisticsFile(self, dirpath):
         import xml.etree.ElementTree as et
