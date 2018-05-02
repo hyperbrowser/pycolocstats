@@ -90,7 +90,9 @@ class StereoGene(OneVsOneMethod):
                                          self._resultFilesDict['stdout'],
                                          self._resultFilesDict['stderr'],
                                          self._params['query'],
-                                         self._params['reference'])
+                                         self._params['reference'],
+                                         self._queryTitle,
+                                         self._refTitle)
         return self.getRemappedResultDict(OrderedDict([(key, fullResHtml) for key in self._results.keys()]))
 
     def preserveClumping(self, preserve):
