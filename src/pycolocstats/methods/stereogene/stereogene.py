@@ -24,8 +24,7 @@ class StereoGene(OneVsOneMethod):
         return STEREOGENE_TOOL_NAME
 
     def _setDefaultParamValues(self):
-        # self._params['tracks'] = []
-        pass
+        self._params['r'] = True
 
     def setGenomeName(self, genomeName):
         pass
@@ -85,8 +84,14 @@ class StereoGene(OneVsOneMethod):
         return 'Correlation coefficient'
 
     def getFullResults(self):
-        fullResults = open(self._resultFilesDict['stdout']).read().replace('\n','<br>\n')
-        return self.getRemappedResultDict(OrderedDict([(key, fullResults) for key in self._results.keys()]))
+        # fullResults = open(self._resultFilesDict['stdout']).read().replace('\n','<br>\n')
+        from . import fullresults
+        fullResHtml = fullresults.toHtml(self._resultFilesDict['output'],
+                                         self._resultFilesDict['stdout'],
+                                         self._resultFilesDict['stderr'],
+                                         self._params['query'],
+                                         self._params['reference'])
+        return self.getRemappedResultDict(OrderedDict([(key, fullResHtml) for key in self._results.keys()]))
 
     def preserveClumping(self, preserve):
         if preserve == True:
