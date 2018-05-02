@@ -16,8 +16,26 @@ from numbers import Number
 
 __metaclass__ = type
 
+def memoize(func):
+    cache = func.cache = {}
+
+    import functools
+    @functools.wraps(func)
+    def memoized_func(*args, **kwargs):
+        key = str(args) + str(kwargs)
+        if key not in cache:
+            cache[key] = func(*args, **kwargs)
+        return cache[key]
+
+    return memoized_func
+
+class Memoize(type):
+    @memoize
+    def __call__(cls, *args):
+        return super(Memoize, cls).__call__(*args)
 
 class Tool(object):
+    __metaclass__ = Memoize
     _cwlToolFactory = cwltool.factory.Factory()
 
     def __init__(self, toolName):
