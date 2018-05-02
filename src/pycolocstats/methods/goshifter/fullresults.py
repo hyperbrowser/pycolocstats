@@ -133,7 +133,9 @@ def toHtml(outputFolder, stdoutFn, stderrFn, pathPrefix=""):
     plotted = plotting(modified, outputFolder)
     #clean() #not sure if needed
 
-    plotFilePath = pathPrefix + outputFolder + os.sep + "barplot.png"
+    rootFolderName = outputFolder.split(os.sep)[-1] if outputFolder else ""
+
+    plotFilePath = pathPrefix + os.sep + rootFolderName + os.sep + "barplot.png"
 
     from os import linesep
     raw_html = ""
