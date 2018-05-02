@@ -1,4 +1,8 @@
 import re
+from os import linesep
+
+from pycolocstats.core.constants import CWL_OUTPUT_FOLDER_NAME
+from pycolocstats.core.util import getLastTwoPartsOfFilePath
 
 
 def sorted_nicely(
@@ -65,16 +69,16 @@ def output_to_table(file):
     table += "<th>All</th>"
     for tup in tuplovoz:
         table += "<th>" + tup[0] + "</th>"
-    table += "</tr>\n"
+    table += "</tr>" + linesep
     for row, name in enumerate(fieldnames):
         table += "<tr>"
         table += "<td>" + name + "</td>"
         table += "<td>" + scissors(data[row][awhole]) + "</td>"
         for tup in tuplovoz:
             table += "<td>" + scissors(data[row][tup[1]]) + "</td>"
-        table += "</tr>\n"
+        table += "</tr>" + linesep
 
-    table += "</table>\n"
+    table += "</table>" + linesep
     return table
 
 
@@ -84,32 +88,38 @@ def output_to_table(file):
 
 
 def gc_html(outputFolder=None, stdoutFile=None, stderrFile=None):
-    html = "<!DOCTYPE html>\n"
-    html += "<html>\n"
-    html += "<head>\n"
-    html += "<style>\n"
-    html += "td {\n"
-    html += "\twhite-space: nowrap;\n"
-    html += "}\n"
-    html += "th {\n"
-    html += "\ttext-align: left;\n"
-    html += "}\n"
-    html += "table {\n"
-    html += "\tborder-spacing: 5px;\n"
-    html += "}\n"
-    html += "</style>\n"
-    html += "<title>GenometriCorr results</title>\n"
-    html += "</head>\n"
-    html += "<body>\n"
-    html += "<h3> GenometriCorr results: </h3>\n"
+    from os.path import sep
+    rootFolderName = outputFolder.split(sep)[-1] if outputFolder else ""
+    stdoutRelPath = getLastTwoPartsOfFilePath(stdoutFile)
+    stderrRelPath = getLastTwoPartsOfFilePath(stderrFile)
+
+    html = "<!DOCTYPE html>" + linesep
+    html += "<html>" + linesep
+    html += "<head>" + linesep
+    html += "<style>" + linesep
+    html += "td {" + linesep
+    html += "\twhite-space: nowrap;" + linesep
+    html += "}" + linesep
+    html += "th {" + linesep
+    html += "\ttext-align: left;" + linesep
+    html += "}" + linesep
+    html += "table {" + linesep
+    html += "\tborder-spacing: 5px;" + linesep
+    html += "}" + linesep
+    html += "</style>" + linesep
+    html += "<title>GenometriCorr results</title>" + linesep
+    html += "</head>" + linesep
+    html += "<body>" + linesep
+    html += "<h3> GenometriCorr results: </h3>" + linesep
     html += output_to_table(outputFolder + "/GenometriCorr_Output.txt")
-    html += "<p>Please refer to <a href=http://genometricorr.sourceforge.net/GenometriCorr.pdf> GenometriCorr documentaion </a></p>\n"
-    html += "<h3> Technical information: </h3>\n"
-    html += "<p><a href = \"" + outputFolder + "/conf.ini\"> Configuration file </a></p>\n"
-    html += "<p><a href = \"" + outputFolder + "/genometricorr.r\"> R calling code </a></p>\n"
-    html += "<p><a href = \"" + stdoutFile + "\">stdout</a></p>\n"
-    html += "<p><a href = \"" + stderrFile + "\">stderr</a></p>\n"
+    html += "<p>Please refer to <a href=http://genometricorr.sourceforge.net/GenometriCorr.pdf> GenometriCorr documentaion </a></p>" + linesep
+    html += "<h3> Technical information: </h3>" + linesep
+    html += "<p><a href = \"" + CWL_OUTPUT_FOLDER_NAME + sep + rootFolderName + sep + "conf.ini\"> Configuration file </a></p>" + linesep
+    html += "<p><a href = \"" + CWL_OUTPUT_FOLDER_NAME + sep + rootFolderName + sep + "genometricorr.r\"> R calling code </a></p>" + linesep
+    html += "<p><a href = \"" + CWL_OUTPUT_FOLDER_NAME + sep + stdoutRelPath + "\">stdout</a></p>" + linesep
+    html += "<p><a href = \"" + CWL_OUTPUT_FOLDER_NAME + sep + stderrRelPath + "\">stderr</a></p>" + linesep
     html += "</body>"
     html += "</html>"
     return html
+
 
