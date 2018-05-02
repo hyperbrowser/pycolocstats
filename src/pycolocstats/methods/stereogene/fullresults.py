@@ -10,14 +10,14 @@ def toHtml(outputFolder=None, stdoutFile=None, stderrFile=None, queryTrack=None,
     refTrackFn = refTrack.split(sep)[-1]
     htmlFn = "~".join((splitext(queryTrack)[0].split(sep)[-1], splitext(refTrack)[0].split(sep)[-1])) + ".html"
     targetHtml = sep.join((CWL_OUTPUT_FOLDER_NAME, rootFolderName, htmlFn))
-    # contents = ""
-    # with open(targetHtml, "rt") as f:
-    #     contents = f.read()
-    # if contents:
-    #     contents = contents.replace(queryTrackFn, queryTitle)
-    #     contents = contents.replace(refTrackFn, refTitle)
-    #     with open(targetHtml, "wt") as f:
-    #         f.write(contents)
+    contents = ""
+    with open(sep.join((outputFolder, htmlFn)), "rt") as f:
+        contents = f.read()
+    if contents:
+        contents = contents.replace(queryTrackFn, queryTitle)
+        contents = contents.replace(refTrackFn, refTitle)
+        with open(sep.join((outputFolder, htmlFn)), "wt") as f:
+            f.write(contents)
 
     html = "<!DOCTYPE html>" + linesep
     html += "<html>" + linesep
