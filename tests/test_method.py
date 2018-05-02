@@ -211,7 +211,7 @@ class TestMethods(TestMethodsBase):
         self._assertMethodResultsSize(expectedResulstNr, method)
 
     def testLOLADynamic(self, chrLenFile, tracks):
-        raise Exception('With current setup, too long running time to function as unit test')
+        # raise Exception('With current setup, too long running time to function as unit test') #ok with lola_test
         method = LOLA()
         method.setQueryTrackFileNames([tracks[8]])
         method.setReferenceTrackFileNames([tracks[2], tracks[3]])
@@ -219,6 +219,7 @@ class TestMethods(TestMethodsBase):
         method.preserveClumping(False)
         runAllMethods([method])
         self._printResultFiles(method, ['stderr', 'stdout', 'output'])
+        method.getFullResults()
 
     def testLOLAReference(self, chrLenFile, tracks):
         method = LOLA()

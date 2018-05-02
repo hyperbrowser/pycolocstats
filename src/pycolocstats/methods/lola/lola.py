@@ -113,10 +113,11 @@ class LOLA(OneVsManyMethod):
         return self.getRemappedResultDict(self._testStats)
 
     def getFullResults(self):
-        resultsFolderPath = self._resultFilesDict['output']
-        mainOutput = resultsFolderPath + '/lolaResults/allEnrichments.tsv'
-        fullResults = open(mainOutput).read().replace('\n','<br>\n')
-        return self.getRemappedResultDict(OrderedDict([(key, fullResults) for key in self._pvals.keys()]))
+        from . import fullresults
+        fullResHtml = fullresults.toHtml(self._resultFilesDict['output'],
+                                         self._resultFilesDict['stdout'],
+                                         self._resultFilesDict['stderr'])
+        return self.getRemappedResultDict(OrderedDict([(key, fullResHtml) for key in self._pvals.keys()]))
 
     def preserveClumping(self, preserve):
         if not preserve:
