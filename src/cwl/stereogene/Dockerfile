@@ -22,3 +22,5 @@ RUN mkdir -p ./obj
 RUN make -f StereoGene.mak
 
 RUN Rscript -e 'install.packages("markdown", repos = "https://cran.revolutionanalytics.com")'
+
+RUN Rscript -e 'install.packages("rmarkdown", repos = "https://cran.revolutionanalytics.com")'
