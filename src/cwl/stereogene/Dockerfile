@@ -24,3 +24,7 @@ RUN make -f StereoGene.mak
 RUN Rscript -e 'install.packages("markdown", repos = "https://cran.revolutionanalytics.com")'
 
 RUN Rscript -e 'install.packages("rmarkdown", repos = "https://cran.revolutionanalytics.com")'
+
+RUN wget https://github.com/jgm/pandoc/releases/download/1.15.1/pandoc-1.15.1-1-amd64.deb && \
+dpkg -i pandoc-1.15.1-1-amd64.deb && \
+rm pandoc-1.15.1-1-amd64.deb
