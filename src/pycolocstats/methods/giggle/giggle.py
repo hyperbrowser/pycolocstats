@@ -44,7 +44,7 @@ class Giggle(OneVsManyMethod):
     def _setQueryTrackFileName(self, trackFile):
         bedPath = self._getBedExtendedFileName(trackFile.path)
         self._addTrackTitleMapping(bedPath, trackFile.title)
-        self.qTrackFn = bedPath
+        self.qTrackFn = trackFile.title
         self._params['search_q'] = bedPath
 
     def getRefTracksMappedToIndexParams(self, trackFnList):
