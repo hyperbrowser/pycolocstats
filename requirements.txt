@@ -7,3 +7,4 @@ cwltool
 pytest
 configparser
 pandas
+vim
