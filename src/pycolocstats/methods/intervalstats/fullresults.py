@@ -6,20 +6,25 @@ def toHtml(outputFolder=None, stdoutFile=None, stderrFile=None, urlPrefix=''):
     htmlStr = '''
     <html>
         <head>
+            <style>
+            table, th, td {
+                border: 1px solid grey;
+            }
+            </style>
             <script type="text/javascript" src="''' + urlPrefix + '''/static/scripts/libs/jquery/jquery.js"></script>
             <script type="text/javascript" src="''' + urlPrefix + '''/static/scripts/proto/sorttable.js"></script>
         </head>
         <body>
             <h3> Intervalstats results: </h3>
-            <table class="sortable" width="100%%" style="table-layout:auto;word-wrap:break-word;border: 1px solid grey;">
-                <tr>
-                    <th>Query interval</th>
-                    <th>Closest reference interval</th>
-                    <th>Length of query</th>
-                    <th>Distance</th>
-                    <th>Numerator</th>
-                    <th>Denominator</th>
-                    <th>P-value</th>
+            <table border="1|0" class="sortable" width="100%%" style="table-layout:auto;word-wrap:break-word;">
+                <tr style=">
+                    <th bgcolor="lightgray">Query interval</th>
+                    <th bgcolor="lightgray">Closest reference interval</th>
+                    <th bgcolor="lightgray">Length of query</th>
+                    <th bgcolor="lightgray">Distance</th>
+                    <th bgcolor="lightgray">Numerator</th>
+                    <th bgcolor="lightgray">Denominator</th>
+                    <th bgcolor="lightgray">P-value</th>
                 </tr>
     '''
     with open(path.join(outputFolder, 'output'), 'rt') as f:
