@@ -165,7 +165,7 @@ class GoShifter(OneVsOneMethod):
                    + '">' + self._getFormattedVal(testStatVal) + '</span>'
         return {(self._orginalQueryFileTitle, self._orginalReferenceFileTitle): SingleResultValue(testStatVal, testStatText)}
 
-    def getFullResults(self):
+    def getFullResults(self, *args, **kwargs):
         # fullResults = open(self._resultFilesDict['stdout']).read().replace('\n', '<br>\n')
 
         from . import fullresults

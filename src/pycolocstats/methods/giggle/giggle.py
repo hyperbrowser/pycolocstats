@@ -116,7 +116,7 @@ class Giggle(OneVsManyMethod):
         return self.getRemappedResultDict(testStatDict)
 
 
-    def getFullResults(self):
+    def getFullResults(self, *args, **kwargs):
         fullResults = self.resultsToHtml(stdoutFile=self.getResultFilesDict()['stdout'],
                                          trackTitleMapping=self._trackTitleMappings)
         return self.getRemappedResultDict(OrderedDict([(key,fullResults) for key in self._parsedResults.getResultsPerName('overlaps').keys()]))

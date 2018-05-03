@@ -87,7 +87,7 @@ class GenometriCorr(OneVsOneMethod):
     def getTestStatDescr(cls):
         return 'ratio of observed to expected (according to projection test)'
 
-    def getFullResults(self):
+    def getFullResults(self, *args, **kwargs):
 
         from . import fullresults
         html = fullresults.gc_html(self._resultFilesDict['output'],

@@ -46,7 +46,7 @@ class MultiMethodAbstractMethodsMixin(object):
     def getTestStatistic(self):
         raise AbstractMethodError()
 
-    def getFullResults(self):
+    def getFullResults(self, *args, **kwargs):
         raise AbstractMethodError()
 
 

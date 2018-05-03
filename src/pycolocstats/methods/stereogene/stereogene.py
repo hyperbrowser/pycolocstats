@@ -83,7 +83,7 @@ class StereoGene(OneVsOneMethod):
     def getTestStatDescr(cls):
         return 'Correlation coefficient'
 
-    def getFullResults(self):
+    def getFullResults(self, *args, **kwargs):
         # fullResults = open(self._resultFilesDict['stdout']).read().replace('\n','<br>\n')
         from . import fullresults
         fullResHtml = fullresults.toHtml(self._resultFilesDict['output'],

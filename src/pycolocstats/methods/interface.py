@@ -194,7 +194,7 @@ class UniformInterface(with_metaclass(ABCMeta, object)):
         return 'not defined'
 
     @abstractmethod
-    def getFullResults(self):
+    def getFullResults(self, *args, **kwargs):
         """
         :return: Full result output as a string
         """

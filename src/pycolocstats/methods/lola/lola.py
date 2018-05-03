@@ -112,7 +112,7 @@ class LOLA(OneVsManyMethod):
     def getTestStatistic(self):
         return self.getRemappedResultDict(self._testStats)
 
-    def getFullResults(self):
+    def getFullResults(self, *args, **kwargs):
         from . import fullresults
         fullResHtml = fullresults.toHtml(self._resultFilesDict['output'],
                                          self._resultFilesDict['stdout'],
