@@ -17,7 +17,7 @@ def toHtml(outputFolder=None, stdoutFile=None, stderrFile=None, urlPrefix=''):
         <body>
             <h3> Intervalstats results: </h3>
             <table border="1|0" class="sortable" width="100%%" style="table-layout:auto;word-wrap:break-word;">
-                <tr style=">
+                <tr>
                     <th bgcolor="lightgray">Query interval</th>
                     <th bgcolor="lightgray">Closest reference interval</th>
                     <th bgcolor="lightgray">Length of query</th>
