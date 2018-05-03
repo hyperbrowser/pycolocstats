@@ -32,7 +32,7 @@ def toHtml(outputFolder=None, stdoutFile=None, stderrFile=None, queryTrack=None,
         html += "</head>" + linesep
         html += "<body>" + linesep
         html += "<p>Something went wrong while generating the HTML report.</p>"
-        with open(sep.join((CWL_OUTPUT_FOLDER_NAME, stderrFile)), 'rt') as f:
+        with open(stderrFile, 'rt') as f:
             html += "<p>" + f.read().replace(linesep, "<br>") + "</p>"
     html += "</body>" + linesep
     html += "</html>"
