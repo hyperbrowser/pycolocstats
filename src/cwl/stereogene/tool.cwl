@@ -195,5 +195,5 @@ requirements:
           cp $(inputs.query.path) .
           cp $(inputs.reference.path) .
           /root/stereogene/src/StereoGene -chrom $(inputs.chrom.basename) $(inputs.query.basename) $(inputs.reference.basename) \$(echo "$@" | sed 's@/private/[^ ]*@@g' | sed 's@/var/[^ ]*@@g' | sed 's@-chrom[^ ]*@@g')
-          Rscript *_report.r >& /dev/null
+          Rscript *_report.r
           chmod a+w -R *.html
