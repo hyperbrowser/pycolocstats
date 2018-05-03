@@ -16,10 +16,12 @@ from numbers import Number
 
 __metaclass__ = type
 
+
 def memoize(func):
+    import functools
+
     cache = func.cache = {}
 
-    import functools
     @functools.wraps(func)
     def memoized_func(*args, **kwargs):
         key = str(args) + str(kwargs)
@@ -29,33 +31,86 @@ def memoize(func):
 
     return memoized_func
 
+
 class Memoize(type):
     @memoize
-    def __call__(cls, *args):
-        return super(Memoize, cls).__call__(*args)
+    def __call__(cls, *args, **kwargs):
+        return super(Memoize, cls).__call__(*args, **kwargs)
+
+
+class ToolConfig(object):
+    __metaclass__ = Memoize
+
+    def __init__(self, toolName):
+        self.toolName = toolName
+
+        if USE_TEST_DOCKER_IMAGES:
+            oldToolName = self.toolName
+            self.toolName += TEST_TOOL_SUFFIX
+            if not os.path.exists(self.getCWLFilePath()):
+                self.toolName = oldToolName
+
+        with open(self.getCWLFilePath(), 'r') as stream:
+            self._yaml = yaml.load(stream)
+
+    def getToolImageName(self):
+        return 'colocstats/%s' % self.toolName
+
+    def getDockerImagePullInfo(self):
+        requirements = self._yaml['requirements']
+        dockerRequirement = [r for r in requirements if r['class'] == 'DockerRequirement'][0]
+        return dockerRequirement['dockerPull']
+
+    def getCWLFilePath(self):
+        return pkg_resources.resource_filename('pycolocstats',
+                                               '../cwl/{}/tool.cwl'.format(self.toolName))
+
+    def createJobParamsDict(self):
+        inputs = self._yaml['inputs']
+        paramDefDict = dict(
+            [(inp, dict(type=self._getPythonType(inputs[inp]['type']),
+                        mandatory=self._isMandatoryParameter(inputs[inp]['type'])))
+             for inp in inputs])
+        return JobParamsDict(paramDefDict)
+
+    @staticmethod
+    def _getPythonType(cwlType):
+        if isinstance(cwlType, dict) or isinstance(cwlType, list):
+            return PathStrList
+        typeStr = cwlType[:-1] if cwlType.endswith('?') else cwlType
+        return {
+            'int': int,
+            'float': float,
+            'long': Number,
+            'string': str,
+            'boolean': bool,
+            'File': PathStr
+        }[typeStr]
+
+    @staticmethod
+    def _isMandatoryParameter(cwlType):
+        if isinstance(cwlType, list):
+            return 'null' not in cwlType
+        else:
+            return True if isinstance(cwlType, dict) else not cwlType.endswith('?')
+
 
 class Tool(object):
-    __metaclass__ = Memoize
     _cwlToolFactory = cwltool.factory.Factory()
 
     def __init__(self, toolName):
-        self._toolName = toolName
-
-        if USE_TEST_DOCKER_IMAGES:
-            oldToolName = self._toolName
-            self._toolName += TEST_TOOL_SUFFIX
-            if not os.path.exists(self._getCWLFilePath()):
-                self._toolName = oldToolName
-
-        with open(self._getCWLFilePath(), 'r') as stream:
-            self._yaml = yaml.load(stream)
+        self._config = ToolConfig(toolName)
         self._cwlTool = None
+
+    @property
+    def toolName(self):
+        return self._config.toolName
 
     def getCwlTool(self, jobOutputDir=DEFAULT_JOB_OUTPUT_DIR):
         if not self._cwlTool:
             if PULL_DOCKER_IMAGES:
-                docker.from_env().images.pull('colocstats/%s' % self._toolName, tag="latest")
-            self._cwlTool = self._cwlToolFactory.make(self._getCWLFilePath())
+                docker.from_env().images.pull(self._config.getToolImageName(), tag="latest")
+            self._cwlTool = self._cwlToolFactory.make(self._config.getCWLFilePath())
             self._cwlTool.factory.execkwargs['use_container'] = True
             self._cwlTool.factory.execkwargs['no_read_only'] = True
 
@@ -70,44 +125,5 @@ class Tool(object):
 
         return self._cwlTool
 
-    def _getDockerImagePullInfo(self):
-        requirements = self._yaml['requirements']
-        dockerRequirement = [r for r in requirements if r['class'] == 'DockerRequirement'][0]
-        return dockerRequirement['dockerPull']
-
-    def _getToolPath(self):
-        return pkg_resources.resource_filename('pycolocstats',
-                                               '../cwl/{}'.format(self._toolName))
-
-    def _getCWLFilePath(self):
-        return pkg_resources.resource_filename('pycolocstats',
-                                               '../cwl/{}/tool.cwl'.format(self._toolName))
-
     def createJobParamsDict(self):
-        inputs = self._yaml['inputs']
-        paramDefDict = dict(
-            [(inp, dict(type=self.getPythonType(inputs[inp]['type']),
-                        mandatory=self.isMandatoryParameter(inputs[inp]['type'])))
-             for inp in inputs])
-        return JobParamsDict(paramDefDict)
-
-    @staticmethod
-    def getPythonType(cwlType):
-        if isinstance(cwlType, dict) or isinstance(cwlType, list):
-            return PathStrList
-        typeStr = cwlType[:-1] if cwlType.endswith('?') else cwlType
-        return {
-            'int': int,
-            'float': float,
-            'long': Number,
-            'string': str,
-            'boolean': bool,
-            'File': PathStr
-        }[typeStr]
-
-    @staticmethod
-    def isMandatoryParameter(cwlType):
-        if isinstance(cwlType, list):
-            return 'null' not in cwlType
-        else:
-            return True if isinstance(cwlType, dict) else not cwlType.endswith('?')
+        return self._config.createJobParamsDict()
