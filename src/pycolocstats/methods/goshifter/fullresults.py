@@ -26,29 +26,29 @@ def modifyinputs(outputFolder, stdoutFile, stderrFile):  # Read standard output 
     # print(outputFolder)
     # print(stdoutFile)
     # print(stderrFile)
-    cmd = 'grep \"p-value = \" %s > %s' % (stdoutFile, outputFolder + os.sep + TEMP_FILE_PREFIX + '1.txt')
+    cmd = 'grep \"p-value = \" %s > %s 2>/dev/null' % (stdoutFile, outputFolder + os.sep + TEMP_FILE_PREFIX + '1.txt')
     os.system(cmd)
 
-    cmd = 'grep \"annotation \" %s > %s' % (stdoutFile, outputFolder + os.sep + TEMP_FILE_PREFIX + '2.txt')
+    cmd = 'grep \"annotation \" %s > %s 2>/dev/null' % (stdoutFile, outputFolder + os.sep + TEMP_FILE_PREFIX + '2.txt')
     os.system(cmd)
 
-    cmd = 'paste %s %s > %s' % (
+    cmd = 'paste %s %s > %s 2>/dev/null' % (
     outputFolder + os.sep + TEMP_FILE_PREFIX + '1.txt', outputFolder + os.sep + TEMP_FILE_PREFIX + '2.txt', outputFolder + os.sep + TEMP_FILE_PREFIX + '3.txt')
     os.system(cmd)
 
-    cmd = 'vim -c\"%%s/\\s\\+/\\t/g|wq\" %s' % (outputFolder + os.sep + TEMP_FILE_PREFIX + '3.txt')
+    cmd = 'vim -c\"%%s/\\s\\+/\\t/g|wq\" %s 2>/dev/null' % (outputFolder + os.sep + TEMP_FILE_PREFIX + '3.txt')
     os.system(cmd)
 
-    cmd = 'vim -c\"%%s/--annotation\\s\\+.\\+\\//\\t/|wq\" %s' % (outputFolder + os.sep + TEMP_FILE_PREFIX + '3.txt')
+    cmd = 'vim -c\"%%s/--annotation\\s\\+.\\+\\//\\t/|wq\" %s 2>/dev/null' % (outputFolder + os.sep + TEMP_FILE_PREFIX + '3.txt')
     os.system(cmd)
 
-    cmd = 'vim -c\"%%s/p-value\\s\\+=\\s\\+//|wq\" %s' % (outputFolder + os.sep + TEMP_FILE_PREFIX + '3.txt')
+    cmd = 'vim -c\"%%s/p-value\\s\\+=\\s\\+//|wq\" %s 2>/dev/null' % (outputFolder + os.sep + TEMP_FILE_PREFIX + '3.txt')
     os.system(cmd)
 
-    cmd = 'vim -c\"1s/\\(.\\+\\)/\Index\tPvalue\\tAnnotation\\r1\\t\\1/|wq\" %s' % (outputFolder + os.sep + TEMP_FILE_PREFIX + '3.txt')
+    cmd = 'vim -c\"1s/\\(.\\+\\)/\Index\tPvalue\\tAnnotation\\r1\\t\\1/|wq\" %s 2>/dev/null' % (outputFolder + os.sep + TEMP_FILE_PREFIX + '3.txt')
     os.system(cmd)
 
-    cmd = 'vim -c\"%%s/\\s\\+/\\t/g|wq\" %s' % (outputFolder + os.sep + TEMP_FILE_PREFIX + '3.txt')
+    cmd = 'vim -c\"%%s/\\s\\+/\\t/g|wq\" %s 2>/dev/null' % (outputFolder + os.sep + TEMP_FILE_PREFIX + '3.txt')
     os.system(cmd)
     return outputFolder + os.sep + TEMP_FILE_PREFIX + '3.txt'
 
@@ -61,9 +61,9 @@ def plotting(modified, outputFolder):  # Getting input and plotting
     N = len([pvalue])
     width = 1 / 1.5
     fname2 = outputFolder + os.sep + 'output.nperm10.locusscore'
-    cmd = 'cp %s %s' % (fname2, fname2 + '_Copy')
+    cmd = 'cp %s %s 2>/dev/null' % (fname2, fname2 + '_Copy')
     os.system(cmd)
-    cmd = 'vim -c\"%%s/N\/A/0/g|wq\" %s' % (fname2 + '_Copy')
+    cmd = 'vim -c\"%%s/N\/A/0/g|wq\" %s 2>/dev/null' % (fname2 + '_Copy')
     os.system(cmd)
     results2 = pd.read_csv(filepath_or_buffer=fname2 + '_Copy', sep='\t', header=0, index_col=0)
     x1 = results2.loc[:, 'overlap']
