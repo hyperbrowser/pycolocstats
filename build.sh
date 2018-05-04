@@ -7,5 +7,5 @@ for d in src/cwl/*/ ; do
     IMAGE=${IMAGE%?};
     TOOL=${IMAGE/colocstats}
     echo Running: docker build --cache-from ${IMAGE}:latest --tag ${IMAGE}:latest src/cwl${TOOL}
-    docker build --cache-from ${IMAGE}:latest --tag ${IMAGE}:latest cwl${TOOL}
+    docker build --cache-from ${IMAGE}:latest --tag ${IMAGE}:latest src/cwl${TOOL}
 done
