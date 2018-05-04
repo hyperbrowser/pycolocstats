@@ -72,7 +72,7 @@ def output_to_table(file):
 
     # gather the table
     table = "<table>"
-    if tuplovoz and fieldnames:
+    if tuplovoz and fieldnames and data and awhole is not None:
         table += "<tr><th></th>"
         table += "<th>All</th>"
         for tup in tuplovoz:
@@ -119,7 +119,8 @@ def gc_html(outputFolder=None, stdoutFile=None, stderrFile=None):
     html += "</head>" + linesep
     html += "<body>" + linesep
     html += "<h3> GenometriCorr results: </h3>" + linesep
-    html += output_to_table(outputFolder + "/GenometriCorr_Output.txt")
+    print("GNMTRCRR: ", outputFolder + sep + "GenometriCorr_Output.txt")
+    html += output_to_table(outputFolder + sep + "GenometriCorr_Output.txt")
     html += "<p>Please refer to <a href=http://genometricorr.sourceforge.net/GenometriCorr.pdf> GenometriCorr documentaion </a></p>" + linesep
     html += "<h3> Technical information: </h3>" + linesep
     html += "<p><a href = \"" + CWL_OUTPUT_FOLDER_NAME + sep + rootFolderName + sep + "conf.ini\"> Configuration file </a></p>" + linesep
