@@ -33,11 +33,16 @@ def scissors(q):  # trim float values
 
 
 def output_to_table(file):
-    filedesc = open(file, "r")
-    results_by_string = filedesc.read().split("\n")
+    chrnames = []
+    results_by_string = []
+    with open(file, "rt") as filedesc:
+        results_by_string = [x.strip() for x in filedesc.readlines()]
+    # filedesc = open(file, "rt")
+    # results_by_string = filedesc.read().split("\n")
     first = 1
     data = []  # to append
     fieldnames = []  # to append
+    awhole = None
     for typeline in results_by_string:
         dataline = typeline.split("\t")
         if len(dataline) <= 1:
@@ -56,7 +61,8 @@ def output_to_table(file):
                 continue
             fieldnames.append(dataline[0])
             data.append(dataline[1:])
-    chrnames.pop(awhole)  # genomewide
+    if awhole is not None and chrnames:
+        chrnames.pop(awhole)  # genomewide
 
     tuplovoz = []
     for n, chrom in enumerate(chrnames):
@@ -65,18 +71,20 @@ def output_to_table(file):
     tuplovoz = sorted_nicely_tup(tuplovoz)
 
     # gather the table
-    table = "<table><tr><th></th>"
-    table += "<th>All</th>"
-    for tup in tuplovoz:
-        table += "<th>" + tup[0] + "</th>"
-    table += "</tr>" + linesep
-    for row, name in enumerate(fieldnames):
-        table += "<tr>"
-        table += "<td>" + name + "</td>"
-        table += "<td>" + scissors(data[row][awhole]) + "</td>"
+    table = "<table>"
+    if tuplovoz and fieldnames:
+        table += "<tr><th></th>"
+        table += "<th>All</th>"
         for tup in tuplovoz:
-            table += "<td>" + scissors(data[row][tup[1]]) + "</td>"
+            table += "<th>" + tup[0] + "</th>"
         table += "</tr>" + linesep
+        for row, name in enumerate(fieldnames):
+            table += "<tr>"
+            table += "<td>" + name + "</td>"
+            table += "<td>" + scissors(data[row][awhole]) + "</td>"
+            for tup in tuplovoz:
+                table += "<td>" + scissors(data[row][tup[1]]) + "</td>"
+            table += "</tr>" + linesep
 
     table += "</table>" + linesep
     return table
