@@ -67,6 +67,7 @@ requirements:
           tar xf web.tar.gz
           rm web.tar.gz
           rm web/allEnrichments.tsv
+          mkdir -p lolaResults
           mv web/* lolaResults
           rm -rf web
 
