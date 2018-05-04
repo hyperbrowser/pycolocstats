@@ -24,8 +24,7 @@ class StereoGene(OneVsOneMethod):
         return STEREOGENE_TOOL_NAME
 
     def _setDefaultParamValues(self):
-        # self._params['tracks'] = []
-        pass
+        self._params['r'] = True
 
     def setGenomeName(self, genomeName):
         pass
@@ -84,9 +83,17 @@ class StereoGene(OneVsOneMethod):
     def getTestStatDescr(cls):
         return 'Correlation coefficient'
 
-    def getFullResults(self):
-        fullResults = open(self._resultFilesDict['stdout']).read().replace('\n','<br>\n')
-        return self.getRemappedResultDict(OrderedDict([(key, fullResults) for key in self._results.keys()]))
+    def getFullResults(self, *args, **kwargs):
+        # fullResults = open(self._resultFilesDict['stdout']).read().replace('\n','<br>\n')
+        from . import fullresults
+        fullResHtml = fullresults.toHtml(self._resultFilesDict['output'],
+                                         self._resultFilesDict['stdout'],
+                                         self._resultFilesDict['stderr'],
+                                         self._params['query'],
+                                         self._params['reference'],
+                                         self._queryTitle,
+                                         self._refTitle)
+        return self.getRemappedResultDict(OrderedDict([(key, fullResHtml) for key in self._results.keys()]))
 
     def preserveClumping(self, preserve):
         if preserve == True:
@@ -105,9 +112,8 @@ class StereoGene(OneVsOneMethod):
         #assert isinstance(colocMeasure, ColocMeasureCorrelation), type(colocMeasure)
 
     def setHeterogeneityPreservation(self, preservationScheme, fn=None):
-        if preservationScheme is not None:
+        if preservationScheme != self.PRESERVE_HETEROGENEITY_NOT:
             self.setNotCompatible()
-        #assert preservationScheme is None, preservationScheme
 
     def _parseStatisticsFile(self, dirpath):
         import xml.etree.ElementTree as et

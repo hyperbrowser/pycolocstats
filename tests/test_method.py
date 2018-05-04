@@ -87,18 +87,18 @@ class TestMethods(TestMethodsBase):
         #     self._printResultFiles(workingMethod, ['stderr', 'stdout', 'output'])
 
     def testGenometriCorr(self, chrLenFile, tracks):
-        raise Exception('With current setup, too long running time to function as unit test')
-        # method = GenometriCorr()
-        # method.setQueryTrackFileNames([tracks[0]])
-        # method.setReferenceTrackFileNames([tracks[1]])
-        # method.setChromLenFileName(chrLenFile)
-        # method.setManualParam('ecdfPermNum', 5)
-        # method.setManualParam('meanPermNum', 5)
-        # method.setManualParam('jaccardPermNum', 5)
-        # runAllMethodsInSequence([method])
-        # self._printResultFiles(method, ['stderr', 'stdout', 'output'])
-        # print(method.getPValue())
-        # print(method.getTestStatistic())
+        # raise Exception('With current setup, too long running time to function as unit test')
+        method = GenometriCorr()
+        method.setQueryTrackFileNames([tracks[0]])
+        method.setReferenceTrackFileNames([tracks[1]])
+        method.setChromLenFileName(chrLenFile)
+        method.setManualParam('ecdfPermNum', 5)
+        method.setManualParam('meanPermNum', 5)
+        method.setManualParam('jaccardPermNum', 5)
+        runAllMethods([method])
+        self._printResultFiles(method, ['stderr', 'stdout', 'output'])
+        print(method.getPValue())
+        print(method.getTestStatistic())
 
     def testStereoGene(self, chrLenFile, tracks):
         method = StereoGene()
@@ -122,7 +122,7 @@ class TestMethods(TestMethodsBase):
         self._assertMethodResultsSize(len(refTracks), method)
 
     def testStereoGeneMultiVsMulti(self, chrLenFile, tracks):
-        raise Exception('With current setup, too long running time to function as unit test')
+        # raise Exception('With current setup, too long running time to function as unit test')
 
         qTracks = [tracks[0], tracks[1]]
         refTracks = [tracks[2], tracks[3]]

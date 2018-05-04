@@ -112,7 +112,7 @@ class LOLA(OneVsManyMethod):
     def getTestStatistic(self):
         return self.getRemappedResultDict(self._testStats)
 
-    def getFullResults(self):
+    def getFullResults(self, *args, **kwargs):
         from . import fullresults
         fullResHtml = fullresults.toHtml(self._resultFilesDict['output'],
                                          self._resultFilesDict['stdout'],
@@ -137,7 +137,8 @@ class LOLA(OneVsManyMethod):
             self.setNotCompatible()
 
     def setHeterogeneityPreservation(self, preservationScheme, fn=None):
-        pass
+        if preservationScheme != self.PRESERVE_HETEROGENEITY_NOT:
+            self.setNotCompatible()
 
     def getErrorDetails(self):
         assert not self.ranSuccessfully()

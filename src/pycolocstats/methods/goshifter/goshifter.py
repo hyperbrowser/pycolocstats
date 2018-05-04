@@ -165,7 +165,7 @@ class GoShifter(OneVsOneMethod):
                    + '">' + self._getFormattedVal(testStatVal) + '</span>'
         return {(self._orginalQueryFileTitle, self._orginalReferenceFileTitle): SingleResultValue(testStatVal, testStatText)}
 
-    def getFullResults(self):
+    def getFullResults(self, *args, **kwargs):
         # fullResults = open(self._resultFilesDict['stdout']).read().replace('\n', '<br>\n')
 
         from . import fullresults
@@ -192,7 +192,7 @@ class GoShifter(OneVsOneMethod):
             self.setNotCompatible()
 
     def setHeterogeneityPreservation(self, preservationScheme, fn=None):
-        if preservationScheme is not None:
+        if preservationScheme != self.PRESERVE_HETEROGENEITY_AS_NEIGHBORHOOD:
             self.setNotCompatible()
 
     def getErrorDetails(self):

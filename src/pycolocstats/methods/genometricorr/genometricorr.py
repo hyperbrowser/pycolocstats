@@ -87,7 +87,7 @@ class GenometriCorr(OneVsOneMethod):
     def getTestStatDescr(cls):
         return 'ratio of observed to expected (according to projection test)'
 
-    def getFullResults(self):
+    def getFullResults(self, *args, **kwargs):
 
         from . import fullresults
         html = fullresults.gc_html(self._resultFilesDict['output'],
@@ -108,7 +108,8 @@ class GenometriCorr(OneVsOneMethod):
             self.setNotCompatible()
 
     def setHeterogeneityPreservation(self, preservationScheme, fn=None):
-        pass
+        if preservationScheme != self.PRESERVE_HETEROGENEITY_NOT:
+            self.setNotCompatible()
 
     def getErrorDetails(self):
         assert not self.ranSuccessfully()

@@ -44,7 +44,7 @@ class Giggle(OneVsManyMethod):
     def _setQueryTrackFileName(self, trackFile):
         bedPath = self._getBedExtendedFileName(trackFile.path)
         self._addTrackTitleMapping(bedPath, trackFile.title)
-        self.qTrackFn = bedPath
+        self.qTrackFn = trackFile.title
         self._params['search_q'] = bedPath
 
     def getRefTracksMappedToIndexParams(self, trackFnList):
@@ -116,8 +116,9 @@ class Giggle(OneVsManyMethod):
         return self.getRemappedResultDict(testStatDict)
 
 
-    def getFullResults(self):
-        fullResults = self.resultsToHtml(stdoutFile=self.getResultFilesDict()['stdout'])
+    def getFullResults(self, *args, **kwargs):
+        fullResults = self.resultsToHtml(stdoutFile=self.getResultFilesDict()['stdout'],
+                                         trackTitleMapping=self._trackTitleMappings)
         return self.getRemappedResultDict(OrderedDict([(key,fullResults) for key in self._parsedResults.getResultsPerName('overlaps').keys()]))
 
     def preserveClumping(self, preserve):
@@ -134,7 +135,7 @@ class Giggle(OneVsManyMethod):
 
 
     def setHeterogeneityPreservation(self, preservationScheme, fn=None):
-        if preservationScheme is True:
+        if preservationScheme != self.PRESERVE_HETEROGENEITY_NOT:
             self.setNotCompatible()
 
     def getErrorDetails(self):
@@ -206,7 +207,8 @@ class Giggle(OneVsManyMethod):
         return htmlStr
 
     @classmethod
-    def resultsToHtml(cls, outputFolder=None, stdoutFile=None, stderrFile=None):
+    def resultsToHtml(cls, outputFolder=None, stdoutFile=None, stderrFile=None, trackTitleMapping=None):
+        from os.path import sep
         if not stdoutFile:
             return cls.html_headers() + cls.html_empty_stdout(stderrFile, True) + cls.html_footers()
 
@@ -241,7 +243,10 @@ class Giggle(OneVsManyMethod):
             html_string += '<tr>'
             i = 0
             for x in row:
-                if i == 3:
+                if i == 0:
+                    trackTitle = trackTitleMapping[x.split(sep)[-1]]
+                    html_string += '<td>' + trackTitle + '</td>'
+                elif i == 3:
                     odds_ratio = float(x)
                     rgba = cls.get_rgba_str(odds_ratio, odds_ratios, 1.0)
                     html_string += '<td  style="background-color: ' + rgba + ';">' + x + '</td>'

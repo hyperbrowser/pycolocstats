@@ -110,9 +110,14 @@ class IntervalStats(OneVsOneMethod):
     def getTestStatDescr(cls):
         return 'ratio of observed to expected number of proximity p-values below 0.05'
 
-    def getFullResults(self):
-        resultsFolderPath = path.join(self._resultFilesDict['output'], 'output')
-        return self.getRemappedResultDict({(self._params['q'], self._params['r']): open(resultsFolderPath).read().replace('\n','<br>\n')})
+    def getFullResults(self, urlPrefix=None, *args, **kwargs):
+
+        from . import fullresults
+        fullResHtml = fullresults.toHtml(self._resultFilesDict['output'],
+                           self._resultFilesDict['stdout'],
+                           self._resultFilesDict['stderr'],
+                           urlPrefix)
+        return self.getRemappedResultDict({(self._params['q'], self._params['r']): fullResHtml})
 
     def preserveClumping(self, preserve):
         # not sure yet
@@ -135,7 +140,7 @@ class IntervalStats(OneVsOneMethod):
             self.setNotCompatible()
 
     def setHeterogeneityPreservation(self, preservationScheme, fn=None):
-        if preservationScheme is not True:
+        if preservationScheme != self.PRESERVE_HETEROGENEITY_NOT:
             self.setNotCompatible()
 
     def getErrorDetails(self):

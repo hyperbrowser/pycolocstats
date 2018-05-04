@@ -164,14 +164,12 @@ class UniformInterface(with_metaclass(ABCMeta, object)):
 
     @abstractmethod
     def setHeterogeneityPreservation(self, preservationScheme, fn=None):
-        # assert preservationScheme in [PRESERVE_HETEROGENEITY_NOT, PRESERVE_HETEROGENEITY_AS_NEIGHBORHOOD, PRESERVE_HETEROGENEITY_WITHIN_SUPPLIED_REGIONS]
-        # if preservationScheme==PRESERVE_HETEROGENEITY_WITHIN_SUPPLIED_REGIONS:
-        #     assert fn is not None
-        pass
+        if preservationScheme != self.PRESERVE_HETEROGENEITY_NOT:
+            self.setNotCompatible()
 
-    PRESERVE_HETEROGENEITY_NOT = '...'
-    PRESERVE_HETEROGENEITY_AS_NEIGHBORHOOD = '...'
-    PRESERVE_HETEROGENEITY_WITHIN_SUPPLIED_REGIONS = '...'
+    PRESERVE_HETEROGENEITY_NOT = 'Distribute genomic elements across all analysis regions'
+    PRESERVE_HETEROGENEITY_AS_NEIGHBORHOOD = 'Distribute each genomic element within a fixed size neighbourhood'
+    PRESERVE_HETEROGENEITY_WITHIN_SUPPLIED_REGIONS = 'Distribute genomic elements within their original analysis regions'
 
     @abstractmethod
     # @takes("UniformInterface", bool)
@@ -196,7 +194,7 @@ class UniformInterface(with_metaclass(ABCMeta, object)):
         return 'not defined'
 
     @abstractmethod
-    def getFullResults(self):
+    def getFullResults(self, *args, **kwargs):
         """
         :return: Full result output as a string
         """

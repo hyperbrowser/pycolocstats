@@ -49,6 +49,7 @@ class TestMethods(TestMethodsBase):
         runAllMethods([method])
         # self._printResultFiles(method, ['stderr', 'stdout', 'output'])
         self._assertMethodResultsSize(1, method)
+        print(method.getFullResults())
 
     def testStereoGene_OneVsOne_header_in_data(self, chrLenFile, tracks):
         method = StereoGene()
