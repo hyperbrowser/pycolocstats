@@ -81,7 +81,7 @@ def output_to_table(file):
         for row, name in enumerate(fieldnames):
             table += "<tr>"
             table += "<td>" + name + "</td>"
-            table += "<td>" + scissors(data[row][awhole]) if awhole is not None else "N/A" + "</td>"
+            table += "<td>" + (scissors(data[row][awhole]) if awhole is not None else "N/A") + "</td>"
             for tup in tuplovoz:
                 table += "<td>" + scissors(data[row][tup[1]]) + "</td>"
             table += "</tr>" + linesep
