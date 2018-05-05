@@ -129,9 +129,12 @@ def plotting(modified, outputFolder):  # Getting input and plotting
 
 
 def toHtml(outputFolder, stdoutFn, stderrFn, pathPrefix=""):
-    modified = modifyinputs(outputFolder, stdoutFn, stderrFn)
-    plotted = plotting(modified, outputFolder)
-    #clean() #not sure if needed
+    import warnings
+    with warnings.catch_warnings():
+        warnings.simplefilter("ignore")
+        modified = modifyinputs(outputFolder, stdoutFn, stderrFn)
+        plotted = plotting(modified, outputFolder)
+        #clean() #not sure if needed
 
     rootFolderName = outputFolder.split(os.sep)[-1] if outputFolder else ""
 
