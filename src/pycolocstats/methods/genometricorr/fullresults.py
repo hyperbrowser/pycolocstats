@@ -72,7 +72,7 @@ def output_to_table(file):
 
     # gather the table
     table = "<table>"
-    if tuplovoz and fieldnames and data and awhole is not None:
+    if tuplovoz and fieldnames and data:
         table += "<tr><th></th>"
         table += "<th>All</th>"
         for tup in tuplovoz:
@@ -81,7 +81,7 @@ def output_to_table(file):
         for row, name in enumerate(fieldnames):
             table += "<tr>"
             table += "<td>" + name + "</td>"
-            table += "<td>" + scissors(data[row][awhole]) + "</td>"
+            table += "<td>" + scissors(data[row][awhole]) if awhole is not None else "N/A" + "</td>"
             for tup in tuplovoz:
                 table += "<td>" + scissors(data[row][tup[1]]) + "</td>"
             table += "</tr>" + linesep
@@ -119,7 +119,6 @@ def gc_html(outputFolder=None, stdoutFile=None, stderrFile=None):
     html += "</head>" + linesep
     html += "<body>" + linesep
     html += "<h3> GenometriCorr results: </h3>" + linesep
-    print("GNMTRCRR: ", outputFolder + sep + "GenometriCorr_Output.txt")
     html += output_to_table(outputFolder + sep + "GenometriCorr_Output.txt")
     html += "<p>Please refer to <a href=http://genometricorr.sourceforge.net/GenometriCorr.pdf> GenometriCorr documentaion </a></p>" + linesep
     html += "<h3> Technical information: </h3>" + linesep
