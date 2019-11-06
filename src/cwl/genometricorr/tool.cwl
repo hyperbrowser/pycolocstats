@@ -92,8 +92,8 @@ requirements:
 
       - entryname: genometricorr.r
         entry: |-
-          y <- gsub("\\\\\\\\n", "\\n", readLines("conf.ini"))
-          cat(y, file="conf.ini", sep="\\n")
+          y <- gsub("\\\\n", "\n", readLines("conf.ini"))
+          cat(y, file="conf.ini", sep="\n")
           library("GenometriCorr")
           config <- new("GenometriCorrConfig", "conf.ini")
           conf_res <- run.config(config)
@@ -124,6 +124,6 @@ requirements:
           new_res <- apply(temp3,2,as.character)
           final_res <- as.data.frame(cbind(rownames(temp3),new_res))
           colnames(final_res)[1] <- "genomet.arguments"
-          write.table(final_res, "GenometriCorr_Output.txt",row.names=F,quote=F,sep='\\t')
+          write.table(final_res, "GenometriCorr_Output.txt",row.names=F,quote=F,sep='\t')
 
 
