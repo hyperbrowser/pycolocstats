@@ -1,4 +1,4 @@
-numpy==1.12.1
+numpy==1.21.0
 pytz==2015.4
 more-itertools==5.0.0
 zipp==0.6.0
