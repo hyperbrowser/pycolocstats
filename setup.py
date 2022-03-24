@@ -5,6 +5,8 @@ https://packaging.python.org/en/latest/distributing.html
 https://github.com/pypa/sampleproject
 """
 
+import sys
+
 # Always prefer setuptools over distutils
 from setuptools import setup, find_packages
 # To use a consistent encoding
@@ -19,13 +21,15 @@ here = path.abspath(path.dirname(__file__))
 description = 'Python core package that collects various software for genomic track ' \
               'co-localization analysis.'
 
+requirements_filename = 'requirements_py2.txt' if sys.version_info[0] == 2 else 'requirements.txt'
+
 setup(
     name='pycolocstats',
 
     # Versions should comply with PEP440.  For a discussion on single-sourcing
     # the version across setup.py and the project code, see
     # https://packaging.python.org/en/latest/single_source_version.html
-    version='1.0b1',
+    version='1.0b2',
 
     description=description,
     long_description=description,
@@ -84,7 +88,7 @@ setup(
     # your project is installed. For an analysis of "install_requires" vs pip's
     # requirements files see:
     # https://packaging.python.org/en/latest/requirements.html
-    install_requires=[_.strip() for _ in open('requirements.txt').read().strip().split()],
+    install_requires=[_.strip() for _ in open(requirements_filename).read().strip().split()],
 
     # List additional groups of dependencies here (e.g. development
     # dependencies). You can install these using the following syntax,

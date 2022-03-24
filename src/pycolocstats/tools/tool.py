@@ -6,13 +6,14 @@ import os
 import pkg_resources
 import yaml
 
+from cwltool.context import RuntimeContext
+from numbers import Number
 from pycolocstats.core.config import DEFAULT_JOB_OUTPUT_DIR, TMP_DIR, PULL_DOCKER_IMAGES, \
     USE_TEST_DOCKER_IMAGES
 from pycolocstats.core.constants import TEST_TOOL_SUFFIX
 from pycolocstats.core.types import PathStr, PathStrList
 from pycolocstats.core.util import ensureDirExists
 from pycolocstats.tools.jobparamsdict import JobParamsDict
-from numbers import Number
 
 __metaclass__ = type
 
@@ -63,8 +64,7 @@ class ToolConfig(object):
 
     def getCWLFilePath(self):
         return pkg_resources.resource_filename('pycolocstats',
-                                               '../cwl/{}/tool.cwl'.format(self.toolName))
-
+                                               'cwl/{}/tool.cwl'.format(self.toolName))
     def createJobParamsDict(self):
         inputs = self._yaml['inputs']
         paramDefDict = dict(
@@ -96,11 +96,20 @@ class ToolConfig(object):
 
 
 class Tool(object):
-    _cwlToolFactory = cwltool.factory.Factory()
+    _cwlToolFactory = None
 
     def __init__(self, toolName):
+        if not self._cwlToolFactory:
+            self._cwlToolFactory = self._createToolFactory()
         self._config = ToolConfig(toolName)
         self._cwlTool = None
+
+    @staticmethod
+    def _createToolFactory():
+        runtime_context = RuntimeContext()
+        runtime_context.use_container = True
+        runtime_context.no_read_only = True
+        return cwltool.factory.Factory(runtime_context=runtime_context)
 
     @property
     def toolName(self):
@@ -111,8 +120,6 @@ class Tool(object):
             if PULL_DOCKER_IMAGES:
                 docker.from_env().images.pull(self._config.getToolImageName(), tag="latest")
             self._cwlTool = self._cwlToolFactory.make(self._config.getCWLFilePath())
-            self._cwlTool.factory.execkwargs['use_container'] = True
-            self._cwlTool.factory.execkwargs['no_read_only'] = True
 
             tmpDir = os.path.abspath(TMP_DIR)
             jobOutputDir = os.path.abspath(jobOutputDir)
@@ -120,8 +127,9 @@ class Tool(object):
             ensureDirExists(tmpDir)
             ensureDirExists(jobOutputDir)
 
-            self._cwlTool.factory.execkwargs['tmpdir_prefix'] = tmpDir + '/'
-            self._cwlTool.factory.execkwargs['tmp_outdir_prefix'] = jobOutputDir + '/'
+            self._cwlTool.factory.runtime_context.tmpdir_prefix = tmpDir
+            self._cwlTool.factory.runtime_context.tmp_outdir_prefix = tmpDir
+            self._cwlTool.factory.runtime_context.outdir = jobOutputDir
 
         return self._cwlTool
 
