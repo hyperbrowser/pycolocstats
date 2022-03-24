@@ -15,22 +15,22 @@ from tests.test_method import TestMethodsBase
 @pytest.fixture(scope='function')
 def tracks():
     return [
-        TrackFile(pkg_resources.resource_filename('pycolocstats', '../../tests/resources/test_track1.bed'), 'track1'),
-        TrackFile(pkg_resources.resource_filename('pycolocstats', '../../tests/resources/test_track2.bed'), 'track2'),
-        TrackFile(pkg_resources.resource_filename('pycolocstats', '../../tests/resources/test_track3.bed'), 'track3'),
-        TrackFile(pkg_resources.resource_filename('pycolocstats', '../../tests/resources/test_track4.bed'), 'track4'),
-        TrackFile(pkg_resources.resource_filename('pycolocstats', '../../tests/resources/test_track5.bed'), 'track5'),
-        TrackFile(pkg_resources.resource_filename('pycolocstats', '../../tests/resources/test_track6.bed'), 'track6'),
-        TrackFile(pkg_resources.resource_filename('pycolocstats', '../../tests/resources/test_track7.bed'), 'track7'),
-        TrackFile(pkg_resources.resource_filename('pycolocstats', '../../tests/resources/test_track8.bed'), 'track8'),
-        TrackFile(pkg_resources.resource_filename('pycolocstats', '../../tests/resources/test_track9.bed'), 'track9'),
-        TrackFile(pkg_resources.resource_filename('pycolocstats', '../../tests/resources/test_track10.bed'), 'track10'),
+        TrackFile('resources/test_track1.bed', 'track1'),
+        TrackFile('resources/test_track2.bed', 'track2'),
+        TrackFile('resources/test_track3.bed', 'track3'),
+        TrackFile('resources/test_track4.bed', 'track4'),
+        TrackFile('resources/test_track5.bed', 'track5'),
+        TrackFile('resources/test_track6.bed', 'track6'),
+        TrackFile('resources/test_track7.bed', 'track7'),
+        TrackFile('resources/test_track8.bed', 'track8'),
+        TrackFile('resources/test_track9.bed', 'track9'),
+        TrackFile('resources/test_track10.bed', 'track10'),
     ]
 
 
 @pytest.fixture(scope='function')
 def chrLenFile():
-    return pkg_resources.resource_filename('pycolocstats', '../../tests/resources/test_chrom_lengths_2.tabular')
+    return 'resources/test_chrom_lengths_2.tabular'
 
 
 @pytest.mark.usefixtures('chrLenFile', 'tracks')
@@ -164,9 +164,9 @@ class TestMethods(TestMethodsBase):
 
     def testGoShifter(self, chrLenFile, tracks):
         method = GoShifter()
-        # snpmap = pkg_resources.resource_filename('pycolocstats', '../../tests/resources/snpmap.tabular')
-        # annotation = pkg_resources.resource_filename('pycolocstats', '../../tests/resources/annotation.bed.gz')
-        # proxies = pkg_resources.resource_filename('pycolocstats', '../../tests/resources/proxies.txt')
+        # snpmap = 'resources/snpmap.tabular'
+        # annotation = 'resources/annotation.bed.gz'
+        # proxies = 'resources/proxies.txt'
         method.setQueryTrackFileNames([tracks[4]])
         method.setReferenceTrackFileNames([tracks[5]])
         # method.setManualParam('s', snpmap)
@@ -180,9 +180,9 @@ class TestMethods(TestMethodsBase):
 
     def testGoShifter_header_in_data(self, chrLenFile, tracks):
         method = GoShifter()
-        # snpmap = pkg_resources.resource_filename('pycolocstats', '../../tests/resources/snpmap.tabular')
-        # annotation = pkg_resources.resource_filename('pycolocstats', '../../tests/resources/annotation.bed.gz')
-        # proxies = pkg_resources.resource_filename('pycolocstats', '../../tests/resources/proxies.txt')
+        # snpmap = 'resources/snpmap.tabular'
+        # annotation = 'resources/annotation.bed.gz'
+        # proxies = 'resources/proxies.txt'
         method.setQueryTrackFileNames([tracks[9]])
         method.setReferenceTrackFileNames([tracks[5]])
         # method.setManualParam('s', snpmap)

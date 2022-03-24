@@ -51,11 +51,16 @@ outputs:
     type: Directory
     outputBinding:
       glob: '.'
+stdout:
+    stdout
+stderr:
+    stderr
+
 
 label: giggle
 requirements:
   - class: DockerRequirement
-    dockerPull: 'colocstats/giggle:latest'
+    dockerPull: colocstats/giggle:latest
   - class: InlineJavascriptRequirement
   - class: InitialWorkDirRequirement
     listing:

@@ -15,16 +15,16 @@ PRINT_TEST_STATISTICS = True
 @pytest.fixture(scope='function')
 def tracks():
     return [
-            TrackFile(pkg_resources.resource_filename('pycolocstats', '../../tests/resources/test_track1.bed'), 't1'),
-            TrackFile(pkg_resources.resource_filename('pycolocstats', '../../tests/resources/test_track2.bed'), 't2'),
-            TrackFile(pkg_resources.resource_filename('pycolocstats', '../../tests/resources/test_track3.bed'), 't3'),
-            TrackFile(pkg_resources.resource_filename('pycolocstats', '../../tests/resources/test_track4.bed'), 't4'),
+            TrackFile('resources/test_track1.bed', 't1'),
+            TrackFile('resources/test_track2.bed', 't2'),
+            TrackFile('resources/test_track3.bed', 't3'),
+            TrackFile('resources/test_track4.bed', 't4'),
             ]
 
 
 @pytest.fixture(scope='function')
 def chrLenFile():
-    return pkg_resources.resource_filename('pycolocstats', '../../tests/resources/test_chrom_lengths_2.tabular')
+    return 'resources/test_chrom_lengths_2.tabular'
 
 @pytest.fixture(scope='function')
 @pytest.mark.usefixtures('tracks')

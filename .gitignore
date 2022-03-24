@@ -101,4 +101,4 @@ ENV/
 .mypy_cache/
 
 # pycolocstats settings
-config/pycolocstats.ini
+**/pycolocstats.ini

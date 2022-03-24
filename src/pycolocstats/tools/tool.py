@@ -51,7 +51,7 @@ class ToolConfig(object):
                 self.toolName = oldToolName
 
         with open(self.getCWLFilePath(), 'r') as stream:
-            self._yaml = yaml.load(stream, Loader=yaml.UnsafeLoader)
+            self._yaml = yaml.load(stream, Loader=yaml.Loader)
 
     def getToolImageName(self):
         return 'colocstats/%s' % self.toolName

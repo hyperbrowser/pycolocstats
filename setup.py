@@ -73,7 +73,8 @@ setup(
 
     # You can just specify the packages manually here if your project is
     # simple. Or you can use find_packages().
-    packages=find_packages(exclude=['tests']),
+    packages=find_packages(where='src'),
+    package_dir={'': 'src'},
 
     # Alternatively, if you want to distribute just a my_module.py, uncomment
     # this:
@@ -98,7 +99,7 @@ setup(
     # installed, specify them here.  If using Python 2.6 or less, then these
     # have to be included in MANIFEST.in as well.
     package_data={
-        'pycolocstats': ['resources/*', 'src/cwl/*'],
+        'pycolocstats': ['config/*.sample', 'cwl/*/*', 'resources/*'],
     },
 
     # Although 'package_data' is the preferred approach, in some case you may

@@ -4,7 +4,8 @@ __metaclass__ = type
 
 
 CONFIG_SECTION = u'pycolocstats'
-DEFAULT_CONFIG_REL_FN = '../../config/pycolocstats.ini'
+DEFAULT_CONFIG_REL_FN = '.pycolocstats/pycolocstats.ini'
+SAMPLE_CONFIG_REL_FN = 'config/pycolocstats.ini.sample'
 
 
 def getConfigParser(config_fn):
@@ -20,13 +21,14 @@ def getConfigFilename():
     import pkg_resources
     import shutil
 
-    defConfigFn = pkg_resources.resource_filename('pycolocstats', DEFAULT_CONFIG_REL_FN)
-    sampleConfigFn = defConfigFn + '.sample'
+    sampleConfigFn = pkg_resources.resource_filename('pycolocstats', SAMPLE_CONFIG_REL_FN)
 
     envConfigFn = os.environ.get('PYCOLOCSTATS_CONFIG')
-    configFn = envConfigFn if envConfigFn else defConfigFn
+    configFn = envConfigFn if envConfigFn else DEFAULT_CONFIG_REL_FN
 
     if not os.path.exists(configFn):
+        print("Writing config file: " + configFn)
+        os.makedirs(os.path.dirname(configFn))
         shutil.copy(sampleConfigFn, configFn)
     else:
         sampleCfgParser = getConfigParser(sampleConfigFn)
