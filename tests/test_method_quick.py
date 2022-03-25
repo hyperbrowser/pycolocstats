@@ -1,4 +1,4 @@
-import pkg_resources
+import os
 import pytest
 
 from pycolocstats.core.types import TrackFile
@@ -9,28 +9,29 @@ from pycolocstats.methods.intervalstats.intervalstats import IntervalStats
 from pycolocstats.methods.multimethod import MultiMethod
 from pycolocstats.methods.stereogene.stereogene import StereoGene
 from pycolocstats.tools.runner import runAllMethods
+from tests import TEST_RESOURCES_DIR
 from tests.test_method import TestMethodsBase
 
 
 @pytest.fixture(scope='function')
 def tracks():
     return [
-        TrackFile('resources/test_track1.bed', 'track1'),
-        TrackFile('resources/test_track2.bed', 'track2'),
-        TrackFile('resources/test_track3.bed', 'track3'),
-        TrackFile('resources/test_track4.bed', 'track4'),
-        TrackFile('resources/test_track5.bed', 'track5'),
-        TrackFile('resources/test_track6.bed', 'track6'),
-        TrackFile('resources/test_track7.bed', 'track7'),
-        TrackFile('resources/test_track8.bed', 'track8'),
-        TrackFile('resources/test_track9.bed', 'track9'),
-        TrackFile('resources/test_track10.bed', 'track10'),
+        TrackFile(os.path.join(TEST_RESOURCES_DIR, 'test_track1.bed'), 'track1'),
+        TrackFile(os.path.join(TEST_RESOURCES_DIR, 'test_track2.bed'), 'track2'),
+        TrackFile(os.path.join(TEST_RESOURCES_DIR, 'test_track3.bed'), 'track3'),
+        TrackFile(os.path.join(TEST_RESOURCES_DIR, 'test_track4.bed'), 'track4'),
+        TrackFile(os.path.join(TEST_RESOURCES_DIR, 'test_track5.bed'), 'track5'),
+        TrackFile(os.path.join(TEST_RESOURCES_DIR, 'test_track6.bed'), 'track6'),
+        TrackFile(os.path.join(TEST_RESOURCES_DIR, 'test_track7.bed'), 'track7'),
+        TrackFile(os.path.join(TEST_RESOURCES_DIR, 'test_track8.bed'), 'track8'),
+        TrackFile(os.path.join(TEST_RESOURCES_DIR, 'test_track9.bed'), 'track9'),
+        TrackFile(os.path.join(TEST_RESOURCES_DIR, 'test_track10.bed'), 'track10'),
     ]
 
 
 @pytest.fixture(scope='function')
 def chrLenFile():
-    return 'resources/test_chrom_lengths_2.tabular'
+    return os.path.join(TEST_RESOURCES_DIR, 'test_chrom_lengths_2.tabular')
 
 
 @pytest.mark.usefixtures('chrLenFile', 'tracks')
@@ -164,9 +165,9 @@ class TestMethods(TestMethodsBase):
 
     def testGoShifter(self, chrLenFile, tracks):
         method = GoShifter()
-        # snpmap = 'resources/snpmap.tabular'
-        # annotation = 'resources/annotation.bed.gz'
-        # proxies = 'resources/proxies.txt'
+        # snpmap = os.path.join(TEST_RESOURCES_DIR, 'snpmap.tabular'
+        # annotation = os.path.join(TEST_RESOURCES_DIR, 'annotation.bed.gz'
+        # proxies = os.path.join(TEST_RESOURCES_DIR, 'proxies.txt'
         method.setQueryTrackFileNames([tracks[4]])
         method.setReferenceTrackFileNames([tracks[5]])
         # method.setManualParam('s', snpmap)
@@ -180,9 +181,9 @@ class TestMethods(TestMethodsBase):
 
     def testGoShifter_header_in_data(self, chrLenFile, tracks):
         method = GoShifter()
-        # snpmap = 'resources/snpmap.tabular'
-        # annotation = 'resources/annotation.bed.gz'
-        # proxies = 'resources/proxies.txt'
+        # snpmap = os.path.join(TEST_RESOURCES_DIR, 'snpmap.tabular'
+        # annotation = os.path.join(TEST_RESOURCES_DIR, 'annotation.bed.gz'
+        # proxies = os.path.join(TEST_RESOURCES_DIR, 'proxies.txt'
         method.setQueryTrackFileNames([tracks[9]])
         method.setReferenceTrackFileNames([tracks[5]])
         # method.setManualParam('s', snpmap)

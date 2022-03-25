@@ -1,9 +1,9 @@
 from tempfile import NamedTemporaryFile
 
 import os
-import pkg_resources
 import pytest
 
+from tests import TEST_RESOURCES_DIR
 from pycolocstats.methods.genometricorr.genometricorr import GenometriCorr
 from pycolocstats.methods.giggle.giggle import Giggle
 from pycolocstats.methods.interface import RestrictedThroughInclusion
@@ -17,25 +17,25 @@ from pycolocstats.tools.runner import runAllMethods
 
 @pytest.fixture(scope='function')
 def tracks():
-    return [TrackFile('resources/H3K4me1_no_overlaps.bed', 't1'),
-            TrackFile('resources/H3K4me3_no_overlaps.bed', 't2'),
-            TrackFile('resources/H3K4me1_with_overlaps.bed', 't3'),
-            TrackFile('resources/H3K4me3_with_overlaps.bed', 't4'),
-            TrackFile('resources/H3K4me1_no_overlaps.bed.gz', 't5'),
-            TrackFile('resources/H3K4me3_no_overlaps.bed.gz', 't6'),
-            TrackFile('resources/H3K4me1_with_overlaps.bed.gz', 't7'),
-            TrackFile('resources/H3K4me3_with_overlaps.bed.gz', 't8'),
-            TrackFile('resources/H3K4me1_no_overlaps_cropped.bed', 't9'),
-            TrackFile('resources/H3K4me1_no_overlaps_large.bed.gz', 't10'),
-            TrackFile('resources/H3K4me3_no_overlaps_large.bed.gz', 't11'),
-            TrackFile('resources/Refseq_Genes_cropped.bed.gz', 't12'),
-            TrackFile('resources/Ensembl_Genes_cropped.bed.gz', 't13'),
-            TrackFile('resources/H3K4me3_no_overlaps_cropped.bed', 't14')]
+    return [TrackFile(os.path.join(TEST_RESOURCES_DIR, 'H3K4me1_no_overlaps.bed'), 't1'),
+            TrackFile(os.path.join(TEST_RESOURCES_DIR, 'H3K4me3_no_overlaps.bed'), 't2'),
+            TrackFile(os.path.join(TEST_RESOURCES_DIR, 'H3K4me1_with_overlaps.bed'), 't3'),
+            TrackFile(os.path.join(TEST_RESOURCES_DIR, 'H3K4me3_with_overlaps.bed'), 't4'),
+            TrackFile(os.path.join(TEST_RESOURCES_DIR, 'H3K4me1_no_overlaps.bed.gz'), 't5'),
+            TrackFile(os.path.join(TEST_RESOURCES_DIR, 'H3K4me3_no_overlaps.bed.gz'), 't6'),
+            TrackFile(os.path.join(TEST_RESOURCES_DIR, 'H3K4me1_with_overlaps.bed.gz'), 't7'),
+            TrackFile(os.path.join(TEST_RESOURCES_DIR, 'H3K4me3_with_overlaps.bed.gz'), 't8'),
+            TrackFile(os.path.join(TEST_RESOURCES_DIR, 'H3K4me1_no_overlaps_cropped.bed'), 't9'),
+            TrackFile(os.path.join(TEST_RESOURCES_DIR, 'H3K4me1_no_overlaps_large.bed.gz'), 't10'),
+            TrackFile(os.path.join(TEST_RESOURCES_DIR, 'H3K4me3_no_overlaps_large.bed.gz'), 't11'),
+            TrackFile(os.path.join(TEST_RESOURCES_DIR, 'Refseq_Genes_cropped.bed.gz'), 't12'),
+            TrackFile(os.path.join(TEST_RESOURCES_DIR, 'Ensembl_Genes_cropped.bed.gz'), 't13'),
+            TrackFile(os.path.join(TEST_RESOURCES_DIR, 'H3K4me3_no_overlaps_cropped.bed'), 't14')]
 
 
 @pytest.fixture(scope='function')
 def chrLenFile():
-    return 'resources/chrom_lengths.tabular'
+    return os.path.join(TEST_RESOURCES_DIR, 'chrom_lengths.tabular')
 
 
 class TestMethodsBase(object):

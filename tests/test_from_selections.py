@@ -1,4 +1,5 @@
-import pkg_resources
+import os
+
 import pytest
 
 from pycolocstats.core.types import TrackFile
@@ -7,53 +8,64 @@ from pycolocstats.methods.interface import RestrictedThroughInclusion
 from pycolocstats.methods.lola.lola import LOLA
 from pycolocstats.tools.WorkingMethodObjectParser import WorkingMethodObjectParser
 from pycolocstats.tools.runner import runAllMethods
+from tests import TEST_RESOURCES_DIR
 from tests.test_method import TestMethodsBase
 
 PRINT_RESULT_FILES = True
 PRINT_TEST_STATISTICS = True
 
+
 @pytest.fixture(scope='function')
 def tracks():
     return [
-            TrackFile('resources/test_track1.bed', 't1'),
-            TrackFile('resources/test_track2.bed', 't2'),
-            TrackFile('resources/test_track3.bed', 't3'),
-            TrackFile('resources/test_track4.bed', 't4'),
+            TrackFile(os.path.join(TEST_RESOURCES_DIR, 'test_track1.bed'), 't1'),
+            TrackFile(os.path.join(TEST_RESOURCES_DIR, 'test_track2.bed'), 't2'),
+            TrackFile(os.path.join(TEST_RESOURCES_DIR, 'test_track3.bed'), 't3'),
+            TrackFile(os.path.join(TEST_RESOURCES_DIR, 'test_track4.bed'), 't4'),
             ]
 
 
 @pytest.fixture(scope='function')
 def chrLenFile():
-    return 'resources/test_chrom_lengths_2.tabular'
+    return os.path.join(TEST_RESOURCES_DIR, 'test_chrom_lengths_2.tabular')
+
 
 @pytest.fixture(scope='function')
 @pytest.mark.usefixtures('tracks')
 def queryTrack(tracks):
     return tracks[0:1]
 
+
 @pytest.fixture(scope='function')
 @pytest.mark.usefixtures('tracks')
 def refTracks(tracks):
     return tracks[1:2]
 
+
 @pytest.mark.usefixtures('chrLenFile', 'tracks', 'queryTrack', 'refTracks')
 class TestMethods(TestMethodsBase):
     def test_default_giggle(self, chrLenFile, queryTrack, refTracks):
-        selectionValues = [[('setGenomeName', u'hg19')], [('setRestrictedAnalysisUniverse', None)],[('setRuntimeMode', u'quick')]]
-        selectionValues.append([('setChromLenFileName',chrLenFile)])
+        selectionValues = [[('setGenomeName', u'hg19')],
+                           [('setRestrictedAnalysisUniverse', None)],
+                           [('setRuntimeMode', u'quick')],
+                           [('setChromLenFileName', chrLenFile)]]
         methodClasses = [Giggle]
         self._checkThatRuns(queryTrack, refTracks, selectionValues, methodClasses)
 
 
     def test_default_intervalStats(self, chrLenFile, queryTrack, refTracks):
-        selectionValues = [[('setGenomeName', u'hg19')], [('setRestrictedAnalysisUniverse', None)],[('setRuntimeMode', u'quick')]]
-        selectionValues.append([('setChromLenFileName',chrLenFile)])
+        selectionValues = [[('setGenomeName', u'hg19')],
+                           [('setRestrictedAnalysisUniverse', None)],
+                           [('setRuntimeMode', u'quick')],
+                           [('setChromLenFileName', chrLenFile)]]
         methodClasses = [Giggle]
         self._checkThatRuns(queryTrack, refTracks, selectionValues, methodClasses)
 
     def test_defaultWithBg_Lola(self, chrLenFile, queryTrack, refTracks, tracks):
-        selectionValues = [[('setGenomeName', u'hg19')], [('setRestrictedAnalysisUniverse', RestrictedThroughInclusion(tracks[3]))], [('setRuntimeMode', u'quick')]]
-        selectionValues.append([('setChromLenFileName',chrLenFile)])
+        selectionValues = [[('setGenomeName', u'hg19')],
+                           [('setRestrictedAnalysisUniverse', RestrictedThroughInclusion(tracks[3]))],
+                           [('setRuntimeMode', u'quick')],
+                           [('setChromLenFileName', chrLenFile)]]
         methodClasses = [LOLA]
         self._checkThatRuns(queryTrack, refTracks, selectionValues, methodClasses)
 
@@ -125,8 +137,10 @@ class TestMethods(TestMethodsBase):
         '''
 
     # def test_default_genometriCorr(self, chrLenFile, queryTrack, refTracks):
-    #     selectionValues = [[('setGenomeName', u'hg19')], [('setRestrictedAnalysisUniverse', None)],[('setRuntimeMode', u'quick')]]
-    #     selectionValues.append([('setChromLenFileName',chrLenFile)])
+    #     selectionValues = [[('setGenomeName', u'hg19')],
+    #                        [('setRestrictedAnalysisUniverse', None)],
+    #                        [('setRuntimeMode', u'quick')],
+    #                        [('setChromLenFileName', chrLenFile)]]
     #     methodClasses = [GenometriCorr]
     #     self._checkThatRuns(queryTrack, refTracks, selectionValues, methodClasses)
 
